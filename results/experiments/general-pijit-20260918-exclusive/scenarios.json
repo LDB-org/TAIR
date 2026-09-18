@@ -1,0 +1,26 @@
+{
+  "mixed_config": {
+    "files": {
+      "app.py": "import argparse\n\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4)\n    p.add_argument('--timeout', type=float, default=1.5)\n    p.add_argument('--host', default='localhost')\n    return p\n",
+      "test_app.py": "import unittest\nfrom app import build_parser\nclass TestConfig(unittest.TestCase):\n    def test_defaults(self):\n        p=build_parser().parse_args([])\n        self.assertEqual((p.workers,p.timeout,p.host),(6,2.5,'localhost'))\n    def test_overrides(self):\n        p=build_parser().parse_args(['--workers','3','--timeout','0.25','--host','remote'])\n        self.assertEqual((p.workers,p.timeout,p.host),(3,0.25,'remote'))\n"
+    },
+    "prompt": "Inspect the Python project. Change the workers default to 6 and timeout default to 2.5. Preserve explicit overrides and the host setting. Run python -m unittest -v, fix any failures, and summarize what changed. Do not change the tests.",
+    "check": "import app\np=app.build_parser()\na=p.parse_args([])\nassert (a.workers,a.timeout,a.host)==(6,2.5,'localhost')\na=p.parse_args(['--workers','17','--timeout','0.75','--host','example'])\nassert (a.workers,a.timeout,a.host)==(17,0.75,'example')\n"
+  },
+  "summary_bug": {
+    "files": {
+      "app.py": "def summarize(values):\n    return {'count': len(set(values)), 'total': sum(values), 'mean': sum(values)/len(values), 'min': min(values), 'max': max(values)}\n",
+      "test_app.py": "import unittest\nfrom app import summarize\nclass TestSummary(unittest.TestCase):\n    def test_duplicates(self):\n        self.assertEqual(summarize([2,2,5])['count'],3)\n    def test_empty(self):\n        self.assertEqual(summarize([]),{'count':0,'total':0,'mean':None,'min':None,'max':None})\n"
+    },
+    "prompt": "Inspect this project and fix summarize: count must include duplicates; empty input must return count=0,total=0,mean=None,min=None,max=None. Preserve input order and contents and handle negative/floating-point values. Add unittest coverage for negative values and input immutability, keeping existing tests. Run python -m unittest -v and summarize the result.",
+    "check": "from app import summarize\nfor xs in [[],[2,2,5],[-4,-2],[0.25,1.25,2.5],[9]]:\n before=list(xs)\n expected={'count':len(xs),'total':sum(xs),'mean':sum(xs)/len(xs) if xs else None,'min':min(xs) if xs else None,'max':max(xs) if xs else None}\n assert summarize(xs)==expected\n assert xs==before\nfrom pathlib import Path\nassert 'unittest' in Path('test_app.py').read_text()\n"
+  },
+  "multifile_feature": {
+    "files": {
+      "app.py": "import argparse\n\ndef main():\n    p=argparse.ArgumentParser()\n    p.add_argument('text')\n    args=p.parse_args()\n    print(args.text)\n\nif __name__=='__main__':\n    main()\n",
+      "README.md": "# Text CLI\n\nRun python app.py \"Hello World\" to echo text.\n"
+    },
+    "prompt": "Add an opt-in --slug flag to this CLI. Implement slugify(text) in a new textutil.py module: lowercase text, split on whitespace, join words with hyphens; whitespace-only input returns an empty string. Without --slug preserve the original echo behavior. Update README with an example and add test_app.py unittest coverage for the utility and both CLI modes. Run python -m unittest -v and summarize.",
+    "check": "import subprocess,sys\nfrom pathlib import Path\nfrom textutil import slugify\nfor text,expected in [('  Hello   WORLD ','hello-world'),('A\\tB\\nC','a-b-c'),('   ',''),('Keep_This','keep_this')]:\n assert slugify(text)==expected\nfor flags,expected in [([], '  Hello World  \\n'),(['--slug'],'hello-world\\n')]:\n r=subprocess.run([sys.executable,'app.py',*flags,'  Hello World  '],capture_output=True,text=True,timeout=10)\n assert r.returncode==0 and r.stdout==expected,(r.stdout,r.stderr)\nassert '--slug' in Path('README.md').read_text()\nassert 'unittest' in Path('test_app.py').read_text()\n"
+  }
+}

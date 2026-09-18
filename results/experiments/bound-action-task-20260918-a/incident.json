@@ -1,0 +1,25 @@
+{
+  "restart_count": 1,
+  "state": {
+    "Status": "running",
+    "Running": true,
+    "OOMKilled": false,
+    "StartedAt": "2026-09-18T05:38:57.591956617Z"
+  },
+  "watchdog": "active",
+  "crash_excerpt": [
+    "(Worker_PP2_TP1 pid=560) ERROR 09-18 05:38:55 [multiproc_executor.py:1055]   File \"/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/model_runner.py\", line 1425, in sample",
+    "(Worker_PP2_TP1 pid=560) ERROR 09-18 05:38:55 [multiproc_executor.py:1055]     sampler_output = self.sampler(logits, input_batch)",
+    "(Worker_PP2_TP1 pid=560) ERROR 09-18 05:38:55 [multiproc_executor.py:1055]                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+    "(Worker_PP2_TP1 pid=560) ERROR 09-18 05:38:55 [multiproc_executor.py:1055]   File \"/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/sample/sampler.py\", line 146, in __call__",
+    "(Worker_PP2_TP1 pid=560) ERROR 09-18 05:38:55 [multiproc_executor.py:1055]     sampled, processed_logits = self.sample(",
+    "(Worker_PP2_TP1 pid=560) ERROR 09-18 05:38:55 [multiproc_executor.py:1055]                                 ^^^^^^^^^^^^",
+    "(Worker_PP2_TP1 pid=560) ERROR 09-18 05:38:55 [multiproc_executor.py:1055]   File \"/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/sample/sampler.py\", line 291, in sample",
+    "(Worker_PP2_TP1 pid=560) ERROR 09-18 05:38:55 [multiproc_executor.py:1055]     direct = classify_v2(self, logits, expanded_idx_mapping, idx_mapping,",
+    "(Worker_PP2_TP1 pid=560) ERROR 09-18 05:38:55 [multiproc_executor.py:1055]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+    "(Worker_PP2_TP1 pid=560) ERROR 09-18 05:38:55 [multiproc_executor.py:1055]   File \"/usr/local/lib/python3.12/dist-packages/vllm/openjev_direct_tools.py\", line 105, in classify_v2",
+    "(Worker_PP2_TP1 pid=560) ERROR 09-18 05:38:55 [multiproc_executor.py:1055]     processed[rows] = ordinary_logits",
+    "(Worker_PP2_TP1 pid=560) ERROR 09-18 05:38:55 [multiproc_executor.py:1055]     ~~~~~~~~~^^^^^^",
+    "(Worker_PP2_TP1 pid=560) ERROR 09-18 05:38:55 [multiproc_executor.py:1055] RuntimeError: Index put requires the source and destination dtypes match, got BFloat16 for the destination and Float for the source."
+  ]
+}

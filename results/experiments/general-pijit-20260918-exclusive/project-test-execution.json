@@ -1,0 +1,142 @@
+[
+  {
+    "case": "mixed_config",
+    "arm": "native",
+    "repeat": 0,
+    "unittest_calls": [
+      {
+        "command": "cd /home/Kei/TAIR/results/experiments/general-pijit-20260918-exclusive/0-mixed_config-native/project && python -m unittest -v",
+        "error": false
+      }
+    ]
+  },
+  {
+    "case": "mixed_config",
+    "arm": "preset",
+    "repeat": 0,
+    "unittest_calls": [
+      {
+        "command": "python -m unittest -v",
+        "error": false
+      }
+    ]
+  },
+  {
+    "case": "summary_bug",
+    "arm": "preset",
+    "repeat": 0,
+    "unittest_calls": [
+      {
+        "command": "python -m unittest -v",
+        "error": false
+      },
+      {
+        "command": "python -m unittest -v",
+        "error": false
+      }
+    ]
+  },
+  {
+    "case": "summary_bug",
+    "arm": "native",
+    "repeat": 0,
+    "unittest_calls": [
+      {
+        "command": "cd /home/Kei/TAIR/results/experiments/general-pijit-20260918-exclusive/0-summary_bug-native/project && python -m unittest -v",
+        "error": false
+      }
+    ]
+  },
+  {
+    "case": "multifile_feature",
+    "arm": "native",
+    "repeat": 0,
+    "unittest_calls": [
+      {
+        "command": "cd /home/Kei/TAIR/results/experiments/general-pijit-20260918-exclusive/0-multifile_feature-native/project && python -m unittest -v",
+        "error": false
+      }
+    ]
+  },
+  {
+    "case": "multifile_feature",
+    "arm": "preset",
+    "repeat": 0,
+    "unittest_calls": [
+      {
+        "command": "cd /home/Kei/TAIR/results/experiments/general-pijit-20260918-exclusive/0-multifile_feature-preset/project && python -m unittest -v",
+        "error": false
+      }
+    ]
+  },
+  {
+    "case": "mixed_config",
+    "arm": "native",
+    "repeat": 1,
+    "unittest_calls": [
+      {
+        "command": "cd /home/Kei/TAIR/results/experiments/general-pijit-20260918-exclusive/1-mixed_config-native/project && python -m unittest -v",
+        "error": false
+      }
+    ]
+  },
+  {
+    "case": "mixed_config",
+    "arm": "preset",
+    "repeat": 1,
+    "unittest_calls": [
+      {
+        "command": "python -m unittest -v",
+        "error": false
+      }
+    ]
+  },
+  {
+    "case": "summary_bug",
+    "arm": "native",
+    "repeat": 1,
+    "unittest_calls": [
+      {
+        "command": "cd /home/Kei/TAIR/results/experiments/general-pijit-20260918-exclusive/1-summary_bug-native/project && python -m unittest -v",
+        "error": false
+      }
+    ]
+  },
+  {
+    "case": "summary_bug",
+    "arm": "preset",
+    "repeat": 1,
+    "unittest_calls": [
+      {
+        "command": "cat >> test_app.py << 'EOF'\n\n    def test_negative(self):\n        result = summarize([-1, -2.5, 3])\n        self.assertEqual(result['count'], 3)\n        self.assertEqual(result['total'], -0.5)\n        self.assertEqual(result['mean'], -0.5/3)\n        self.assertEqual(result['min'], -2.5)\n        self.assertEqual(result['max'], 3)\n\n    def test_input_immutability(self):\n        values = [3, 1, 2]\n        original = list(values)\n        summarize(values)\n        self.assertEqual(values, original)\n\nif __name__ == '__main__':\n    unittest.main()\n",
+        "error": false
+      },
+      {
+        "command": "python -m unittest -v",
+        "error": false
+      }
+    ]
+  },
+  {
+    "case": "multifile_feature",
+    "arm": "preset",
+    "repeat": 1,
+    "unittest_calls": [
+      {
+        "command": "cd /home/Kei/TAIR/results/experiments/general-pijit-20260918-exclusive/1-multifile_feature-preset/project && python -m unittest -v",
+        "error": false
+      }
+    ]
+  },
+  {
+    "case": "multifile_feature",
+    "arm": "native",
+    "repeat": 1,
+    "unittest_calls": [
+      {
+        "command": "cd /home/Kei/TAIR/results/experiments/general-pijit-20260918-exclusive/1-multifile_feature-native/project && python -m unittest -v",
+        "error": false
+      }
+    ]
+  }
+]

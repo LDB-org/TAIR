@@ -1,0 +1,16 @@
+{
+  "arms": [
+    "native",
+    "accelerated",
+    "optimized"
+  ],
+  "outer_comparison": true,
+  "rounds": 2,
+  "repeats": 2,
+  "seed": 20260921,
+  "tokenizer_revision": "c90dfa01249db1be4245780a052ede752e1361c612ac6d08e2bdada7d599476b:6ac8c8dc065ed118161d02dd532749ae3f52c243deac27872134fae2f50d8547",
+  "timing": "Pi startup through exit plus external final oracle. In-loop tests and recovery included; fixture reset excluded.",
+  "pairing": "Same absolute project per arm/pair; identical initial files restored before both rounds. Fresh Agent session each time. Round two retains only runtime state (learned codebook and tokenizer cache); no conversation history. No preseeded correct edits.",
+  "baseline": "Native stock tools on same patched server; generation uses compact tools without schema/JIT. Accelerated uses expanded schema and exact-source learned replay. Tool catalogs and provider prompts differ; not a pure classifier-only comparison.",
+  "admission": "Generated typed edits admitted after existing local syntax/project checks. Full task oracle is run externally afterward; admission is not proof of semantic correctness."
+}

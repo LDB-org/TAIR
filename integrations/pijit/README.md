@@ -260,3 +260,137 @@ a `pijit` shell launcher for that command. The extension uses Pi's documented
 [provider and tool extension interface](https://github.com/earendil-works/pi/tree/main/packages/coding-agent/docs),
 without patching its core. Automatic extension discovery is disabled for this
 profile; additional extensions can be loaded explicitly with `-e`.
+
+### Whole-action classification preparation
+
+`prepare_classification(messages, count)` overlaps prompt tokenization with the
+existing revision-bound label cache lookup/fill. Dynamic codebook selection uses
+this helper; whole-action callers can reuse it too. Configure a verified
+`PIJIT_TOKENIZER_REVISION` to reuse labels across calls. Without a revision, labels
+are fetched again; unknown tokenizer identity never permits stale cache reuse.
+
+The exclusive-load [bound-action comparison](../../results/experiments/bound-action-task-20260918-optimized/REPORT.md)
+measured 0.693 s complete-task average, versus 1.927 s with serial preparation,
+0.982 s for one-shot JSON generation, and 3.616 s for stock Pi. All 40 tasks passed.
+This is a finite preset fixture and a specialized one-request workflow, not a
+general Agent speed claim. Cold cache fill is included; cold/warm results are
+reported separately.
+
+### Schema action prototype
+
+Set `PIJIT_SCHEMA_ACTIONS=1` to use the opt-in schema path for `compact_edit`.
+`deploy/schema_actions.py` owns the stable semantic enum and executable codebook.
+The bridge compiles `enum: [default, help, required, generate]` to distinct single-token candidate
+IDs for the experimental direct-classification endpoint. It does not append the
+codebook, enum list, parameter bindings, or candidate edits to the prompt. Source,
+task, and a classification question remain model inputs. This is candidate-logit
+classification, not ordinary JSON generation or a newly trained classifier head.
+
+The fast path supports explicit atomic argparse default changes with matching
+integer, float, string or boolean types, plus existing string `help` and boolean
+`required` keywords. Local AST checks bind the option, property, original value and
+requested value. Unsupported or compound forms skip classification entirely and
+fall back to the generator; ambiguous targets and shadowed parser bindings are
+rejected by the local fast path. Successful edits retain
+backup, concurrency checks, and configured project verification. Legacy dynamic
+codebook retrieval is bypassed in this mode. Ordinary agent tool selection and
+fallback argument generation retain their existing prompts; this flag does not
+convert the whole agent to schema-only classification.
+
+Acceptance requires conditional probability >= .95, logit margin >= 3, and total
+candidate probability mass >= .1, followed by deterministic binding. These are
+heuristics, not calibrated correctness guarantees. Relative confidence alone can
+be high even when every allowed label is unlikely. Schema validity does not teach
+label semantics: the first live prompt failed to route default changes correctly.
+The initial v1 development experiment, including unsuccessful probes, is preserved in
+`results/experiments/schema-actions-20260918-a`. Its cases are not a held-out general
+agent evaluation. Generated argument tokens, control records, input tokens, and
+fallback latency are reported separately.
+
+
+### Learned replay and Agent routing
+
+Enable the integrated experimental path with:
+
+```sh
+PIJIT_SCHEMA_ACTIONS=1 PIJIT_JIT_ACTIONS=1 PIJIT_LOCAL_ROUTING=1 pijit
+```
+
+The launcher can also be called as `node integrations/pijit/launch.mjs` with these
+variables. Flags are opt-in. Ordinary tools remain available for unsupported work.
+
+`PIJIT_LOCAL_ROUTING` recognizes explicit property-change and alias sentences in
+the latest user request after the Agent successfully reads a Python file. It routes
+a uniquely applicable clause to `compact_edit`, preserving its exact text; it does
+not generate an outer tool-call argument payload. Quoted strings stay intact;
+negated/compound/unrecognized clauses and ambiguous files go to the ordinary Agent.
+An attempted clause is not automatically scheduled again, including on tool error.
+This is a bounded deterministic dispatcher, not learned general-purpose planning.
+
+`PIJIT_JIT_ACTIONS` stores learned typed actions in each workspace's
+`jit-actions.json`, separately from the legacy dynamic codebook. A generated edit
+is admitted only after the existing apply/verification guards succeed. A schema
+edit can also enter if the typed decoder reproduces its exact result. Each entry
+records its task, absolute path, source hash, result hash, concrete edits and actual
+validation level. No claim of semantic correctness follows from compile-only
+validation. `PIJIT_VERIFY_CMD` adds project validation when configured.
+
+Second-round exact task/path/source matches replay locally, with zero model calls;
+this is exact memoization, not a newly trained classifier or fuzzy semantic match.
+Replay revalidates scope, typed operations, result hash, concurrent-source checks,
+and project checks, retaining backup/rollback. Different source versions, paths or
+wording miss. No-op results are not admitted. Generated entries and prewritten
+schema templates have separate accounting (`jit_admission_origin`). Disabling the
+codebook with `PIJIT_DISABLE_CODEBOOK=1` also disables learned replay.
+
+The repeat benchmark restores original project files before round two, retains
+only codebook/tokenizer state, and creates a fresh Agent session. Both baseline
+arms also get two rounds, so ordinary warm-state variation is visible. Full task
+wall time includes Agent planning, tools, tests, recovery and final reply; a JIT
+edit hit does not imply the whole Agent makes zero model calls.
+
+Results: [full Agent cold/warm comparison](../../results/experiments/schema-jit-agent-20260918-b/REPORT.md)
+and [matched edit-only control](../../results/experiments/schema-jit-edits-20260918-a/REPORT.md).
+The full Agent experiment passed 36/36 tasks, with 12/12 covered second-round
+edits replayed; the mixed task set remained slower than native Pi. The edit-only
+experiment passed 54/54 checks and separates local replay savings from Agent work.
+
+### Outer-loop preparation and directory reads
+
+Two additional opt-in controls target overhead outside learned edits:
+
+```sh
+PIJIT_CONTINUATION_CACHE=1 PIJIT_DIRECTORY_GUARD=1 \
+PIJIT_SCHEMA_ACTIONS=1 PIJIT_JIT_ACTIONS=1 PIJIT_LOCAL_ROUTING=1 \
+node integrations/pijit/launch.mjs
+```
+
+Continuation caching also requires `PIJIT_TOKENIZER_REVISION` to identify the
+pinned tokenizer/chat-template deployment. The cache key includes endpoint, model,
+revision, thinking flags and exact label/instruction tails. Cold preparation checks
+that full real-context tokenization and an independent calibration context yield
+identical continuation tokens. Context-dependent results are not cached. Warm
+preparation tokenizes the current conversation once and appends cached tool tails;
+model prompt tokens, candidate IDs, grammar and output budget stay the same.
+Cached arrays have shape/type/checksum checks; invalid entries are rebuilt. State
+stays in the private runtime directory, not experiment archives. Calibration is an
+empirical check of this pinned template, not a proof for arbitrary chat templates.
+Update the revision or clear the cache if the deployed template changes.
+
+The directory guard detects a model-selected `read` on a directory within the
+workspace and returns a quoted, read-only `bash` listing call when that tool is
+available. This prevents an EISDIR error followed by another planning round. File
+reads and out-of-workspace paths are unchanged. The original model request and its
+usage remain charged; traces retain both original and replacement calls. It does
+not fabricate a successful read or hide a failed tool execution.
+
+For paired evaluation, `benchmark_schema_jit_agent.py --outer-comparison` compares
+native, previous accelerated, and optimized arms on the same tasks and restored
+cold/warm projects. Only the optimized arm enables these two new controls. Cold
+calibration cost, normal Agent recovery, tests and replies remain in wall time.
+
+[Outer-loop comparison results](../../results/experiments/outer-agent-20260918-a/REPORT.md):
+36/36 task checks passed. Combined cold/warm time decreased 9.3% versus the prior
+custom path, but remained 3.1% above native Pi. Covered warm tasks improved;
+ordinary logic repair showed regressions and recovery variation. All formal
+samples and calibration costs are included.

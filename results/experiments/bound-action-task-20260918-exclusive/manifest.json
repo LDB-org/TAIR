@@ -1,0 +1,17 @@
+{
+  "scope": "Bounded argparse --workers integer default fixture. Six prebound candidates including NONE, values fixed independently of expected answer. Not a general Agent.",
+  "arms": [
+    "native",
+    "generate",
+    "classify"
+  ],
+  "repeats": 5,
+  "values": [
+    6,
+    8
+  ],
+  "seed": 20260919,
+  "timing": "Bound arms include source read, binding, cold tokenization, model HTTP, local execution and independent behavior validation. Native includes Pi startup/read/edit/reply and same final oracle. Bound arms use deterministic DONE and one model call; native remains general Pi loop. Bound Python interpreter/import startup excluded. No retries or warm-up; all samples retained.",
+  "causality": "generate versus classify isolates output mechanism with same specialized workflow; native comparison also changes orchestration. Six remote label tokenizer calls per classification deliberately included, no persistent label cache.",
+  "server": "Existing shared patched vLLM, max-num-seqs 4; no restart/configuration change."
+}

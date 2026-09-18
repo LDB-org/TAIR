@@ -1,0 +1,20 @@
+{
+  "scope": "Bounded argparse --workers integer default fixture. Six prebound candidates including NONE, values fixed independently of expected answer. Not a general Agent.",
+  "arms": [
+    "native",
+    "generate",
+    "classify",
+    "classify_cached"
+  ],
+  "tokenizer_revision": "c90dfa01249db1be4245780a052ede752e1361c612ac6d08e2bdada7d599476b:6ac8c8dc065ed118161d02dd532749ae3f52c243deac27872134fae2f50d8547",
+  "optimized": "Existing revision-bound label cache plus parallel label/message preparation. Fresh cache per repeat: first cached-arm task cold, second warm; all times included. Cache files remain temporary.",
+  "repeats": 5,
+  "values": [
+    6,
+    8
+  ],
+  "seed": 20260919,
+  "timing": "Bound arms include source read, binding, prompt tokenization and any label cache lookup/fill, model HTTP, local execution and independent behavior validation. Native includes Pi startup/read/edit/reply and same final oracle. Bound arms use deterministic DONE and one model call; native remains general Pi loop. Bound Python interpreter/import startup excluded. No retries or warm-up; all samples retained.",
+  "causality": "generate versus classify isolates output mechanism with same specialized workflow; native comparison also changes orchestration. The classify arm keeps six sequential label tokenizer calls; classify_cached reuses the revision-bound bridge cache and overlaps cold preparation.",
+  "server": "Existing shared patched vLLM, max-num-seqs 4; no restart/configuration change."
+}
