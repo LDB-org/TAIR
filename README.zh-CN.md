@@ -317,6 +317,12 @@ KV 前缀复用。
 
 ## 7. 相关工作与创新范围
 
+[动作码表与 Agent 重放研究](docs/AGENT_REUSE_RESEARCH.md) 补充了
+ToolkenGPT／ToolGen（离散工具 token）、AgentRR（带检查的重放）、
+Agent Workflow Memory／Voyager（工作流与技能复用）和 LLMCompiler／SGLang
+（执行开销优化）的论文与代码入口，区分实现差异、完整 Agent 实验证据和后续计划。
+扩大 schema 不会自动教会未训练模型新动作编号的含义；编辑缓存命中也不等于整个任务加速。
+
 [OpenJev](https://github.com/TheoLeeCJ/openjev) 展示了面向运行时决策的候选 logits
 直接读取，是本项目分类路径的实现启发。它没有披露或复现闭源 Jev 的内部模型架构，
 我们也不对此作推断。

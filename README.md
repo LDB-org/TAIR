@@ -382,6 +382,14 @@ into many fast repeated errors.
 
 ## 7. Related work and scope of novelty
 
+The [action codebook and Agent replay review](docs/AGENT_REUSE_RESEARCH.md)
+compares ToolkenGPT/ToolGen (discrete tool tokens), AgentRR (guarded replay),
+Agent Workflow Memory/Voyager (workflow and skill reuse), and LLMCompiler/SGLang
+(execution overhead). It records primary paper/code links, implementation
+differences, whole-Agent evidence and proposed follow-up experiments.
+Growing a schema does not teach an unchanged model the meaning of new action IDs;
+an edit-cache hit does not by itself establish a whole-task speedup.
+
 [OpenJev](https://github.com/TheoLeeCJ/openjev) demonstrates direct option-logit
 readout for runtime-defined decisions and is the implementation inspiration for
 our classification path. It does not disclose or reproduce the internal model

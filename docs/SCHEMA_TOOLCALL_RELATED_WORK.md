@@ -3,6 +3,9 @@
 Checked 2026-09-18 against primary repositories, documentation, and papers.
 This is a targeted literature search, not an exhaustive novelty determination.
 
+See the [action codebook and Agent replay update](AGENT_REUSE_RESEARCH.md) for
+the later implementation state, workflow/skill reuse comparisons and next experiments.
+
 ## Finding
 
 The broad combination already has explicit precedents: finite-choice selection,
@@ -110,7 +113,7 @@ correct token/cache boundaries, robust typed event/object output, and faster
 end-to-end task completion at matched quality. Merely removing JSON punctuation
 or wrapping existing `select`/`gen` calls is not enough to establish novelty.
 
-The local prototype now includes protocol LoRA experiments, but remains a
+The early local prototype included protocol LoRA experiments, but remained a
 Python orchestration implementation using an existing LM head, not an engine-native
 typed-object protocol or a dedicated classification head. It should be compared with Jsonformer/Guidance-style
 field execution and optimized schema-constrained generation before making
@@ -167,9 +170,11 @@ this does not assert every current serving path enables them.
 
 Our intended engineering target is a schema-compiled field execution protocol
 inside a serving engine, with typed object/event outputs and reply_user as a
-mandatory action. The local experiment has only two tools, one enum, and one
-string, orchestrated as three requests; an engine-native implementation remains
-future work. Single-token classification through restricted LM logits is
+mandatory action. The early local experiment had only two tools, one enum, and one
+string, orchestrated as three requests. The later experimental vLLM path implements
+candidate-logit selection and retained-KV continuation; see the
+[current research update](AGENT_REUSE_RESEARCH.md).
+Single-token classification through restricted LM logits is
 mathematically the same argmax as greedy masked generation under the same
 prompt and candidate set. Distinction must come from field protocol, cache/state
 management, training and measured end-to-end execution, not the label
