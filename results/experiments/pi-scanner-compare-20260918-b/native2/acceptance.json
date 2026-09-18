@@ -1,0 +1,122 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "test": "open_closed_range_duplicate",
+      "workers": 1,
+      "result": {
+        "host": "127.0.0.1",
+        "open_ports": [
+          38277,
+          54073
+        ],
+        "closed_ports": [
+          44963
+        ]
+      }
+    },
+    {
+      "test": "open_closed_range_duplicate",
+      "workers": 4,
+      "result": {
+        "host": "127.0.0.1",
+        "open_ports": [
+          38277,
+          54073
+        ],
+        "closed_ports": [
+          44963
+        ]
+      }
+    },
+    {
+      "test": "open_closed_range_duplicate",
+      "workers": 16,
+      "result": {
+        "host": "127.0.0.1",
+        "open_ports": [
+          38277,
+          54073
+        ],
+        "closed_ports": [
+          44963
+        ]
+      }
+    },
+    {
+      "test": "invalid_ports",
+      "value": "0",
+      "exit_code": 2
+    },
+    {
+      "test": "invalid_ports",
+      "value": "65536",
+      "exit_code": 2
+    },
+    {
+      "test": "invalid_ports",
+      "value": "20-10",
+      "exit_code": 2
+    },
+    {
+      "test": "invalid_ports",
+      "value": "abc",
+      "exit_code": 2
+    },
+    {
+      "test": "invalid_ports",
+      "value": "1,,2",
+      "exit_code": 2
+    },
+    {
+      "test": "invalid_ports",
+      "value": "1-2-3",
+      "exit_code": 2
+    },
+    {
+      "test": "invalid_ports",
+      "value": "-1",
+      "exit_code": 2
+    },
+    {
+      "test": "invalid_ports",
+      "value": "",
+      "exit_code": 2
+    },
+    {
+      "test": "invalid_option",
+      "flag": "--workers",
+      "value": "0",
+      "exit_code": 2
+    },
+    {
+      "test": "invalid_option",
+      "flag": "--workers",
+      "value": "-1",
+      "exit_code": 2
+    },
+    {
+      "test": "invalid_option",
+      "flag": "--timeout",
+      "value": "0",
+      "exit_code": 2
+    },
+    {
+      "test": "invalid_option",
+      "flag": "--timeout",
+      "value": "-1",
+      "exit_code": 2
+    },
+    {
+      "test": "help",
+      "exit_code": 0
+    },
+    {
+      "test": "agent_written_unittest_rerun",
+      "stdout": "",
+      "stderr": "test_cli_dns_error (test_port_scanner.CliTests.test_cli_dns_error) ... ok\ntest_cli_invalid_ports (test_port_scanner.CliTests.test_cli_invalid_ports) ... ok\ntest_cli_invalid_timeout (test_port_scanner.CliTests.test_cli_invalid_timeout) ... ok\ntest_cli_invalid_workers (test_port_scanner.CliTests.test_cli_invalid_workers) ... ok\ntest_cli_mixed_ranges_duplicates (test_port_scanner.CliTests.test_cli_mixed_ranges_duplicates) ... ok\ntest_cli_open_and_closed (test_port_scanner.CliTests.test_cli_open_and_closed) ... ok\ntest_help (test_port_scanner.CliTests.test_help) ... ok\ntest_boundaries (test_port_scanner.ParsePortsTests.test_boundaries) ... ok\ntest_dedup_sorted (test_port_scanner.ParsePortsTests.test_dedup_sorted) ... ok\ntest_empty_spec (test_port_scanner.ParsePortsTests.test_empty_spec) ... ok\ntest_invalid_port_too_high (test_port_scanner.ParsePortsTests.test_invalid_port_too_high) ... ok\ntest_invalid_port_zero (test_port_scanner.ParsePortsTests.test_invalid_port_zero) ... ok\ntest_malformed_empty_element (test_port_scanner.ParsePortsTests.test_malformed_empty_element) ... ok\ntest_malformed_non_numeric (test_port_scanner.ParsePortsTests.test_malformed_non_numeric) ... ok\ntest_malformed_range (test_port_scanner.ParsePortsTests.test_malformed_range) ... ok\ntest_mixed_ranges_and_duplicates (test_port_scanner.ParsePortsTests.test_mixed_ranges_and_duplicates) ... ok\ntest_ranges (test_port_scanner.ParsePortsTests.test_ranges) ... ok\ntest_reversed_range (test_port_scanner.ParsePortsTests.test_reversed_range) ... ok\ntest_single_ports (test_port_scanner.ParsePortsTests.test_single_ports) ... ok\ntest_all_closed (test_port_scanner.ScanFunctionTests.test_all_closed) ... ok\ntest_open_and_closed_detection (test_port_scanner.ScanFunctionTests.test_open_and_closed_detection) ... ok\n\n----------------------------------------------------------------------\nRan 21 tests in 0.510s\n\nOK\n",
+      "exit_code": 0
+    }
+  ],
+  "count": 17
+}

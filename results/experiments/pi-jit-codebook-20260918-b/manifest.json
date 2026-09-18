@@ -1,0 +1,84 @@
+{
+  "cases": [
+    [
+      "cold_workers",
+      "Change build_parser so --workers defaults to 6. Preserve overrides and all other behavior.",
+      "default_workers_six",
+      6,
+      false
+    ],
+    [
+      "warm_workers",
+      "Use 8 as the default value for --workers in build_parser; keep explicit overrides working.",
+      "default_workers_six",
+      8,
+      false
+    ],
+    [
+      "cold_unicode",
+      "Make main JSON output retain Unicode host characters rather than escaping them with ASCII unicode escapes. Preserve the existing output fields, sorted keys, trailing newline and all scanner behavior.",
+      "json_unicode",
+      null,
+      false
+    ],
+    [
+      "warm_unicode",
+      "In main, make json.dumps keep Unicode host characters unescaped; retain sorted keys and all other output behavior.",
+      "json_unicode",
+      null,
+      false
+    ],
+    [
+      "novel_nan",
+      "Make main JSON serialization reject NaN/Infinity in results with ValueError instead of emitting nonstandard JSON. Preserve normal JSON fields, sorted keys, trailing newline and scanner behavior.",
+      "json_no_nan",
+      null,
+      false
+    ],
+    [
+      "repeat_nan",
+      "In main, ensure json.dumps raises ValueError for NaN and Infinity instead of emitting nonstandard JSON. Keep normal output unchanged.",
+      "json_no_nan",
+      null,
+      false
+    ],
+    [
+      "stale_workers",
+      "Set --workers default to 12 in build_parser, preserving overrides and other behavior.",
+      "default_workers_six",
+      12,
+      true
+    ],
+    [
+      "warm_new_version",
+      "In build_parser use 14 as the default for --workers; preserve explicit overrides and everything else.",
+      "default_workers_six",
+      14,
+      true
+    ],
+    [
+      "novel_guard",
+      "In scan_port, reject timeout values greater than 60 with ValueError before creating a socket. Preserve timeout=60, ordinary positive timeout behavior, return values, and socket cleanup. No new imports.",
+      "timeout_upper_guard",
+      null,
+      false
+    ],
+    [
+      "repeat_guard",
+      "Reject timeout greater than 60 in scan_port by raising ValueError before socket creation. Preserve valid timeout behavior and cleanup.",
+      "timeout_upper_guard",
+      null,
+      false
+    ]
+  ],
+  "seed": 20260925,
+  "gate": {
+    "conditional_probability": 0.8,
+    "margin": 1.0,
+    "calibrated": false
+  },
+  "admission": "Only one kw edit after oracle task test and 17 regressions; integer values become task-integer binding if unambiguous. Other edits generated but not cached.",
+  "fallback": "Empty table, no applicable entry, NONE, low confidence or validation failure -> one generated attempt; no repeated generation. Baseline always generates.",
+  "scope": "Sequential related scanner tasks with hand-authored oracle; no arbitrary prompts or learned admission verifier. Classification gate does not inspect expected answers. False acceptance measured before oracle rejection.",
+  "timing": "End-to-end includes local binding, tokenize SSH calls, inference SSH calls and validation. Engine scheduled-to-last-output is sum of TTFT and decode intervals; queue separately reported."
+}

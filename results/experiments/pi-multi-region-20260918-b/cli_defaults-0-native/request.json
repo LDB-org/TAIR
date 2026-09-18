@@ -1,0 +1,66 @@
+{
+  "model": "/model",
+  "temperature": 0,
+  "max_tokens": 4096,
+  "return_token_ids": true,
+  "cache_salt": "d71b1cdea4fb46419795a19aa3828015",
+  "chat_template_kwargs": {
+    "thinking": false,
+    "enable_thinking": false
+  },
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "edit",
+        "description": "Apply unique exact text replacements to a file.",
+        "parameters": {
+          "type": "object",
+          "required": [
+            "path",
+            "edits"
+          ],
+          "properties": {
+            "path": {
+              "type": "string",
+              "description": "Path to the file to edit (relative or absolute)"
+            },
+            "edits": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "oldText",
+                  "newText"
+                ],
+                "properties": {
+                  "oldText": {
+                    "type": "string",
+                    "description": "Exact text for one targeted replacement. It must be unique in the original file and must not overlap with any other edits[].oldText in the same call."
+                  },
+                  "newText": {
+                    "type": "string",
+                    "description": "Replacement text for this targeted edit."
+                  }
+                }
+              },
+              "description": "One or more targeted replacements. Each edit is matched against the original file, not incrementally. Do not include overlapping or nested edits. If two changes touch the same block or nearby lines, merge them into one edit instead."
+            }
+          }
+        }
+      }
+    }
+  ],
+  "tool_choice": "auto",
+  "parallel_tool_calls": false,
+  "messages": [
+    {
+      "role": "system",
+      "content": "Use the edit tool once with path port_scanner.py and edits containing the minimal unique oldText/newText replacements. Do not emit ordinary assistant text."
+    },
+    {
+      "role": "user",
+      "content": "Edit the supplied existing Python file to satisfy the task. Make the smallest necessary change, preserve unrelated behavior, no explanations. Return one edit operation only.\nTASK: Change CLI defaults in build_parser: --timeout defaults to 0.25 seconds and --workers defaults to 4. Keep explicit command-line overrides and all other behavior unchanged. Make minimal changes.\nFILE: port_scanner.py\nSOURCE (line numbers are not file content):\n1: #!/usr/bin/env python3\n2: \"\"\"TCP connect port scanner using only the Python 3 standard library.\"\"\"\n3: \n4: import argparse\n5: import json\n6: import socket\n7: import sys\n8: from concurrent.futures import ThreadPoolExecutor, as_completed\n9: from typing import Iterable, List, Optional, Sequence, Set, Tuple\n10: \n11: \n12: def parse_port_spec(spec: str) -> List[int]:\n13:     \"\"\"Parse a comma-separated port specification.\n14: \n15:     Accepts individual ports and inclusive ranges (e.g. 80,443,8000-8010).\n16:     Returns a sorted, de-duplicated list of ports. Raises ValueError for\n17:     malformed input, out-of-range values, or reversed ranges.\n18:     \"\"\"\n19:     if not spec or not spec.strip():\n20:         raise ValueError(\"port specification must not be empty\")\n21: \n22:     ports: Set[int] = set()\n23:     for raw_part in spec.split(\",\"):\n24:         part = raw_part.strip()\n25:         if not part:\n26:             raise ValueError(f\"empty port item in specification: {spec!r}\")\n27: \n28:         if \"-\" in part:\n29:             if part.count(\"-\") != 1:\n30:                 raise ValueError(f\"malformed port range: {part!r}\")\n31:             left, right = part.split(\"-\", 1)\n32:             left = left.strip()\n33:             right = right.strip()\n34:             if not left or not right:\n35:                 raise ValueError(f\"malformed port range: {part!r}\")\n36:             try:\n37:                 start = int(left, 10)\n38:                 end = int(right, 10)\n39:             except ValueError:\n40:                 raise ValueError(f\"invalid port range: {part!r}\") from None\n41:             if not (1 <= start <= 65535 and 1 <= end <= 65535):\n42:                 raise ValueError(f\"port out of range 1..65535: {part!r}\")\n43:             if start > end:\n44:                 raise ValueError(f\"reversed port range: {part!r}\")\n45:             ports.update(range(start, end + 1))\n46:         else:\n47:             try:\n48:                 port = int(part, 10)\n49:             except ValueError:\n50:                 raise ValueError(f\"invalid port: {part!r}\") from None\n51:             if not (1 <= port <= 65535):\n52:                 raise ValueError(f\"port out of range 1..65535: {part!r}\")\n53:             ports.add(port)\n54: \n55:     if not ports:\n56:         raise ValueError(\"port specification produced no ports\")\n57:     return sorted(ports)\n58: \n59: \n60: def scan_port(host: str, port: int, timeout: float) -> bool:\n61:     \"\"\"Return True if a TCP connection to host:port succeeds.\"\"\"\n62:     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n63:     try:\n64:         sock.settimeout(timeout)\n65:         result = sock.connect_ex((host, port))\n66:         return result == 0\n67:     except OSError:\n68:         return False\n69:     finally:\n70:         try:\n71:             sock.close()\n72:         except OSError:\n73:             pass\n74: \n75: \n76: def scan_ports(\n77:     host: str,\n78:     ports: Sequence[int],\n79:     timeout: float,\n80:     workers: int,\n81: ) -> Tuple[List[int], List[int]]:\n82:     \"\"\"Scan ports with a bounded thread pool.\n83: \n84:     Connection refusal and timeout are treated as closed. DNS resolution is\n85:     performed before scanning so a DNS error is reported as a failure.\n86:     \"\"\"\n87:     # Resolve hostname before scanning. This also validates that the host is\n88:     # resolvable and lets us use the resolved IP for all connection attempts.\n89:     try:\n90:         resolved = socket.getaddrinfo(host, None, family=socket.AF_INET, type=socket.SOCK_STREAM)\n91:     except socket.gaierror as exc:\n92:         raise ValueError(f\"could not resolve host {host!r}: {exc}\") from exc\n93:     if not resolved:\n94:         raise ValueError(f\"could not resolve host {host!r}\")\n95: \n96:     # Use the first IPv4 address. This keeps all tests on 127.0.0.1 and avoids\n97:     # unpredictable behavior from multiple addresses.\n98:     ip = resolved[0][4][0]\n99: \n100:     open_ports: List[int] = []\n101:     closed_ports: List[int] = []\n102: \n103:     with ThreadPoolExecutor(max_workers=workers) as executor:\n104:         future_to_port = {\n105:             executor.submit(scan_port, ip, port, timeout): port for port in ports\n106:         }\n107:         for future in as_completed(future_to_port):\n108:             port = future_to_port[future]\n109:             try:\n110:                 is_open = future.result()\n111:             except Exception:\n112:                 is_open = False\n113:             if is_open:\n114:                 open_ports.append(port)\n115:             else:\n116:                 closed_ports.append(port)\n117: \n118:     open_ports.sort()\n119:     closed_ports.sort()\n120:     return open_ports, closed_ports\n121: \n122: \n123: def build_parser() -> argparse.ArgumentParser:\n124:     parser = argparse.ArgumentParser(\n125:         description=\"TCP connect port scanner using only the Python standard library.\"\n126:     )\n127:     parser.add_argument(\"--host\", required=True, help=\"Hostname or IP address to scan\")\n128:     parser.add_argument(\n129:         \"--ports\",\n130:         required=True,\n131:         help=\"Comma-separated ports and inclusive ranges, e.g. 80,443,8000-8010\",\n132:     )\n133:     parser.add_argument(\n134:         \"--timeout\",\n135:         type=float,\n136:         default=1.0,\n137:         help=\"Connection timeout in seconds (positive number)\",\n138:     )\n139:     parser.add_argument(\n140:         \"--workers\",\n141:         type=int,\n142:         default=10,\n143:         help=\"Maximum number of parallel workers (positive integer)\",\n144:     )\n145:     return parser\n146: \n147: \n148: def main(argv: Optional[Sequence[str]] = None) -> int:\n149:     parser = build_parser()\n150:     args = parser.parse_args(argv)\n151: \n152:     if args.timeout <= 0:\n153:         parser.error(\"--timeout must be positive\")\n154:     if args.workers <= 0:\n155:         parser.error(\"--workers must be positive\")\n156: \n157:     try:\n158:         ports = parse_port_spec(args.ports)\n159:     except ValueError as exc:\n160:         parser.error(str(exc))\n161: \n162:     try:\n163:         open_ports, closed_ports = scan_ports(args.host, ports, args.timeout, args.workers)\n164:     except ValueError as exc:\n165:         print(f\"error: {exc}\", file=sys.stderr)\n166:         return 1\n167: \n168:     result = {\n169:         \"host\": args.host,\n170:         \"open_ports\": open_ports,\n171:         \"closed_ports\": closed_ports,\n172:     }\n173:     print(json.dumps(result, sort_keys=True))\n174:     return 0\n175: \n176: \n177: if __name__ == \"__main__\":\n178:     sys.exit(main())\n\nCURRENT TASK (apply a real change, not a copy of unchanged source): Change CLI defaults in build_parser: --timeout defaults to 0.25 seconds and --workers defaults to 4. Keep explicit command-line overrides and all other behavior unchanged. Make minimal changes."
+    }
+  ]
+}

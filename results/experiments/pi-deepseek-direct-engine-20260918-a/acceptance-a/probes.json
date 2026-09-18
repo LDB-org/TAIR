@@ -1,0 +1,172 @@
+{
+  "invalid_table": {
+    "status": 400,
+    "response": {
+      "error": "Inconsistent candidate table"
+    }
+  },
+  "truncated": {
+    "status": 500,
+    "response": {
+      "request_id": "openjev-9f34a14974a24f16b86d77ecf514a8bc",
+      "error": "Incomplete tool call: length"
+    }
+  },
+  "text": {
+    "id": "chatcmpl-beb61b6b32da2447",
+    "object": "chat.completion",
+    "created": 1789687577,
+    "model": "/model",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "OK",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.28.1rc1.dev137+g5ab628dd1-tp2-pp3-1070d36c",
+    "usage": {
+      "prompt_tokens": 12,
+      "total_tokens": 14,
+      "completion_tokens": 2,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": {
+      "time_to_first_token_ms": 146.78376261144876,
+      "generation_time_ms": 12.254881672561169,
+      "queue_time_ms": 9800.87697505951,
+      "mean_itl_ms": 12.254881672561169,
+      "tokens_per_second": 12.57555991503811,
+      "speculative_decoding": null
+    }
+  },
+  "native_tool": {
+    "id": "chatcmpl-88c152e3d7ac765a",
+    "object": "chat.completion",
+    "created": 1789687587,
+    "model": "/model",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [
+            {
+              "id": "chatcmpl-tool-a25d709cbbd542fe",
+              "type": "function",
+              "function": {
+                "name": "reply_user",
+                "arguments": "{\"content\": \"OK\"}"
+              }
+            }
+          ],
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "tool_calls",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.28.1rc1.dev137+g5ab628dd1-tp2-pp3-1070d36c",
+    "usage": {
+      "prompt_tokens": 279,
+      "total_tokens": 323,
+      "completion_tokens": 44,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": {
+      "time_to_first_token_ms": 420.91657780110836,
+      "generation_time_ms": 448.4778046607971,
+      "queue_time_ms": 7024.7171353548765,
+      "mean_itl_ms": 10.429716387460397,
+      "tokens_per_second": 50.60994283791334,
+      "speculative_decoding": null
+    }
+  },
+  "vision": {
+    "id": "chatcmpl-b93f21b757871f4c",
+    "object": "chat.completion",
+    "created": 1789687595,
+    "model": "/model",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "RED",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.28.1rc1.dev137+g5ab628dd1-tp2-pp3-1070d36c",
+    "usage": {
+      "prompt_tokens": 139,
+      "total_tokens": 141,
+      "completion_tokens": 2,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": {
+      "time_to_first_token_ms": 336.29260305315256,
+      "generation_time_ms": 12.760991230607033,
+      "queue_time_ms": 5144.4595688954,
+      "mean_itl_ms": 12.760991230607033,
+      "tokens_per_second": 5.7297791306343635,
+      "speculative_decoding": null
+    }
+  }
+}

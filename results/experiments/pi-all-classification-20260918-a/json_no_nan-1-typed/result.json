@@ -1,0 +1,29 @@
+{
+  "passed": false,
+  "mode": "multi",
+  "transport_seconds": 46.160935007967055,
+  "usage": {
+    "prompt_tokens": 1689,
+    "total_tokens": 1758,
+    "completion_tokens": 69,
+    "prompt_tokens_details": null,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "metrics": {
+    "time_to_first_token_ms": 203.7343243137002,
+    "generation_time_ms": 3988.456861115992,
+    "queue_time_ms": 40832.38573465496,
+    "mean_itl_ms": 58.653777369352824,
+    "tokens_per_second": 16.45917300714128,
+    "speculative_decoding": null
+  },
+  "validation": {
+    "passed": false,
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 9, in <module>\n    try:m.main(['--host','127.0.0.1','--ports','80'])\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/port_scanner.py\", line 149, in main\n    if any((not isinstance(x, (int, float)) or (isinstance(x, float) and (x != x or x in (float('inf'), float('-inf')))) for x in open_ports + closed_ports)):\n                                                                                                                                  ^^^^^^^^^^\nUnboundLocalError: cannot access local variable 'open_ports' where it is not associated with a value\n"
+  },
+  "seconds": 46.22360180399846
+}

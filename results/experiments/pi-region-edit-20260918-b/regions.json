@@ -1,0 +1,952 @@
+{
+  "R0": {
+    "start": 1,
+    "end": 1,
+    "text": "#!/usr/bin/env python3\n"
+  },
+  "R1": {
+    "start": 2,
+    "end": 2,
+    "text": "\"\"\"TCP connect port scanner using only the Python 3 standard library.\"\"\"\n"
+  },
+  "R2": {
+    "start": 4,
+    "end": 4,
+    "text": "import argparse\n"
+  },
+  "R3": {
+    "start": 5,
+    "end": 5,
+    "text": "import json\n"
+  },
+  "R4": {
+    "start": 6,
+    "end": 6,
+    "text": "import socket\n"
+  },
+  "R5": {
+    "start": 7,
+    "end": 7,
+    "text": "import sys\n"
+  },
+  "R6": {
+    "start": 8,
+    "end": 8,
+    "text": "from concurrent.futures import ThreadPoolExecutor, as_completed\n"
+  },
+  "R7": {
+    "start": 9,
+    "end": 9,
+    "text": "from typing import Iterable, List, Optional, Sequence, Set, Tuple\n"
+  },
+  "R8": {
+    "start": 12,
+    "end": 12,
+    "text": "def parse_port_spec(spec: str) -> List[int]:\n"
+  },
+  "R9": {
+    "start": 12,
+    "end": 57,
+    "text": "def parse_port_spec(spec: str) -> List[int]:\n    \"\"\"Parse a comma-separated port specification.\n\n    Accepts individual ports and inclusive ranges (e.g. 80,443,8000-8010).\n    Returns a sorted, de-duplicated list of ports. Raises ValueError for\n    malformed input, out-of-range values, or reversed ranges.\n    \"\"\"\n    if not spec or not spec.strip():\n        raise ValueError(\"port specification must not be empty\")\n\n    ports: Set[int] = set()\n    for raw_part in spec.split(\",\"):\n        part = raw_part.strip()\n        if not part:\n            raise ValueError(f\"empty port item in specification: {spec!r}\")\n\n        if \"-\" in part:\n            if part.count(\"-\") != 1:\n                raise ValueError(f\"malformed port range: {part!r}\")\n            left, right = part.split(\"-\", 1)\n            left = left.strip()\n            right = right.strip()\n            if not left or not right:\n                raise ValueError(f\"malformed port range: {part!r}\")\n            try:\n                start = int(left, 10)\n                end = int(right, 10)\n            except ValueError:\n                raise ValueError(f\"invalid port range: {part!r}\") from None\n            if not (1 <= start <= 65535 and 1 <= end <= 65535):\n                raise ValueError(f\"port out of range 1..65535: {part!r}\")\n            if start > end:\n                raise ValueError(f\"reversed port range: {part!r}\")\n            ports.update(range(start, end + 1))\n        else:\n            try:\n                port = int(part, 10)\n            except ValueError:\n                raise ValueError(f\"invalid port: {part!r}\") from None\n            if not (1 <= port <= 65535):\n                raise ValueError(f\"port out of range 1..65535: {part!r}\")\n            ports.add(port)\n\n    if not ports:\n        raise ValueError(\"port specification produced no ports\")\n    return sorted(ports)\n"
+  },
+  "R10": {
+    "start": 13,
+    "end": 13,
+    "text": "    \"\"\"Parse a comma-separated port specification.\n"
+  },
+  "R11": {
+    "start": 13,
+    "end": 18,
+    "text": "    \"\"\"Parse a comma-separated port specification.\n\n    Accepts individual ports and inclusive ranges (e.g. 80,443,8000-8010).\n    Returns a sorted, de-duplicated list of ports. Raises ValueError for\n    malformed input, out-of-range values, or reversed ranges.\n    \"\"\"\n"
+  },
+  "R12": {
+    "start": 15,
+    "end": 15,
+    "text": "    Accepts individual ports and inclusive ranges (e.g. 80,443,8000-8010).\n"
+  },
+  "R13": {
+    "start": 16,
+    "end": 16,
+    "text": "    Returns a sorted, de-duplicated list of ports. Raises ValueError for\n"
+  },
+  "R14": {
+    "start": 17,
+    "end": 17,
+    "text": "    malformed input, out-of-range values, or reversed ranges.\n"
+  },
+  "R15": {
+    "start": 18,
+    "end": 18,
+    "text": "    \"\"\"\n"
+  },
+  "R16": {
+    "start": 19,
+    "end": 19,
+    "text": "    if not spec or not spec.strip():\n"
+  },
+  "R17": {
+    "start": 19,
+    "end": 20,
+    "text": "    if not spec or not spec.strip():\n        raise ValueError(\"port specification must not be empty\")\n"
+  },
+  "R18": {
+    "start": 20,
+    "end": 20,
+    "text": "        raise ValueError(\"port specification must not be empty\")\n"
+  },
+  "R19": {
+    "start": 22,
+    "end": 22,
+    "text": "    ports: Set[int] = set()\n"
+  },
+  "R20": {
+    "start": 23,
+    "end": 23,
+    "text": "    for raw_part in spec.split(\",\"):\n"
+  },
+  "R21": {
+    "start": 23,
+    "end": 53,
+    "text": "    for raw_part in spec.split(\",\"):\n        part = raw_part.strip()\n        if not part:\n            raise ValueError(f\"empty port item in specification: {spec!r}\")\n\n        if \"-\" in part:\n            if part.count(\"-\") != 1:\n                raise ValueError(f\"malformed port range: {part!r}\")\n            left, right = part.split(\"-\", 1)\n            left = left.strip()\n            right = right.strip()\n            if not left or not right:\n                raise ValueError(f\"malformed port range: {part!r}\")\n            try:\n                start = int(left, 10)\n                end = int(right, 10)\n            except ValueError:\n                raise ValueError(f\"invalid port range: {part!r}\") from None\n            if not (1 <= start <= 65535 and 1 <= end <= 65535):\n                raise ValueError(f\"port out of range 1..65535: {part!r}\")\n            if start > end:\n                raise ValueError(f\"reversed port range: {part!r}\")\n            ports.update(range(start, end + 1))\n        else:\n            try:\n                port = int(part, 10)\n            except ValueError:\n                raise ValueError(f\"invalid port: {part!r}\") from None\n            if not (1 <= port <= 65535):\n                raise ValueError(f\"port out of range 1..65535: {part!r}\")\n            ports.add(port)\n"
+  },
+  "R22": {
+    "start": 24,
+    "end": 24,
+    "text": "        part = raw_part.strip()\n"
+  },
+  "R23": {
+    "start": 25,
+    "end": 25,
+    "text": "        if not part:\n"
+  },
+  "R24": {
+    "start": 25,
+    "end": 26,
+    "text": "        if not part:\n            raise ValueError(f\"empty port item in specification: {spec!r}\")\n"
+  },
+  "R25": {
+    "start": 26,
+    "end": 26,
+    "text": "            raise ValueError(f\"empty port item in specification: {spec!r}\")\n"
+  },
+  "R26": {
+    "start": 28,
+    "end": 28,
+    "text": "        if \"-\" in part:\n"
+  },
+  "R27": {
+    "start": 28,
+    "end": 53,
+    "text": "        if \"-\" in part:\n            if part.count(\"-\") != 1:\n                raise ValueError(f\"malformed port range: {part!r}\")\n            left, right = part.split(\"-\", 1)\n            left = left.strip()\n            right = right.strip()\n            if not left or not right:\n                raise ValueError(f\"malformed port range: {part!r}\")\n            try:\n                start = int(left, 10)\n                end = int(right, 10)\n            except ValueError:\n                raise ValueError(f\"invalid port range: {part!r}\") from None\n            if not (1 <= start <= 65535 and 1 <= end <= 65535):\n                raise ValueError(f\"port out of range 1..65535: {part!r}\")\n            if start > end:\n                raise ValueError(f\"reversed port range: {part!r}\")\n            ports.update(range(start, end + 1))\n        else:\n            try:\n                port = int(part, 10)\n            except ValueError:\n                raise ValueError(f\"invalid port: {part!r}\") from None\n            if not (1 <= port <= 65535):\n                raise ValueError(f\"port out of range 1..65535: {part!r}\")\n            ports.add(port)\n"
+  },
+  "R28": {
+    "start": 29,
+    "end": 29,
+    "text": "            if part.count(\"-\") != 1:\n"
+  },
+  "R29": {
+    "start": 29,
+    "end": 30,
+    "text": "            if part.count(\"-\") != 1:\n                raise ValueError(f\"malformed port range: {part!r}\")\n"
+  },
+  "R30": {
+    "start": 30,
+    "end": 30,
+    "text": "                raise ValueError(f\"malformed port range: {part!r}\")\n"
+  },
+  "R31": {
+    "start": 31,
+    "end": 31,
+    "text": "            left, right = part.split(\"-\", 1)\n"
+  },
+  "R32": {
+    "start": 32,
+    "end": 32,
+    "text": "            left = left.strip()\n"
+  },
+  "R33": {
+    "start": 33,
+    "end": 33,
+    "text": "            right = right.strip()\n"
+  },
+  "R34": {
+    "start": 34,
+    "end": 34,
+    "text": "            if not left or not right:\n"
+  },
+  "R35": {
+    "start": 34,
+    "end": 35,
+    "text": "            if not left or not right:\n                raise ValueError(f\"malformed port range: {part!r}\")\n"
+  },
+  "R36": {
+    "start": 35,
+    "end": 35,
+    "text": "                raise ValueError(f\"malformed port range: {part!r}\")\n"
+  },
+  "R37": {
+    "start": 36,
+    "end": 36,
+    "text": "            try:\n"
+  },
+  "R38": {
+    "start": 36,
+    "end": 40,
+    "text": "            try:\n                start = int(left, 10)\n                end = int(right, 10)\n            except ValueError:\n                raise ValueError(f\"invalid port range: {part!r}\") from None\n"
+  },
+  "R39": {
+    "start": 37,
+    "end": 37,
+    "text": "                start = int(left, 10)\n"
+  },
+  "R40": {
+    "start": 38,
+    "end": 38,
+    "text": "                end = int(right, 10)\n"
+  },
+  "R41": {
+    "start": 39,
+    "end": 39,
+    "text": "            except ValueError:\n"
+  },
+  "R42": {
+    "start": 40,
+    "end": 40,
+    "text": "                raise ValueError(f\"invalid port range: {part!r}\") from None\n"
+  },
+  "R43": {
+    "start": 41,
+    "end": 41,
+    "text": "            if not (1 <= start <= 65535 and 1 <= end <= 65535):\n"
+  },
+  "R44": {
+    "start": 41,
+    "end": 42,
+    "text": "            if not (1 <= start <= 65535 and 1 <= end <= 65535):\n                raise ValueError(f\"port out of range 1..65535: {part!r}\")\n"
+  },
+  "R45": {
+    "start": 42,
+    "end": 42,
+    "text": "                raise ValueError(f\"port out of range 1..65535: {part!r}\")\n"
+  },
+  "R46": {
+    "start": 43,
+    "end": 43,
+    "text": "            if start > end:\n"
+  },
+  "R47": {
+    "start": 43,
+    "end": 44,
+    "text": "            if start > end:\n                raise ValueError(f\"reversed port range: {part!r}\")\n"
+  },
+  "R48": {
+    "start": 44,
+    "end": 44,
+    "text": "                raise ValueError(f\"reversed port range: {part!r}\")\n"
+  },
+  "R49": {
+    "start": 45,
+    "end": 45,
+    "text": "            ports.update(range(start, end + 1))\n"
+  },
+  "R50": {
+    "start": 46,
+    "end": 46,
+    "text": "        else:\n"
+  },
+  "R51": {
+    "start": 47,
+    "end": 47,
+    "text": "            try:\n"
+  },
+  "R52": {
+    "start": 47,
+    "end": 50,
+    "text": "            try:\n                port = int(part, 10)\n            except ValueError:\n                raise ValueError(f\"invalid port: {part!r}\") from None\n"
+  },
+  "R53": {
+    "start": 48,
+    "end": 48,
+    "text": "                port = int(part, 10)\n"
+  },
+  "R54": {
+    "start": 49,
+    "end": 49,
+    "text": "            except ValueError:\n"
+  },
+  "R55": {
+    "start": 50,
+    "end": 50,
+    "text": "                raise ValueError(f\"invalid port: {part!r}\") from None\n"
+  },
+  "R56": {
+    "start": 51,
+    "end": 51,
+    "text": "            if not (1 <= port <= 65535):\n"
+  },
+  "R57": {
+    "start": 51,
+    "end": 52,
+    "text": "            if not (1 <= port <= 65535):\n                raise ValueError(f\"port out of range 1..65535: {part!r}\")\n"
+  },
+  "R58": {
+    "start": 52,
+    "end": 52,
+    "text": "                raise ValueError(f\"port out of range 1..65535: {part!r}\")\n"
+  },
+  "R59": {
+    "start": 53,
+    "end": 53,
+    "text": "            ports.add(port)\n"
+  },
+  "R60": {
+    "start": 55,
+    "end": 55,
+    "text": "    if not ports:\n"
+  },
+  "R61": {
+    "start": 55,
+    "end": 56,
+    "text": "    if not ports:\n        raise ValueError(\"port specification produced no ports\")\n"
+  },
+  "R62": {
+    "start": 56,
+    "end": 56,
+    "text": "        raise ValueError(\"port specification produced no ports\")\n"
+  },
+  "R63": {
+    "start": 57,
+    "end": 57,
+    "text": "    return sorted(ports)\n"
+  },
+  "R64": {
+    "start": 60,
+    "end": 60,
+    "text": "def scan_port(host: str, port: int, timeout: float) -> bool:\n"
+  },
+  "R65": {
+    "start": 60,
+    "end": 73,
+    "text": "def scan_port(host: str, port: int, timeout: float) -> bool:\n    \"\"\"Return True if a TCP connection to host:port succeeds.\"\"\"\n    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n    try:\n        sock.settimeout(timeout)\n        result = sock.connect_ex((host, port))\n        return result == 0\n    except OSError:\n        return False\n    finally:\n        try:\n            sock.close()\n        except OSError:\n            pass\n"
+  },
+  "R66": {
+    "start": 61,
+    "end": 61,
+    "text": "    \"\"\"Return True if a TCP connection to host:port succeeds.\"\"\"\n"
+  },
+  "R67": {
+    "start": 62,
+    "end": 62,
+    "text": "    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n"
+  },
+  "R68": {
+    "start": 63,
+    "end": 63,
+    "text": "    try:\n"
+  },
+  "R69": {
+    "start": 63,
+    "end": 73,
+    "text": "    try:\n        sock.settimeout(timeout)\n        result = sock.connect_ex((host, port))\n        return result == 0\n    except OSError:\n        return False\n    finally:\n        try:\n            sock.close()\n        except OSError:\n            pass\n"
+  },
+  "R70": {
+    "start": 64,
+    "end": 64,
+    "text": "        sock.settimeout(timeout)\n"
+  },
+  "R71": {
+    "start": 65,
+    "end": 65,
+    "text": "        result = sock.connect_ex((host, port))\n"
+  },
+  "R72": {
+    "start": 66,
+    "end": 66,
+    "text": "        return result == 0\n"
+  },
+  "R73": {
+    "start": 67,
+    "end": 67,
+    "text": "    except OSError:\n"
+  },
+  "R74": {
+    "start": 68,
+    "end": 68,
+    "text": "        return False\n"
+  },
+  "R75": {
+    "start": 69,
+    "end": 69,
+    "text": "    finally:\n"
+  },
+  "R76": {
+    "start": 70,
+    "end": 70,
+    "text": "        try:\n"
+  },
+  "R77": {
+    "start": 70,
+    "end": 73,
+    "text": "        try:\n            sock.close()\n        except OSError:\n            pass\n"
+  },
+  "R78": {
+    "start": 71,
+    "end": 71,
+    "text": "            sock.close()\n"
+  },
+  "R79": {
+    "start": 72,
+    "end": 72,
+    "text": "        except OSError:\n"
+  },
+  "R80": {
+    "start": 73,
+    "end": 73,
+    "text": "            pass\n"
+  },
+  "R81": {
+    "start": 76,
+    "end": 76,
+    "text": "def scan_ports(\n"
+  },
+  "R82": {
+    "start": 76,
+    "end": 120,
+    "text": "def scan_ports(\n    host: str,\n    ports: Sequence[int],\n    timeout: float,\n    workers: int,\n) -> Tuple[List[int], List[int]]:\n    \"\"\"Scan ports with a bounded thread pool.\n\n    Connection refusal and timeout are treated as closed. DNS resolution is\n    performed before scanning so a DNS error is reported as a failure.\n    \"\"\"\n    # Resolve hostname before scanning. This also validates that the host is\n    # resolvable and lets us use the resolved IP for all connection attempts.\n    try:\n        resolved = socket.getaddrinfo(host, None, family=socket.AF_INET, type=socket.SOCK_STREAM)\n    except socket.gaierror as exc:\n        raise ValueError(f\"could not resolve host {host!r}: {exc}\") from exc\n    if not resolved:\n        raise ValueError(f\"could not resolve host {host!r}\")\n\n    # Use the first IPv4 address. This keeps all tests on 127.0.0.1 and avoids\n    # unpredictable behavior from multiple addresses.\n    ip = resolved[0][4][0]\n\n    open_ports: List[int] = []\n    closed_ports: List[int] = []\n\n    with ThreadPoolExecutor(max_workers=workers) as executor:\n        future_to_port = {\n            executor.submit(scan_port, ip, port, timeout): port for port in ports\n        }\n        for future in as_completed(future_to_port):\n            port = future_to_port[future]\n            try:\n                is_open = future.result()\n            except Exception:\n                is_open = False\n            if is_open:\n                open_ports.append(port)\n            else:\n                closed_ports.append(port)\n\n    open_ports.sort()\n    closed_ports.sort()\n    return open_ports, closed_ports\n"
+  },
+  "R83": {
+    "start": 77,
+    "end": 77,
+    "text": "    host: str,\n"
+  },
+  "R84": {
+    "start": 78,
+    "end": 78,
+    "text": "    ports: Sequence[int],\n"
+  },
+  "R85": {
+    "start": 79,
+    "end": 79,
+    "text": "    timeout: float,\n"
+  },
+  "R86": {
+    "start": 80,
+    "end": 80,
+    "text": "    workers: int,\n"
+  },
+  "R87": {
+    "start": 81,
+    "end": 81,
+    "text": ") -> Tuple[List[int], List[int]]:\n"
+  },
+  "R88": {
+    "start": 82,
+    "end": 82,
+    "text": "    \"\"\"Scan ports with a bounded thread pool.\n"
+  },
+  "R89": {
+    "start": 82,
+    "end": 86,
+    "text": "    \"\"\"Scan ports with a bounded thread pool.\n\n    Connection refusal and timeout are treated as closed. DNS resolution is\n    performed before scanning so a DNS error is reported as a failure.\n    \"\"\"\n"
+  },
+  "R90": {
+    "start": 84,
+    "end": 84,
+    "text": "    Connection refusal and timeout are treated as closed. DNS resolution is\n"
+  },
+  "R91": {
+    "start": 85,
+    "end": 85,
+    "text": "    performed before scanning so a DNS error is reported as a failure.\n"
+  },
+  "R92": {
+    "start": 86,
+    "end": 86,
+    "text": "    \"\"\"\n"
+  },
+  "R93": {
+    "start": 87,
+    "end": 87,
+    "text": "    # Resolve hostname before scanning. This also validates that the host is\n"
+  },
+  "R94": {
+    "start": 88,
+    "end": 88,
+    "text": "    # resolvable and lets us use the resolved IP for all connection attempts.\n"
+  },
+  "R95": {
+    "start": 89,
+    "end": 89,
+    "text": "    try:\n"
+  },
+  "R96": {
+    "start": 89,
+    "end": 92,
+    "text": "    try:\n        resolved = socket.getaddrinfo(host, None, family=socket.AF_INET, type=socket.SOCK_STREAM)\n    except socket.gaierror as exc:\n        raise ValueError(f\"could not resolve host {host!r}: {exc}\") from exc\n"
+  },
+  "R97": {
+    "start": 90,
+    "end": 90,
+    "text": "        resolved = socket.getaddrinfo(host, None, family=socket.AF_INET, type=socket.SOCK_STREAM)\n"
+  },
+  "R98": {
+    "start": 91,
+    "end": 91,
+    "text": "    except socket.gaierror as exc:\n"
+  },
+  "R99": {
+    "start": 92,
+    "end": 92,
+    "text": "        raise ValueError(f\"could not resolve host {host!r}: {exc}\") from exc\n"
+  },
+  "R100": {
+    "start": 93,
+    "end": 93,
+    "text": "    if not resolved:\n"
+  },
+  "R101": {
+    "start": 93,
+    "end": 94,
+    "text": "    if not resolved:\n        raise ValueError(f\"could not resolve host {host!r}\")\n"
+  },
+  "R102": {
+    "start": 94,
+    "end": 94,
+    "text": "        raise ValueError(f\"could not resolve host {host!r}\")\n"
+  },
+  "R103": {
+    "start": 96,
+    "end": 96,
+    "text": "    # Use the first IPv4 address. This keeps all tests on 127.0.0.1 and avoids\n"
+  },
+  "R104": {
+    "start": 97,
+    "end": 97,
+    "text": "    # unpredictable behavior from multiple addresses.\n"
+  },
+  "R105": {
+    "start": 98,
+    "end": 98,
+    "text": "    ip = resolved[0][4][0]\n"
+  },
+  "R106": {
+    "start": 100,
+    "end": 100,
+    "text": "    open_ports: List[int] = []\n"
+  },
+  "R107": {
+    "start": 101,
+    "end": 101,
+    "text": "    closed_ports: List[int] = []\n"
+  },
+  "R108": {
+    "start": 103,
+    "end": 103,
+    "text": "    with ThreadPoolExecutor(max_workers=workers) as executor:\n"
+  },
+  "R109": {
+    "start": 103,
+    "end": 116,
+    "text": "    with ThreadPoolExecutor(max_workers=workers) as executor:\n        future_to_port = {\n            executor.submit(scan_port, ip, port, timeout): port for port in ports\n        }\n        for future in as_completed(future_to_port):\n            port = future_to_port[future]\n            try:\n                is_open = future.result()\n            except Exception:\n                is_open = False\n            if is_open:\n                open_ports.append(port)\n            else:\n                closed_ports.append(port)\n"
+  },
+  "R110": {
+    "start": 104,
+    "end": 104,
+    "text": "        future_to_port = {\n"
+  },
+  "R111": {
+    "start": 104,
+    "end": 106,
+    "text": "        future_to_port = {\n            executor.submit(scan_port, ip, port, timeout): port for port in ports\n        }\n"
+  },
+  "R112": {
+    "start": 105,
+    "end": 105,
+    "text": "            executor.submit(scan_port, ip, port, timeout): port for port in ports\n"
+  },
+  "R113": {
+    "start": 106,
+    "end": 106,
+    "text": "        }\n"
+  },
+  "R114": {
+    "start": 107,
+    "end": 107,
+    "text": "        for future in as_completed(future_to_port):\n"
+  },
+  "R115": {
+    "start": 107,
+    "end": 116,
+    "text": "        for future in as_completed(future_to_port):\n            port = future_to_port[future]\n            try:\n                is_open = future.result()\n            except Exception:\n                is_open = False\n            if is_open:\n                open_ports.append(port)\n            else:\n                closed_ports.append(port)\n"
+  },
+  "R116": {
+    "start": 108,
+    "end": 108,
+    "text": "            port = future_to_port[future]\n"
+  },
+  "R117": {
+    "start": 109,
+    "end": 109,
+    "text": "            try:\n"
+  },
+  "R118": {
+    "start": 109,
+    "end": 112,
+    "text": "            try:\n                is_open = future.result()\n            except Exception:\n                is_open = False\n"
+  },
+  "R119": {
+    "start": 110,
+    "end": 110,
+    "text": "                is_open = future.result()\n"
+  },
+  "R120": {
+    "start": 111,
+    "end": 111,
+    "text": "            except Exception:\n"
+  },
+  "R121": {
+    "start": 112,
+    "end": 112,
+    "text": "                is_open = False\n"
+  },
+  "R122": {
+    "start": 113,
+    "end": 113,
+    "text": "            if is_open:\n"
+  },
+  "R123": {
+    "start": 113,
+    "end": 116,
+    "text": "            if is_open:\n                open_ports.append(port)\n            else:\n                closed_ports.append(port)\n"
+  },
+  "R124": {
+    "start": 114,
+    "end": 114,
+    "text": "                open_ports.append(port)\n"
+  },
+  "R125": {
+    "start": 115,
+    "end": 115,
+    "text": "            else:\n"
+  },
+  "R126": {
+    "start": 116,
+    "end": 116,
+    "text": "                closed_ports.append(port)\n"
+  },
+  "R127": {
+    "start": 118,
+    "end": 118,
+    "text": "    open_ports.sort()\n"
+  },
+  "R128": {
+    "start": 119,
+    "end": 119,
+    "text": "    closed_ports.sort()\n"
+  },
+  "R129": {
+    "start": 120,
+    "end": 120,
+    "text": "    return open_ports, closed_ports\n"
+  },
+  "R130": {
+    "start": 123,
+    "end": 123,
+    "text": "def build_parser() -> argparse.ArgumentParser:\n"
+  },
+  "R131": {
+    "start": 123,
+    "end": 145,
+    "text": "def build_parser() -> argparse.ArgumentParser:\n    parser = argparse.ArgumentParser(\n        description=\"TCP connect port scanner using only the Python standard library.\"\n    )\n    parser.add_argument(\"--host\", required=True, help=\"Hostname or IP address to scan\")\n    parser.add_argument(\n        \"--ports\",\n        required=True,\n        help=\"Comma-separated ports and inclusive ranges, e.g. 80,443,8000-8010\",\n    )\n    parser.add_argument(\n        \"--timeout\",\n        type=float,\n        default=1.0,\n        help=\"Connection timeout in seconds (positive number)\",\n    )\n    parser.add_argument(\n        \"--workers\",\n        type=int,\n        default=10,\n        help=\"Maximum number of parallel workers (positive integer)\",\n    )\n    return parser\n"
+  },
+  "R132": {
+    "start": 124,
+    "end": 124,
+    "text": "    parser = argparse.ArgumentParser(\n"
+  },
+  "R133": {
+    "start": 124,
+    "end": 126,
+    "text": "    parser = argparse.ArgumentParser(\n        description=\"TCP connect port scanner using only the Python standard library.\"\n    )\n"
+  },
+  "R134": {
+    "start": 125,
+    "end": 125,
+    "text": "        description=\"TCP connect port scanner using only the Python standard library.\"\n"
+  },
+  "R135": {
+    "start": 126,
+    "end": 126,
+    "text": "    )\n"
+  },
+  "R136": {
+    "start": 127,
+    "end": 127,
+    "text": "    parser.add_argument(\"--host\", required=True, help=\"Hostname or IP address to scan\")\n"
+  },
+  "R137": {
+    "start": 128,
+    "end": 128,
+    "text": "    parser.add_argument(\n"
+  },
+  "R138": {
+    "start": 128,
+    "end": 132,
+    "text": "    parser.add_argument(\n        \"--ports\",\n        required=True,\n        help=\"Comma-separated ports and inclusive ranges, e.g. 80,443,8000-8010\",\n    )\n"
+  },
+  "R139": {
+    "start": 129,
+    "end": 129,
+    "text": "        \"--ports\",\n"
+  },
+  "R140": {
+    "start": 130,
+    "end": 130,
+    "text": "        required=True,\n"
+  },
+  "R141": {
+    "start": 131,
+    "end": 131,
+    "text": "        help=\"Comma-separated ports and inclusive ranges, e.g. 80,443,8000-8010\",\n"
+  },
+  "R142": {
+    "start": 132,
+    "end": 132,
+    "text": "    )\n"
+  },
+  "R143": {
+    "start": 133,
+    "end": 133,
+    "text": "    parser.add_argument(\n"
+  },
+  "R144": {
+    "start": 133,
+    "end": 138,
+    "text": "    parser.add_argument(\n        \"--timeout\",\n        type=float,\n        default=1.0,\n        help=\"Connection timeout in seconds (positive number)\",\n    )\n"
+  },
+  "R145": {
+    "start": 134,
+    "end": 134,
+    "text": "        \"--timeout\",\n"
+  },
+  "R146": {
+    "start": 135,
+    "end": 135,
+    "text": "        type=float,\n"
+  },
+  "R147": {
+    "start": 136,
+    "end": 136,
+    "text": "        default=1.0,\n"
+  },
+  "R148": {
+    "start": 137,
+    "end": 137,
+    "text": "        help=\"Connection timeout in seconds (positive number)\",\n"
+  },
+  "R149": {
+    "start": 138,
+    "end": 138,
+    "text": "    )\n"
+  },
+  "R150": {
+    "start": 139,
+    "end": 139,
+    "text": "    parser.add_argument(\n"
+  },
+  "R151": {
+    "start": 139,
+    "end": 144,
+    "text": "    parser.add_argument(\n        \"--workers\",\n        type=int,\n        default=10,\n        help=\"Maximum number of parallel workers (positive integer)\",\n    )\n"
+  },
+  "R152": {
+    "start": 140,
+    "end": 140,
+    "text": "        \"--workers\",\n"
+  },
+  "R153": {
+    "start": 141,
+    "end": 141,
+    "text": "        type=int,\n"
+  },
+  "R154": {
+    "start": 142,
+    "end": 142,
+    "text": "        default=10,\n"
+  },
+  "R155": {
+    "start": 143,
+    "end": 143,
+    "text": "        help=\"Maximum number of parallel workers (positive integer)\",\n"
+  },
+  "R156": {
+    "start": 144,
+    "end": 144,
+    "text": "    )\n"
+  },
+  "R157": {
+    "start": 145,
+    "end": 145,
+    "text": "    return parser\n"
+  },
+  "R158": {
+    "start": 148,
+    "end": 148,
+    "text": "def main(argv: Optional[Sequence[str]] = None) -> int:\n"
+  },
+  "R159": {
+    "start": 148,
+    "end": 174,
+    "text": "def main(argv: Optional[Sequence[str]] = None) -> int:\n    parser = build_parser()\n    args = parser.parse_args(argv)\n\n    if args.timeout <= 0:\n        parser.error(\"--timeout must be positive\")\n    if args.workers <= 0:\n        parser.error(\"--workers must be positive\")\n\n    try:\n        ports = parse_port_spec(args.ports)\n    except ValueError as exc:\n        parser.error(str(exc))\n\n    try:\n        open_ports, closed_ports = scan_ports(args.host, ports, args.timeout, args.workers)\n    except ValueError as exc:\n        print(f\"error: {exc}\", file=sys.stderr)\n        return 1\n\n    result = {\n        \"host\": args.host,\n        \"open_ports\": open_ports,\n        \"closed_ports\": closed_ports,\n    }\n    print(json.dumps(result, sort_keys=True))\n    return 0\n"
+  },
+  "R160": {
+    "start": 149,
+    "end": 149,
+    "text": "    parser = build_parser()\n"
+  },
+  "R161": {
+    "start": 150,
+    "end": 150,
+    "text": "    args = parser.parse_args(argv)\n"
+  },
+  "R162": {
+    "start": 152,
+    "end": 152,
+    "text": "    if args.timeout <= 0:\n"
+  },
+  "R163": {
+    "start": 152,
+    "end": 153,
+    "text": "    if args.timeout <= 0:\n        parser.error(\"--timeout must be positive\")\n"
+  },
+  "R164": {
+    "start": 153,
+    "end": 153,
+    "text": "        parser.error(\"--timeout must be positive\")\n"
+  },
+  "R165": {
+    "start": 154,
+    "end": 154,
+    "text": "    if args.workers <= 0:\n"
+  },
+  "R166": {
+    "start": 154,
+    "end": 155,
+    "text": "    if args.workers <= 0:\n        parser.error(\"--workers must be positive\")\n"
+  },
+  "R167": {
+    "start": 155,
+    "end": 155,
+    "text": "        parser.error(\"--workers must be positive\")\n"
+  },
+  "R168": {
+    "start": 157,
+    "end": 157,
+    "text": "    try:\n"
+  },
+  "R169": {
+    "start": 157,
+    "end": 160,
+    "text": "    try:\n        ports = parse_port_spec(args.ports)\n    except ValueError as exc:\n        parser.error(str(exc))\n"
+  },
+  "R170": {
+    "start": 158,
+    "end": 158,
+    "text": "        ports = parse_port_spec(args.ports)\n"
+  },
+  "R171": {
+    "start": 159,
+    "end": 159,
+    "text": "    except ValueError as exc:\n"
+  },
+  "R172": {
+    "start": 160,
+    "end": 160,
+    "text": "        parser.error(str(exc))\n"
+  },
+  "R173": {
+    "start": 162,
+    "end": 162,
+    "text": "    try:\n"
+  },
+  "R174": {
+    "start": 162,
+    "end": 166,
+    "text": "    try:\n        open_ports, closed_ports = scan_ports(args.host, ports, args.timeout, args.workers)\n    except ValueError as exc:\n        print(f\"error: {exc}\", file=sys.stderr)\n        return 1\n"
+  },
+  "R175": {
+    "start": 163,
+    "end": 163,
+    "text": "        open_ports, closed_ports = scan_ports(args.host, ports, args.timeout, args.workers)\n"
+  },
+  "R176": {
+    "start": 164,
+    "end": 164,
+    "text": "    except ValueError as exc:\n"
+  },
+  "R177": {
+    "start": 165,
+    "end": 165,
+    "text": "        print(f\"error: {exc}\", file=sys.stderr)\n"
+  },
+  "R178": {
+    "start": 166,
+    "end": 166,
+    "text": "        return 1\n"
+  },
+  "R179": {
+    "start": 168,
+    "end": 168,
+    "text": "    result = {\n"
+  },
+  "R180": {
+    "start": 168,
+    "end": 172,
+    "text": "    result = {\n        \"host\": args.host,\n        \"open_ports\": open_ports,\n        \"closed_ports\": closed_ports,\n    }\n"
+  },
+  "R181": {
+    "start": 169,
+    "end": 169,
+    "text": "        \"host\": args.host,\n"
+  },
+  "R182": {
+    "start": 170,
+    "end": 170,
+    "text": "        \"open_ports\": open_ports,\n"
+  },
+  "R183": {
+    "start": 171,
+    "end": 171,
+    "text": "        \"closed_ports\": closed_ports,\n"
+  },
+  "R184": {
+    "start": 172,
+    "end": 172,
+    "text": "    }\n"
+  },
+  "R185": {
+    "start": 173,
+    "end": 173,
+    "text": "    print(json.dumps(result, sort_keys=True))\n"
+  },
+  "R186": {
+    "start": 174,
+    "end": 174,
+    "text": "    return 0\n"
+  },
+  "R187": {
+    "start": 177,
+    "end": 177,
+    "text": "if __name__ == \"__main__\":\n"
+  },
+  "R188": {
+    "start": 177,
+    "end": 178,
+    "text": "if __name__ == \"__main__\":\n    sys.exit(main())\n"
+  },
+  "R189": {
+    "start": 178,
+    "end": 178,
+    "text": "    sys.exit(main())\n"
+  }
+}

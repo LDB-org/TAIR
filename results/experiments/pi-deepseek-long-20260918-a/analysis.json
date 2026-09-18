@@ -1,0 +1,212 @@
+{
+  "groups": {
+    "write": {
+      "whole": {
+        "n": 2,
+        "complete": 2,
+        "exact": 1,
+        "generated_tokens": 1305,
+        "internal_control_records": 0,
+        "total_seconds": 20.56350532360375,
+        "median_seconds": 10.281752661801875
+      },
+      "direct": {
+        "n": 2,
+        "complete": 2,
+        "exact": 2,
+        "generated_tokens": 1284,
+        "internal_control_records": 2,
+        "total_seconds": 28.73015110567212,
+        "median_seconds": 14.36507555283606
+      }
+    },
+    "edit": {
+      "whole": {
+        "n": 2,
+        "complete": 2,
+        "exact": 1,
+        "generated_tokens": 1892,
+        "internal_control_records": 0,
+        "total_seconds": 31.79788839071989,
+        "median_seconds": 15.898944195359945
+      },
+      "direct": {
+        "n": 2,
+        "complete": 2,
+        "exact": 0,
+        "generated_tokens": 1870,
+        "internal_control_records": 2,
+        "total_seconds": 25.83024458680302,
+        "median_seconds": 12.91512229340151
+      }
+    },
+    "reply_user": {
+      "whole": {
+        "n": 2,
+        "complete": 2,
+        "exact": 2,
+        "generated_tokens": 2266,
+        "internal_control_records": 0,
+        "total_seconds": 41.96187621355057,
+        "median_seconds": 20.980938106775284
+      },
+      "direct": {
+        "n": 2,
+        "complete": 2,
+        "exact": 0,
+        "generated_tokens": 2252,
+        "internal_control_records": 2,
+        "total_seconds": 55.750009845010936,
+        "median_seconds": 27.875004922505468
+      }
+    },
+    "all": {
+      "whole": {
+        "n": 6,
+        "complete": 6,
+        "exact": 4,
+        "generated_tokens": 5463,
+        "internal_control_records": 0,
+        "total_seconds": 94.32326992787421,
+        "median_seconds": 15.898944195359945
+      },
+      "direct": {
+        "n": 6,
+        "complete": 6,
+        "exact": 2,
+        "generated_tokens": 5406,
+        "internal_control_records": 6,
+        "total_seconds": 110.31040553748608,
+        "median_seconds": 14.36507555283606
+      }
+    }
+  },
+  "pairs": [
+    {
+      "case": "write",
+      "repeat": 0,
+      "both_exact": true,
+      "token_difference": 10,
+      "seconds_difference": -0.6238101031631231
+    },
+    {
+      "case": "write",
+      "repeat": 1,
+      "both_exact": false,
+      "token_difference": 11,
+      "seconds_difference": -7.542835678905249
+    },
+    {
+      "case": "edit",
+      "repeat": 0,
+      "both_exact": false,
+      "token_difference": 9,
+      "seconds_difference": 2.2330582374706864
+    },
+    {
+      "case": "edit",
+      "repeat": 1,
+      "both_exact": false,
+      "token_difference": 13,
+      "seconds_difference": 3.734585566446185
+    },
+    {
+      "case": "reply_user",
+      "repeat": 0,
+      "both_exact": false,
+      "token_difference": 7,
+      "seconds_difference": 4.25420777220279
+    },
+    {
+      "case": "reply_user",
+      "repeat": 1,
+      "both_exact": false,
+      "token_difference": 7,
+      "seconds_difference": -18.04234140366316
+    }
+  ],
+  "known_python_fixture_runs": true,
+  "exact_python_outputs_covered_by_fixture_test": 3,
+  "known_edit_fixture_applies_and_compiles": true,
+  "posthoc_diagnostics_not_replacements_for_exact_score": [
+    {
+      "case": "write",
+      "repeat": 1,
+      "mode": "whole",
+      "validation_error": "expected an indented block after 'for' statement on line 15 (generated-report.py, line 16)"
+    },
+    {
+      "case": "edit",
+      "repeat": 1,
+      "mode": "direct",
+      "applied_file_exact": true
+    },
+    {
+      "case": "edit",
+      "repeat": 0,
+      "mode": "whole",
+      "applied_file_exact": true
+    },
+    {
+      "case": "reply_user",
+      "repeat": 0,
+      "mode": "direct",
+      "matches_except_final_newline": false
+    },
+    {
+      "case": "reply_user",
+      "repeat": 0,
+      "mode": "whole",
+      "matches_except_final_newline": true
+    },
+    {
+      "case": "edit",
+      "repeat": 0,
+      "mode": "direct",
+      "applied_file_exact": true
+    },
+    {
+      "case": "edit",
+      "repeat": 1,
+      "mode": "whole",
+      "applied_file_exact": true
+    },
+    {
+      "case": "reply_user",
+      "repeat": 1,
+      "mode": "whole",
+      "matches_except_final_newline": true
+    },
+    {
+      "case": "write",
+      "repeat": 0,
+      "mode": "direct",
+      "syntax_valid": true,
+      "ast_matches_fixture": true,
+      "runtime_passed": true
+    },
+    {
+      "case": "reply_user",
+      "repeat": 1,
+      "mode": "direct",
+      "matches_except_final_newline": false
+    },
+    {
+      "case": "write",
+      "repeat": 0,
+      "mode": "whole",
+      "syntax_valid": true,
+      "ast_matches_fixture": true,
+      "runtime_passed": true
+    },
+    {
+      "case": "write",
+      "repeat": 1,
+      "mode": "direct",
+      "syntax_valid": true,
+      "ast_matches_fixture": true,
+      "runtime_passed": true
+    }
+  ],
+  "scope": "Fixed long-content reproduction, not autonomous long-horizon agent tasks"
+}

@@ -1,0 +1,73 @@
+{
+  "case": "short_flags",
+  "repeat": 1,
+  "arm": "hybrid",
+  "passed": true,
+  "seconds": 22.419976510980632,
+  "attempts": [
+    {
+      "passed": false,
+      "mode": "multi",
+      "transport_seconds": 11.91593118099263,
+      "usage": {
+        "prompt_tokens": 2828,
+        "total_tokens": 2916,
+        "completion_tokens": 88,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "metrics": {
+        "time_to_first_token_ms": 250.39456225931644,
+        "generation_time_ms": 3714.7066025063396,
+        "queue_time_ms": 6504.085357300937,
+        "mean_itl_ms": 42.69777704030275,
+        "tokens_per_second": 22.1936329852005,
+        "speculative_decoding": null
+      },
+      "validation": {
+        "passed": false,
+        "returncode": 2,
+        "stdout": "",
+        "stderr": "usage: check.py [-h] --host HOST --ports PORTS [--timeout TIMEOUT]\n                [--workers WORKERS]\ncheck.py: error: the following arguments are required: --host, --ports\n"
+      },
+      "seconds": 11.975211228011176
+    },
+    {
+      "passed": true,
+      "mode": "native",
+      "transport_seconds": 9.222398413985502,
+      "usage": {
+        "prompt_tokens": 2399,
+        "total_tokens": 2822,
+        "completion_tokens": 423,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "metrics": {
+        "time_to_first_token_ms": 256.18433952331543,
+        "generation_time_ms": 4581.27773553133,
+        "queue_time_ms": 3002.701279707253,
+        "mean_itl_ms": 10.856108378036328,
+        "tokens_per_second": 87.44254599561313,
+        "speculative_decoding": null
+      },
+      "validation": {
+        "passed": true,
+        "returncode": 0,
+        "stdout": "{\"passed\": true, \"regression\": \"test_cli_dns_error (test_port_scanner.CliTests.test_cli_dns_error) ... ok\\ntest_cli_invalid_ports (test_port_scanner.CliTests.test_cli_invalid_ports) ... ok\\ntest_cli_invalid_timeout (test_port_scanner.CliTests.test_cli_invalid_timeout) ... ok\\ntest_cli_invalid_workers (test_port_scanner.CliTests.test_cli_invalid_workers) ... ok\\ntest_cli_mixed_ranges_duplicates (test_port_scanner.CliTests.test_cli_mixed_ranges_duplicates) ... ok\\ntest_cli_open_and_closed_detection (test_port_scanner.CliTests.test_cli_open_and_closed_detection) ... ok\\ntest_help (test_port_scanner.CliTests.test_help) ... ok\\ntest_empty_spec_rejected (test_port_scanner.ParsePortSpecTests.test_empty_spec_rejected) ... ok\\ntest_malformed_item_rejected (test_port_scanner.ParsePortSpecTests.test_malformed_item_rejected) ... ok\\ntest_mixed_ranges_and_duplicates (test_port_scanner.ParsePortSpecTests.test_mixed_ranges_and_duplicates) ... ok\\ntest_out_of_range_rejected (test_port_scanner.ParsePortSpecTests.test_out_of_range_rejected) ... ok\\ntest_range (test_port_scanner.ParsePortSpecTests.test_range) ... ok\\ntest_reversed_range_rejected (test_port_scanner.ParsePortSpecTests.test_reversed_range_rejected) ... ok\\ntest_single_port (test_port_scanner.ParsePortSpecTests.test_single_port) ... ok\\ntest_whitespace (test_port_scanner.ParsePortSpecTests.test_whitespace) ... ok\\ntest_dns_error_raises (test_port_scanner.ScannerFunctionTests.test_dns_error_raises) ... ok\\ntest_open_and_closed_detection (test_port_scanner.ScannerFunctionTests.test_open_and_closed_detection) ... ok\\n\\n----------------------------------------------------------------------\\nRan 17 tests in 0.964s\\n\\nOK\\n\"}\n",
+        "stderr": ""
+      },
+      "seconds": 10.443021922954358
+    }
+  ],
+  "usage_complete": true,
+  "usage": {
+    "prompt_tokens": 5227,
+    "completion_tokens": 511,
+    "total_tokens": 5738
+  }
+}

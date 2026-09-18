@@ -1,0 +1,54 @@
+[
+  {
+    "source_sha256": "1f742c656974c92cd2a68946680a65a37bb516be55574bb5cb8da7e66c00c737",
+    "description": "Change build_parser so --workers defaults to {task_integer}. Preserve overrides and all other behavior.",
+    "template": [
+      "kw",
+      "--workers",
+      "default",
+      {
+        "bind": "task_integer"
+      }
+    ],
+    "admission": "passed benchmark task oracle and 17 regressions; not generally verified",
+    "id": 0
+  },
+  {
+    "source_sha256": "1f742c656974c92cd2a68946680a65a37bb516be55574bb5cb8da7e66c00c737",
+    "description": "Make main JSON output retain Unicode host characters rather than escaping them with ASCII unicode escapes. Preserve the existing output fields, sorted keys, trailing newline and all scanner behavior.",
+    "template": [
+      "kw",
+      "json.dumps",
+      "ensure_ascii",
+      false
+    ],
+    "admission": "passed benchmark task oracle and 17 regressions; not generally verified",
+    "id": 1
+  },
+  {
+    "source_sha256": "1f742c656974c92cd2a68946680a65a37bb516be55574bb5cb8da7e66c00c737",
+    "description": "In main, ensure json.dumps raises ValueError for NaN and Infinity instead of emitting nonstandard JSON. Keep normal output unchanged.",
+    "template": [
+      "kw",
+      "json.dumps",
+      "allow_nan",
+      false
+    ],
+    "admission": "passed benchmark task oracle and 17 regressions; not generally verified",
+    "id": 2
+  },
+  {
+    "source_sha256": "6274fc360339c49a13ee50715957cf0c9ab5148f62ad76156e52462b1d7bd2c9",
+    "description": "Set --workers default to {task_integer} in build_parser, preserving overrides and other behavior.",
+    "template": [
+      "kw",
+      "--workers",
+      "default",
+      {
+        "bind": "task_integer"
+      }
+    ],
+    "admission": "passed benchmark task oracle and 17 regressions; not generally verified",
+    "id": 3
+  }
+]

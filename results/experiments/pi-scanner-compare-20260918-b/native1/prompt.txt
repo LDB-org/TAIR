@@ -1,0 +1,7 @@
+Create port_scanner.py and test_port_scanner.py in the workspace. Implement a usable Python 3 standard-library TCP connect port scanner.
+CLI: python3 port_scanner.py --host HOST --ports SPEC --timeout SECONDS --workers N
+SPEC accepts comma-separated ports and inclusive ranges, deduplicates them, validates 1..65535, and rejects malformed/reversed ranges. Timeout and workers must be positive.
+Output exactly one JSON object with keys host (string), open_ports (sorted integer array), closed_ports (sorted integer array). Connection refusal or timeout counts as closed. Resolve hostnames; a DNS error or invalid arguments exits nonzero without claiming a successful scan.
+Use bounded parallel workers and close sockets. Provide --help. Write unittest tests using temporary loopback TCP listeners and guaranteed non-listening bound ports, test actual subprocess CLI behavior, mixed ranges/duplicates, closed/open detection, and invalid input.
+Run your tests via bash, inspect errors and fix files until they pass. Do not only write code or claim tests passed without running them. Finish via reply_user with a short Chinese report.
+All network tests MUST stay on 127.0.0.1. Bash runs in an isolated network namespace, only loopback is available. Work directory is /work in bash. File tools use relative paths. You can use read, bash, edit, write as needed. Do not install packages.

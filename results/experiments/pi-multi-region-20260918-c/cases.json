@@ -1,0 +1,5 @@
+{
+  "strict_ascii_ports": "Tighten parse_port_spec to accept only ASCII decimal digits in each port or range endpoint after trimming surrounding whitespace. Reject leading plus signs, underscores, fullwidth or other Unicode digits, for both single ports and range endpoints. Preserve existing ASCII ranges, deduplication, bounds checking and surrounding whitespace support. Modify only parse_port_spec; no new imports.",
+  "cli_limits": "Update main CLI validation: timeout must be finite and strictly positive; workers must be an integer from 1 through 64 inclusive. Reject invalid values with argparse exit code 2. Preserve valid calls, defaults, and existing scanner behavior. No new imports.",
+  "cli_defaults": "Change CLI defaults in build_parser: --timeout defaults to 0.25 seconds and --workers defaults to 4. Keep explicit command-line overrides and all other behavior unchanged. Make minimal changes."
+}

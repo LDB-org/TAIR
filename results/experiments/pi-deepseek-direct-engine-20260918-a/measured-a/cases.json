@@ -1,0 +1,82 @@
+[
+  [
+    "read",
+    "Read notes.txt starting at line 1, with a limit of 3 lines.",
+    {
+      "path": "notes.txt",
+      "offset": 1,
+      "limit": 3
+    }
+  ],
+  [
+    "bash",
+    "Run the exact Bash command printf 'hello\\n' with timeout 5 seconds.",
+    {
+      "command": "printf 'hello\\n'",
+      "timeout": 5
+    }
+  ],
+  [
+    "edit",
+    "In config.txt replace the exact text DEBUG=0 with DEBUG=1 using one edit.",
+    {
+      "path": "config.txt",
+      "edits": [
+        {
+          "oldText": "DEBUG=0",
+          "newText": "DEBUG=1"
+        }
+      ]
+    }
+  ],
+  [
+    "write",
+    "Write notes.txt with exactly Hello. as its entire content, with no newline.",
+    {
+      "path": "notes.txt",
+      "content": "Hello."
+    }
+  ],
+  [
+    "grep",
+    "Search for the literal TODO in the current directory (path .), with at most 5 matches.",
+    {
+      "pattern": "TODO",
+      "path": ".",
+      "literal": true,
+      "limit": 5
+    }
+  ],
+  [
+    "find",
+    "Find files matching *.py in the current directory (path .), with at most 5 results.",
+    {
+      "pattern": "*.py",
+      "path": ".",
+      "limit": 5
+    }
+  ],
+  [
+    "ls",
+    "List the current directory (path .), with at most 5 entries.",
+    {
+      "path": ".",
+      "limit": 5
+    }
+  ],
+  [
+    "powershell",
+    "Run the exact PowerShell command Write-Output 'hello' with timeout 5 seconds.",
+    {
+      "command": "Write-Output 'hello'",
+      "timeout": 5
+    }
+  ],
+  [
+    "reply_user",
+    "Send the user exactly Done. as the final reply, with no newline.",
+    {
+      "content": "Done."
+    }
+  ]
+]

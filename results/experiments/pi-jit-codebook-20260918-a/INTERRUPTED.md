@@ -1,0 +1,1 @@
+Development run interrupted after unit test exposed integer extraction rejecting a sentence-final period. Four completed rows retained; another request was in flight and has unknown response/usage. Do not include this incomplete run in benchmark totals. Fixed binding regex was tested before the separate b run.

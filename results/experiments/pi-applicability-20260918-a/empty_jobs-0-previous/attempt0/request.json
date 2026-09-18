@@ -1,0 +1,24 @@
+{
+  "model": "/model",
+  "temperature": 0,
+  "max_tokens": 4096,
+  "return_token_ids": true,
+  "cache_salt": "d76e40e0088a43b89327b3b2b57325af",
+  "chat_template_kwargs": {
+    "thinking": false,
+    "enable_thinking": false
+  },
+  "messages": [
+    {
+      "role": "system",
+      "content": "Output one JSON array containing all required edits. Engine preserves source and builds indentation. [\"arg\",call,string] adds a positional string argument, e.g. an option alias. [\"kw\",call,key,value] changes a typed keyword value; use plain JSON values, not Python strings representing values. [\"return_if\",function,condition_expr,result_expr] inserts if/return. [\"raise_if\",function,condition_expr,exception_type,message] inserts if/raise BEFORE execution. [\"catch\",statement,exception_type,value] wraps an EXISTING statement in try/except returning the JSON value. Only condition_expr and result_expr contain Python expression text. Function targets are their names. Call targets are their first simple string argument (e.g. --option), otherwise the callee name (e.g. module.func). Assignment targets are the assigned variable name. Candidate functions: schedule_jobs; calls: list; statements: assignments,return@24\nUnrelated example: [[\"catch\",\"resource\",\"LookupError\",null]] catches an exception from the existing resource assignment. A condition expression cannot contain an assignment or catch an exception."
+    },
+    {
+      "role": "user",
+      "content": "Edit this file with the smallest necessary change; preserve unrelated behavior.\nFILE: port_scanner.py\nSOURCE:\n\"\"\"Configuration utility fixture; filename retained for the Pi edit adapter.\"\"\"\nimport argparse\nimport json\n\n\ndef build_parser():\n    parser = argparse.ArgumentParser()\n    parser.add_argument('--retries', type=int, default=2)\n    parser.add_argument('--label', default='job')\n    return parser\n\n\ndef encode_record(record):\n    return json.dumps(record, sort_keys=True)\n\n\ndef read_resource(loader, key):\n    resource = loader(key)\n    return resource\n\n\ndef schedule_jobs(jobs, workers):\n    assignments = list(jobs)\n    return assignments, workers\n\n\ndef normalize_score(score):\n    adjusted = score / 100\n    return adjusted\n\nTASK: Make schedule_jobs return ([], 0) immediately when jobs is empty. Preserve nonempty jobs, ordering and the given workers value."
+    }
+  ],
+  "structured_outputs": {
+    "regex": "\\[(\\[\"arg\",\"list\",\"([^\"\\\\\\x00-\\x1f]|\\\\([\"\\\\/bfnrt]|u[0-9a-fA-F]{4}))*\"\\]|\\[\"return_if\",\"schedule_jobs\",\"([^\"\\\\\\x00-\\x1f]|\\\\([\"\\\\/bfnrt]|u[0-9a-fA-F]{4}))*\",\"([^\"\\\\\\x00-\\x1f]|\\\\([\"\\\\/bfnrt]|u[0-9a-fA-F]{4}))*\"\\]|\\[\"raise_if\",\"schedule_jobs\",\"([^\"\\\\\\x00-\\x1f]|\\\\([\"\\\\/bfnrt]|u[0-9a-fA-F]{4}))*\",(\"ValueError\"|\"OSError\"|\"Exception\"|\"RuntimeError\"|\"TypeError\"|\"KeyError\"|\"TimeoutError\"|\"LookupError\"),\"([^\"\\\\\\x00-\\x1f]|\\\\([\"\\\\/bfnrt]|u[0-9a-fA-F]{4}))*\"\\]|\\[\"catch\",\"assignments\",(\"ValueError\"|\"OSError\"|\"Exception\"|\"RuntimeError\"|\"TypeError\"|\"KeyError\"|\"TimeoutError\"|\"LookupError\"),(\"([^\"\\\\\\x00-\\x1f]|\\\\([\"\\\\/bfnrt]|u[0-9a-fA-F]{4}))*\"|-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?|true|false|null)\\]|\\[\"catch\",\"return@24\",(\"ValueError\"|\"OSError\"|\"Exception\"|\"RuntimeError\"|\"TypeError\"|\"KeyError\"|\"TimeoutError\"|\"LookupError\"),(\"([^\"\\\\\\x00-\\x1f]|\\\\([\"\\\\/bfnrt]|u[0-9a-fA-F]{4}))*\"|-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?|true|false|null)\\])(,(\\[\"arg\",\"list\",\"([^\"\\\\\\x00-\\x1f]|\\\\([\"\\\\/bfnrt]|u[0-9a-fA-F]{4}))*\"\\]|\\[\"return_if\",\"schedule_jobs\",\"([^\"\\\\\\x00-\\x1f]|\\\\([\"\\\\/bfnrt]|u[0-9a-fA-F]{4}))*\",\"([^\"\\\\\\x00-\\x1f]|\\\\([\"\\\\/bfnrt]|u[0-9a-fA-F]{4}))*\"\\]|\\[\"raise_if\",\"schedule_jobs\",\"([^\"\\\\\\x00-\\x1f]|\\\\([\"\\\\/bfnrt]|u[0-9a-fA-F]{4}))*\",(\"ValueError\"|\"OSError\"|\"Exception\"|\"RuntimeError\"|\"TypeError\"|\"KeyError\"|\"TimeoutError\"|\"LookupError\"),\"([^\"\\\\\\x00-\\x1f]|\\\\([\"\\\\/bfnrt]|u[0-9a-fA-F]{4}))*\"\\]|\\[\"catch\",\"assignments\",(\"ValueError\"|\"OSError\"|\"Exception\"|\"RuntimeError\"|\"TypeError\"|\"KeyError\"|\"TimeoutError\"|\"LookupError\"),(\"([^\"\\\\\\x00-\\x1f]|\\\\([\"\\\\/bfnrt]|u[0-9a-fA-F]{4}))*\"|-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?|true|false|null)\\]|\\[\"catch\",\"return@24\",(\"ValueError\"|\"OSError\"|\"Exception\"|\"RuntimeError\"|\"TypeError\"|\"KeyError\"|\"TimeoutError\"|\"LookupError\"),(\"([^\"\\\\\\x00-\\x1f]|\\\\([\"\\\\/bfnrt]|u[0-9a-fA-F]{4}))*\"|-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?|true|false|null)\\])){0,7}\\]"
+  }
+}

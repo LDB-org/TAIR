@@ -1,0 +1,59 @@
+{
+  "case": "novel_nan",
+  "arm": "baseline",
+  "source_sha256": "1f742c656974c92cd2a68946680a65a37bb516be55574bb5cb8da7e66c00c737",
+  "book_size_before": 2,
+  "requests": [
+    {
+      "route": "/v1/chat/completions",
+      "seconds": 4.010254673019517,
+      "usage": {
+        "prompt_tokens": 1689,
+        "total_tokens": 1734,
+        "completion_tokens": 45,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "metrics": {
+        "time_to_first_token_ms": 187.78503593057394,
+        "generation_time_ms": 2431.4178032800555,
+        "queue_time_ms": 0.0054389238357543945,
+        "mean_itl_ms": 55.25949552909217,
+        "tokens_per_second": 17.18079994658299,
+        "speculative_decoding": null
+      },
+      "request_id": "chatcmpl-bad6de169455b0bc"
+    }
+  ],
+  "passed": false,
+  "gate_accepted": false,
+  "false_acceptance": false,
+  "cache_hit": false,
+  "admitted": false,
+  "generated": true,
+  "generated_edits": [
+    [
+      "return_if",
+      "main",
+      "any(not isinstance(x, int) or isinstance(x, bool) for x in open_ports + closed_ports)",
+      "ValueError('port results must be integers')"
+    ]
+  ],
+  "generated_validation": {
+    "passed": false,
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 9, in <module>\n    try:m.main(['--host','127.0.0.1','--ports','80'])\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/port_scanner.py\", line 149, in main\n    if any((not isinstance(x, int) or isinstance(x, bool) for x in open_ports + closed_ports)):\n                                                                   ^^^^^^^^^^\nUnboundLocalError: cannot access local variable 'open_ports' where it is not associated with a value\n"
+  },
+  "seconds": 4.073323983000591,
+  "book_size_after": 2,
+  "usage_complete": true,
+  "usage": {
+    "prompt_tokens": 1689,
+    "completion_tokens": 45,
+    "total_tokens": 1734
+  },
+  "control_records": 0
+}

@@ -1,0 +1,26 @@
+{
+  "cases": {
+    "short_flags": "Add -H, -p, -t, and -w as aliases for --host, --ports, --timeout, and --workers respectively. Preserve long flags, required arguments, defaults and all other behavior.",
+    "empty_scan": "Make scan_ports return ([], []) immediately for an empty ports sequence, without DNS lookup or constructing a thread pool. Preserve all nonempty behavior.",
+    "socket_creation": "Make scan_port return False if socket.socket itself raises OSError, as it already does for connection OSError. Preserve successful connections, timeout handling and closing successfully created sockets.",
+    "compact_json": "Make main emit compact JSON without spaces after separators. Preserve the trailing newline, sorted keys, all existing fields and values, and exit behavior.",
+    "default_workers_six": "Change build_parser so --workers defaults to 6, preserving explicit overrides, other defaults and all existing behavior.",
+    "timeout_upper_guard": "In scan_port, reject timeout values greater than 60 with ValueError before creating a socket. Preserve timeout=60, ordinary positive timeout behavior, return values, and socket cleanup. No new imports.",
+    "guard_empty_host": "In scan_port, reject an empty host string with ValueError before creating any socket. Preserve nonempty host behavior, return values, and cleanup. No new imports.",
+    "json_unicode": "Make main JSON output retain Unicode host characters rather than escaping them with ASCII unicode escapes. Preserve the existing output fields, sorted keys, trailing newline and all scanner behavior.",
+    "json_no_nan": "Make main JSON serialization reject NaN/Infinity in results with ValueError instead of emitting nonstandard JSON. Preserve normal JSON fields, sorted keys, trailing newline and scanner behavior.",
+    "guard_port_bounds": "In scan_port, raise ValueError before creating a socket when port is outside 1..65535 inclusive. Preserve valid boundary ports, normal behavior, return values and cleanup. No new imports."
+  },
+  "repeats": 1,
+  "seed": 20260922,
+  "arms": [
+    "native",
+    "typed",
+    "combined"
+  ],
+  "source_sha256": "1f742c656974c92cd2a68946680a65a37bb516be55574bb5cb8da7e66c00c737",
+  "fallback": "At most one native retry from pristine on any protocol/application/test failure",
+  "usage": "Combined prompt = classifier prefix + injected suffix; completion includes one internal control ID; missing usage is never a zero-cost success",
+  "timing": "includes API/SSH, applying edits, task tests, and 17 regressions; payload preparation excluded for every arm",
+  "scope": "Same-project previously tuned regression tasks; not held-out or full agent-loop validation"
+}

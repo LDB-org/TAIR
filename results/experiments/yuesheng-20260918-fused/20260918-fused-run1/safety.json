@@ -1,0 +1,129 @@
+{
+  "invalid_mode": {
+    "status": 400,
+    "body": {
+      "error": "Unsupported mode"
+    }
+  },
+  "truncated": {
+    "status": 422,
+    "body": {
+      "call": null,
+      "candidate": null,
+      "valid": false,
+      "complete": false,
+      "wire": null,
+      "error": "Invalid decision frame",
+      "mode": "hybrid_fused",
+      "seconds": 10.186310729943216,
+      "trace": [
+        {
+          "seconds": 10.186265586875379,
+          "finish_reason": "length",
+          "usage": {
+            "prompt_tokens": 204,
+            "total_tokens": 205,
+            "completion_tokens": 1,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "text": "A",
+          "reasoning_present": false,
+          "regex": "[ABCD]\\n[\\s\\S]+",
+          "token_ids": [
+            35
+          ],
+          "request_id": "chatcmpl-b15a11215d55590a",
+          "stage": 0
+        }
+      ],
+      "completion_tokens": 1,
+      "upstream_requests": 1,
+      "model": "/model"
+    }
+  },
+  "grammar": {
+    "status": 200,
+    "body": {
+      "id": "chatcmpl-930867ec7556bf64",
+      "object": "chat.completion",
+      "created": 1789675162,
+      "model": "/model",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "A\nB\nC\nD",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": null
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": [
+            35,
+            201,
+            36,
+            201,
+            37,
+            201,
+            38,
+            1
+          ],
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.28.1rc1.dev137+g5ab628dd1-tp2-pp3-1070d36c",
+      "usage": {
+        "prompt_tokens": 22,
+        "total_tokens": 30,
+        "completion_tokens": 8,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": [
+        0,
+        128803,
+        17797,
+        9045,
+        1653,
+        1539,
+        260,
+        1017,
+        1836,
+        1539,
+        44388,
+        16,
+        16696,
+        5238,
+        334,
+        406,
+        345,
+        469,
+        420,
+        16,
+        128804,
+        128822
+      ],
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    }
+  },
+  "passed": {
+    "invalid_mode": true,
+    "truncation_rejected": true,
+    "grammar_enforced": true
+  }
+}

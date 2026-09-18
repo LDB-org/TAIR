@@ -1,0 +1,5 @@
+{
+  "finite_timeout": "Fix CLI timeout validation to reject nan, inf, -inf as well as zero and negatives with argparse exit code 2. Keep ordinary positive finite timeouts working. Make the smallest necessary change; do not add imports.",
+  "range_step": "Extend parse_port_spec to support inclusive stepped ranges START-END/STEP, e.g. 20-26/2 gives 20,22,24,26. STEP must be a positive integer; /STEP is only allowed on a range, never on a single port. Keep existing comma/range/deduplication/validation behavior. Modify only parse_port_spec; retain its name and signature.",
+  "socket_context": "Refactor only scan_port to manage its socket with a with context manager, eliminating the explicit try/finally close logic. Preserve True on connect_ex==0, False on nonzero or OSError, and close the socket both on success and failure. Keep its signature; no new imports."
+}

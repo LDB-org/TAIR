@@ -1,0 +1,66 @@
+{
+  "model": "/model",
+  "temperature": 0,
+  "max_tokens": 4096,
+  "return_token_ids": true,
+  "cache_salt": "cb6219e360d042c192b7628337905e5c",
+  "chat_template_kwargs": {
+    "thinking": false,
+    "enable_thinking": false
+  },
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "edit",
+        "description": "Apply unique exact text replacements to a file.",
+        "parameters": {
+          "type": "object",
+          "required": [
+            "path",
+            "edits"
+          ],
+          "properties": {
+            "path": {
+              "type": "string",
+              "description": "Path to the file to edit (relative or absolute)"
+            },
+            "edits": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "oldText",
+                  "newText"
+                ],
+                "properties": {
+                  "oldText": {
+                    "type": "string",
+                    "description": "Exact text for one targeted replacement. It must be unique in the original file and must not overlap with any other edits[].oldText in the same call."
+                  },
+                  "newText": {
+                    "type": "string",
+                    "description": "Replacement text for this targeted edit."
+                  }
+                }
+              },
+              "description": "One or more targeted replacements. Each edit is matched against the original file, not incrementally. Do not include overlapping or nested edits. If two changes touch the same block or nearby lines, merge them into one edit instead."
+            }
+          }
+        }
+      }
+    }
+  ],
+  "tool_choice": "auto",
+  "parallel_tool_calls": false,
+  "messages": [
+    {
+      "role": "system",
+      "content": "Use the edit tool once with path port_scanner.py and edits containing the minimal unique oldText/newText replacements. Do not emit ordinary assistant text."
+    },
+    {
+      "role": "user",
+      "content": "Edit this file with the smallest necessary change; preserve unrelated behavior.\nFILE: port_scanner.py\nSOURCE:\n\"\"\"Configuration utility fixture; filename retained for the Pi edit adapter.\"\"\"\nimport argparse\nimport json\n\n\ndef build_parser():\n    parser = argparse.ArgumentParser()\n    parser.add_argument('--retries', type=int, default=2)\n    parser.add_argument('--label', default='job')\n    return parser\n\n\ndef encode_record(record):\n    return json.dumps(record, sort_keys=True)\n\n\ndef read_resource(loader, key):\n    resource = loader(key)\n    return resource\n\n\ndef schedule_jobs(jobs, workers):\n    assignments = list(jobs)\n    return assignments, workers\n\n\ndef normalize_score(score):\n    adjusted = score / 100\n    return adjusted\n\nTASK: Make encode_record reject NaN and Infinity with ValueError instead of emitting nonstandard JSON. Preserve ordinary finite records and sorted keys."
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openjev-phase1"
+version = "0.1.0"
+description = "Open baselines for runtime-defined semantic decisions"
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.10"
+dependencies = [
+  "torch==2.10.0",
+  "transformers==5.17.0",
+  "accelerate==1.12.0",
+  "safetensors==0.8.0",
+  "huggingface-hub==1.31.0",
+  "tokenizers==0.23.2",
+  "numpy==2.2.6",
+  "sentencepiece==0.2.1",
+  "protobuf==7.36.1",
+]
+
+[project.scripts]
+openjev-score = "openjev_phase1.cli:main"
+
+[project.optional-dependencies]
+test = ["pytest==8.4.2", "jsonschema==4.26.0"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "webgpu-demo"]

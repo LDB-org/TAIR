@@ -1,0 +1,30 @@
+{
+  "protocol_mode": "engine",
+  "turns": 12,
+  "seconds": 104.55477904000001,
+  "reply": "\n\n已完成修复并验证。\n\n- `clean_names` 现在会先 `strip()` 去除首尾空白，丢弃空字符串和纯空白名称，并按首次出现顺序去重。\n- 已创建 `test_catalog.py`，包含空输入、纯空白、去重、顺序、Unicode 和 CLI JSON 输出测试。\n- 使用 `bash` 运行测试：6 个测试全部通过；CLI 输出为 JSON：`[\"Ada\", \"Bob\"]`。\n- 按要求调用了 `powershell` 一次：`Write-Output 'protocol-smoke'`。由于当前 Linux 环境没有 `/usr/bin/pwsh`，实际工具报错为 `bwrap: execvp /usr/bin/pwsh: No such file or directory`，因此无法执行 PowerShell，未安装任何软件。",
+  "all_assistant_output_is_toolcall": true,
+  "registered_tools": [
+    "read",
+    "bash",
+    "edit",
+    "write",
+    "grep",
+    "find",
+    "ls",
+    "powershell",
+    "reply_user"
+  ],
+  "executed_tools": [
+    "read",
+    "ls",
+    "find",
+    "grep",
+    "edit",
+    "write",
+    "bash",
+    "powershell",
+    "reply_user"
+  ],
+  "tool_errors": 2
+}

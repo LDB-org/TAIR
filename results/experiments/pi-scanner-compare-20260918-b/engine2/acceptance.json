@@ -1,0 +1,122 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "test": "open_closed_range_duplicate",
+      "workers": 1,
+      "result": {
+        "closed_ports": [
+          56685
+        ],
+        "host": "127.0.0.1",
+        "open_ports": [
+          34231,
+          43441
+        ]
+      }
+    },
+    {
+      "test": "open_closed_range_duplicate",
+      "workers": 4,
+      "result": {
+        "closed_ports": [
+          56685
+        ],
+        "host": "127.0.0.1",
+        "open_ports": [
+          34231,
+          43441
+        ]
+      }
+    },
+    {
+      "test": "open_closed_range_duplicate",
+      "workers": 16,
+      "result": {
+        "closed_ports": [
+          56685
+        ],
+        "host": "127.0.0.1",
+        "open_ports": [
+          34231,
+          43441
+        ]
+      }
+    },
+    {
+      "test": "invalid_ports",
+      "value": "0",
+      "exit_code": 2
+    },
+    {
+      "test": "invalid_ports",
+      "value": "65536",
+      "exit_code": 2
+    },
+    {
+      "test": "invalid_ports",
+      "value": "20-10",
+      "exit_code": 2
+    },
+    {
+      "test": "invalid_ports",
+      "value": "abc",
+      "exit_code": 2
+    },
+    {
+      "test": "invalid_ports",
+      "value": "1,,2",
+      "exit_code": 2
+    },
+    {
+      "test": "invalid_ports",
+      "value": "1-2-3",
+      "exit_code": 2
+    },
+    {
+      "test": "invalid_ports",
+      "value": "-1",
+      "exit_code": 2
+    },
+    {
+      "test": "invalid_ports",
+      "value": "",
+      "exit_code": 2
+    },
+    {
+      "test": "invalid_option",
+      "flag": "--workers",
+      "value": "0",
+      "exit_code": 2
+    },
+    {
+      "test": "invalid_option",
+      "flag": "--workers",
+      "value": "-1",
+      "exit_code": 2
+    },
+    {
+      "test": "invalid_option",
+      "flag": "--timeout",
+      "value": "0",
+      "exit_code": 2
+    },
+    {
+      "test": "invalid_option",
+      "flag": "--timeout",
+      "value": "-1",
+      "exit_code": 2
+    },
+    {
+      "test": "help",
+      "exit_code": 0
+    },
+    {
+      "test": "agent_written_unittest_rerun",
+      "stdout": "",
+      "stderr": "test_cli_dns_error (test_port_scanner.CliTests.test_cli_dns_error) ... ok\ntest_cli_invalid_port_spec (test_port_scanner.CliTests.test_cli_invalid_port_spec) ... ok\ntest_cli_invalid_timeout (test_port_scanner.CliTests.test_cli_invalid_timeout) ... ok\ntest_cli_invalid_workers (test_port_scanner.CliTests.test_cli_invalid_workers) ... ok\ntest_cli_mixed_ranges_and_duplicates (test_port_scanner.CliTests.test_cli_mixed_ranges_and_duplicates) ... ok\ntest_cli_open_and_closed_detection (test_port_scanner.CliTests.test_cli_open_and_closed_detection) ... ok\ntest_cli_reversed_range (test_port_scanner.CliTests.test_cli_reversed_range) ... ok\ntest_help (test_port_scanner.CliTests.test_help) ... ok\ntest_empty_spec (test_port_scanner.PortSpecTests.test_empty_spec) ... ok\ntest_invalid_port (test_port_scanner.PortSpecTests.test_invalid_port) ... ok\ntest_malformed_range (test_port_scanner.PortSpecTests.test_malformed_range) ... ok\ntest_mixed_ranges_and_duplicates (test_port_scanner.PortSpecTests.test_mixed_ranges_and_duplicates) ... ok\ntest_out_of_range (test_port_scanner.PortSpecTests.test_out_of_range) ... ok\ntest_range (test_port_scanner.PortSpecTests.test_range) ... ok\ntest_reversed_range (test_port_scanner.PortSpecTests.test_reversed_range) ... ok\ntest_single_port (test_port_scanner.PortSpecTests.test_single_port) ... ok\ntest_whitespace (test_port_scanner.PortSpecTests.test_whitespace) ... ok\ntest_connection_refused_and_timeout_count_as_closed (test_port_scanner.ScannerFunctionTests.test_connection_refused_and_timeout_count_as_closed) ... ok\ntest_open_and_closed_detection (test_port_scanner.ScannerFunctionTests.test_open_and_closed_detection) ... ok\n\n----------------------------------------------------------------------\nRan 19 tests in 1.028s\n\nOK\n",
+      "exit_code": 0
+    }
+  ],
+  "count": 17
+}

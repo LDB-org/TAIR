@@ -1,0 +1,128 @@
+{
+  "case": "novel_nan",
+  "arm": "jit",
+  "source_sha256": "1f742c656974c92cd2a68946680a65a37bb516be55574bb5cb8da7e66c00c737",
+  "book_size_before": 2,
+  "requests": [
+    {
+      "route": "/tokenize",
+      "seconds": 1.2686117429984733,
+      "usage": null,
+      "metrics": null,
+      "request_id": null
+    },
+    {
+      "route": "/v1/completions",
+      "seconds": 1.5509198610088788,
+      "usage": {
+        "prompt_tokens": 1540,
+        "total_tokens": 1541,
+        "completion_tokens": 1,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": null
+      },
+      "metrics": {
+        "time_to_first_token_ms": 199.15335439145565,
+        "generation_time_ms": 0.0,
+        "queue_time_ms": 0.004896894097328186,
+        "mean_itl_ms": null,
+        "tokens_per_second": 5.021256122226297,
+        "speculative_decoding": null
+      },
+      "request_id": "cmpl-b743b5ba9c3ca253"
+    },
+    {
+      "route": "/v1/chat/completions",
+      "seconds": 3.951413808041252,
+      "usage": {
+        "prompt_tokens": 1689,
+        "total_tokens": 1734,
+        "completion_tokens": 45,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "metrics": {
+        "time_to_first_token_ms": 189.80213906615973,
+        "generation_time_ms": 2432.7462492510676,
+        "queue_time_ms": 0.004938803613185883,
+        "mean_itl_ms": 55.289687482978806,
+        "tokens_per_second": 17.158882635097726,
+        "speculative_decoding": null
+      },
+      "request_id": "chatcmpl-9a43c3ec6245cafd"
+    }
+  ],
+  "passed": false,
+  "gate_accepted": true,
+  "false_acceptance": true,
+  "cache_hit": false,
+  "admitted": false,
+  "candidates": [
+    {
+      "id": 1,
+      "description": "Make main JSON output retain Unicode host characters rather than escaping them with ASCII unicode escapes. Preserve the existing output fields, sorted keys, trailing newline and all scanner behavior.",
+      "edits": [
+        [
+          "kw",
+          "json.dumps",
+          "ensure_ascii",
+          false
+        ]
+      ]
+    }
+  ],
+  "decision": {
+    "id": 1,
+    "description": "Make main JSON output retain Unicode host characters rather than escaping them with ASCII unicode escapes. Preserve the existing output fields, sorted keys, trailing newline and all scanner behavior.",
+    "edits": [
+      [
+        "kw",
+        "json.dumps",
+        "ensure_ascii",
+        false
+      ]
+    ]
+  },
+  "scores": [
+    -1.701756238937378,
+    -0.20175623893737793
+  ],
+  "confidence": {
+    "conditional_probability": 0.8175744761936437,
+    "margin": 1.5,
+    "candidate_mass": 0.99965709784976
+  },
+  "cached_validation": {
+    "passed": false,
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 11, in <module>\n    else:raise AssertionError('nonstandard NaN JSON accepted')\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: nonstandard NaN JSON accepted\n"
+  },
+  "fallback_reason": "oracle_rejected_cached_edit",
+  "generated": true,
+  "generated_edits": [
+    [
+      "return_if",
+      "main",
+      "any(not isinstance(x, int) or isinstance(x, bool) for x in open_ports + closed_ports)",
+      "ValueError('port results must be integers')"
+    ]
+  ],
+  "generated_validation": {
+    "passed": false,
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 9, in <module>\n    try:m.main(['--host','127.0.0.1','--ports','80'])\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/port_scanner.py\", line 149, in main\n    if any((not isinstance(x, int) or isinstance(x, bool) for x in open_ports + closed_ports)):\n                                                                   ^^^^^^^^^^\nUnboundLocalError: cannot access local variable 'open_ports' where it is not associated with a value\n"
+  },
+  "seconds": 6.907521876972169,
+  "book_size_after": 2,
+  "usage_complete": true,
+  "usage": {
+    "prompt_tokens": 3229,
+    "completion_tokens": 46,
+    "total_tokens": 3275
+  },
+  "control_records": 1
+}

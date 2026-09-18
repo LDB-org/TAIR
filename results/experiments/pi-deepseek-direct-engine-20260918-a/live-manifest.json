@@ -1,0 +1,60 @@
+{
+  "model_path": "/data/models/DeepSeek-V4-Flash-Vision-Exp",
+  "metadata": {
+    "config.json": [
+      "6821d6ad3681a4b137b066b76094fa82ebd0a380",
+      "11823cdb9ef2911555e3a50832e26463ce8bce5d"
+    ],
+    "model.safetensors.index.json": [
+      "6821d6ad3681a4b137b066b76094fa82ebd0a380",
+      "edf6b1260af1f6fa131f2580d826ff3e4938ef00"
+    ],
+    "tokenizer_config.json": [
+      "6821d6ad3681a4b137b066b76094fa82ebd0a380",
+      "f3dad388a2bbfd6a8605bd02754acd86d9ca5112"
+    ]
+  },
+  "hashes": {
+    "config.json": "6cd841bdd6702f5e2ac34671bc78047ed80817102465525ae2a41c502abbcd75",
+    "model.safetensors.index.json": "507977e3d3818865264e68c0fdab139aa7f3929d0d0cf693dacc47428da56395",
+    "tokenizer_config.json": "6ac8c8dc065ed118161d02dd532749ae3f52c243deac27872134fae2f50d8547"
+  },
+  "image": "sha256:c0dec7f60c449fc4089134dcbc2b80462e9d39622fa33dba83dfb0b1d90987dc",
+  "args": [
+    "serve",
+    "/model",
+    "--trust-remote-code",
+    "--tokenizer-mode",
+    "deepseek_v4",
+    "--kv-cache-dtype",
+    "fp8",
+    "--max-model-len",
+    "272000",
+    "--tensor-parallel-size",
+    "2",
+    "--pipeline-parallel-size",
+    "3",
+    "--kv-cache-memory-bytes",
+    "2560M",
+    "--max-num-batched-tokens",
+    "1024",
+    "--max-num-seqs",
+    "4",
+    "--block-size",
+    "256",
+    "--scheduling-policy",
+    "priority",
+    "--enable-prefix-caching",
+    "--disable-uvicorn-access-log",
+    "--enable-auto-tool-choice",
+    "--tool-call-parser",
+    "deepseek_v4",
+    "--reasoning-parser",
+    "deepseek_v4",
+    "--allowed-local-media-path",
+    "/model",
+    "--enable-per-request-metrics"
+  ],
+  "started_at": "2026-09-17T23:18:06.83773249Z",
+  "vllm": "0.28.1rc1.dev137+g5ab628dd1"
+}

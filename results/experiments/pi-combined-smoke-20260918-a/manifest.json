@@ -1,0 +1,17 @@
+{
+  "cases": {
+    "default_workers_six": "Change build_parser so --workers defaults to 6, preserving explicit overrides, other defaults and all existing behavior."
+  },
+  "repeats": 1,
+  "seed": 20260922,
+  "arms": [
+    "native",
+    "typed",
+    "combined"
+  ],
+  "source_sha256": "1f742c656974c92cd2a68946680a65a37bb516be55574bb5cb8da7e66c00c737",
+  "fallback": "At most one native retry from pristine on any protocol/application/test failure",
+  "usage": "Combined prompt = classifier prefix + injected suffix; completion includes one internal control ID; missing usage is never a zero-cost success",
+  "timing": "includes API/SSH, applying edits, task tests, and 17 regressions; payload preparation excluded for every arm",
+  "scope": "Same-project previously tuned regression tasks; not held-out or full agent-loop validation"
+}

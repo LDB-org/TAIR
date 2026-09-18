@@ -1,0 +1,76 @@
+{
+  "agent-0": {
+    "summary": {
+      "protocol_mode": "engine_raw",
+      "turns": 9,
+      "seconds": 85.60390505,
+      "reply": "已完成 catalog.py 修复：clean_names 现在会先 trim 名称，丢弃空字符串和纯空白名称，并在保留首次出现顺序的前提下去除重复项；CLI 仍输出 JSON。已创建 test_catalog.py，包含空输入、纯空白、trim 后去重、顺序、Unicode 和 CLI JSON 输出测试；通过 bash 运行 unittest 全部通过，CLI 输出为 [\"Ada\", \"Bob\"]。按要求调用了 powershell 一次，但当前 Linux 环境没有 /usr/bin/pwsh，实际工具错误为 “bwrap: execvp /usr/bin/pwsh: No such file or directory”，因此无法执行 PowerShell 命令；未安装软件，也未使用 PowerShell 修改文件。",
+      "all_assistant_output_is_toolcall": true,
+      "registered_tools": [
+        "read",
+        "bash",
+        "edit",
+        "write",
+        "grep",
+        "find",
+        "ls",
+        "powershell",
+        "reply_user"
+      ],
+      "executed_tools": [
+        "read",
+        "ls",
+        "find",
+        "grep",
+        "edit",
+        "write",
+        "bash",
+        "powershell",
+        "reply_user"
+      ],
+      "tool_errors": 1
+    },
+    "actual_model_requests": 9,
+    "local_limit_events": 0,
+    "usage": {
+      "prompt_tokens": 21806,
+      "completion_tokens": 597,
+      "total_tokens": 22403
+    },
+    "generation_seconds": 12.713668735697865,
+    "queue_seconds": 58.22924419865012
+  },
+  "agent-1": {
+    "summary": {
+      "protocol_mode": "engine_raw",
+      "turns": 21,
+      "seconds": 122.388738506,
+      "reply": null,
+      "all_assistant_output_is_toolcall": false,
+      "registered_tools": [
+        "read",
+        "bash",
+        "edit",
+        "write",
+        "grep",
+        "find",
+        "ls",
+        "powershell",
+        "reply_user"
+      ],
+      "executed_tools": [
+        "read"
+      ],
+      "tool_errors": 20
+    },
+    "actual_model_requests": 20,
+    "local_limit_events": 1,
+    "usage": {
+      "prompt_tokens": 53680,
+      "completion_tokens": 180,
+      "total_tokens": 53860
+    },
+    "generation_seconds": 4.085535070858896,
+    "queue_seconds": 87.18966825958341
+  }
+}

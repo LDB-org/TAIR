@@ -1,0 +1,55 @@
+{
+  "utc": "2026-09-17T19:50:44.961271+00:00",
+  "model_container_started_at": "2026-09-06T04:00:51.807796485Z",
+  "image_id": "sha256:c0dec7f60c449fc4089134dcbc2b80462e9d39622fa33dba83dfb0b1d90987dc",
+  "image": "vllm-openai:deepseekv4-flash-vision-pp-inputids-20260906",
+  "gpu_snapshot": "index, name, utilization.gpu [%], memory.used [MiB], memory.total [MiB]\n0, NVIDIA GeForce RTX 5090, 99 %, 30512 MiB, 32607 MiB\n1, NVIDIA GeForce RTX 5090, 98 %, 30512 MiB, 32607 MiB\n2, NVIDIA GeForce RTX 5090, 92 %, 32148 MiB, 32607 MiB\n3, NVIDIA GeForce RTX 5090, 94 %, 32108 MiB, 32607 MiB\n4, NVIDIA GeForce RTX 5090, 71 %, 30992 MiB, 32607 MiB\n5, NVIDIA GeForce RTX 5090, 74 %, 30992 MiB, 32607 MiB\n",
+  "health": {
+    "status": "ready",
+    "model": "/model",
+    "source_sha256": "0d3fe37701df2e0b4a837b5e44b89321c012d550b9c07179a508765b7a6c373a",
+    "decision_token_ids": [
+      35,
+      36
+    ],
+    "upstream": "http://127.0.0.1:8000",
+    "schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "arguments"
+      ],
+      "properties": {
+        "name": {
+          "enum": [
+            "reply_user",
+            "search_docs"
+          ]
+        },
+        "arguments": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "priority",
+            "content"
+          ],
+          "properties": {
+            "priority": {
+              "enum": [
+                "normal",
+                "urgent"
+              ]
+            },
+            "content": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "tool_execution": false
+  },
+  "model_config_sha256": "6cd841bdd6702f5e2ac34671bc78047ed80817102465525ae2a41c502abbcd75"
+}

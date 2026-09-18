@@ -1,0 +1,70 @@
+{
+  "case": "new_divisor",
+  "repeat": 0,
+  "arm": "previous",
+  "passed": true,
+  "seconds": 10.07530922605656,
+  "explicit_native_route": false,
+  "failure_fallback": true,
+  "attempts": [
+    {
+      "passed": false,
+      "mode": "multi",
+      "transport_seconds": 3.7010207769926637,
+      "usage": {
+        "prompt_tokens": 433,
+        "total_tokens": 487,
+        "completion_tokens": 54,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "metrics": {
+        "time_to_first_token_ms": 152.23183948546648,
+        "generation_time_ms": 2034.103101119399,
+        "queue_time_ms": 288.21447025984526,
+        "mean_itl_ms": 38.37930379470564,
+        "tokens_per_second": 24.69886886821674,
+        "speculative_decoding": null
+      },
+      "error": "ValueError: Overlapping edits",
+      "seconds": 3.704073618981056
+    },
+    {
+      "passed": true,
+      "mode": "native",
+      "transport_seconds": 6.180680116987787,
+      "usage": {
+        "prompt_tokens": 669,
+        "total_tokens": 759,
+        "completion_tokens": 90,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "metrics": {
+        "time_to_first_token_ms": 156.72958455979824,
+        "generation_time_ms": 1130.1080277189612,
+        "queue_time_ms": 3733.6305659264326,
+        "mean_itl_ms": 12.697843008078216,
+        "tokens_per_second": 69.93889449705009,
+        "speculative_decoding": null
+      },
+      "validation": {
+        "passed": true,
+        "returncode": 0,
+        "stdout": "{\"passed\": true, \"regression\": \"test_jobs (test_port_scanner.RegressionTests.test_jobs) ... ok\\ntest_parser (test_port_scanner.RegressionTests.test_parser) ... ok\\ntest_record (test_port_scanner.RegressionTests.test_record) ... ok\\ntest_resource (test_port_scanner.RegressionTests.test_resource) ... ok\\ntest_score_zero (test_port_scanner.RegressionTests.test_score_zero) ... ok\\n\\n----------------------------------------------------------------------\\nRan 5 tests in 0.000s\\n\\nOK\\n\"}\n",
+        "stderr": ""
+      },
+      "seconds": 6.369888469984289
+    }
+  ],
+  "usage_complete": true,
+  "usage": {
+    "prompt_tokens": 1102,
+    "completion_tokens": 144,
+    "total_tokens": 1246
+  }
+}

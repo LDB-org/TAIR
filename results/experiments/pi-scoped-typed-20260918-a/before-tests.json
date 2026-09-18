@@ -1,0 +1,62 @@
+{
+  "short_flags": {
+    "passed": false,
+    "returncode": 2,
+    "stdout": "",
+    "stderr": "usage: check.py [-h] --host HOST --ports PORTS [--timeout TIMEOUT]\n                [--workers WORKERS]\ncheck.py: error: the following arguments are required: --host, --ports\n"
+  },
+  "empty_scan": {
+    "passed": false,
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 82, in <module>\n    assert m.scan_ports('invalid',[],.1,1)==([],[])\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/port_scanner.py\", line 90, in scan_ports\n    resolved = socket.getaddrinfo(host, None, family=socket.AF_INET, type=socket.SOCK_STREAM)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/unittest/mock.py\", line 1134, in __call__\n    return self._mock_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/unittest/mock.py\", line 1138, in _mock_call\n    return self._execute_mock_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/unittest/mock.py\", line 1193, in _execute_mock_call\n    raise effect\nAssertionError: DNS must not run\n"
+  },
+  "socket_creation": {
+    "passed": false,
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 90, in <module>\n    assert m.scan_port('127.0.0.1',80,.1) is False\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/port_scanner.py\", line 62, in scan_port\n    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/unittest/mock.py\", line 1134, in __call__\n    return self._mock_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/unittest/mock.py\", line 1138, in _mock_call\n    return self._execute_mock_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/unittest/mock.py\", line 1193, in _execute_mock_call\n    raise effect\nOSError: allocation failed\n"
+  },
+  "compact_json": {
+    "passed": false,
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 79, in <module>\n    assert stream.getvalue()==json.dumps(value,sort_keys=True,separators=(',',':'))+'\\n',repr(stream.getvalue())\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: '{\"closed_ports\": [81], \"host\": \"127.0.0.1\", \"open_ports\": [80]}\\n'\n"
+  },
+  "default_workers_six": {
+    "passed": false,
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 41, in <module>\n    assert parser.parse_args(['--host','127.0.0.1','--ports','80']).workers==6\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  },
+  "timeout_upper_guard": {
+    "passed": false,
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 48, in <module>\n    else:raise AssertionError(timeout)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 60.01\n"
+  },
+  "guard_empty_host": {
+    "passed": false,
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 28, in <module>\n    else:raise AssertionError('empty host accepted')\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: empty host accepted\n"
+  },
+  "json_unicode": {
+    "passed": false,
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 38, in <module>\n    assert stream.getvalue()==json.dumps(expected,sort_keys=True,ensure_ascii=False)+'\\n',repr(stream.getvalue())\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: '{\"closed_ports\": [], \"host\": \"\\\\u6d4b\\\\u8bd5.example\", \"open_ports\": [80]}\\n'\n"
+  },
+  "json_no_nan": {
+    "passed": false,
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 11, in <module>\n    else:raise AssertionError('nonstandard NaN JSON accepted')\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: nonstandard NaN JSON accepted\n"
+  },
+  "guard_port_bounds": {
+    "passed": false,
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 18, in <module>\n    else:raise AssertionError(port)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0\n"
+  }
+}

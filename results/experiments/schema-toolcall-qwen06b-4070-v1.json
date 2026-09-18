@@ -1,0 +1,1023 @@
+{
+  "schema": "openjev-schema-toolcall-toy-v1",
+  "model": {
+    "source": "/home/Kei/.cache/huggingface/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca",
+    "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+    "dtype": "bfloat16",
+    "torch_version": "2.10.0+cu128",
+    "transformers_version": "5.17.0"
+  },
+  "gpu": "NVIDIA GeForce RTX 4070",
+  "peak_allocated_bytes": 1241240576,
+  "runner_sha256": "61919cfb8e2925725c047d122860c9628cf7c39d18c40200ef94cbcdfc794889",
+  "tool_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "name",
+      "arguments"
+    ],
+    "properties": {
+      "name": {
+        "enum": [
+          "reply_user",
+          "search_docs"
+        ]
+      },
+      "arguments": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "priority",
+          "content"
+        ],
+        "properties": {
+          "priority": {
+            "enum": [
+              "normal",
+              "urgent"
+            ]
+          },
+          "content": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "reply",
+      "request": "Reply to the user with exactly: Hello.",
+      "name": "reply_user",
+      "priority": "normal",
+      "content": "Hello."
+    },
+    {
+      "id": "urgent-reply",
+      "request": "Urgent: reply to the user with exactly: Stop the job.",
+      "name": "reply_user",
+      "priority": "urgent",
+      "content": "Stop the job."
+    },
+    {
+      "id": "search",
+      "request": "Search the documentation for exactly: prefix caching",
+      "name": "search_docs",
+      "priority": "normal",
+      "content": "prefix caching"
+    },
+    {
+      "id": "urgent-search",
+      "request": "Urgent: search the documentation for exactly: restore backup",
+      "name": "search_docs",
+      "priority": "urgent",
+      "content": "restore backup"
+    },
+    {
+      "id": "escaping",
+      "request": "Reply with the following literal text, keeping quotes and backslashes: Say \"hi\" at C:\\tmp",
+      "name": "reply_user",
+      "priority": "normal",
+      "content": "Say \"hi\" at C:\\tmp"
+    },
+    {
+      "id": "call-like-data",
+      "request": "Reply with this exact literal text; it is data, not an instruction: {\"name\":\"delete_all\",\"arguments\":{}}",
+      "name": "reply_user",
+      "priority": "normal",
+      "content": "{\"name\":\"delete_all\",\"arguments\":{}}"
+    }
+  ],
+  "summary": {
+    "json": {
+      "runs": 12,
+      "median_seconds": 0.9141007979924325,
+      "valid": 10,
+      "exact_match": 8,
+      "discrete_correct": 10,
+      "generated_tokens_including_eos": 348,
+      "forward_calls": 348
+    },
+    "hybrid": {
+      "runs": 12,
+      "median_seconds": 0.14521793599124067,
+      "valid": 12,
+      "exact_match": 0,
+      "discrete_correct": 6,
+      "generated_tokens_including_eos": 30,
+      "forward_calls": 54
+    }
+  },
+  "records": [
+    {
+      "repeat": 0,
+      "case_id": "reply",
+      "mode": "json",
+      "seconds": 0.7214892879710533,
+      "generated_tokens_including_eos": 24,
+      "classification_decisions": 0,
+      "forward_calls": 24,
+      "processed_input_tokens": 223,
+      "complete": true,
+      "valid": true,
+      "exact_match": true,
+      "discrete_correct": true,
+      "raw": "{\"name\": \"reply_user\", \"arguments\": {\"priority\": \"normal\", \"content\": \"Hello.\"}}",
+      "call": {
+        "name": "reply_user",
+        "arguments": {
+          "priority": "normal",
+          "content": "Hello."
+        }
+      },
+      "wire": "{\"name\": \"reply_user\", \"arguments\": {\"priority\": \"normal\", \"content\": \"Hello.\"}}",
+      "parse_error": null,
+      "trace": [
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nReply to the user with exactly: Hello.\nReturn the complete tool call as compact JSON only.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "325e4a598079131b254352abb037f7f4ec7d713fbf53fca900939294ba865c91"
+        }
+      ]
+    },
+    {
+      "repeat": 0,
+      "case_id": "reply",
+      "mode": "hybrid",
+      "seconds": 0.17869186698226258,
+      "generated_tokens_including_eos": 5,
+      "classification_decisions": 2,
+      "forward_calls": 7,
+      "processed_input_tokens": 308,
+      "complete": true,
+      "valid": true,
+      "exact_match": false,
+      "discrete_correct": true,
+      "raw": "A: reply_user",
+      "call": {
+        "name": "reply_user",
+        "arguments": {
+          "priority": "normal",
+          "content": "A: reply_user"
+        }
+      },
+      "wire": "{\"name\": \"reply_user\", \"arguments\": {\"priority\": \"normal\", \"content\": \"A: reply_user\"}}",
+      "parse_error": null,
+      "trace": [
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nReply to the user with exactly: Hello.\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "d9bbea84d0d5dadc5ea7f755af1631af4846328937c9938ea2d1f7b20af7b158",
+          "option_probabilities": [
+            0.9999687671661377,
+            3.120191104244441e-05
+          ]
+        },
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nReply to the user with exactly: Hello.\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user. Select arguments.priority.\nSelect one value. Reply with its letter only.\nA: normal\nB: urgent<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "aba6a01a67700b7d01f262114eb6949b5c78c43258bad5680e59ffdd6839041e",
+          "option_probabilities": [
+            0.9924227595329285,
+            0.007577240467071533
+          ]
+        },
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nReply to the user with exactly: Hello.\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user. Select arguments.priority.\nSelect one value. Reply with its letter only.\nA: normal\nB: urgent<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user; priority: normal. Output only the raw text value of arguments.content. Do not use JSON, wrapping quotes, or a code fence.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "0a5c8ffd21adce72a9494ecf9a915d0aa9954327b851b2ea2c5ba33fb17aa005"
+        }
+      ]
+    },
+    {
+      "repeat": 0,
+      "case_id": "urgent-reply",
+      "mode": "hybrid",
+      "seconds": 0.11526496097212657,
+      "generated_tokens_including_eos": 2,
+      "classification_decisions": 2,
+      "forward_calls": 4,
+      "processed_input_tokens": 311,
+      "complete": true,
+      "valid": true,
+      "exact_match": false,
+      "discrete_correct": false,
+      "raw": "A",
+      "call": {
+        "name": "reply_user",
+        "arguments": {
+          "priority": "normal",
+          "content": "A"
+        }
+      },
+      "wire": "{\"name\": \"reply_user\", \"arguments\": {\"priority\": \"normal\", \"content\": \"A\"}}",
+      "parse_error": null,
+      "trace": [
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nUrgent: reply to the user with exactly: Stop the job.\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "c1870ad26c09815db43d8a2a2e236530bc788344bbc1ca9d084f07172905dfaf",
+          "option_probabilities": [
+            0.9940890073776245,
+            0.005911068990826607
+          ]
+        },
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nUrgent: reply to the user with exactly: Stop the job.\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user. Select arguments.priority.\nSelect one value. Reply with its letter only.\nA: normal\nB: urgent<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "aae0e39b503a7d696d67e4b31d6b2f35fcbb3f906572d49d9a9052f5a2154f1a",
+          "option_probabilities": [
+            0.9933071732521057,
+            0.006692850962281227
+          ]
+        },
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nUrgent: reply to the user with exactly: Stop the job.\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user. Select arguments.priority.\nSelect one value. Reply with its letter only.\nA: normal\nB: urgent<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user; priority: normal. Output only the raw text value of arguments.content. Do not use JSON, wrapping quotes, or a code fence.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "936224f7d9907d66c4183909be70c2db80f1ff8d815c0c689190c20b564088f5"
+        }
+      ]
+    },
+    {
+      "repeat": 0,
+      "case_id": "urgent-reply",
+      "mode": "json",
+      "seconds": 0.9480640289839357,
+      "generated_tokens_including_eos": 26,
+      "classification_decisions": 0,
+      "forward_calls": 26,
+      "processed_input_tokens": 231,
+      "complete": true,
+      "valid": true,
+      "exact_match": true,
+      "discrete_correct": true,
+      "raw": "{\"name\": \"reply_user\", \"arguments\": {\"priority\": \"urgent\", \"content\": \"Stop the job.\"}}",
+      "call": {
+        "name": "reply_user",
+        "arguments": {
+          "priority": "urgent",
+          "content": "Stop the job."
+        }
+      },
+      "wire": "{\"name\": \"reply_user\", \"arguments\": {\"priority\": \"urgent\", \"content\": \"Stop the job.\"}}",
+      "parse_error": null,
+      "trace": [
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nUrgent: reply to the user with exactly: Stop the job.\nReturn the complete tool call as compact JSON only.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "bf2dcea793b63e9cd681314a4a74accdf20bf3fff73dcf65c9982964ba161543"
+        }
+      ]
+    },
+    {
+      "repeat": 0,
+      "case_id": "search",
+      "mode": "json",
+      "seconds": 0.8439813160221092,
+      "generated_tokens_including_eos": 24,
+      "classification_decisions": 0,
+      "forward_calls": 24,
+      "processed_input_tokens": 223,
+      "complete": true,
+      "valid": true,
+      "exact_match": true,
+      "discrete_correct": true,
+      "raw": "{\"name\": \"search_docs\", \"arguments\": {\"priority\": \"normal\", \"content\": \"prefix caching\"}}",
+      "call": {
+        "name": "search_docs",
+        "arguments": {
+          "priority": "normal",
+          "content": "prefix caching"
+        }
+      },
+      "wire": "{\"name\": \"search_docs\", \"arguments\": {\"priority\": \"normal\", \"content\": \"prefix caching\"}}",
+      "parse_error": null,
+      "trace": [
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nSearch the documentation for exactly: prefix caching\nReturn the complete tool call as compact JSON only.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "ae21745982b93a8a503e0bde982d5b10a92e85cde690629b324e3d0fee0c70d8"
+        }
+      ]
+    },
+    {
+      "repeat": 0,
+      "case_id": "search",
+      "mode": "hybrid",
+      "seconds": 0.16459508799016476,
+      "generated_tokens_including_eos": 2,
+      "classification_decisions": 2,
+      "forward_calls": 4,
+      "processed_input_tokens": 305,
+      "complete": true,
+      "valid": true,
+      "exact_match": false,
+      "discrete_correct": false,
+      "raw": "A",
+      "call": {
+        "name": "reply_user",
+        "arguments": {
+          "priority": "normal",
+          "content": "A"
+        }
+      },
+      "wire": "{\"name\": \"reply_user\", \"arguments\": {\"priority\": \"normal\", \"content\": \"A\"}}",
+      "parse_error": null,
+      "trace": [
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nSearch the documentation for exactly: prefix caching\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "ef40abee00e3d49173cba93126689858d670d1eece45f5e41018611996ce8e72",
+          "option_probabilities": [
+            0.977022647857666,
+            0.022977370768785477
+          ]
+        },
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nSearch the documentation for exactly: prefix caching\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user. Select arguments.priority.\nSelect one value. Reply with its letter only.\nA: normal\nB: urgent<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "cf17815600b8fb1ad6c84c9557009e4f3d050b53523305c58d1d7b940f4a268d",
+          "option_probabilities": [
+            0.9902915358543396,
+            0.009708477184176445
+          ]
+        },
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nSearch the documentation for exactly: prefix caching\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user. Select arguments.priority.\nSelect one value. Reply with its letter only.\nA: normal\nB: urgent<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user; priority: normal. Output only the raw text value of arguments.content. Do not use JSON, wrapping quotes, or a code fence.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "a1a421c0608fa2bc86a5f839ad9bdf5696803598b443da84a5c9bee3f6fc011e"
+        }
+      ]
+    },
+    {
+      "repeat": 0,
+      "case_id": "urgent-search",
+      "mode": "hybrid",
+      "seconds": 0.1494393739849329,
+      "generated_tokens_including_eos": 2,
+      "classification_decisions": 2,
+      "forward_calls": 4,
+      "processed_input_tokens": 309,
+      "complete": true,
+      "valid": true,
+      "exact_match": false,
+      "discrete_correct": false,
+      "raw": "A",
+      "call": {
+        "name": "reply_user",
+        "arguments": {
+          "priority": "normal",
+          "content": "A"
+        }
+      },
+      "wire": "{\"name\": \"reply_user\", \"arguments\": {\"priority\": \"normal\", \"content\": \"A\"}}",
+      "parse_error": null,
+      "trace": [
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nUrgent: search the documentation for exactly: restore backup\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "36ed0fa1580d6532799a0341d295a291cf58d7e207753762cb351876499691cb",
+          "option_probabilities": [
+            0.9399133324623108,
+            0.06008664518594742
+          ]
+        },
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nUrgent: search the documentation for exactly: restore backup\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user. Select arguments.priority.\nSelect one value. Reply with its letter only.\nA: normal\nB: urgent<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "fba26038e4dd1d1031f675f73d3d966a8916226d58c03113c82942b43c81c47c",
+          "option_probabilities": [
+            0.9940890073776245,
+            0.005911068990826607
+          ]
+        },
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nUrgent: search the documentation for exactly: restore backup\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user. Select arguments.priority.\nSelect one value. Reply with its letter only.\nA: normal\nB: urgent<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user; priority: normal. Output only the raw text value of arguments.content. Do not use JSON, wrapping quotes, or a code fence.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "6b38712b56bd05986babc70c937b5f3fc9b9ae002c56657dd8d6d998558cdd55"
+        }
+      ]
+    },
+    {
+      "repeat": 0,
+      "case_id": "urgent-search",
+      "mode": "json",
+      "seconds": 1.0071897020097822,
+      "generated_tokens_including_eos": 30,
+      "classification_decisions": 0,
+      "forward_calls": 30,
+      "processed_input_tokens": 233,
+      "complete": true,
+      "valid": true,
+      "exact_match": false,
+      "discrete_correct": true,
+      "raw": "{\"name\": \"search_docs\", \"arguments\": {\"priority\": \"urgent\", \"content\": \"search the documentation for exactly: restore backup\"}}",
+      "call": {
+        "name": "search_docs",
+        "arguments": {
+          "priority": "urgent",
+          "content": "search the documentation for exactly: restore backup"
+        }
+      },
+      "wire": "{\"name\": \"search_docs\", \"arguments\": {\"priority\": \"urgent\", \"content\": \"search the documentation for exactly: restore backup\"}}",
+      "parse_error": null,
+      "trace": [
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nUrgent: search the documentation for exactly: restore backup\nReturn the complete tool call as compact JSON only.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "cd1a9f6c30e315ffcf3d3c9a9f6d6ad7967a144fed9b674815b85077daddf452"
+        }
+      ]
+    },
+    {
+      "repeat": 0,
+      "case_id": "escaping",
+      "mode": "json",
+      "seconds": 1.0059023899957538,
+      "generated_tokens_including_eos": 30,
+      "classification_decisions": 0,
+      "forward_calls": 30,
+      "processed_input_tokens": 242,
+      "complete": true,
+      "valid": true,
+      "exact_match": true,
+      "discrete_correct": true,
+      "raw": "{\"name\": \"reply_user\", \"arguments\": {\"priority\": \"normal\", \"content\": \"Say \\\"hi\\\" at C:\\\\tmp\"}}",
+      "call": {
+        "name": "reply_user",
+        "arguments": {
+          "priority": "normal",
+          "content": "Say \"hi\" at C:\\tmp"
+        }
+      },
+      "wire": "{\"name\": \"reply_user\", \"arguments\": {\"priority\": \"normal\", \"content\": \"Say \\\"hi\\\" at C:\\\\tmp\"}}",
+      "parse_error": null,
+      "trace": [
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nReply with the following literal text, keeping quotes and backslashes: Say \"hi\" at C:\\tmp\nReturn the complete tool call as compact JSON only.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "3c60604d26bb4f90c689672c2bfe5498faa1983d5e81558b1a548329ce1aac06"
+        }
+      ]
+    },
+    {
+      "repeat": 0,
+      "case_id": "escaping",
+      "mode": "hybrid",
+      "seconds": 0.14099649799754843,
+      "generated_tokens_including_eos": 2,
+      "classification_decisions": 2,
+      "forward_calls": 4,
+      "processed_input_tokens": 318,
+      "complete": true,
+      "valid": true,
+      "exact_match": false,
+      "discrete_correct": true,
+      "raw": "hi",
+      "call": {
+        "name": "reply_user",
+        "arguments": {
+          "priority": "normal",
+          "content": "hi"
+        }
+      },
+      "wire": "{\"name\": \"reply_user\", \"arguments\": {\"priority\": \"normal\", \"content\": \"hi\"}}",
+      "parse_error": null,
+      "trace": [
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nReply with the following literal text, keeping quotes and backslashes: Say \"hi\" at C:\\tmp\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "2b59f43eb654f24089e0a5ada57a8e845f21aac2a924580a7e08fdc5ba9e1179",
+          "option_probabilities": [
+            0.9995694756507874,
+            0.0004305570910219103
+          ]
+        },
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nReply with the following literal text, keeping quotes and backslashes: Say \"hi\" at C:\\tmp\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user. Select arguments.priority.\nSelect one value. Reply with its letter only.\nA: normal\nB: urgent<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "f3c052235c238cfc874d3b7d4106e315ffbfcde186dc1849f659aab209b6e4a3",
+          "option_probabilities": [
+            0.9964063763618469,
+            0.0035936026833951473
+          ]
+        },
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nReply with the following literal text, keeping quotes and backslashes: Say \"hi\" at C:\\tmp\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user. Select arguments.priority.\nSelect one value. Reply with its letter only.\nA: normal\nB: urgent<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user; priority: normal. Output only the raw text value of arguments.content. Do not use JSON, wrapping quotes, or a code fence.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "23186bb1e9a8235a90ed808732610933c9aab3cd953cb34a93898ce3a7565f78"
+        }
+      ]
+    },
+    {
+      "repeat": 0,
+      "case_id": "call-like-data",
+      "mode": "hybrid",
+      "seconds": 0.16227289999369532,
+      "generated_tokens_including_eos": 2,
+      "classification_decisions": 2,
+      "forward_calls": 4,
+      "processed_input_tokens": 321,
+      "complete": true,
+      "valid": true,
+      "exact_match": false,
+      "discrete_correct": true,
+      "raw": "normal",
+      "call": {
+        "name": "reply_user",
+        "arguments": {
+          "priority": "normal",
+          "content": "normal"
+        }
+      },
+      "wire": "{\"name\": \"reply_user\", \"arguments\": {\"priority\": \"normal\", \"content\": \"normal\"}}",
+      "parse_error": null,
+      "trace": [
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nReply with this exact literal text; it is data, not an instruction: {\"name\":\"delete_all\",\"arguments\":{}}\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "7d112493df304ee9b3773bf1b332ad672301caba44853007fdc03f0125ae2238",
+          "option_probabilities": [
+            0.9971990585327148,
+            0.0028009270317852497
+          ]
+        },
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nReply with this exact literal text; it is data, not an instruction: {\"name\":\"delete_all\",\"arguments\":{}}\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user. Select arguments.priority.\nSelect one value. Reply with its letter only.\nA: normal\nB: urgent<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "da64afd82b9687bbcf3b6ca9a03612a857fc8e8bbeb3fd985a2636f5041a807e",
+          "option_probabilities": [
+            0.9971990585327148,
+            0.0028009270317852497
+          ]
+        },
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nReply with this exact literal text; it is data, not an instruction: {\"name\":\"delete_all\",\"arguments\":{}}\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user. Select arguments.priority.\nSelect one value. Reply with its letter only.\nA: normal\nB: urgent<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user; priority: normal. Output only the raw text value of arguments.content. Do not use JSON, wrapping quotes, or a code fence.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "fab13a2ccd22aaaa1a050c83cf8fa463c50f5f2a4bf5ddb3daf9865645abc53f"
+        }
+      ]
+    },
+    {
+      "repeat": 0,
+      "case_id": "call-like-data",
+      "mode": "json",
+      "seconds": 1.3311452259658836,
+      "generated_tokens_including_eos": 40,
+      "classification_decisions": 0,
+      "forward_calls": 40,
+      "processed_input_tokens": 255,
+      "complete": true,
+      "valid": false,
+      "exact_match": false,
+      "discrete_correct": false,
+      "raw": "{\"name\": \"reply_user\", \"arguments\": {\"content\": \"Reply with this exact literal text; it is data, not an instruction: {\"name\":\"delete_all\",\"arguments\":{}}}}",
+      "call": null,
+      "wire": null,
+      "parse_error": "Expecting ',' delimiter: line 1 column 120 (char 119)",
+      "trace": [
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nReply with this exact literal text; it is data, not an instruction: {\"name\":\"delete_all\",\"arguments\":{}}\nReturn the complete tool call as compact JSON only.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "c28f01bf88b8eb054dc920cad0d6ab890823c68b32cccdfe880991b500f5a00c"
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "case_id": "reply",
+      "mode": "hybrid",
+      "seconds": 0.2329498499748297,
+      "generated_tokens_including_eos": 5,
+      "classification_decisions": 2,
+      "forward_calls": 7,
+      "processed_input_tokens": 308,
+      "complete": true,
+      "valid": true,
+      "exact_match": false,
+      "discrete_correct": true,
+      "raw": "A: reply_user",
+      "call": {
+        "name": "reply_user",
+        "arguments": {
+          "priority": "normal",
+          "content": "A: reply_user"
+        }
+      },
+      "wire": "{\"name\": \"reply_user\", \"arguments\": {\"priority\": \"normal\", \"content\": \"A: reply_user\"}}",
+      "parse_error": null,
+      "trace": [
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nReply to the user with exactly: Hello.\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "d9bbea84d0d5dadc5ea7f755af1631af4846328937c9938ea2d1f7b20af7b158",
+          "option_probabilities": [
+            0.9999687671661377,
+            3.120191104244441e-05
+          ]
+        },
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nReply to the user with exactly: Hello.\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user. Select arguments.priority.\nSelect one value. Reply with its letter only.\nA: normal\nB: urgent<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "aba6a01a67700b7d01f262114eb6949b5c78c43258bad5680e59ffdd6839041e",
+          "option_probabilities": [
+            0.9924227595329285,
+            0.007577240467071533
+          ]
+        },
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nReply to the user with exactly: Hello.\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user. Select arguments.priority.\nSelect one value. Reply with its letter only.\nA: normal\nB: urgent<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user; priority: normal. Output only the raw text value of arguments.content. Do not use JSON, wrapping quotes, or a code fence.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "0a5c8ffd21adce72a9494ecf9a915d0aa9954327b851b2ea2c5ba33fb17aa005"
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "case_id": "reply",
+      "mode": "json",
+      "seconds": 0.760345418995712,
+      "generated_tokens_including_eos": 24,
+      "classification_decisions": 0,
+      "forward_calls": 24,
+      "processed_input_tokens": 223,
+      "complete": true,
+      "valid": true,
+      "exact_match": true,
+      "discrete_correct": true,
+      "raw": "{\"name\": \"reply_user\", \"arguments\": {\"priority\": \"normal\", \"content\": \"Hello.\"}}",
+      "call": {
+        "name": "reply_user",
+        "arguments": {
+          "priority": "normal",
+          "content": "Hello."
+        }
+      },
+      "wire": "{\"name\": \"reply_user\", \"arguments\": {\"priority\": \"normal\", \"content\": \"Hello.\"}}",
+      "parse_error": null,
+      "trace": [
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nReply to the user with exactly: Hello.\nReturn the complete tool call as compact JSON only.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "325e4a598079131b254352abb037f7f4ec7d713fbf53fca900939294ba865c91"
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "case_id": "urgent-reply",
+      "mode": "json",
+      "seconds": 0.8401840720325708,
+      "generated_tokens_including_eos": 26,
+      "classification_decisions": 0,
+      "forward_calls": 26,
+      "processed_input_tokens": 231,
+      "complete": true,
+      "valid": true,
+      "exact_match": true,
+      "discrete_correct": true,
+      "raw": "{\"name\": \"reply_user\", \"arguments\": {\"priority\": \"urgent\", \"content\": \"Stop the job.\"}}",
+      "call": {
+        "name": "reply_user",
+        "arguments": {
+          "priority": "urgent",
+          "content": "Stop the job."
+        }
+      },
+      "wire": "{\"name\": \"reply_user\", \"arguments\": {\"priority\": \"urgent\", \"content\": \"Stop the job.\"}}",
+      "parse_error": null,
+      "trace": [
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nUrgent: reply to the user with exactly: Stop the job.\nReturn the complete tool call as compact JSON only.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "bf2dcea793b63e9cd681314a4a74accdf20bf3fff73dcf65c9982964ba161543"
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "case_id": "urgent-reply",
+      "mode": "hybrid",
+      "seconds": 0.11490248201880604,
+      "generated_tokens_including_eos": 2,
+      "classification_decisions": 2,
+      "forward_calls": 4,
+      "processed_input_tokens": 311,
+      "complete": true,
+      "valid": true,
+      "exact_match": false,
+      "discrete_correct": false,
+      "raw": "A",
+      "call": {
+        "name": "reply_user",
+        "arguments": {
+          "priority": "normal",
+          "content": "A"
+        }
+      },
+      "wire": "{\"name\": \"reply_user\", \"arguments\": {\"priority\": \"normal\", \"content\": \"A\"}}",
+      "parse_error": null,
+      "trace": [
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nUrgent: reply to the user with exactly: Stop the job.\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "c1870ad26c09815db43d8a2a2e236530bc788344bbc1ca9d084f07172905dfaf",
+          "option_probabilities": [
+            0.9940890073776245,
+            0.005911068990826607
+          ]
+        },
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nUrgent: reply to the user with exactly: Stop the job.\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user. Select arguments.priority.\nSelect one value. Reply with its letter only.\nA: normal\nB: urgent<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "aae0e39b503a7d696d67e4b31d6b2f35fcbb3f906572d49d9a9052f5a2154f1a",
+          "option_probabilities": [
+            0.9933071732521057,
+            0.006692850962281227
+          ]
+        },
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nUrgent: reply to the user with exactly: Stop the job.\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user. Select arguments.priority.\nSelect one value. Reply with its letter only.\nA: normal\nB: urgent<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user; priority: normal. Output only the raw text value of arguments.content. Do not use JSON, wrapping quotes, or a code fence.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "936224f7d9907d66c4183909be70c2db80f1ff8d815c0c689190c20b564088f5"
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "case_id": "search",
+      "mode": "hybrid",
+      "seconds": 0.1218154969974421,
+      "generated_tokens_including_eos": 2,
+      "classification_decisions": 2,
+      "forward_calls": 4,
+      "processed_input_tokens": 305,
+      "complete": true,
+      "valid": true,
+      "exact_match": false,
+      "discrete_correct": false,
+      "raw": "A",
+      "call": {
+        "name": "reply_user",
+        "arguments": {
+          "priority": "normal",
+          "content": "A"
+        }
+      },
+      "wire": "{\"name\": \"reply_user\", \"arguments\": {\"priority\": \"normal\", \"content\": \"A\"}}",
+      "parse_error": null,
+      "trace": [
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nSearch the documentation for exactly: prefix caching\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "ef40abee00e3d49173cba93126689858d670d1eece45f5e41018611996ce8e72",
+          "option_probabilities": [
+            0.977022647857666,
+            0.022977370768785477
+          ]
+        },
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nSearch the documentation for exactly: prefix caching\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user. Select arguments.priority.\nSelect one value. Reply with its letter only.\nA: normal\nB: urgent<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "cf17815600b8fb1ad6c84c9557009e4f3d050b53523305c58d1d7b940f4a268d",
+          "option_probabilities": [
+            0.9902915358543396,
+            0.009708477184176445
+          ]
+        },
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nSearch the documentation for exactly: prefix caching\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user. Select arguments.priority.\nSelect one value. Reply with its letter only.\nA: normal\nB: urgent<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user; priority: normal. Output only the raw text value of arguments.content. Do not use JSON, wrapping quotes, or a code fence.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "a1a421c0608fa2bc86a5f839ad9bdf5696803598b443da84a5c9bee3f6fc011e"
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "case_id": "search",
+      "mode": "json",
+      "seconds": 0.8092699130065739,
+      "generated_tokens_including_eos": 24,
+      "classification_decisions": 0,
+      "forward_calls": 24,
+      "processed_input_tokens": 223,
+      "complete": true,
+      "valid": true,
+      "exact_match": true,
+      "discrete_correct": true,
+      "raw": "{\"name\": \"search_docs\", \"arguments\": {\"priority\": \"normal\", \"content\": \"prefix caching\"}}",
+      "call": {
+        "name": "search_docs",
+        "arguments": {
+          "priority": "normal",
+          "content": "prefix caching"
+        }
+      },
+      "wire": "{\"name\": \"search_docs\", \"arguments\": {\"priority\": \"normal\", \"content\": \"prefix caching\"}}",
+      "parse_error": null,
+      "trace": [
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nSearch the documentation for exactly: prefix caching\nReturn the complete tool call as compact JSON only.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "ae21745982b93a8a503e0bde982d5b10a92e85cde690629b324e3d0fee0c70d8"
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "case_id": "urgent-search",
+      "mode": "json",
+      "seconds": 0.9527989139896818,
+      "generated_tokens_including_eos": 30,
+      "classification_decisions": 0,
+      "forward_calls": 30,
+      "processed_input_tokens": 233,
+      "complete": true,
+      "valid": true,
+      "exact_match": false,
+      "discrete_correct": true,
+      "raw": "{\"name\": \"search_docs\", \"arguments\": {\"priority\": \"urgent\", \"content\": \"search the documentation for exactly: restore backup\"}}",
+      "call": {
+        "name": "search_docs",
+        "arguments": {
+          "priority": "urgent",
+          "content": "search the documentation for exactly: restore backup"
+        }
+      },
+      "wire": "{\"name\": \"search_docs\", \"arguments\": {\"priority\": \"urgent\", \"content\": \"search the documentation for exactly: restore backup\"}}",
+      "parse_error": null,
+      "trace": [
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nUrgent: search the documentation for exactly: restore backup\nReturn the complete tool call as compact JSON only.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "cd1a9f6c30e315ffcf3d3c9a9f6d6ad7967a144fed9b674815b85077daddf452"
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "case_id": "urgent-search",
+      "mode": "hybrid",
+      "seconds": 0.130124180985149,
+      "generated_tokens_including_eos": 2,
+      "classification_decisions": 2,
+      "forward_calls": 4,
+      "processed_input_tokens": 309,
+      "complete": true,
+      "valid": true,
+      "exact_match": false,
+      "discrete_correct": false,
+      "raw": "A",
+      "call": {
+        "name": "reply_user",
+        "arguments": {
+          "priority": "normal",
+          "content": "A"
+        }
+      },
+      "wire": "{\"name\": \"reply_user\", \"arguments\": {\"priority\": \"normal\", \"content\": \"A\"}}",
+      "parse_error": null,
+      "trace": [
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nUrgent: search the documentation for exactly: restore backup\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "36ed0fa1580d6532799a0341d295a291cf58d7e207753762cb351876499691cb",
+          "option_probabilities": [
+            0.9399133324623108,
+            0.06008664518594742
+          ]
+        },
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nUrgent: search the documentation for exactly: restore backup\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user. Select arguments.priority.\nSelect one value. Reply with its letter only.\nA: normal\nB: urgent<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "fba26038e4dd1d1031f675f73d3d966a8916226d58c03113c82942b43c81c47c",
+          "option_probabilities": [
+            0.9940890073776245,
+            0.005911068990826607
+          ]
+        },
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nUrgent: search the documentation for exactly: restore backup\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user. Select arguments.priority.\nSelect one value. Reply with its letter only.\nA: normal\nB: urgent<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user; priority: normal. Output only the raw text value of arguments.content. Do not use JSON, wrapping quotes, or a code fence.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "6b38712b56bd05986babc70c937b5f3fc9b9ae002c56657dd8d6d998558cdd55"
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "case_id": "escaping",
+      "mode": "hybrid",
+      "seconds": 0.10907335195224732,
+      "generated_tokens_including_eos": 2,
+      "classification_decisions": 2,
+      "forward_calls": 4,
+      "processed_input_tokens": 318,
+      "complete": true,
+      "valid": true,
+      "exact_match": false,
+      "discrete_correct": true,
+      "raw": "hi",
+      "call": {
+        "name": "reply_user",
+        "arguments": {
+          "priority": "normal",
+          "content": "hi"
+        }
+      },
+      "wire": "{\"name\": \"reply_user\", \"arguments\": {\"priority\": \"normal\", \"content\": \"hi\"}}",
+      "parse_error": null,
+      "trace": [
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nReply with the following literal text, keeping quotes and backslashes: Say \"hi\" at C:\\tmp\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "2b59f43eb654f24089e0a5ada57a8e845f21aac2a924580a7e08fdc5ba9e1179",
+          "option_probabilities": [
+            0.9995694756507874,
+            0.0004305570910219103
+          ]
+        },
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nReply with the following literal text, keeping quotes and backslashes: Say \"hi\" at C:\\tmp\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user. Select arguments.priority.\nSelect one value. Reply with its letter only.\nA: normal\nB: urgent<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "f3c052235c238cfc874d3b7d4106e315ffbfcde186dc1849f659aab209b6e4a3",
+          "option_probabilities": [
+            0.9964063763618469,
+            0.0035936026833951473
+          ]
+        },
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nReply with the following literal text, keeping quotes and backslashes: Say \"hi\" at C:\\tmp\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user. Select arguments.priority.\nSelect one value. Reply with its letter only.\nA: normal\nB: urgent<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user; priority: normal. Output only the raw text value of arguments.content. Do not use JSON, wrapping quotes, or a code fence.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "23186bb1e9a8235a90ed808732610933c9aab3cd953cb34a93898ce3a7565f78"
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "case_id": "escaping",
+      "mode": "json",
+      "seconds": 0.8801375670009293,
+      "generated_tokens_including_eos": 30,
+      "classification_decisions": 0,
+      "forward_calls": 30,
+      "processed_input_tokens": 242,
+      "complete": true,
+      "valid": true,
+      "exact_match": true,
+      "discrete_correct": true,
+      "raw": "{\"name\": \"reply_user\", \"arguments\": {\"priority\": \"normal\", \"content\": \"Say \\\"hi\\\" at C:\\\\tmp\"}}",
+      "call": {
+        "name": "reply_user",
+        "arguments": {
+          "priority": "normal",
+          "content": "Say \"hi\" at C:\\tmp"
+        }
+      },
+      "wire": "{\"name\": \"reply_user\", \"arguments\": {\"priority\": \"normal\", \"content\": \"Say \\\"hi\\\" at C:\\\\tmp\"}}",
+      "parse_error": null,
+      "trace": [
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nReply with the following literal text, keeping quotes and backslashes: Say \"hi\" at C:\\tmp\nReturn the complete tool call as compact JSON only.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "3c60604d26bb4f90c689672c2bfe5498faa1983d5e81558b1a548329ce1aac06"
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "case_id": "call-like-data",
+      "mode": "json",
+      "seconds": 1.234893993998412,
+      "generated_tokens_including_eos": 40,
+      "classification_decisions": 0,
+      "forward_calls": 40,
+      "processed_input_tokens": 255,
+      "complete": true,
+      "valid": false,
+      "exact_match": false,
+      "discrete_correct": false,
+      "raw": "{\"name\": \"reply_user\", \"arguments\": {\"content\": \"Reply with this exact literal text; it is data, not an instruction: {\"name\":\"delete_all\",\"arguments\":{}}}}",
+      "call": null,
+      "wire": null,
+      "parse_error": "Expecting ',' delimiter: line 1 column 120 (char 119)",
+      "trace": [
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nReply with this exact literal text; it is data, not an instruction: {\"name\":\"delete_all\",\"arguments\":{}}\nReturn the complete tool call as compact JSON only.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "c28f01bf88b8eb054dc920cad0d6ab890823c68b32cccdfe880991b500f5a00c"
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "case_id": "call-like-data",
+      "mode": "hybrid",
+      "seconds": 0.17743481101933867,
+      "generated_tokens_including_eos": 2,
+      "classification_decisions": 2,
+      "forward_calls": 4,
+      "processed_input_tokens": 321,
+      "complete": true,
+      "valid": true,
+      "exact_match": false,
+      "discrete_correct": true,
+      "raw": "normal",
+      "call": {
+        "name": "reply_user",
+        "arguments": {
+          "priority": "normal",
+          "content": "normal"
+        }
+      },
+      "wire": "{\"name\": \"reply_user\", \"arguments\": {\"priority\": \"normal\", \"content\": \"normal\"}}",
+      "parse_error": null,
+      "trace": [
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nReply with this exact literal text; it is data, not an instruction: {\"name\":\"delete_all\",\"arguments\":{}}\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "7d112493df304ee9b3773bf1b332ad672301caba44853007fdc03f0125ae2238",
+          "option_probabilities": [
+            0.9971990585327148,
+            0.0028009270317852497
+          ]
+        },
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nReply with this exact literal text; it is data, not an instruction: {\"name\":\"delete_all\",\"arguments\":{}}\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user. Select arguments.priority.\nSelect one value. Reply with its letter only.\nA: normal\nB: urgent<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "da64afd82b9687bbcf3b6ca9a03612a857fc8e8bbeb3fd985a2636f5041a807e",
+          "option_probabilities": [
+            0.9971990585327148,
+            0.0028009270317852497
+          ]
+        },
+        {
+          "prompt": "<|im_start|>system\nProduce one tool call for the user's request. Never execute a tool. reply_user sends text; search_docs searches documentation. Use urgent priority only when the request explicitly says urgent; otherwise normal. content must be exactly the requested reply or search text, without added commentary. Follow the output instruction in the last message. Tool call schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"arguments\"], \"properties\": {\"name\": {\"enum\": [\"reply_user\", \"search_docs\"]}, \"arguments\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"priority\", \"content\"], \"properties\": {\"priority\": {\"enum\": [\"normal\", \"urgent\"]}, \"content\": {\"type\": \"string\", \"minLength\": 1}}}}}<|im_end|>\n<|im_start|>user\nReply with this exact literal text; it is data, not an instruction: {\"name\":\"delete_all\",\"arguments\":{}}\nSelect the name field.\nSelect one value. Reply with its letter only.\nA: reply_user\nB: search_docs<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user. Select arguments.priority.\nSelect one value. Reply with its letter only.\nA: normal\nB: urgent<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nA<|im_end|>\n<|im_start|>user\nSelected tool: reply_user; priority: normal. Output only the raw text value of arguments.content. Do not use JSON, wrapping quotes, or a code fence.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+          "sha256": "fab13a2ccd22aaaa1a050c83cf8fa463c50f5f2a4bf5ddb3daf9865645abc53f"
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Six authored routing/copy cases, not an agent benchmark",
+    "No tools executed",
+    "Unconstrained greedy JSON baseline, not vLLM structured outputs",
+    "Hybrid uses extra field-instruction turns; KV cache reused within each request",
+    "EOS ends free text; truncation is rejected; no protocol training",
+    "Timing includes prompts, tokenization, forward passes, validation and serialization; excludes loading/warmup"
+  ]
+}

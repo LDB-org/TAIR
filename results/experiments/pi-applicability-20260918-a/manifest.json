@@ -1,0 +1,22 @@
+{
+  "cases": {
+    "compact_record": "Make encode_record emit compact JSON without spaces after separators, preserving sorted keys and all field values.",
+    "finite_record": "Make encode_record reject NaN and Infinity with ValueError instead of emitting nonstandard JSON. Preserve ordinary finite records and sorted keys.",
+    "score_range": "In normalize_score, reject scores outside 0..100 inclusive with ValueError before any arithmetic. Preserve normal normalization and both boundary values.",
+    "empty_jobs": "Make schedule_jobs return ([], 0) immediately when jobs is empty. Preserve nonempty jobs, ordering and the given workers value.",
+    "retry_alias": "Add -r as an alias for --retries in build_parser. Preserve the existing long flag, default of 2, explicit overrides and label behavior.",
+    "missing_resource": "Make read_resource return None when loader(key) raises LookupError, preserving normal return values and allowing other exception types to propagate.",
+    "new_divisor": "Change normalize_score to divide the input score by 200 instead of 100, preserving its signature and accepting all numeric input values."
+  },
+  "repeats": 1,
+  "seed": 20260919,
+  "arms": [
+    "native",
+    "previous",
+    "applicable"
+  ],
+  "unsupported_case": "new_divisor",
+  "policy": "each structural arm may make one additional native request on explicit route or failure; all costs counted; no training or prompt tuning after launch",
+  "fixture": "new configuration utility, adapter-compatible filename; five regression tests, not the previous scanner",
+  "scope": "six operation-compatible edits plus one expression beyond the restricted language; small synthetic screening, not production proof"
+}

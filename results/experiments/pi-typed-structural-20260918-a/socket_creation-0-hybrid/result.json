@@ -1,0 +1,68 @@
+{
+  "case": "socket_creation",
+  "repeat": 0,
+  "arm": "hybrid",
+  "passed": true,
+  "seconds": 29.518723392044194,
+  "attempts": [
+    {
+      "passed": false,
+      "mode": "multi",
+      "transport_seconds": 10.747968369047157,
+      "usage": {
+        "prompt_tokens": 1949,
+        "total_tokens": 1981,
+        "completion_tokens": 32,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "metrics": {
+        "time_to_first_token_ms": 209.67943407595158,
+        "generation_time_ms": 1558.116895146668,
+        "queue_time_ms": 7452.596405521035,
+        "mean_itl_ms": 50.26183532731187,
+        "tokens_per_second": 18.10163279051035,
+        "speculative_decoding": null
+      },
+      "error": "SyntaxError: invalid syntax (<unknown>, line 1)",
+      "seconds": 10.755332763015758
+    },
+    {
+      "passed": true,
+      "mode": "native",
+      "transport_seconds": 17.59526819299208,
+      "usage": {
+        "prompt_tokens": 1926,
+        "total_tokens": 2273,
+        "completion_tokens": 347,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "metrics": {
+        "time_to_first_token_ms": 195.8963479846716,
+        "generation_time_ms": 4455.91683126986,
+        "queue_time_ms": 11666.338164359331,
+        "mean_itl_ms": 12.878372344710579,
+        "tokens_per_second": 74.59456917734772,
+        "speculative_decoding": null
+      },
+      "validation": {
+        "passed": true,
+        "returncode": 0,
+        "stdout": "{\"passed\": true, \"regression\": \"test_cli_dns_error (test_port_scanner.CliTests.test_cli_dns_error) ... ok\\ntest_cli_invalid_ports (test_port_scanner.CliTests.test_cli_invalid_ports) ... ok\\ntest_cli_invalid_timeout (test_port_scanner.CliTests.test_cli_invalid_timeout) ... ok\\ntest_cli_invalid_workers (test_port_scanner.CliTests.test_cli_invalid_workers) ... ok\\ntest_cli_mixed_ranges_duplicates (test_port_scanner.CliTests.test_cli_mixed_ranges_duplicates) ... ok\\ntest_cli_open_and_closed_detection (test_port_scanner.CliTests.test_cli_open_and_closed_detection) ... ok\\ntest_help (test_port_scanner.CliTests.test_help) ... ok\\ntest_empty_spec_rejected (test_port_scanner.ParsePortSpecTests.test_empty_spec_rejected) ... ok\\ntest_malformed_item_rejected (test_port_scanner.ParsePortSpecTests.test_malformed_item_rejected) ... ok\\ntest_mixed_ranges_and_duplicates (test_port_scanner.ParsePortSpecTests.test_mixed_ranges_and_duplicates) ... ok\\ntest_out_of_range_rejected (test_port_scanner.ParsePortSpecTests.test_out_of_range_rejected) ... ok\\ntest_range (test_port_scanner.ParsePortSpecTests.test_range) ... ok\\ntest_reversed_range_rejected (test_port_scanner.ParsePortSpecTests.test_reversed_range_rejected) ... ok\\ntest_single_port (test_port_scanner.ParsePortSpecTests.test_single_port) ... ok\\ntest_whitespace (test_port_scanner.ParsePortSpecTests.test_whitespace) ... ok\\ntest_dns_error_raises (test_port_scanner.ScannerFunctionTests.test_dns_error_raises) ... ok\\ntest_open_and_closed_detection (test_port_scanner.ScannerFunctionTests.test_open_and_closed_detection) ... ok\\n\\n----------------------------------------------------------------------\\nRan 17 tests in 0.928s\\n\\nOK\\n\"}\n",
+        "stderr": ""
+      },
+      "seconds": 18.76170201698551
+    }
+  ],
+  "usage_complete": true,
+  "usage": {
+    "prompt_tokens": 3875,
+    "completion_tokens": 379,
+    "total_tokens": 4254
+  }
+}

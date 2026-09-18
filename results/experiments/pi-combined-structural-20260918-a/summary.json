@@ -1,0 +1,126 @@
+{
+  "native": {
+    "tasks": 10,
+    "first_pass": 10,
+    "final_pass": 10,
+    "requests": 10,
+    "fallbacks": 0,
+    "usage": {
+      "prompt_tokens": 19236,
+      "completion_tokens": 2036,
+      "total_tokens": 21272
+    },
+    "generated_tokens_excluding_controls": 2036,
+    "control_records": 0,
+    "wall_seconds": 187.1998279329855,
+    "median_seconds": 16.11023043797468,
+    "failed_attempts": [],
+    "queue_time_ms": 136473.4651306644,
+    "generation_time_ms": 23782.675384543836
+  },
+  "typed": {
+    "tasks": 10,
+    "first_pass": 8,
+    "final_pass": 10,
+    "requests": 12,
+    "fallbacks": 2,
+    "usage": {
+      "prompt_tokens": 20727,
+      "completion_tokens": 470,
+      "total_tokens": 21197
+    },
+    "generated_tokens_excluding_controls": 470,
+    "control_records": 0,
+    "wall_seconds": 98.88126819295576,
+    "median_seconds": 7.002966066007502,
+    "failed_attempts": [
+      {
+        "case": "json_no_nan",
+        "repeat": 0,
+        "error": null,
+        "validation": {
+          "passed": false,
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 9, in <module>\n    try:m.main(['--host','127.0.0.1','--ports','80'])\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/port_scanner.py\", line 149, in main\n    if any((not isinstance(x, int) or isinstance(x, bool) for x in open_ports + closed_ports)):\n                                                                   ^^^^^^^^^^\nUnboundLocalError: cannot access local variable 'open_ports' where it is not associated with a value\n"
+        }
+      },
+      {
+        "case": "compact_json",
+        "repeat": 0,
+        "error": null,
+        "validation": {
+          "passed": false,
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 79, in <module>\n    assert stream.getvalue()==json.dumps(value,sort_keys=True,separators=(',',':'))+'\\n',repr(stream.getvalue())\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: '{\"closed_ports\": [81]\"host\": \"127.0.0.1\"\"open_ports\": [80]}\\n'\n"
+        }
+      }
+    ],
+    "queue_time_ms": 59891.94074552506,
+    "generation_time_ms": 11038.002146407962
+  },
+  "combined": {
+    "tasks": 10,
+    "first_pass": 7,
+    "final_pass": 10,
+    "requests": 13,
+    "fallbacks": 3,
+    "usage": {
+      "prompt_tokens": 24460,
+      "completion_tokens": 898,
+      "total_tokens": 25358
+    },
+    "generated_tokens_excluding_controls": 888,
+    "control_records": 10,
+    "wall_seconds": 146.75502596714068,
+    "median_seconds": 11.01683205703739,
+    "failed_attempts": [
+      {
+        "case": "socket_creation",
+        "repeat": 0,
+        "error": null,
+        "validation": {
+          "passed": false,
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 90, in <module>\n    assert m.scan_port('127.0.0.1',80,.1) is False\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/port_scanner.py\", line 62, in scan_port\n    if socket.socket(socket.AF_INET, socket.SOCK_STREAM):\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/unittest/mock.py\", line 1134, in __call__\n    return self._mock_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/unittest/mock.py\", line 1138, in _mock_call\n    return self._execute_mock_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/unittest/mock.py\", line 1193, in _execute_mock_call\n    raise effect\nOSError: allocation failed\n"
+        }
+      },
+      {
+        "case": "guard_empty_host",
+        "repeat": 0,
+        "error": "SyntaxError: invalid syntax (<unknown>, line 1)",
+        "validation": null
+      },
+      {
+        "case": "default_workers_six",
+        "repeat": 0,
+        "error": null,
+        "validation": {
+          "passed": false,
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 40, in <module>\n    parser=m.build_parser()\n           ^^^^^^^^^^^^^^^^\n  File \"/work/port_scanner.py\", line 139, in build_parser\n    parser.add_argument(\n  File \"/usr/lib/python3.12/argparse.py\", line 1475, in add_argument\n    kwargs = self._get_optional_kwargs(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/argparse.py\", line 1610, in _get_optional_kwargs\n    raise ValueError(msg % args)\nValueError: invalid option string '6': must start with a character '-'\n"
+        }
+      }
+    ],
+    "queue_time_ms": null,
+    "generation_time_ms": null
+  },
+  "combined_reductions": {
+    "native": {
+      "prompt_tokens": -0.27157413183614065,
+      "completion_tokens": 0.5589390962671905,
+      "total_tokens": -0.19208349003384728,
+      "wall_seconds": 0.21605149113878142
+    },
+    "typed": {
+      "prompt_tokens": -0.18010324697254787,
+      "completion_tokens": -0.9106382978723404,
+      "total_tokens": -0.1963013634004811,
+      "wall_seconds": -0.48415396211105044
+    }
+  },
+  "limitations": "Previously tuned same-project regression; shared backend; task-test oracle fallback; preparation excluded; not a full Pi agent loop or stable speed/production proof."
+}

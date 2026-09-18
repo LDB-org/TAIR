@@ -1,0 +1,24 @@
+{
+  "splits": {
+    "protocol-sft-v1-train.jsonl": {
+      "rows": 96,
+      "sha256": "589245238a889630ba5e3f733ed375e864ec10b44037be5918d7a4da5933187f"
+    },
+    "protocol-sft-v1-validation.jsonl": {
+      "rows": 16,
+      "sha256": "7abfae88858c2e812a42784f1460a31e4b6307a05f9138259bfc538398854455"
+    },
+    "protocol-sft-v1-test.jsonl": {
+      "rows": 32,
+      "sha256": "2a67a0a579d0f9be41bf729894c5e2c670fddaa7e875fa2b669895f5b49eed30"
+    }
+  },
+  "rules": [
+    "Disjoint request templates and payloads across splits",
+    "All four tool/priority combinations for each payload",
+    "Priority refers to outer request, not urgency words inside literal payload",
+    "Fixed final 2-epoch checkpoint; test opened for scoring only after training",
+    "Joint SFT on three hybrid stages and full JSON for every training case",
+    "Synthetic routing/copy task only, not general tool-use evaluation"
+  ]
+}

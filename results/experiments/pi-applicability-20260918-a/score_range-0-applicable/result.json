@@ -1,0 +1,70 @@
+{
+  "case": "score_range",
+  "repeat": 0,
+  "arm": "applicable",
+  "passed": true,
+  "seconds": 29.290444985963404,
+  "explicit_native_route": true,
+  "failure_fallback": false,
+  "attempts": [
+    {
+      "passed": false,
+      "mode": "multi",
+      "transport_seconds": 24.883827681012917,
+      "usage": {
+        "prompt_tokens": 506,
+        "total_tokens": 510,
+        "completion_tokens": 4,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "metrics": {
+        "time_to_first_token_ms": 156.82344418019056,
+        "generation_time_ms": 39.539274759590626,
+        "queue_time_ms": 23265.13029821217,
+        "mean_itl_ms": 13.179758253196875,
+        "tokens_per_second": 20.37046554252839,
+        "speculative_decoding": null
+      },
+      "error": "ValueError: Native route requested",
+      "seconds": 24.885537093970925
+    },
+    {
+      "passed": true,
+      "mode": "native",
+      "transport_seconds": 4.195432727981824,
+      "usage": {
+        "prompt_tokens": 670,
+        "total_tokens": 814,
+        "completion_tokens": 144,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "metrics": {
+        "time_to_first_token_ms": 152.4018319323659,
+        "generation_time_ms": 1638.4939905256033,
+        "queue_time_ms": 1175.7768485695124,
+        "mean_itl_ms": 11.457999933745477,
+        "tokens_per_second": 80.40668708599858,
+        "speculative_decoding": null
+      },
+      "validation": {
+        "passed": true,
+        "returncode": 0,
+        "stdout": "{\"passed\": true, \"regression\": \"test_jobs (test_port_scanner.RegressionTests.test_jobs) ... ok\\ntest_parser (test_port_scanner.RegressionTests.test_parser) ... ok\\ntest_record (test_port_scanner.RegressionTests.test_record) ... ok\\ntest_resource (test_port_scanner.RegressionTests.test_resource) ... ok\\ntest_score_zero (test_port_scanner.RegressionTests.test_score_zero) ... ok\\n\\n----------------------------------------------------------------------\\nRan 5 tests in 0.000s\\n\\nOK\\n\"}\n",
+        "stderr": ""
+      },
+      "seconds": 4.403547286987305
+    }
+  ],
+  "usage_complete": true,
+  "usage": {
+    "prompt_tokens": 1176,
+    "completion_tokens": 148,
+    "total_tokens": 1324
+  }
+}

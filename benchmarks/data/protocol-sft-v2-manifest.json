@@ -1,0 +1,77 @@
+{
+  "splits": {
+    "protocol-sft-v2-train.jsonl": {
+      "rows": 256,
+      "unique_payloads": 256,
+      "sha256": "ab82c0c53ba0b517c2a0b0502db674a2836e3cafe49dfa34beee289d2907a1bb"
+    },
+    "protocol-sft-v2-validation.jsonl": {
+      "rows": 32,
+      "unique_payloads": 32,
+      "sha256": "cd0bf44904f86cc886b33020e99fce0411f84fa25de8a862d191ca8df3992313"
+    },
+    "protocol-sft-v2-test.jsonl": {
+      "rows": 64,
+      "unique_payloads": 64,
+      "sha256": "989799b5db77092985add90e89fc980ab793033a10967b84523b3fd20bc74d6f"
+    }
+  },
+  "templates": {
+    "train": {
+      "reply_user": [
+        "Reply with this exact text: {text}",
+        "Send the user the following literal message: {text}",
+        "Return precisely the characters after the colon: {text}",
+        "Your response must consist only of this payload: {text}",
+        "Tell the user exactly the following, without changes: {text}",
+        "Deliver this text verbatim as a reply: {text}",
+        "The literal reply starts after the arrow → {text}",
+        "Please reproduce this message to the user unchanged:\n{text}"
+      ],
+      "search_docs": [
+        "Search the documentation for the exact query: {text}",
+        "Look up the following literal search string in the docs: {text}",
+        "Find documentation matching precisely these characters: {text}",
+        "Search the reference manual using only this query: {text}",
+        "Consult the docs with the following text unchanged: {text}",
+        "Use this verbatim string as a documentation query: {text}",
+        "The documentation query starts after the arrow → {text}",
+        "Please search documentation for this exact payload:\n{text}"
+      ]
+    },
+    "validation": {
+      "reply_user": [
+        "The message to deliver verbatim is below:\n{text}",
+        "Copy this exact response to the user → {text}"
+      ],
+      "search_docs": [
+        "Find reference pages for this exact phrase:\n{text}",
+        "Perform a docs lookup with this unchanged string → {text}"
+      ]
+    },
+    "test": {
+      "reply_user": [
+        "Transmit the literal passage below as your answer:\n{text}",
+        "Use the following text as the entire response, preserving every character: {text}",
+        "What you should say back is exactly the string following → {text}",
+        "Give the user this unchanged sequence of characters: {text}"
+      ],
+      "search_docs": [
+        "Retrieve documentation by searching this unmodified phrase:\n{text}",
+        "For a reference lookup, supply exactly this search text: {text}",
+        "Issue a documentation search whose entire query follows → {text}",
+        "Locate relevant manual entries with this unchanged sequence of characters: {text}"
+      ]
+    }
+  },
+  "rules": [
+    "Fresh base initialization; unchanged v1 LoRA settings and inference protocol",
+    "Fixed final two epochs; no checkpoint selection from test results",
+    "Each case has a unique payload; tool/priority balanced within each category",
+    "Request templates, payloads and vocabulary pools disjoint across splits",
+    "No exact reuse of previous training, validation or test requests/payloads",
+    "V1 errors informed category design, so only new v2 cases are held out",
+    "Both JSON and hybrid protocols receive supervision for every training case",
+    "Synthetic routing/copy only; no general generation quality claim"
+  ]
+}

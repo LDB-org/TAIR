@@ -1,0 +1,15 @@
+[Unit]
+Description=TAIR typed tool-call experimental protocol
+After=network.target
+[Service]
+Type=simple
+DynamicUser=yes
+ExecStart=/usr/bin/python3 -u /opt/openjev-toolcall/current/toolcall_service.py
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+[Install]
+WantedBy=multi-user.target

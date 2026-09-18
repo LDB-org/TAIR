@@ -1,0 +1,44 @@
+{
+  "compact_record": {
+    "passed": false,
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 6, in <module>\n    for value in [{'b':[1,2],'a':'x'},{}]:assert m.encode_record(value)==json.dumps(value,sort_keys=True,separators=(',',':'))\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  },
+  "finite_record": {
+    "passed": false,
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 11, in <module>\n    else:raise AssertionError('nonstandard float accepted')\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: nonstandard float accepted\n"
+  },
+  "score_range": {
+    "passed": false,
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 17, in <module>\n    else:raise AssertionError(value)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: -1\n"
+  },
+  "empty_jobs": {
+    "passed": false,
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 20, in <module>\n    assert m.schedule_jobs([],4)==([],0)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  },
+  "retry_alias": {
+    "passed": false,
+    "returncode": 2,
+    "stdout": "",
+    "stderr": "usage: check.py [-h] [--retries RETRIES] [--label LABEL]\ncheck.py: error: unrecognized arguments: -r 5\n"
+  },
+  "missing_resource": {
+    "passed": false,
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 28, in <module>\n    assert m.read_resource(missing,'absent') is None\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/port_scanner.py\", line 18, in read_resource\n    resource = loader(key)\n               ^^^^^^^^^^^\n  File \"/check.py\", line 27, in missing\n    def missing(key):raise LookupError(key)\n                     ^^^^^^^^^^^^^^^^^^^^^^\nLookupError: absent\n"
+  },
+  "new_divisor": {
+    "passed": false,
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 35, in <module>\n    for value in [-125,-1,0,1,13,50,99,100,2000]:assert m.normalize_score(value)==value/200,(value,m.normalize_score(value))\n                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: (-125, -1.25)\n"
+  }
+}

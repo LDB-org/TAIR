@@ -1,0 +1,345 @@
+{
+  "baseline": {
+    "tasks": 10,
+    "passed": 9,
+    "inference_requests": 10,
+    "tokenize_requests": 0,
+    "generated_tokens": 194,
+    "control_records": 0,
+    "usage": {
+      "prompt_tokens": 16812,
+      "completion_tokens": 194,
+      "total_tokens": 17006
+    },
+    "wall_seconds": 104.08154085703427,
+    "scheduled_inference_seconds": 7.982163698412478,
+    "queue_seconds": 74.02377191651613,
+    "cache_hits": 0,
+    "gate_accepts": 0,
+    "false_accepts_before_oracle": 0,
+    "admissions": 0
+  },
+  "jit": {
+    "tasks": 10,
+    "passed": 9,
+    "inference_requests": 14,
+    "tokenize_requests": 5,
+    "generated_tokens": 182,
+    "control_records": 5,
+    "usage": {
+      "prompt_tokens": 22757,
+      "completion_tokens": 187,
+      "total_tokens": 22944
+    },
+    "wall_seconds": 137.01366845099255,
+    "scheduled_inference_seconds": 8.380032400600612,
+    "queue_seconds": 93.80477995891124,
+    "cache_hits": 1,
+    "gate_accepts": 3,
+    "false_accepts_before_oracle": 2,
+    "admissions": 4
+  },
+  "rows": [
+    {
+      "case": "cold_workers",
+      "arm": "baseline",
+      "passed": true,
+      "cache_hit": false,
+      "gate_accepted": false,
+      "false_acceptance": false,
+      "admitted": false,
+      "usage": {
+        "prompt_tokens": 1674,
+        "completion_tokens": 12,
+        "total_tokens": 1686
+      },
+      "seconds": 2.759870913985651
+    },
+    {
+      "case": "cold_workers",
+      "arm": "jit",
+      "passed": true,
+      "cache_hit": false,
+      "gate_accepted": false,
+      "false_acceptance": false,
+      "admitted": true,
+      "usage": {
+        "prompt_tokens": 1674,
+        "completion_tokens": 12,
+        "total_tokens": 1686
+      },
+      "seconds": 2.770331671985332
+    },
+    {
+      "case": "warm_workers",
+      "arm": "jit",
+      "passed": true,
+      "cache_hit": true,
+      "gate_accepted": true,
+      "false_acceptance": false,
+      "admitted": false,
+      "usage": {
+        "prompt_tokens": 1507,
+        "completion_tokens": 1,
+        "total_tokens": 1508
+      },
+      "seconds": 3.9169180400203913
+    },
+    {
+      "case": "warm_workers",
+      "arm": "baseline",
+      "passed": true,
+      "cache_hit": false,
+      "gate_accepted": false,
+      "false_acceptance": false,
+      "admitted": false,
+      "usage": {
+        "prompt_tokens": 1674,
+        "completion_tokens": 12,
+        "total_tokens": 1686
+      },
+      "seconds": 2.4861186270136386
+    },
+    {
+      "case": "cold_unicode",
+      "arm": "baseline",
+      "passed": true,
+      "cache_hit": false,
+      "gate_accepted": false,
+      "false_acceptance": false,
+      "admitted": false,
+      "usage": {
+        "prompt_tokens": 1688,
+        "completion_tokens": 16,
+        "total_tokens": 1704
+      },
+      "seconds": 2.66596887196647
+    },
+    {
+      "case": "cold_unicode",
+      "arm": "jit",
+      "passed": true,
+      "cache_hit": false,
+      "gate_accepted": false,
+      "false_acceptance": false,
+      "admitted": true,
+      "usage": {
+        "prompt_tokens": 1688,
+        "completion_tokens": 16,
+        "total_tokens": 1704
+      },
+      "seconds": 4.587215699022636
+    },
+    {
+      "case": "warm_unicode",
+      "arm": "jit",
+      "passed": true,
+      "cache_hit": false,
+      "gate_accepted": false,
+      "false_acceptance": false,
+      "admitted": false,
+      "usage": {
+        "prompt_tokens": 3203,
+        "completion_tokens": 17,
+        "total_tokens": 3220
+      },
+      "seconds": 9.13203701301245
+    },
+    {
+      "case": "warm_unicode",
+      "arm": "baseline",
+      "passed": true,
+      "cache_hit": false,
+      "gate_accepted": false,
+      "false_acceptance": false,
+      "admitted": false,
+      "usage": {
+        "prompt_tokens": 1676,
+        "completion_tokens": 16,
+        "total_tokens": 1692
+      },
+      "seconds": 13.141570171050262
+    },
+    {
+      "case": "novel_nan",
+      "arm": "baseline",
+      "passed": false,
+      "cache_hit": false,
+      "gate_accepted": false,
+      "false_acceptance": false,
+      "admitted": false,
+      "usage": {
+        "prompt_tokens": 1689,
+        "completion_tokens": 45,
+        "total_tokens": 1734
+      },
+      "seconds": 4.073323983000591
+    },
+    {
+      "case": "novel_nan",
+      "arm": "jit",
+      "passed": false,
+      "cache_hit": false,
+      "gate_accepted": true,
+      "false_acceptance": true,
+      "admitted": false,
+      "usage": {
+        "prompt_tokens": 3229,
+        "completion_tokens": 46,
+        "total_tokens": 3275
+      },
+      "seconds": 6.907521876972169
+    },
+    {
+      "case": "repeat_nan",
+      "arm": "baseline",
+      "passed": true,
+      "cache_hit": false,
+      "gate_accepted": false,
+      "false_acceptance": false,
+      "admitted": false,
+      "usage": {
+        "prompt_tokens": 1677,
+        "completion_tokens": 15,
+        "total_tokens": 1692
+      },
+      "seconds": 47.22782136203023
+    },
+    {
+      "case": "repeat_nan",
+      "arm": "jit",
+      "passed": true,
+      "cache_hit": false,
+      "gate_accepted": true,
+      "false_acceptance": true,
+      "admitted": true,
+      "usage": {
+        "prompt_tokens": 3205,
+        "completion_tokens": 16,
+        "total_tokens": 3221
+      },
+      "seconds": 11.280532432021573
+    },
+    {
+      "case": "stale_workers",
+      "arm": "baseline",
+      "passed": true,
+      "cache_hit": false,
+      "gate_accepted": false,
+      "false_acceptance": false,
+      "admitted": false,
+      "usage": {
+        "prompt_tokens": 1682,
+        "completion_tokens": 12,
+        "total_tokens": 1694
+      },
+      "seconds": 2.78724658198189
+    },
+    {
+      "case": "stale_workers",
+      "arm": "jit",
+      "passed": true,
+      "cache_hit": false,
+      "gate_accepted": false,
+      "false_acceptance": false,
+      "admitted": true,
+      "usage": {
+        "prompt_tokens": 1682,
+        "completion_tokens": 12,
+        "total_tokens": 1694
+      },
+      "seconds": 29.16164614498848
+    },
+    {
+      "case": "warm_new_version",
+      "arm": "jit",
+      "passed": true,
+      "cache_hit": false,
+      "gate_accepted": false,
+      "false_acceptance": false,
+      "admitted": false,
+      "usage": {
+        "prompt_tokens": 3202,
+        "completion_tokens": 13,
+        "total_tokens": 3215
+      },
+      "seconds": 32.353656531951856
+    },
+    {
+      "case": "warm_new_version",
+      "arm": "baseline",
+      "passed": true,
+      "cache_hit": false,
+      "gate_accepted": false,
+      "false_acceptance": false,
+      "admitted": false,
+      "usage": {
+        "prompt_tokens": 1685,
+        "completion_tokens": 12,
+        "total_tokens": 1697
+      },
+      "seconds": 14.713113754987717
+    },
+    {
+      "case": "novel_guard",
+      "arm": "jit",
+      "passed": true,
+      "cache_hit": false,
+      "gate_accepted": false,
+      "false_acceptance": false,
+      "admitted": false,
+      "usage": {
+        "prompt_tokens": 1691,
+        "completion_tokens": 27,
+        "total_tokens": 1718
+      },
+      "seconds": 6.176365252002142
+    },
+    {
+      "case": "novel_guard",
+      "arm": "baseline",
+      "passed": true,
+      "cache_hit": false,
+      "gate_accepted": false,
+      "false_acceptance": false,
+      "admitted": false,
+      "usage": {
+        "prompt_tokens": 1691,
+        "completion_tokens": 27,
+        "total_tokens": 1718
+      },
+      "seconds": 9.04131183802383
+    },
+    {
+      "case": "repeat_guard",
+      "arm": "jit",
+      "passed": true,
+      "cache_hit": false,
+      "gate_accepted": false,
+      "false_acceptance": false,
+      "admitted": false,
+      "usage": {
+        "prompt_tokens": 1676,
+        "completion_tokens": 27,
+        "total_tokens": 1703
+      },
+      "seconds": 30.727443789015524
+    },
+    {
+      "case": "repeat_guard",
+      "arm": "baseline",
+      "passed": true,
+      "cache_hit": false,
+      "gate_accepted": false,
+      "false_acceptance": false,
+      "admitted": false,
+      "usage": {
+        "prompt_tokens": 1676,
+        "completion_tokens": 27,
+        "total_tokens": 1703
+      },
+      "seconds": 5.1851947529939935
+    }
+  ],
+  "limitations": "Hand-authored oracle admission/rejection; uncalibrated fixed gate; keyword-only templates; small sequential related workload on shared server; not arbitrary-prompt or production proof."
+}

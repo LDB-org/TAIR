@@ -1,0 +1,47 @@
+{
+  "status": "ready",
+  "model": "/model",
+  "source_sha256": "0d3fe37701df2e0b4a837b5e44b89321c012d550b9c07179a508765b7a6c373a",
+  "decision_token_ids": [
+    35,
+    36
+  ],
+  "upstream": "http://127.0.0.1:8000",
+  "schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "name",
+      "arguments"
+    ],
+    "properties": {
+      "name": {
+        "enum": [
+          "reply_user",
+          "search_docs"
+        ]
+      },
+      "arguments": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "priority",
+          "content"
+        ],
+        "properties": {
+          "priority": {
+            "enum": [
+              "normal",
+              "urgent"
+            ]
+          },
+          "content": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  },
+  "tool_execution": false
+}

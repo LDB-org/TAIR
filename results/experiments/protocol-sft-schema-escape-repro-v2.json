@@ -1,0 +1,96 @@
+{
+  "model": "/home/Kei/.cache/openjev-protocol-sft/qwen17b-v2/merged",
+  "versions": {
+    "xgrammar": "0.2.3",
+    "vllm": "0.28.0",
+    "transformers": "5.16.1"
+  },
+  "schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "name",
+      "arguments"
+    ],
+    "properties": {
+      "name": {
+        "enum": [
+          "reply_user",
+          "search_docs"
+        ]
+      },
+      "arguments": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "priority",
+          "content"
+        ],
+        "properties": {
+          "priority": {
+            "enum": [
+              "normal",
+              "urgent"
+            ]
+          },
+          "content": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  },
+  "any_whitespace": true,
+  "rows": [
+    {
+      "case": "plain",
+      "raw": "{\"name\":\"reply_user\",\"arguments\":{\"priority\":\"normal\",\"content\":\"abc\"}}",
+      "python_json_valid": true,
+      "grammar_string_accepted": true,
+      "grammar_tokens_accepted": true,
+      "grammar_string_completed": true
+    },
+    {
+      "case": "escaped_tab",
+      "raw": "{\"name\":\"reply_user\",\"arguments\":{\"priority\":\"normal\",\"content\":\"a\\tb\"}}",
+      "python_json_valid": true,
+      "grammar_string_accepted": false,
+      "grammar_tokens_accepted": false,
+      "grammar_string_completed": false
+    },
+    {
+      "case": "literal_tab",
+      "raw": "{\"name\":\"reply_user\",\"arguments\":{\"priority\":\"normal\",\"content\":\"a\tb\"}}",
+      "python_json_valid": false,
+      "grammar_string_accepted": true,
+      "grammar_tokens_accepted": true,
+      "grammar_string_completed": true
+    },
+    {
+      "case": "escaped_quote",
+      "raw": "{\"name\":\"reply_user\",\"arguments\":{\"priority\":\"normal\",\"content\":\"a\\\"b\"}}",
+      "python_json_valid": true,
+      "grammar_string_accepted": false,
+      "grammar_tokens_accepted": false,
+      "grammar_string_completed": false
+    },
+    {
+      "case": "escaped_backslash",
+      "raw": "{\"name\":\"reply_user\",\"arguments\":{\"priority\":\"normal\",\"content\":\"a\\\\b\"}}",
+      "python_json_valid": true,
+      "grammar_string_accepted": false,
+      "grammar_tokens_accepted": false,
+      "grammar_string_completed": false
+    },
+    {
+      "case": "literal_newline",
+      "raw": "{\"name\":\"reply_user\",\"arguments\":{\"priority\":\"normal\",\"content\":\"a\nb\"}}",
+      "python_json_valid": false,
+      "grammar_string_accepted": false,
+      "grammar_tokens_accepted": false,
+      "grammar_string_completed": false
+    }
+  ],
+  "limits": "Local installed compiler reproduction; no serving code changed; not a claim about all structured output implementations"
+}

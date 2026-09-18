@@ -1,0 +1,96 @@
+{
+  "scope": "Two sequential live Pi agent tasks using the existing DeepSeek /model engine. No latency or production claim. Admission uses schema and compile, not a task oracle.",
+  "pi_version": "0.85.1",
+  "runs": [
+    {
+      "name": "cold",
+      "compact_edit": {
+        "path": "/home/Kei/pijit-demo/app.py",
+        "applied": true,
+        "cache_hit": false,
+        "admitted": 2,
+        "fallback_reason": "empty_or_inapplicable_codebook",
+        "validation": "schema + Python compile; semantic correctness unverified",
+        "source_sha256": "b61fa9363a4b441556692fa885599a9b392f835df4c2a55a335e061367fd6fa4",
+        "updated_sha256": "9c657a311c57455681e0989858ded87410599786718b8dfc52c5930bf3f8188f",
+        "backup": "/home/Kei/.pijit/workspaces/662bcf4a079a3f9ede31/backup-0317a72373014963b05c8478af188c54.py",
+        "diff": "--- /home/Kei/pijit-demo/app.py\n+++ /home/Kei/pijit-demo/app.py\n@@ -2,7 +2,7 @@\n \n def build_parser():\n     parser = argparse.ArgumentParser()\n-    parser.add_argument(\"--workers\", type=int, default=4)\n+    parser.add_argument(\"--workers\", type=int, default=6)\n     return parser\n \n if __name__ == \"__main__\":\n",
+        "input_tokens": 505,
+        "generated_argument_tokens": 10,
+        "classification_control_records": 1,
+        "requests": [
+          {
+            "input_tokens": 505,
+            "generated_argument_tokens": 10,
+            "classification_control_records": 1,
+            "request_id": "openjev-02b2969f18b64ea895838fc2ca659180"
+          }
+        ],
+        "wall_seconds": 3.6198039110167883
+      },
+      "execution_output": [
+        [
+          {
+            "type": "text",
+            "text": "6\n3\n"
+          }
+        ]
+      ]
+    },
+    {
+      "name": "warm",
+      "compact_edit": {
+        "path": "/home/Kei/pijit-demo/app.py",
+        "applied": true,
+        "cache_hit": false,
+        "admitted": 1,
+        "fallback_reason": "none_or_low_confidence",
+        "validation": "schema + Python compile; semantic correctness unverified",
+        "source_sha256": "9c657a311c57455681e0989858ded87410599786718b8dfc52c5930bf3f8188f",
+        "updated_sha256": "0dfeafa9c0f771452dead9ddfe1daf046e09a401bdc45c1f02d96e352bf5fe1e",
+        "backup": "/home/Kei/.pijit/workspaces/662bcf4a079a3f9ede31/backup-74773f6a3fb04f248d9b4791d82d3c69.py",
+        "diff": "--- /home/Kei/pijit-demo/app.py\n+++ /home/Kei/pijit-demo/app.py\n@@ -2,7 +2,7 @@\n \n def build_parser():\n     parser = argparse.ArgumentParser()\n-    parser.add_argument(\"--workers\", type=int, default=6)\n+    parser.add_argument(\"--workers\", type=int, default=8)\n     return parser\n \n if __name__ == \"__main__\":\n",
+        "input_tokens": 649,
+        "generated_argument_tokens": 10,
+        "classification_control_records": 2,
+        "requests": [
+          {
+            "gate": {
+              "conditional_probability": 0.7310585903489892,
+              "margin": 1.0000000596046448,
+              "candidate_mass": 0.9920182828762687
+            },
+            "input_tokens": 144,
+            "classification_control_records": 1,
+            "generated_argument_tokens": 0,
+            "request_id": "cmpl-a94d56d0709794ec"
+          },
+          {
+            "input_tokens": 505,
+            "generated_argument_tokens": 10,
+            "classification_control_records": 1,
+            "request_id": "openjev-848c3412a947458db5c296f91a77749c"
+          }
+        ],
+        "wall_seconds": 15.736854778020643
+      },
+      "execution_output": [
+        [
+          {
+            "type": "text",
+            "text": "8\n3\n"
+          }
+        ]
+      ]
+    }
+  ],
+  "findings": {
+    "cold_default": 6,
+    "warm_default": 8,
+    "explicit_override": 3,
+    "live_cache_hits": 0,
+    "warm_gate_probability": 0.7310585903489892,
+    "warm_fallback": "none_or_low_confidence",
+    "unit_test_cache_hit": "Mocked classifier hit path tested separately; not a live hit"
+  }
+}

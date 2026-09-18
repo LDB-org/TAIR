@@ -1,0 +1,128 @@
+{
+  "case": "repeat_nan",
+  "arm": "jit",
+  "source_sha256": "1f742c656974c92cd2a68946680a65a37bb516be55574bb5cb8da7e66c00c737",
+  "book_size_before": 2,
+  "requests": [
+    {
+      "route": "/tokenize",
+      "seconds": 1.2068435779656284,
+      "usage": null,
+      "metrics": null,
+      "request_id": null
+    },
+    {
+      "route": "/v1/completions",
+      "seconds": 6.411160541989375,
+      "usage": {
+        "prompt_tokens": 1528,
+        "total_tokens": 1529,
+        "completion_tokens": 1,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": null
+      },
+      "metrics": {
+        "time_to_first_token_ms": 202.14599464088678,
+        "generation_time_ms": 0.0,
+        "queue_time_ms": 4836.2123453989625,
+        "mean_itl_ms": null,
+        "tokens_per_second": 4.946919684342518,
+        "speculative_decoding": null
+      },
+      "request_id": "cmpl-8f308ea81a500289"
+    },
+    {
+      "route": "/v1/chat/completions",
+      "seconds": 2.5097561319707893,
+      "usage": {
+        "prompt_tokens": 1677,
+        "total_tokens": 1692,
+        "completion_tokens": 15,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "metrics": {
+        "time_to_first_token_ms": 196.56863156706095,
+        "generation_time_ms": 147.46783580631018,
+        "queue_time_ms": 784.134584479034,
+        "mean_itl_ms": 10.53341684330787,
+        "tokens_per_second": 43.60002913214723,
+        "speculative_decoding": null
+      },
+      "request_id": "chatcmpl-b46f45e12f4c42ad"
+    }
+  ],
+  "passed": true,
+  "gate_accepted": true,
+  "false_acceptance": true,
+  "cache_hit": false,
+  "admitted": true,
+  "candidates": [
+    {
+      "id": 1,
+      "description": "Make main JSON output retain Unicode host characters rather than escaping them with ASCII unicode escapes. Preserve the existing output fields, sorted keys, trailing newline and all scanner behavior.",
+      "edits": [
+        [
+          "kw",
+          "json.dumps",
+          "ensure_ascii",
+          false
+        ]
+      ]
+    }
+  ],
+  "decision": {
+    "id": 1,
+    "description": "Make main JSON output retain Unicode host characters rather than escaping them with ASCII unicode escapes. Preserve the existing output fields, sorted keys, trailing newline and all scanner behavior.",
+    "edits": [
+      [
+        "kw",
+        "json.dumps",
+        "ensure_ascii",
+        false
+      ]
+    ]
+  },
+  "scores": [
+    -1.701693058013916,
+    -0.20169301331043243
+  ],
+  "confidence": {
+    "conditional_probability": 0.8175744828610095,
+    "margin": 1.5000000447034836,
+    "candidate_mass": 0.9997202956418234
+  },
+  "cached_validation": {
+    "passed": false,
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 11, in <module>\n    else:raise AssertionError('nonstandard NaN JSON accepted')\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: nonstandard NaN JSON accepted\n"
+  },
+  "fallback_reason": "oracle_rejected_cached_edit",
+  "generated": true,
+  "generated_edits": [
+    [
+      "kw",
+      "json.dumps",
+      "allow_nan",
+      false
+    ]
+  ],
+  "generated_validation": {
+    "passed": true,
+    "returncode": 0,
+    "stdout": "{\"passed\": true, \"regression\": \"test_cli_dns_error (test_port_scanner.CliTests.test_cli_dns_error) ... ok\\ntest_cli_invalid_ports (test_port_scanner.CliTests.test_cli_invalid_ports) ... ok\\ntest_cli_invalid_timeout (test_port_scanner.CliTests.test_cli_invalid_timeout) ... ok\\ntest_cli_invalid_workers (test_port_scanner.CliTests.test_cli_invalid_workers) ... ok\\ntest_cli_mixed_ranges_duplicates (test_port_scanner.CliTests.test_cli_mixed_ranges_duplicates) ... ok\\ntest_cli_open_and_closed_detection (test_port_scanner.CliTests.test_cli_open_and_closed_detection) ... ok\\ntest_help (test_port_scanner.CliTests.test_help) ... ok\\ntest_empty_spec_rejected (test_port_scanner.ParsePortSpecTests.test_empty_spec_rejected) ... ok\\ntest_malformed_item_rejected (test_port_scanner.ParsePortSpecTests.test_malformed_item_rejected) ... ok\\ntest_mixed_ranges_and_duplicates (test_port_scanner.ParsePortSpecTests.test_mixed_ranges_and_duplicates) ... ok\\ntest_out_of_range_rejected (test_port_scanner.ParsePortSpecTests.test_out_of_range_rejected) ... ok\\ntest_range (test_port_scanner.ParsePortSpecTests.test_range) ... ok\\ntest_reversed_range_rejected (test_port_scanner.ParsePortSpecTests.test_reversed_range_rejected) ... ok\\ntest_single_port (test_port_scanner.ParsePortSpecTests.test_single_port) ... ok\\ntest_whitespace (test_port_scanner.ParsePortSpecTests.test_whitespace) ... ok\\ntest_dns_error_raises (test_port_scanner.ScannerFunctionTests.test_dns_error_raises) ... ok\\ntest_open_and_closed_detection (test_port_scanner.ScannerFunctionTests.test_open_and_closed_detection) ... ok\\n\\n----------------------------------------------------------------------\\nRan 17 tests in 0.972s\\n\\nOK\\n\"}\n",
+    "stderr": ""
+  },
+  "seconds": 11.280532432021573,
+  "book_size_after": 3,
+  "usage_complete": true,
+  "usage": {
+    "prompt_tokens": 3205,
+    "completion_tokens": 16,
+    "total_tokens": 3221
+  },
+  "control_records": 1
+}

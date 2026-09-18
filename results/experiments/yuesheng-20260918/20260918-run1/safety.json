@@ -1,0 +1,184 @@
+{
+  "invalid_mode": {
+    "status": 400,
+    "body": {
+      "error": "Unsupported mode"
+    }
+  },
+  "truncated": {
+    "status": 422,
+    "body": {
+      "call": null,
+      "candidate": {
+        "name": "reply_user",
+        "arguments": {
+          "priority": "normal",
+          "content": "one"
+        }
+      },
+      "valid": false,
+      "complete": false,
+      "wire": null,
+      "error": "Incomplete output",
+      "mode": "hybrid_fields",
+      "seconds": 25.023497090674937,
+      "trace": [
+        {
+          "seconds": 20.56330660637468,
+          "finish_reason": "length",
+          "usage": {
+            "prompt_tokens": 137,
+            "total_tokens": 138,
+            "completion_tokens": 1,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "text": "A",
+          "reasoning_present": false,
+          "logprobs": {
+            "content": [
+              {
+                "token": "A",
+                "logprob": -0.0001817776501411572,
+                "bytes": [
+                  65
+                ],
+                "top_logprobs": [
+                  {
+                    "token": "A",
+                    "logprob": -0.0001817776501411572,
+                    "bytes": [
+                      65
+                    ]
+                  },
+                  {
+                    "token": "B",
+                    "logprob": -8.625182151794434,
+                    "bytes": [
+                      66
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "stage": 0
+        },
+        {
+          "seconds": 1.981604197062552,
+          "finish_reason": "length",
+          "usage": {
+            "prompt_tokens": 175,
+            "total_tokens": 176,
+            "completion_tokens": 1,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "text": "A",
+          "reasoning_present": false,
+          "logprobs": {
+            "content": [
+              {
+                "token": "A",
+                "logprob": -0.0015031717484816909,
+                "bytes": [
+                  65
+                ],
+                "top_logprobs": [
+                  {
+                    "token": "A",
+                    "logprob": -0.0015031717484816909,
+                    "bytes": [
+                      65
+                    ]
+                  },
+                  {
+                    "token": "B",
+                    "logprob": -6.501502990722656,
+                    "bytes": [
+                      66
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "stage": 1
+        },
+        {
+          "seconds": 2.4785091001540422,
+          "finish_reason": "length",
+          "usage": {
+            "prompt_tokens": 245,
+            "total_tokens": 246,
+            "completion_tokens": 1,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "text": "one",
+          "reasoning_present": false,
+          "stage": 2
+        }
+      ],
+      "completion_tokens": 3,
+      "upstream_requests": 3,
+      "model": "/model"
+    }
+  },
+  "mask": {
+    "status": 200,
+    "body": {
+      "id": "chatcmpl-84d96674c9de81de",
+      "object": "chat.completion",
+      "created": 1789674223,
+      "model": "/model",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "A",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": null
+          },
+          "logprobs": null,
+          "finish_reason": "length",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.28.1rc1.dev137+g5ab628dd1-tp2-pp3-1070d36c",
+      "usage": {
+        "prompt_tokens": 16,
+        "total_tokens": 17,
+        "completion_tokens": 1,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    }
+  },
+  "passed": {
+    "invalid_mode": true,
+    "truncation_rejected": true,
+    "candidate_mask": true
+  }
+}

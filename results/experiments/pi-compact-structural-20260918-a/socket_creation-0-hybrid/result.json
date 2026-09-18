@@ -1,0 +1,73 @@
+{
+  "case": "socket_creation",
+  "repeat": 0,
+  "arm": "hybrid",
+  "passed": true,
+  "seconds": 20.91817291500047,
+  "attempts": [
+    {
+      "passed": false,
+      "mode": "multi",
+      "transport_seconds": 12.822776520974003,
+      "usage": {
+        "prompt_tokens": 2214,
+        "total_tokens": 2232,
+        "completion_tokens": 18,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "metrics": {
+        "time_to_first_token_ms": 262.1727669611573,
+        "generation_time_ms": 574.2227351292968,
+        "queue_time_ms": 10753.816396929324,
+        "mean_itl_ms": 33.77780794878216,
+        "tokens_per_second": 21.520919176408178,
+        "speculative_decoding": null
+      },
+      "validation": {
+        "passed": false,
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 72, in <module>\n    assert m.scan_port('127.0.0.1',80,.1) is False\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/port_scanner.py\", line 63, in scan_port\n    raise OSError()\nOSError\n"
+      },
+      "seconds": 12.880658209964167
+    },
+    {
+      "passed": true,
+      "mode": "native",
+      "transport_seconds": 7.074848813994322,
+      "usage": {
+        "prompt_tokens": 1941,
+        "total_tokens": 2206,
+        "completion_tokens": 265,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "metrics": {
+        "time_to_first_token_ms": 212.83864229917526,
+        "generation_time_ms": 2788.134690374136,
+        "queue_time_ms": 2667.4517849460244,
+        "mean_itl_ms": 10.56111625141718,
+        "tokens_per_second": 88.30468338881708,
+        "speculative_decoding": null
+      },
+      "validation": {
+        "passed": true,
+        "returncode": 0,
+        "stdout": "{\"passed\": true, \"regression\": \"test_cli_dns_error (test_port_scanner.CliTests.test_cli_dns_error) ... ok\\ntest_cli_invalid_ports (test_port_scanner.CliTests.test_cli_invalid_ports) ... ok\\ntest_cli_invalid_timeout (test_port_scanner.CliTests.test_cli_invalid_timeout) ... ok\\ntest_cli_invalid_workers (test_port_scanner.CliTests.test_cli_invalid_workers) ... ok\\ntest_cli_mixed_ranges_duplicates (test_port_scanner.CliTests.test_cli_mixed_ranges_duplicates) ... ok\\ntest_cli_open_and_closed_detection (test_port_scanner.CliTests.test_cli_open_and_closed_detection) ... ok\\ntest_help (test_port_scanner.CliTests.test_help) ... ok\\ntest_empty_spec_rejected (test_port_scanner.ParsePortSpecTests.test_empty_spec_rejected) ... ok\\ntest_malformed_item_rejected (test_port_scanner.ParsePortSpecTests.test_malformed_item_rejected) ... ok\\ntest_mixed_ranges_and_duplicates (test_port_scanner.ParsePortSpecTests.test_mixed_ranges_and_duplicates) ... ok\\ntest_out_of_range_rejected (test_port_scanner.ParsePortSpecTests.test_out_of_range_rejected) ... ok\\ntest_range (test_port_scanner.ParsePortSpecTests.test_range) ... ok\\ntest_reversed_range_rejected (test_port_scanner.ParsePortSpecTests.test_reversed_range_rejected) ... ok\\ntest_single_port (test_port_scanner.ParsePortSpecTests.test_single_port) ... ok\\ntest_whitespace (test_port_scanner.ParsePortSpecTests.test_whitespace) ... ok\\ntest_dns_error_raises (test_port_scanner.ScannerFunctionTests.test_dns_error_raises) ... ok\\ntest_open_and_closed_detection (test_port_scanner.ScannerFunctionTests.test_open_and_closed_detection) ... ok\\n\\n----------------------------------------------------------------------\\nRan 17 tests in 0.728s\\n\\nOK\\n\"}\n",
+        "stderr": ""
+      },
+      "seconds": 8.035762234008871
+    }
+  ],
+  "usage_complete": true,
+  "usage": {
+    "prompt_tokens": 4155,
+    "completion_tokens": 283,
+    "total_tokens": 4438
+  }
+}

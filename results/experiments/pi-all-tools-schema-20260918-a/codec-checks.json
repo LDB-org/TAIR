@@ -1,0 +1,121 @@
+{
+  "cases": [
+    {
+      "call": {
+        "name": "read",
+        "arguments": {
+          "path": "目录/a.py",
+          "offset": 1,
+          "limit": 20
+        }
+      },
+      "frame": "A\n[\"目录/a.py\",1,20]",
+      "roundtrip": true,
+      "incomplete_finish_rejected": true
+    },
+    {
+      "call": {
+        "name": "bash",
+        "arguments": {
+          "command": "printf 'x\\ny'",
+          "timeout": 3
+        }
+      },
+      "frame": "B\n[\"printf 'x\\\\ny'\",3]",
+      "roundtrip": true,
+      "incomplete_finish_rejected": true
+    },
+    {
+      "call": {
+        "name": "edit",
+        "arguments": {
+          "path": "a.py",
+          "edits": [
+            {
+              "oldText": "a\nb",
+              "newText": "A\nB"
+            }
+          ]
+        }
+      },
+      "frame": "C\n[\"a.py\",[[\"a\\nb\",\"A\\nB\"]]]",
+      "roundtrip": true,
+      "incomplete_finish_rejected": true
+    },
+    {
+      "call": {
+        "name": "write",
+        "arguments": {
+          "path": "a.py",
+          "content": "\nA\n[]\n\\\"中文\n"
+        }
+      },
+      "frame": "D\n[\"a.py\"]\n\nA\n[]\n\\\"中文\n",
+      "roundtrip": true,
+      "incomplete_finish_rejected": true
+    },
+    {
+      "call": {
+        "name": "grep",
+        "arguments": {
+          "pattern": "a.*",
+          "path": ".",
+          "glob": "*.py",
+          "ignoreCase": true,
+          "literal": false,
+          "context": 1,
+          "limit": 10
+        }
+      },
+      "frame": "E\n[\"a.*\",\".\",\"*.py\",true,false,1,10]",
+      "roundtrip": true,
+      "incomplete_finish_rejected": true
+    },
+    {
+      "call": {
+        "name": "find",
+        "arguments": {
+          "pattern": "*.py",
+          "path": ".",
+          "limit": 10
+        }
+      },
+      "frame": "F\n[\"*.py\",\".\",10]",
+      "roundtrip": true,
+      "incomplete_finish_rejected": true
+    },
+    {
+      "call": {
+        "name": "ls",
+        "arguments": {}
+      },
+      "frame": "G\n[null,null]",
+      "roundtrip": true,
+      "incomplete_finish_rejected": true
+    },
+    {
+      "call": {
+        "name": "powershell",
+        "arguments": {
+          "command": "Write-Output 'ok'",
+          "timeout": 3
+        }
+      },
+      "frame": "H\n[\"Write-Output 'ok'\",3]",
+      "roundtrip": true,
+      "incomplete_finish_rejected": true
+    },
+    {
+      "call": {
+        "name": "reply_user",
+        "arguments": {
+          "content": "完成\nB\n[]"
+        }
+      },
+      "frame": "I\n[]\n完成\nB\n[]",
+      "roundtrip": true,
+      "incomplete_finish_rejected": true
+    }
+  ],
+  "malformed_rejections": 4
+}

@@ -1,0 +1,61 @@
+{
+  "case": "cold_workers",
+  "arm": "jit",
+  "source_sha256": "1f742c656974c92cd2a68946680a65a37bb516be55574bb5cb8da7e66c00c737",
+  "book_size_before": 0,
+  "requests": [
+    {
+      "route": "/v1/chat/completions",
+      "seconds": 1.600681142997928,
+      "usage": {
+        "prompt_tokens": 1674,
+        "total_tokens": 1686,
+        "completion_tokens": 12,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "metrics": {
+        "time_to_first_token_ms": 183.61419811844826,
+        "generation_time_ms": 137.54323590546846,
+        "queue_time_ms": 0.005453824996948242,
+        "mean_itl_ms": 12.50393053686077,
+        "tokens_per_second": 37.36485202801301,
+        "speculative_decoding": null
+      },
+      "request_id": "chatcmpl-b4253105a8b29c12"
+    }
+  ],
+  "passed": true,
+  "gate_accepted": false,
+  "false_acceptance": false,
+  "cache_hit": false,
+  "admitted": false,
+  "candidates": [],
+  "fallback_reason": "empty_or_inapplicable_codebook",
+  "generated": true,
+  "generated_edits": [
+    [
+      "kw",
+      "--workers",
+      "default",
+      6
+    ]
+  ],
+  "generated_validation": {
+    "passed": true,
+    "returncode": 0,
+    "stdout": "{\"passed\": true, \"regression\": \"test_cli_dns_error (test_port_scanner.CliTests.test_cli_dns_error) ... ok\\ntest_cli_invalid_ports (test_port_scanner.CliTests.test_cli_invalid_ports) ... ok\\ntest_cli_invalid_timeout (test_port_scanner.CliTests.test_cli_invalid_timeout) ... ok\\ntest_cli_invalid_workers (test_port_scanner.CliTests.test_cli_invalid_workers) ... ok\\ntest_cli_mixed_ranges_duplicates (test_port_scanner.CliTests.test_cli_mixed_ranges_duplicates) ... ok\\ntest_cli_open_and_closed_detection (test_port_scanner.CliTests.test_cli_open_and_closed_detection) ... ok\\ntest_help (test_port_scanner.CliTests.test_help) ... ok\\ntest_empty_spec_rejected (test_port_scanner.ParsePortSpecTests.test_empty_spec_rejected) ... ok\\ntest_malformed_item_rejected (test_port_scanner.ParsePortSpecTests.test_malformed_item_rejected) ... ok\\ntest_mixed_ranges_and_duplicates (test_port_scanner.ParsePortSpecTests.test_mixed_ranges_and_duplicates) ... ok\\ntest_out_of_range_rejected (test_port_scanner.ParsePortSpecTests.test_out_of_range_rejected) ... ok\\ntest_range (test_port_scanner.ParsePortSpecTests.test_range) ... ok\\ntest_reversed_range_rejected (test_port_scanner.ParsePortSpecTests.test_reversed_range_rejected) ... ok\\ntest_single_port (test_port_scanner.ParsePortSpecTests.test_single_port) ... ok\\ntest_whitespace (test_port_scanner.ParsePortSpecTests.test_whitespace) ... ok\\ntest_dns_error_raises (test_port_scanner.ScannerFunctionTests.test_dns_error_raises) ... ok\\ntest_open_and_closed_detection (test_port_scanner.ScannerFunctionTests.test_open_and_closed_detection) ... ok\\n\\n----------------------------------------------------------------------\\nRan 17 tests in 0.757s\\n\\nOK\\n\"}\n",
+    "stderr": ""
+  },
+  "seconds": 2.4699068129993975,
+  "book_size_after": 0,
+  "usage_complete": true,
+  "usage": {
+    "prompt_tokens": 1674,
+    "completion_tokens": 12,
+    "total_tokens": 1686
+  },
+  "control_records": 0
+}

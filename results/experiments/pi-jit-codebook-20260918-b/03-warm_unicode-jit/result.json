@@ -1,0 +1,122 @@
+{
+  "case": "warm_unicode",
+  "arm": "jit",
+  "source_sha256": "1f742c656974c92cd2a68946680a65a37bb516be55574bb5cb8da7e66c00c737",
+  "book_size_before": 2,
+  "requests": [
+    {
+      "route": "/tokenize",
+      "seconds": 1.2787586519843899,
+      "usage": null,
+      "metrics": null,
+      "request_id": null
+    },
+    {
+      "route": "/v1/completions",
+      "seconds": 1.7981124820071273,
+      "usage": {
+        "prompt_tokens": 1527,
+        "total_tokens": 1528,
+        "completion_tokens": 1,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": null
+      },
+      "metrics": {
+        "time_to_first_token_ms": 197.75526598095894,
+        "generation_time_ms": 0.0,
+        "queue_time_ms": 319.23944130539894,
+        "mean_itl_ms": null,
+        "tokens_per_second": 5.0567553538437044,
+        "speculative_decoding": null
+      },
+      "request_id": "cmpl-84f45d98b3dbde82"
+    },
+    {
+      "route": "/v1/chat/completions",
+      "seconds": 4.976497705967631,
+      "usage": {
+        "prompt_tokens": 1676,
+        "total_tokens": 1692,
+        "completion_tokens": 16,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "metrics": {
+        "time_to_first_token_ms": 193.2257767766714,
+        "generation_time_ms": 193.95737536251545,
+        "queue_time_ms": 3324.094702489674,
+        "mean_itl_ms": 12.930491690834362,
+        "tokens_per_second": 41.32411214589272,
+        "speculative_decoding": null
+      },
+      "request_id": "chatcmpl-a43b2cfd2520c327"
+    }
+  ],
+  "passed": true,
+  "gate_accepted": false,
+  "false_acceptance": false,
+  "cache_hit": false,
+  "admitted": false,
+  "candidates": [
+    {
+      "id": 1,
+      "description": "Make main JSON output retain Unicode host characters rather than escaping them with ASCII unicode escapes. Preserve the existing output fields, sorted keys, trailing newline and all scanner behavior.",
+      "edits": [
+        [
+          "kw",
+          "json.dumps",
+          "ensure_ascii",
+          false
+        ]
+      ]
+    }
+  ],
+  "decision": {
+    "id": 1,
+    "description": "Make main JSON output retain Unicode host characters rather than escaping them with ASCII unicode escapes. Preserve the existing output fields, sorted keys, trailing newline and all scanner behavior.",
+    "edits": [
+      [
+        "kw",
+        "json.dumps",
+        "ensure_ascii",
+        false
+      ]
+    ]
+  },
+  "scores": [
+    -0.2529292702674866,
+    -1.5029292106628418
+  ],
+  "confidence": {
+    "conditional_probability": 0.7772998508568416,
+    "margin": 1.2499999403953552,
+    "candidate_mass": 0.9990003243608
+  },
+  "fallback_reason": "none_or_low_confidence",
+  "generated": true,
+  "generated_edits": [
+    [
+      "kw",
+      "json.dumps",
+      "ensure_ascii",
+      false
+    ]
+  ],
+  "generated_validation": {
+    "passed": true,
+    "returncode": 0,
+    "stdout": "{\"passed\": true, \"regression\": \"test_cli_dns_error (test_port_scanner.CliTests.test_cli_dns_error) ... ok\\ntest_cli_invalid_ports (test_port_scanner.CliTests.test_cli_invalid_ports) ... ok\\ntest_cli_invalid_timeout (test_port_scanner.CliTests.test_cli_invalid_timeout) ... ok\\ntest_cli_invalid_workers (test_port_scanner.CliTests.test_cli_invalid_workers) ... ok\\ntest_cli_mixed_ranges_duplicates (test_port_scanner.CliTests.test_cli_mixed_ranges_duplicates) ... ok\\ntest_cli_open_and_closed_detection (test_port_scanner.CliTests.test_cli_open_and_closed_detection) ... ok\\ntest_help (test_port_scanner.CliTests.test_help) ... ok\\ntest_empty_spec_rejected (test_port_scanner.ParsePortSpecTests.test_empty_spec_rejected) ... ok\\ntest_malformed_item_rejected (test_port_scanner.ParsePortSpecTests.test_malformed_item_rejected) ... ok\\ntest_mixed_ranges_and_duplicates (test_port_scanner.ParsePortSpecTests.test_mixed_ranges_and_duplicates) ... ok\\ntest_out_of_range_rejected (test_port_scanner.ParsePortSpecTests.test_out_of_range_rejected) ... ok\\ntest_range (test_port_scanner.ParsePortSpecTests.test_range) ... ok\\ntest_reversed_range_rejected (test_port_scanner.ParsePortSpecTests.test_reversed_range_rejected) ... ok\\ntest_single_port (test_port_scanner.ParsePortSpecTests.test_single_port) ... ok\\ntest_whitespace (test_port_scanner.ParsePortSpecTests.test_whitespace) ... ok\\ntest_dns_error_raises (test_port_scanner.ScannerFunctionTests.test_dns_error_raises) ... ok\\ntest_open_and_closed_detection (test_port_scanner.ScannerFunctionTests.test_open_and_closed_detection) ... ok\\n\\n----------------------------------------------------------------------\\nRan 17 tests in 0.962s\\n\\nOK\\n\"}\n",
+    "stderr": ""
+  },
+  "seconds": 9.13203701301245,
+  "book_size_after": 2,
+  "usage_complete": true,
+  "usage": {
+    "prompt_tokens": 3203,
+    "completion_tokens": 17,
+    "total_tokens": 3220
+  },
+  "control_records": 1
+}

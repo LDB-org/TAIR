@@ -1,0 +1,20 @@
+{
+  "finite_timeout": {
+    "passed": false,
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 9, in <module>\n    assert p.returncode==2,(value,p.returncode,p.stdout,p.stderr)\n           ^^^^^^^^^^^^^^^\nAssertionError: ('nan', 0, '{\"closed_ports\": [1], \"host\": \"127.0.0.1\", \"open_ports\": []}\\n', '')\n"
+  },
+  "range_step": {
+    "passed": false,
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 12, in <module>\n    assert m.parse_port_spec(text)==expected,(text,m.parse_port_spec(text))\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/port_scanner.py\", line 40, in parse_port_spec\n    raise ValueError(f\"invalid port range: {part!r}\") from None\nValueError: invalid port range: '20-26/2'\n"
+  },
+  "socket_context": {
+    "passed": false,
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 19, in <module>\n    assert any(isinstance(n,ast.With) for n in ast.walk(fn)),'Context manager missing'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Context manager missing\n"
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "case": "compact_record",
+  "repeat": 0,
+  "arm": "previous",
+  "passed": true,
+  "seconds": 12.889806630031671,
+  "explicit_native_route": false,
+  "failure_fallback": true,
+  "attempts": [
+    {
+      "passed": false,
+      "mode": "multi",
+      "transport_seconds": 1.7726524739991874,
+      "usage": {
+        "prompt_tokens": 428,
+        "total_tokens": 445,
+        "completion_tokens": 17,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "metrics": {
+        "time_to_first_token_ms": 155.46180214732885,
+        "generation_time_ms": 225.91121681034565,
+        "queue_time_ms": 154.92820739746094,
+        "mean_itl_ms": 14.119451050646603,
+        "tokens_per_second": 44.57578054803791,
+        "speculative_decoding": null
+      },
+      "validation": {
+        "passed": false,
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 6, in <module>\n    for value in [{'b':[1,2],'a':'x'},{}]:assert m.encode_record(value)==json.dumps(value,sort_keys=True,separators=(',',':'))\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+      },
+      "seconds": 1.7981827839976177
+    },
+    {
+      "passed": true,
+      "mode": "native",
+      "transport_seconds": 10.893128052994143,
+      "usage": {
+        "prompt_tokens": 663,
+        "total_tokens": 770,
+        "completion_tokens": 107,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "metrics": {
+        "time_to_first_token_ms": 159.3399029225111,
+        "generation_time_ms": 1349.4772985577583,
+        "queue_time_ms": 8224.767703562975,
+        "mean_itl_ms": 12.73091791092225,
+        "tokens_per_second": 70.91647675743921,
+        "speculative_decoding": null
+      },
+      "validation": {
+        "passed": true,
+        "returncode": 0,
+        "stdout": "{\"passed\": true, \"regression\": \"test_jobs (test_port_scanner.RegressionTests.test_jobs) ... ok\\ntest_parser (test_port_scanner.RegressionTests.test_parser) ... ok\\ntest_record (test_port_scanner.RegressionTests.test_record) ... ok\\ntest_resource (test_port_scanner.RegressionTests.test_resource) ... ok\\ntest_score_zero (test_port_scanner.RegressionTests.test_score_zero) ... ok\\n\\n----------------------------------------------------------------------\\nRan 5 tests in 0.000s\\n\\nOK\\n\"}\n",
+        "stderr": ""
+      },
+      "seconds": 11.090074951993302
+    }
+  ],
+  "usage_complete": true,
+  "usage": {
+    "prompt_tokens": 1091,
+    "completion_tokens": 124,
+    "total_tokens": 1215
+  }
+}

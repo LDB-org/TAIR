@@ -1,0 +1,92 @@
+{
+  "case": "warm_workers",
+  "arm": "jit",
+  "source_sha256": "1f742c656974c92cd2a68946680a65a37bb516be55574bb5cb8da7e66c00c737",
+  "book_size_before": 1,
+  "requests": [
+    {
+      "route": "/tokenize",
+      "seconds": 1.2312729400000535,
+      "usage": null,
+      "metrics": null,
+      "request_id": null
+    },
+    {
+      "route": "/v1/completions",
+      "seconds": 1.6003615299705416,
+      "usage": {
+        "prompt_tokens": 1507,
+        "total_tokens": 1508,
+        "completion_tokens": 1,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": null
+      },
+      "metrics": {
+        "time_to_first_token_ms": 273.2154903933406,
+        "generation_time_ms": 0.0,
+        "queue_time_ms": 0.004338100552558899,
+        "mean_itl_ms": null,
+        "tokens_per_second": 3.6601145804739272,
+        "speculative_decoding": null
+      },
+      "request_id": "cmpl-82718bf34d39e0d2"
+    }
+  ],
+  "passed": true,
+  "gate_accepted": true,
+  "false_acceptance": false,
+  "cache_hit": true,
+  "admitted": false,
+  "candidates": [
+    {
+      "id": 0,
+      "description": "Change build_parser so --workers defaults to {task_integer}. Preserve overrides and all other behavior.",
+      "edits": [
+        [
+          "kw",
+          "--workers",
+          "default",
+          8
+        ]
+      ]
+    }
+  ],
+  "decision": {
+    "id": 0,
+    "description": "Change build_parser so --workers defaults to {task_integer}. Preserve overrides and all other behavior.",
+    "edits": [
+      [
+        "kw",
+        "--workers",
+        "default",
+        8
+      ]
+    ]
+  },
+  "scores": [
+    -8.500219345092773,
+    -0.00021896349790040404
+  ],
+  "confidence": {
+    "conditional_probability": 0.9997965730995557,
+    "margin": 8.500000381594873,
+    "candidate_mass": 0.9999844842169733
+  },
+  "cached_validation": {
+    "passed": true,
+    "returncode": 0,
+    "stdout": "{\"passed\": true, \"regression\": \"test_cli_dns_error (test_port_scanner.CliTests.test_cli_dns_error) ... ok\\ntest_cli_invalid_ports (test_port_scanner.CliTests.test_cli_invalid_ports) ... ok\\ntest_cli_invalid_timeout (test_port_scanner.CliTests.test_cli_invalid_timeout) ... ok\\ntest_cli_invalid_workers (test_port_scanner.CliTests.test_cli_invalid_workers) ... ok\\ntest_cli_mixed_ranges_duplicates (test_port_scanner.CliTests.test_cli_mixed_ranges_duplicates) ... ok\\ntest_cli_open_and_closed_detection (test_port_scanner.CliTests.test_cli_open_and_closed_detection) ... ok\\ntest_help (test_port_scanner.CliTests.test_help) ... ok\\ntest_empty_spec_rejected (test_port_scanner.ParsePortSpecTests.test_empty_spec_rejected) ... ok\\ntest_malformed_item_rejected (test_port_scanner.ParsePortSpecTests.test_malformed_item_rejected) ... ok\\ntest_mixed_ranges_and_duplicates (test_port_scanner.ParsePortSpecTests.test_mixed_ranges_and_duplicates) ... ok\\ntest_out_of_range_rejected (test_port_scanner.ParsePortSpecTests.test_out_of_range_rejected) ... ok\\ntest_range (test_port_scanner.ParsePortSpecTests.test_range) ... ok\\ntest_reversed_range_rejected (test_port_scanner.ParsePortSpecTests.test_reversed_range_rejected) ... ok\\ntest_single_port (test_port_scanner.ParsePortSpecTests.test_single_port) ... ok\\ntest_whitespace (test_port_scanner.ParsePortSpecTests.test_whitespace) ... ok\\ntest_dns_error_raises (test_port_scanner.ScannerFunctionTests.test_dns_error_raises) ... ok\\ntest_open_and_closed_detection (test_port_scanner.ScannerFunctionTests.test_open_and_closed_detection) ... ok\\n\\n----------------------------------------------------------------------\\nRan 17 tests in 0.975s\\n\\nOK\\n\"}\n",
+    "stderr": ""
+  },
+  "fallback_reason": null,
+  "generated": false,
+  "seconds": 3.9169180400203913,
+  "book_size_after": 1,
+  "usage_complete": true,
+  "usage": {
+    "prompt_tokens": 1507,
+    "completion_tokens": 1,
+    "total_tokens": 1508
+  },
+  "control_records": 1
+}

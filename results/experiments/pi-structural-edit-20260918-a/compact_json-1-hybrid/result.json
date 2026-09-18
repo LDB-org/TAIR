@@ -1,0 +1,73 @@
+{
+  "case": "compact_json",
+  "repeat": 1,
+  "arm": "hybrid",
+  "passed": true,
+  "seconds": 10.652564994990826,
+  "attempts": [
+    {
+      "passed": false,
+      "mode": "multi",
+      "transport_seconds": 4.605437204008922,
+      "usage": {
+        "prompt_tokens": 2798,
+        "total_tokens": 2817,
+        "completion_tokens": 19,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "metrics": {
+        "time_to_first_token_ms": 263.06724455207586,
+        "generation_time_ms": 608.6154459044337,
+        "queue_time_ms": 2396.177505142987,
+        "mean_itl_ms": 33.811969216912985,
+        "tokens_per_second": 21.796922444392575,
+        "speculative_decoding": null
+      },
+      "validation": {
+        "passed": false,
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/check.py\", line 44, in <module>\n    assert m.main(['--host','127.0.0.1','--ports','80,81'])==0\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/port_scanner.py\", line 173, in main\n    print(json.dumps(result, sort_keys=True), separators=('', ','))\nTypeError: 'separators' is an invalid keyword argument for print()\n"
+      },
+      "seconds": 4.6720053409808315
+    },
+    {
+      "passed": true,
+      "mode": "native",
+      "transport_seconds": 4.711108129005879,
+      "usage": {
+        "prompt_tokens": 2369,
+        "total_tokens": 2477,
+        "completion_tokens": 108,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "metrics": {
+        "time_to_first_token_ms": 257.8697483986616,
+        "generation_time_ms": 1116.3986446335912,
+        "queue_time_ms": 1979.2031422257423,
+        "mean_itl_ms": 10.4336321928373,
+        "tokens_per_second": 78.58726908628346,
+        "speculative_decoding": null
+      },
+      "validation": {
+        "passed": true,
+        "returncode": 0,
+        "stdout": "{\"passed\": true, \"regression\": \"test_cli_dns_error (test_port_scanner.CliTests.test_cli_dns_error) ... ok\\ntest_cli_invalid_ports (test_port_scanner.CliTests.test_cli_invalid_ports) ... ok\\ntest_cli_invalid_timeout (test_port_scanner.CliTests.test_cli_invalid_timeout) ... ok\\ntest_cli_invalid_workers (test_port_scanner.CliTests.test_cli_invalid_workers) ... ok\\ntest_cli_mixed_ranges_duplicates (test_port_scanner.CliTests.test_cli_mixed_ranges_duplicates) ... ok\\ntest_cli_open_and_closed_detection (test_port_scanner.CliTests.test_cli_open_and_closed_detection) ... ok\\ntest_help (test_port_scanner.CliTests.test_help) ... ok\\ntest_empty_spec_rejected (test_port_scanner.ParsePortSpecTests.test_empty_spec_rejected) ... ok\\ntest_malformed_item_rejected (test_port_scanner.ParsePortSpecTests.test_malformed_item_rejected) ... ok\\ntest_mixed_ranges_and_duplicates (test_port_scanner.ParsePortSpecTests.test_mixed_ranges_and_duplicates) ... ok\\ntest_out_of_range_rejected (test_port_scanner.ParsePortSpecTests.test_out_of_range_rejected) ... ok\\ntest_range (test_port_scanner.ParsePortSpecTests.test_range) ... ok\\ntest_reversed_range_rejected (test_port_scanner.ParsePortSpecTests.test_reversed_range_rejected) ... ok\\ntest_single_port (test_port_scanner.ParsePortSpecTests.test_single_port) ... ok\\ntest_whitespace (test_port_scanner.ParsePortSpecTests.test_whitespace) ... ok\\ntest_dns_error_raises (test_port_scanner.ScannerFunctionTests.test_dns_error_raises) ... ok\\ntest_open_and_closed_detection (test_port_scanner.ScannerFunctionTests.test_open_and_closed_detection) ... ok\\n\\n----------------------------------------------------------------------\\nRan 17 tests in 0.988s\\n\\nOK\\n\"}\n",
+        "stderr": ""
+      },
+      "seconds": 5.9788446630118415
+    }
+  ],
+  "usage_complete": true,
+  "usage": {
+    "prompt_tokens": 5167,
+    "completion_tokens": 127,
+    "total_tokens": 5294
+  }
+}
