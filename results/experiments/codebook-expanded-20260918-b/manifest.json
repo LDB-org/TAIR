@@ -1,0 +1,165 @@
+{
+  "workloads": [
+    {
+      "name": "integer",
+      "source": "import argparse\n\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4)\n    p.add_argument('--timeout', type=float, default=1.5, help='Timeout')\n    p.add_argument('--host', default='localhost')\n    p.add_argument('--verbose', action='store_true', default=False)\n    p.add_argument('--token', default='', required=False)\n    return p\n\ndef checksum(values):\n    return sum(values) % 65536\n",
+      "tasks": [
+        "Change --workers default to 7.",
+        "Update the default value for --workers to 11.",
+        "Change --workers default to 13."
+      ],
+      "checks": [
+        "p=app.build_parser()\na=next(a for a in p._actions if '--workers' in a.option_strings)\nassert a.default == 7 and type(a.default) is int\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\n",
+        "p=app.build_parser()\na=next(a for a in p._actions if '--workers' in a.option_strings)\nassert a.default == 11 and type(a.default) is int\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\n",
+        "p=app.build_parser()\na=next(a for a in p._actions if '--workers' in a.option_strings)\nassert a.default == 13 and type(a.default) is int\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\n"
+      ],
+      "variant_continues": false
+    },
+    {
+      "name": "float",
+      "source": "import argparse\n\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4)\n    p.add_argument('--timeout', type=float, default=1.5, help='Timeout')\n    p.add_argument('--host', default='localhost')\n    p.add_argument('--verbose', action='store_true', default=False)\n    p.add_argument('--token', default='', required=False)\n    return p\n\ndef checksum(values):\n    return sum(values) % 65536\n",
+      "tasks": [
+        "Change --timeout default to 2.75.",
+        "Update the default value for --timeout to 3.125.",
+        "Change --timeout default to 4.5."
+      ],
+      "checks": [
+        "p=app.build_parser()\na=next(a for a in p._actions if '--timeout' in a.option_strings)\nassert a.default == 2.75 and type(a.default) is float\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\n",
+        "p=app.build_parser()\na=next(a for a in p._actions if '--timeout' in a.option_strings)\nassert a.default == 3.125 and type(a.default) is float\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\n",
+        "p=app.build_parser()\na=next(a for a in p._actions if '--timeout' in a.option_strings)\nassert a.default == 4.5 and type(a.default) is float\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\n"
+      ],
+      "variant_continues": false
+    },
+    {
+      "name": "string",
+      "source": "import argparse\n\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4)\n    p.add_argument('--timeout', type=float, default=1.5, help='Timeout')\n    p.add_argument('--host', default='localhost')\n    p.add_argument('--verbose', action='store_true', default=False)\n    p.add_argument('--token', default='', required=False)\n    return p\n\ndef checksum(values):\n    return sum(values) % 65536\n",
+      "tasks": [
+        "Change --host default to \"edge.local\".",
+        "Update the default value for --host to \"cache.internal\".",
+        "Change --host default to \"备用节点\"."
+      ],
+      "checks": [
+        "p=app.build_parser()\na=next(a for a in p._actions if '--host' in a.option_strings)\nassert a.default == 'edge.local' and type(a.default) is str\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\n",
+        "p=app.build_parser()\na=next(a for a in p._actions if '--host' in a.option_strings)\nassert a.default == 'cache.internal' and type(a.default) is str\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\n",
+        "p=app.build_parser()\na=next(a for a in p._actions if '--host' in a.option_strings)\nassert a.default == '备用节点' and type(a.default) is str\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\n"
+      ],
+      "variant_continues": false
+    },
+    {
+      "name": "boolean",
+      "source": "import argparse\n\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4)\n    p.add_argument('--timeout', type=float, default=1.5, help='Timeout')\n    p.add_argument('--host', default='localhost')\n    p.add_argument('--verbose', action='store_true', default=False)\n    p.add_argument('--token', default='', required=False)\n    return p\n\ndef checksum(values):\n    return sum(values) % 65536\n",
+      "tasks": [
+        "Change --verbose default to true.",
+        "Update the default value for --verbose to false.",
+        "Change --verbose default to true."
+      ],
+      "checks": [
+        "p=app.build_parser()\na=next(a for a in p._actions if '--verbose' in a.option_strings)\nassert a.default == True and type(a.default) is bool\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\n",
+        "p=app.build_parser()\na=next(a for a in p._actions if '--verbose' in a.option_strings)\nassert a.default == False and type(a.default) is bool\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\n",
+        "p=app.build_parser()\na=next(a for a in p._actions if '--verbose' in a.option_strings)\nassert a.default == True and type(a.default) is bool\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\n"
+      ],
+      "variant_continues": true
+    },
+    {
+      "name": "help",
+      "source": "import argparse\n\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4)\n    p.add_argument('--timeout', type=float, default=1.5, help='Timeout')\n    p.add_argument('--host', default='localhost')\n    p.add_argument('--verbose', action='store_true', default=False)\n    p.add_argument('--token', default='', required=False)\n    return p\n\ndef checksum(values):\n    return sum(values) % 65536\n",
+      "tasks": [
+        "Change --timeout help to \"Wait duration\".",
+        "将 --timeout 的帮助文本改为 \"等待秒数\"。",
+        "Change --timeout help to \"Connection deadline\"."
+      ],
+      "checks": [
+        "p=app.build_parser()\na=next(a for a in p._actions if '--timeout' in a.option_strings)\nassert a.help == 'Wait duration' and type(a.help) is str\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\n",
+        "p=app.build_parser()\na=next(a for a in p._actions if '--timeout' in a.option_strings)\nassert a.help == '等待秒数' and type(a.help) is str\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\n",
+        "p=app.build_parser()\na=next(a for a in p._actions if '--timeout' in a.option_strings)\nassert a.help == 'Connection deadline' and type(a.help) is str\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\n"
+      ],
+      "variant_continues": false
+    },
+    {
+      "name": "required",
+      "source": "import argparse\n\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4)\n    p.add_argument('--timeout', type=float, default=1.5, help='Timeout')\n    p.add_argument('--host', default='localhost')\n    p.add_argument('--verbose', action='store_true', default=False)\n    p.add_argument('--token', default='', required=False)\n    return p\n\ndef checksum(values):\n    return sum(values) % 65536\n",
+      "tasks": [
+        "Change --token required to true.",
+        "Update the required value for --token to false.",
+        "Change --token required to true."
+      ],
+      "checks": [
+        "p=app.build_parser()\na=next(a for a in p._actions if '--token' in a.option_strings)\nassert a.required == True and type(a.required) is bool\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\n",
+        "p=app.build_parser()\na=next(a for a in p._actions if '--token' in a.option_strings)\nassert a.required == False and type(a.required) is bool\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\n",
+        "p=app.build_parser()\na=next(a for a in p._actions if '--token' in a.option_strings)\nassert a.required == True and type(a.required) is bool\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\n"
+      ],
+      "variant_continues": true
+    },
+    {
+      "name": "alias",
+      "source": "import argparse\n\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4)\n    p.add_argument('--timeout', type=float, default=1.5, help='Timeout')\n    p.add_argument('--host', default='localhost')\n    p.add_argument('--verbose', action='store_true', default=False)\n    p.add_argument('--token', default='', required=False)\n    return p\n\ndef checksum(values):\n    return sum(values) % 65536\n",
+      "tasks": [
+        "Add alias -t to --timeout.",
+        "Add alias -u to --timeout.",
+        "Add alias -v to --timeout."
+      ],
+      "checks": [
+        "p=app.build_parser()\na=next(a for a in p._actions if '--timeout' in a.option_strings)\nassert a.default == 1.5 and type(a.default) is float\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\nassert p.parse_args(['-t',\"0.25\",\"--token\",\"x\"]).timeout==0.25\n",
+        "p=app.build_parser()\na=next(a for a in p._actions if '--timeout' in a.option_strings)\nassert a.default == 1.5 and type(a.default) is float\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\nassert p.parse_args(['-u',\"0.25\",\"--token\",\"x\"]).timeout==0.25\n",
+        "p=app.build_parser()\na=next(a for a in p._actions if '--timeout' in a.option_strings)\nassert a.default == 1.5 and type(a.default) is float\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\nassert p.parse_args(['-u',\"0.25\",\"--token\",\"x\"]).timeout==0.25\nassert p.parse_args(['-v',\"0.25\",\"--token\",\"x\"]).timeout==0.25\n"
+      ]
+    },
+    {
+      "name": "return_guard",
+      "source": "def safe_divide(a, b):\n    return a / b\n",
+      "tasks": [
+        "In safe_divide, return None immediately when b == 0.",
+        "In safe_divide, return 0 immediately when b == 0."
+      ],
+      "checks": [
+        "assert app.safe_divide(7,0) is None\nassert app.safe_divide(9,3)==3\n",
+        "assert app.safe_divide(7,0)==0\nassert app.safe_divide(9,3)==3\n"
+      ]
+    },
+    {
+      "name": "raise_guard",
+      "source": "def connect(timeout):\n    return timeout * 2\n",
+      "tasks": [
+        "In connect, raise ValueError with message \"negative\" when timeout < 0.",
+        "In connect, raise ValueError with message \"too small\" when timeout < 1."
+      ],
+      "checks": [
+        "assert app.connect(2)==4\ntry:\n app.connect(-1)\nexcept ValueError as e:\n assert str(e)==\"negative\"\nelse:\n raise AssertionError(\"missing exception\")\n",
+        "assert app.connect(2)==4\ntry:\n app.connect(0)\nexcept ValueError as e:\n assert str(e)==\"too small\"\nelse:\n raise AssertionError(\"missing exception\")\n"
+      ]
+    },
+    {
+      "name": "catch",
+      "source": "def parse_count(text):\n    value = int(text)\n    return value\n",
+      "tasks": [
+        "In parse_count, catch ValueError from value = int(text) and return 0.",
+        "In parse_count, catch ValueError from value = int(text) and return -1."
+      ],
+      "checks": [
+        "assert app.parse_count(\"bad\")==0\nassert app.parse_count(\"19\")==19\n",
+        "assert app.parse_count(\"bad\")==-1\nassert app.parse_count(\"19\")==19\n"
+      ]
+    },
+    {
+      "name": "multiple_edits",
+      "source": "import argparse\n\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4)\n    p.add_argument('--timeout', type=float, default=1.5, help='Timeout')\n    p.add_argument('--host', default='localhost')\n    p.add_argument('--verbose', action='store_true', default=False)\n    p.add_argument('--token', default='', required=False)\n    return p\n\ndef checksum(values):\n    return sum(values) % 65536\n",
+      "tasks": [
+        "Change --workers default to 7 and --timeout default to 2.75.",
+        "Change --workers default to 11 and --timeout default to 3.125."
+      ],
+      "checks": [
+        "p=app.build_parser()\na=next(a for a in p._actions if '--workers' in a.option_strings)\nassert a.default == 7 and type(a.default) is int\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\np=app.build_parser()\na=next(a for a in p._actions if '--timeout' in a.option_strings)\nassert a.default == 2.75 and type(a.default) is float\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\n",
+        "p=app.build_parser()\na=next(a for a in p._actions if '--workers' in a.option_strings)\nassert a.default == 11 and type(a.default) is int\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\np=app.build_parser()\na=next(a for a in p._actions if '--timeout' in a.option_strings)\nassert a.default == 3.125 and type(a.default) is float\nassert len(p._actions)==6\nassert app.checksum([65536,3])==3\nparsed=p.parse_args([\"--workers\",\"9\",\"--timeout\",\"0.5\",\"--host\",\"explicit\",\"--token\",\"provided\"])\nassert (parsed.workers,parsed.timeout,parsed.host,parsed.token)==(9,0.5,\"explicit\",\"provided\")\n"
+      ]
+    }
+  ],
+  "repeats": 2,
+  "seed": 920,
+  "arms": [
+    "native",
+    "previous",
+    "expanded"
+  ],
+  "legacy_root": "/tmp/tair-codebook-optimized-20260918",
+  "method": "one fresh Python worker per edit; independent codebook per family/repeat/arm persisted across phases; random arm order; continuous phases use each arm actual prior source; no retries; same behavior oracle; wall excludes worker startup, process_wall reports it separately"
+}

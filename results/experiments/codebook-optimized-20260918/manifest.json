@@ -1,0 +1,187 @@
+{
+  "cases": [
+    [
+      "cold",
+      "Change --workers default to 6.",
+      "import argparse\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4)\n    return p\n",
+      6,
+      false
+    ],
+    [
+      "repeat",
+      "Change --workers default to 6.",
+      "import argparse\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4)\n    return p\n",
+      6,
+      false
+    ],
+    [
+      "new_value",
+      "Change --workers default to 8.",
+      "import argparse\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4)\n    return p\n",
+      8,
+      false
+    ],
+    [
+      "paraphrase",
+      "Set the default value for --workers to 10.",
+      "import argparse\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4)\n    return p\n",
+      10,
+      false
+    ],
+    [
+      "source_change",
+      "Change --workers default to 12.",
+      "import argparse\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4)\n    return p\n# unrelated comment\n",
+      12,
+      false
+    ],
+    [
+      "alias_cold",
+      "Add alias -w to --workers.",
+      "import argparse\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4)\n    return p\n",
+      4,
+      true
+    ],
+    [
+      "alias_repeat",
+      "Add alias -w to --workers.",
+      "import argparse\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4)\n    return p\n",
+      4,
+      true
+    ]
+  ],
+  "challenges": [
+    [
+      "wrong_value",
+      "Change --workers default to 8.",
+      [
+        [
+          "kw",
+          "--workers",
+          "default",
+          9
+        ]
+      ],
+      false
+    ],
+    [
+      "wrong_target",
+      "Change --workers default to 8.",
+      [
+        [
+          "kw",
+          "--timeout",
+          "default",
+          8
+        ]
+      ],
+      false
+    ],
+    [
+      "wrong_property",
+      "Change --timeout default to 8.",
+      [
+        [
+          "kw",
+          "--timeout",
+          "help",
+          "8"
+        ]
+      ],
+      false
+    ],
+    [
+      "extra_edit",
+      "Change --workers default to 8.",
+      [
+        [
+          "kw",
+          "--workers",
+          "default",
+          8
+        ],
+        [
+          "kw",
+          "--timeout",
+          "default",
+          8
+        ]
+      ],
+      false
+    ],
+    [
+      "wrong_type",
+      "Change --workers default to 1.",
+      [
+        [
+          "kw",
+          "--workers",
+          "default",
+          true
+        ]
+      ],
+      false
+    ],
+    [
+      "negated",
+      "Do not change --workers default to 8.",
+      [
+        [
+          "kw",
+          "--workers",
+          "default",
+          8
+        ]
+      ],
+      false
+    ],
+    [
+      "compound",
+      "Change --workers default to 8 and add alias -w.",
+      [
+        [
+          "kw",
+          "--workers",
+          "default",
+          8
+        ]
+      ],
+      false
+    ],
+    [
+      "heldout_integer",
+      "Update the default value for --timeout to 7.",
+      [
+        [
+          "kw",
+          "--timeout",
+          "default",
+          7
+        ]
+      ],
+      true
+    ],
+    [
+      "heldout_string",
+      "Change --timeout help to \"Wait duration\".",
+      [
+        [
+          "kw",
+          "--timeout",
+          "help",
+          "Wait duration"
+        ]
+      ],
+      true
+    ]
+  ],
+  "repeats": 3,
+  "seed": 918,
+  "arms": [
+    "generate",
+    "legacy",
+    "optimized"
+  ],
+  "url": "http://127.0.0.1:8000",
+  "method": "fresh state per arm/repeat; reset declared source before each case; retain book; shuffled arm order; no retries; full bridge wall includes oracle; no label cache; edit-only shared backend"
+}

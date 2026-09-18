@@ -1,0 +1,539 @@
+{
+  "arm": "batched",
+  "value": 0,
+  "seconds": 8.914935417007655,
+  "timed_out": false,
+  "validated_seconds": 8.935763292014599,
+  "exit_code": 0,
+  "finished": true,
+  "validation": {
+    "passed": true,
+    "seconds": 0.02082787500694394,
+    "stderr": ""
+  },
+  "passed": true,
+  "metrics": [
+    {
+      "metrics_version": 2,
+      "trace_id": "c1905806006e405987efc32421e66e4e",
+      "session_id": "01a0b5d0-a285-7722-ac87-0cacd39e31f2",
+      "parent_tool_call_id": null,
+      "stage_seconds": {
+        "generation_preparation": 0.26469541573897004,
+        "generation_http": 1.0901657501235604,
+        "generation": 1.3549091247841716
+      },
+      "http_requests": [
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789756744.420532,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.26381458388641477
+        },
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789756744.684906,
+          "http_status": 200,
+          "request_id": "openjev-94383f8fa9904f2a84a99782fd52a5af",
+          "input_tokens": 2555,
+          "generated_argument_tokens": 52,
+          "classification_control_records": 1,
+          "engine_seconds": 0.7729408824816346,
+          "classification_seconds": 0.1875532530248165,
+          "classification_timing": null,
+          "seconds": 1.0897941659204662
+        }
+      ],
+      "continuation_cache_hit": true,
+      "label_cache_hit": true,
+      "batch_tool_count": 2,
+      "batch_tool_names": [
+        "bash",
+        "read"
+      ],
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 2555,
+        "known_generated_argument_tokens": 52,
+        "known_classification_control_records": 1
+      },
+      "request_id": "openjev-94383f8fa9904f2a84a99782fd52a5af",
+      "decision": {
+        "index": 1,
+        "name": "execute_plan",
+        "control_id": 36,
+        "logprobs": [
+          -3.0973825454711914,
+          -0.22238261997699738
+        ],
+        "classification_seconds": 0.1875532530248165
+      },
+      "generated_argument_tokens": 52,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 0.7729408824816346,
+      "finish_reason": "stop",
+      "input_tokens": 2555,
+      "calls": [
+        {
+          "name": "bash",
+          "arguments": {
+            "command": "ls -la && find . -name '*.py' -not -path '*/.*' | head -50"
+          }
+        },
+        {
+          "name": "read",
+          "arguments": {
+            "path": "project"
+          }
+        }
+      ],
+      "status": "ok",
+      "wall_seconds": 1.371514375321567,
+      "action": "chat",
+      "timestamp": 1789756745.791446
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "3d1b782ce8544e489b45a433ca11fb37",
+      "session_id": "01a0b5d0-a285-7722-ac87-0cacd39e31f2",
+      "parent_tool_call_id": null,
+      "stage_seconds": {
+        "generation_preparation": 0.270175791811198,
+        "generation_http": 1.7356845829635859,
+        "generation": 2.0059138340875506
+      },
+      "http_requests": [
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789756745.920924,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.26927933283150196
+        },
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789756746.191835,
+          "http_status": 200,
+          "request_id": "openjev-264813a632b144dba0ed33b282f6d279",
+          "input_tokens": 2939,
+          "generated_argument_tokens": 110,
+          "classification_control_records": 1,
+          "engine_seconds": 1.3192195622250438,
+          "classification_seconds": 0.2380627617239952,
+          "classification_timing": null,
+          "seconds": 1.7343705417588353
+        }
+      ],
+      "continuation_cache_hit": true,
+      "label_cache_hit": true,
+      "batch_tool_count": 4,
+      "batch_tool_names": [
+        "read",
+        "read",
+        "compact_edit",
+        "bash"
+      ],
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 2939,
+        "known_generated_argument_tokens": 110,
+        "known_classification_control_records": 1
+      },
+      "request_id": "openjev-264813a632b144dba0ed33b282f6d279",
+      "decision": {
+        "index": 1,
+        "name": "execute_plan",
+        "control_id": 36,
+        "logprobs": [
+          -2.9698522090911865,
+          -0.5948522090911865
+        ],
+        "classification_seconds": 0.2380627617239952
+      },
+      "generated_argument_tokens": 110,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 1.3192195622250438,
+      "finish_reason": "stop",
+      "input_tokens": 2939,
+      "calls": [
+        {
+          "name": "read",
+          "arguments": {
+            "path": "app.py"
+          }
+        },
+        {
+          "name": "read",
+          "arguments": {
+            "path": "test_app.py"
+          }
+        },
+        {
+          "name": "compact_edit",
+          "arguments": {
+            "path": "app.py",
+            "task": "Change --timeout default to 2.5. Change --host default to \"remote\". Change --verbose default to true. Change --workers help to \"Worker count\". Change --workers required to true."
+          }
+        },
+        {
+          "name": "bash",
+          "arguments": {
+            "command": "python -m unittest -v"
+          }
+        }
+      ],
+      "status": "ok",
+      "wall_seconds": 2.0111997090280056,
+      "action": "chat",
+      "timestamp": 1789756747.931551
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "59602740ce1646dd98669228eda35f84",
+      "session_id": "01a0b5d0-a285-7722-ac87-0cacd39e31f2",
+      "parent_tool_call_id": "openjev-264813a632b144dba0ed33b282f6d279-2",
+      "stage_seconds": {
+        "lock_wait": 5.875248461961746e-06,
+        "retrieval": 0.00045399973168969154,
+        "cached_validation": 2.919696271419525e-07,
+        "generation_preparation": 0.6903129173442721,
+        "generation_http": 0.9420337500050664,
+        "generation": 1.632455499842763,
+        "generated_validation": 0.01145141664892435,
+        "write": 0.004404583014547825,
+        "verification": 2.3166649043560028e-05,
+        "admission": 0.001072457991540432
+      },
+      "http_requests": [
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789756748.0063329,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.30643050000071526
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789756748.006474,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.3759696246124804
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789756748.006603,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.37625387497246265
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789756748.006756,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.30527162505313754
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789756748.006884,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.357554541900754
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789756748.006997,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.3577076247893274
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789756748.007113,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.38399845780804753
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789756748.00722,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.3816064167767763
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789756748.007306,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.30521999998018146
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789756748.007392,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.37718462524935603
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789756748.007509,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.30550337489694357
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789756748.0076249,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.37605224968865514
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789756748.007711,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.3787477919831872
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789756748.39181,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.2893995000049472
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789756748.392092,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.2887258748523891
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789756748.392363,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.2891014590859413
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789756748.392989,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.2886503334157169
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789756748.3934982,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.2884797500446439
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789756748.393733,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.28820162545889616
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789756748.393951,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.28817387484014034
+        },
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789756748.697115,
+          "http_status": 200,
+          "request_id": "openjev-0a5942361d7d4c158d413f1691427a57",
+          "input_tokens": 592,
+          "generated_argument_tokens": 46,
+          "classification_control_records": 1,
+          "engine_seconds": 0.652019364759326,
+          "classification_seconds": 0.13936954736709595,
+          "classification_timing": null,
+          "seconds": 0.9411226669326425
+        }
+      ],
+      "codebook_enabled": true,
+      "cache_hit": false,
+      "applied": true,
+      "retrieval": {
+        "book_entries": 0,
+        "task_path_matches": 0,
+        "source_matches": 0,
+        "candidate_count": 0
+      },
+      "candidates": [],
+      "jit_entries_before": 0,
+      "jit_hit": false,
+      "fallback_reason": "empty_or_inapplicable_codebook",
+      "label_cache_hit": false,
+      "continuation_cache_hit": false,
+      "backup": "/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-expanded-agent-yugc89k1/1-properties-batched/state/workspaces/a1c3d4d7e10bf3e3484b/backup-577f7887156f4bc8a6fc56b28c94bbf0.py",
+      "source_sha256": "ff3ce632ba63131cea6bcea647abf9f1a684f1fe5d2f5c051aae4370c9690d5b",
+      "updated_sha256": "054fe73e11c344585b7081ef43cfc94b324e51650e44996a1ff0b048f1579a21",
+      "jit_admission_origin": null,
+      "schema_hit": false,
+      "jit_admitted": 0,
+      "jit_entries_after": 0,
+      "validation": "schema + Python compile; semantic correctness unverified",
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 592,
+        "known_generated_argument_tokens": 46,
+        "known_classification_control_records": 1
+      },
+      "path": "/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-expanded-agent-yugc89k1/1-properties-batched/project/app.py",
+      "admitted": 1,
+      "input_tokens": 592,
+      "generated_argument_tokens": 46,
+      "classification_control_records": 1,
+      "requests": [
+        {
+          "input_tokens": 592,
+          "generated_argument_tokens": 46,
+          "classification_control_records": 1,
+          "request_id": "openjev-0a5942361d7d4c158d413f1691427a57"
+        }
+      ],
+      "status": "ok",
+      "wall_seconds": 1.6507900841534138,
+      "action": "edit",
+      "timestamp": 1789756749.655952
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "aa3abaa74be6476cacd0969ee7a0cd84",
+      "session_id": "01a0b5d0-a285-7722-ac87-0cacd39e31f2",
+      "parent_tool_call_id": null,
+      "stage_seconds": {
+        "generation_preparation": 0.3233196660876274,
+        "generation_http": 2.792414417024702,
+        "generation": 3.1158425831235945
+      },
+      "http_requests": [
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789756749.787918,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.32251195795834064
+        },
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789756750.1115808,
+          "http_status": 200,
+          "request_id": "openjev-429973549ac24af89a9861bfbd022773",
+          "input_tokens": 3393,
+          "generated_argument_tokens": 240,
+          "classification_control_records": 1,
+          "engine_seconds": 2.4318560510873795,
+          "classification_seconds": 0.28572423569858074,
+          "classification_timing": null,
+          "seconds": 2.791481166612357
+        }
+      ],
+      "label_cache_hit": true,
+      "continuation_cache_hit": true,
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 3393,
+        "known_generated_argument_tokens": 240,
+        "known_classification_control_records": 1
+      },
+      "request_id": "openjev-429973549ac24af89a9861bfbd022773",
+      "decision": {
+        "index": 0,
+        "name": "reply_user",
+        "control_id": 35,
+        "logprobs": [
+          -0.00898780394345522,
+          -6.508987903594971
+        ],
+        "classification_seconds": 0.28572423569858074
+      },
+      "generated_argument_tokens": 240,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 2.4318560510873795,
+      "finish_reason": "stop",
+      "input_tokens": 3393,
+      "status": "ok",
+      "wall_seconds": 3.11601229198277,
+      "action": "chat",
+      "timestamp": 1789756752.9037492
+    }
+  ],
+  "malformed_event_lines": 0,
+  "usage_complete": true
+}

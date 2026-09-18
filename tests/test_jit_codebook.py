@@ -8,8 +8,44 @@ m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
 def test_only_validated_supported_edits_enter_codebook():
     b=m.Codebook()
     assert not b.admit('source','Set value to 6.',[['kw','f','default',6]],False)
-    assert not b.admit('source','Return early.',[['return_if','f','True','0']],True)
+    assert not b.admit('source','Return early.',[['unknown','f','True','0']],True)
     assert b.entries==[]
+
+
+def test_exact_typed_edit_admission_requires_same_task_and_source():
+    book = m.Codebook()
+    edits = [['return_if', 'f', 'value < 0', 'None'], ['raise_if', 'g', 'x is None', 'ValueError', 'missing']]
+    assert book.admit('source', 'Guard f and g.', edits, True)
+    assert book.retrieve('source', 'Guard f and g.', {'f', 'g'})[0]['edits'] == edits
+    assert not book.retrieve('source', 'Guard f only.', {'f', 'g'})
+    assert not book.retrieve('source', 'Guard f and g.', {'f'})
+    assert not book.retrieve('source\n# comment', 'Guard f and g.', {'f', 'g'})
+
+
+def test_typed_bound_values_aliases_and_comment_equivalence():
+    for first, second in [(1.5, 2.5), ('old', 'new'), (False, True), (6, 8)]:
+        book = m.Codebook()
+        edit = [['kw', '--value', 'default', first]]
+        assert book.admit('x = 1\n', 'first', edit, True, bound=edit)
+        bound = [['kw', '--value', 'default', second]]
+        assert book.retrieve('x = 1\n# comment\n', 'different', {'--value'}, bound=bound)[0]['edits'] == bound
+        assert not book.retrieve('x = 2\n', 'different', {'--value'}, bound=bound)
+        assert not book.retrieve('x = 1\n', 'different', {'--value'}, bound=[['kw', '--value', 'help', second]])
+    book = m.Codebook()
+    alias = [['arg', '--value', '-v']]
+    assert book.admit('x=1', 'Add alias -v to --value.', alias, True, bound=alias)
+    bound = [['arg', '--value', '-x']]
+    assert book.retrieve('x=1', 'Add alias -x to --value.', {'--value'}, bound=bound)[0]['edits'] == bound
+
+
+def test_bound_types_nonfinite_and_equivalent_duplicates():
+    book = m.Codebook()
+    edit = [['kw', '--flag', 'default', True]]
+    assert book.admit('x=1', 'true', edit, True, bound=edit)
+    assert not book.retrieve('x=1', 'one', {'--flag'}, bound=[['kw', '--flag', 'default', 1]])
+    assert book.admit('x = 1 # comment', 'true', edit, True, bound=edit)
+    assert len(book.retrieve('x=1', 'true', {'--flag'}, bound=edit)) == 1
+    assert not book.admit('x=1', 'nan', [['kw', '--flag', 'default', float('nan')]], True)
 
 
 def test_integer_template_rebinds_and_rejects_stale_or_ambiguous_input():

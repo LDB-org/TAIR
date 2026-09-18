@@ -31,7 +31,8 @@ With `PIJIT_TOKENIZER_REVISION` set to the deployed tokenizer's immutable revisi
 or file hashes, validated labels are reused across bridge processes under
 `PIJIT_STATE_DIR/tokenizer-labels`. The key includes endpoint, model, revision and
 label set. Update this value whenever the deployed tokenizer changes; without it,
-labels are fetched on every call. Prompt/continuation tokenization is not cached.
+labels are fetched on every call. Continuation caching is separately opt-in below;
+the current conversation is always tokenized.
 `label_cache_hit` records reuse separately from edit-codebook hits.
 
 Live evidence in `results/experiments/pijit-preparation-20260918-live/` shows
@@ -58,14 +59,36 @@ keyword/default changes, positional option aliases, function-entry guards, and
 catch/return operations. Other languages and unsupported changes use Pi's ordinary
 `edit` or `write` tools; their tool selection still uses the engine.
 
-The persistent table currently admits **single keyword edits only**. Entries are
-bound to the project, file, exact source hash and normalized task wording. One
-unambiguous integer can vary. Successful edits register both the original and
-resulting snapshots, enabling a subsequent value change on the resulting file.
-Paraphrased tasks or unrelated source changes miss the table and generate again.
-A candidate must also pass direct classification with NONE, conditional score
->= 0.95 and logprob margin >= 3. These thresholds are heuristic, not calibrated
-correctness probabilities. Only this nested edit inference can avoid argument
+The persistent table learns **typed CLI keyword/alias templates and exact-task
+typed edits**. Complete explicit CLI requests supported by `schema_actions.bind_edit`
+can reuse a generated template with new integer, float, string or boolean values,
+or a new alias. Target, property and value type must match the learned template;
+the instantiated edit must match the complete request. Original and resulting
+snapshots are registered, including updated selector names after adding an alias.
+Entries remain project/file bound. Explicit bindings can also reuse a snapshot
+with the same location-free Python AST (ordinary comments/formatting may change);
+actual AST changes invalidate it. Current-byte checks still guard every write.
+
+Other supported generated operations, including guards, exception handling and
+multi-edit arrays, are retained for the exact stripped task and exact original
+source. They do not acquire arbitrary parameter binding or semantic paraphrase
+support. Their already-edited result is not registered as another replay input.
+Equivalent retrieved actions are deduplicated before the bounded candidate table.
+The historical standalone probe and older entry format retain their narrower
+behavior; these default-client additions are not retroactive benchmark claims.
+
+Candidates still go through direct classification with NONE. An explicitly bound
+matching candidate selected by the model is accepted on the structural match;
+the trace records `acceptance_basis=explicit_binding`. A selected exact-task entry
+whose task and source match uses `acceptance_basis=exact_task`. Contradictory
+bindings or stale exact-task metadata are rejected regardless of score. Other
+legacy candidates retain the conditional score >= 0.95 and logprob margin >= 3
+gate. These thresholds are heuristic, not calibrated correctness probabilities.
+The classification prompt explains the candidate operation fields. NONE still
+causes generation; generation that contradicts a complete explicit binding is
+rejected before writing. A cold miss always generates before learning; there is
+no preseeded correct action. Exact-task reuse inherits its original validation
+level and does not prove semantic correctness. Only this nested edit inference can avoid argument
 generation; the outer Pi tool call still generates its path/task arguments.
 
 Default admission means **schema + Python compilation**, not semantic correctness.
@@ -321,10 +344,13 @@ variables. Flags are opt-in. Ordinary tools remain available for unsupported wor
 
 `PIJIT_LOCAL_ROUTING` recognizes explicit property-change and alias sentences in
 the latest user request after the Agent successfully reads a Python file. It routes
-a uniquely applicable clause to `compact_edit`, preserving its exact text; it does
+a uniquely applicable clause to `compact_edit`, preserving its exact text. With
+the default learned codebook it groups up to eight applicable clauses for the same
+file into one call; schema/exact-action modes retain one clause per call. It does
 not generate an outer tool-call argument payload. Quoted strings stay intact;
 negated/compound/unrecognized clauses and ambiguous files go to the ordinary Agent.
 An attempted clause is not automatically scheduled again, including on tool error.
+Attempt tracking expands previously grouped tasks back into their original clauses.
 This is a bounded deterministic dispatcher, not learned general-purpose planning.
 
 `PIJIT_JIT_ACTIONS` stores learned typed actions in each workspace's
@@ -355,9 +381,46 @@ The full Agent experiment passed 36/36 tasks, with 12/12 covered second-round
 edits replayed; the mixed task set remained slower than native Pi. The edit-only
 experiment passed 54/54 checks and separates local replay savings from Agent work.
 
+### Experimental multi-operation plans
+
+`PIJIT_BATCH_TOOLS=1` enables an experimental outer planning path for `read`,
+`edit`, `write`, `bash`, and `compact_edit`. The outer model selects either a
+final reply or a plan envelope containing 1..8 operations, instead of selecting
+each supported tool separately. It emits an operation list
+whose arguments must already be known; the model still needs another turn when
+discovery changes what to do. Final replies wait for actual execution results.
+
+Pi receives ordinary individual tool calls, with distinct IDs and normal tool
+hooks. In this mode the four built-in tools use their standard Pi factories with
+sequential execution, and compact edits also execute sequentially. A failed or
+blocked step prevents later plan steps from running. Earlier successful edits
+are retained: this is not a transaction or whole-plan rollback. The existing
+compact-edit codebook remains active; entire plans are not learned or replayed.
+The deterministic single-clause outer dispatcher is bypassed in this mode.
+
+This mode is opt-in and requires the tested Pi 0.85.1 execution semantics.
+
 ### Outer-loop preparation and directory reads
 
 Two additional opt-in controls target overhead outside learned edits:
+
+For the learned **classification-first** codebook, use this configuration with an
+immutable revision covering both tokenizer and chat-template files:
+
+```sh
+PIJIT_SSH_HOST=rs-yuesheng-gpu-public \
+PIJIT_TOKENIZER_REVISION='<deployed tokenizer and chat-template revision or hashes>' \
+PIJIT_CONTINUATION_CACHE=1 PIJIT_DIRECTORY_GUARD=1 PIJIT_LOCAL_ROUTING=1 \
+PIJIT_SCHEMA_ACTIONS=0 PIJIT_JIT_ACTIONS=0 PIJIT_PRESET_EDITS=0 PIJIT_DISABLE_CODEBOOK=0 \
+node integrations/pijit/launch.mjs
+```
+
+Routing removes an outer planning request only for recognized user clauses after
+a source read. The inner edit still classifies learned candidates; NONE falls back
+to generation and admission. No schema execution or zero-model edit replay is
+enabled by this configuration. All controls remain opt-in.
+
+For the separate schema/exact-replay experiment:
 
 ```sh
 PIJIT_CONTINUATION_CACHE=1 PIJIT_DIRECTORY_GUARD=1 \

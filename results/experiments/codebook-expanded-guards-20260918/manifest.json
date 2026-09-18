@@ -1,0 +1,218 @@
+{
+  "source": "import argparse\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4)\n    p.add_argument('--timeout', type=int, default=3, help='old')\n    p.add_argument('--ratio', type=float, default=1.25)\n    p.add_argument('--flag', action='store_true', default=False)\n    return p\n",
+  "cases": [
+    [
+      "wrong_value",
+      "Change --workers default to 8.",
+      [
+        [
+          "kw",
+          "--workers",
+          "default",
+          9
+        ]
+      ],
+      false
+    ],
+    [
+      "wrong_target",
+      "Change --workers default to 8.",
+      [
+        [
+          "kw",
+          "--timeout",
+          "default",
+          8
+        ]
+      ],
+      false
+    ],
+    [
+      "wrong_property",
+      "Change --timeout default to 8.",
+      [
+        [
+          "kw",
+          "--timeout",
+          "help",
+          "8"
+        ]
+      ],
+      false
+    ],
+    [
+      "extra_edit",
+      "Change --workers default to 8.",
+      [
+        [
+          "kw",
+          "--workers",
+          "default",
+          8
+        ],
+        [
+          "kw",
+          "--timeout",
+          "default",
+          8
+        ]
+      ],
+      false
+    ],
+    [
+      "wrong_type",
+      "Change --workers default to 1.",
+      [
+        [
+          "kw",
+          "--workers",
+          "default",
+          true
+        ]
+      ],
+      false
+    ],
+    [
+      "negated",
+      "Do not change --workers default to 8.",
+      [
+        [
+          "kw",
+          "--workers",
+          "default",
+          8
+        ]
+      ],
+      false
+    ],
+    [
+      "compound",
+      "Change --workers default to 8 and add alias -w.",
+      [
+        [
+          "kw",
+          "--workers",
+          "default",
+          8
+        ]
+      ],
+      false
+    ],
+    [
+      "heldout_integer",
+      "Update the default value for --timeout to 7.",
+      [
+        [
+          "kw",
+          "--timeout",
+          "default",
+          7
+        ]
+      ],
+      true
+    ],
+    [
+      "heldout_string",
+      "Change --timeout help to \"Wait duration\".",
+      [
+        [
+          "kw",
+          "--timeout",
+          "help",
+          "Wait duration"
+        ]
+      ],
+      true
+    ],
+    [
+      "alias_wrong",
+      "Add alias -t to --timeout.",
+      [
+        [
+          "arg",
+          "--timeout",
+          "-x"
+        ]
+      ],
+      false
+    ],
+    [
+      "alias_correct",
+      "Add alias -t to --timeout.",
+      [
+        [
+          "arg",
+          "--timeout",
+          "-t"
+        ]
+      ],
+      true
+    ],
+    [
+      "float_wrong_type",
+      "Change --ratio default to 2.0.",
+      [
+        [
+          "kw",
+          "--ratio",
+          "default",
+          2
+        ]
+      ],
+      false
+    ],
+    [
+      "float_correct",
+      "Change --ratio default to 2.75.",
+      [
+        [
+          "kw",
+          "--ratio",
+          "default",
+          2.75
+        ]
+      ],
+      true
+    ],
+    [
+      "boolean_wrong",
+      "Change --flag default to true.",
+      [
+        [
+          "kw",
+          "--flag",
+          "default",
+          false
+        ]
+      ],
+      false
+    ],
+    [
+      "boolean_correct",
+      "Change --flag default to true.",
+      [
+        [
+          "kw",
+          "--flag",
+          "default",
+          true
+        ]
+      ],
+      true
+    ],
+    [
+      "unicode_correct",
+      "将 --timeout 的帮助文本改为 \"等待时间\"。",
+      [
+        [
+          "kw",
+          "--timeout",
+          "help",
+          "等待时间"
+        ]
+      ],
+      true
+    ]
+  ],
+  "method": "direct gate probes bypass retrieval; separate worker per arm/case; negatives may not be normally admissible; no edits executed; no retries"
+}

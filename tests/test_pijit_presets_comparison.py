@@ -23,6 +23,8 @@ def test_summary_counts_outer_inner_and_failed_work_separately():
          'metrics': [record('chat', 1, 40), record('preset', 0, 0), record('chat', 1, 8)]},
         {'arm': 'c4', 'passed': False, 'seconds': 5, 'usage_complete': False,
          'metrics': [record('chat', 1, 30), record('edit', 2, 0, 'error')]},
+        {'arm': 'optimized', 'passed': True, 'seconds': 2, 'usage_complete': True,
+         'metrics': [record('chat', 0, 0), record('edit', 1, 10)]},
     ]
     result = c.summarize(rows)['arms']
     assert result['generation']['inference_requests'] == 3
@@ -33,6 +35,8 @@ def test_summary_counts_outer_inner_and_failed_work_separately():
     assert result['c4']['inference_requests'] == 3
     assert result['c4']['passed'] == 0 and result['c4']['wall_seconds'] == 5
     assert not result['c4']['usage_complete']
+    assert result['optimized']['outer_calls'] == result['optimized']['inference_requests'] == 1
+    assert result['optimized']['passed'] == 1 and result['optimized']['wall_seconds'] == 2
 
 
 @pytest.mark.parametrize('arm', ['preset', 'preset_before'])
