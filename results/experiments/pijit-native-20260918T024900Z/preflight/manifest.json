@@ -1,0 +1,26 @@
+{
+  "seed": 20260919,
+  "repeats": 1,
+  "values": [
+    6
+  ],
+  "sources": {
+    "benchmarks/compare_pijit_presets.py": "7289061c3e6df16d7d8b9e2e79f16f6d5535b0f7cadfc59487c9b3b56a66c8f9",
+    "benchmarks/native_pi_trace.ts": "e289e272395f214369f4308dfed1bed20c135544ed5fcdbcfb74aa9e6536d79d",
+    "integrations/pijit/bridge.py": "d7121802a973a7c0de08a469a3fe1cd3ef920fa5d12d926714552cec7ec6f192",
+    "integrations/pijit/extension.ts": "936fba5254223c5aed68e2b2ed8560080af0adbf76e376fe08451a767f129f26",
+    "integrations/pijit/launch.mjs": "4269f50927dc27a899076a98d187e7724c53dc47374aff1236ef04ddd9afdf30",
+    "deploy/preset_edits.py": "537fda7ead72534e1b60dcb3189e2d01f7bbcece2770e739502d703da491d534",
+    "deploy/jit_codebook.py": "0b7d7ae77bf46e32c2e230b88d31e3dc8625caadc7eb7200ed6a935c0dde5551",
+    "deploy/direct_structural_protocol.py": "5e0b9c469fddab63ef8624761472e99610c395a9f354eea1bc47f1405a07030f",
+    "deploy/compact_structural_protocol.py": "15a7e1be3c0c8cc1a628813705714998dafbb4c13c2a7084eda4e1ca4c7b7820",
+    "deploy/structural_edit_protocol.py": "cfcdb80c64ad850149df17db9d558512543c8c018afd65273c4e77f55385d40a"
+  },
+  "arms": [
+    "native"
+  ],
+  "task_timeout": 120.0,
+  "timing": "Reported validated wall = Pi start through exit plus identical independent final AST/behavior check. Preset/compact paths additionally keep in-tool verification/rollback; native uses unmodified read/edit tools. Fixture/tunnel preparation excluded. Profile startup included.",
+  "native": "Stock Pi openai-completions streaming provider and read/edit tools on the same patched vLLM standard tools API. Harness fixes temperature 0, 2048-token budget, thinking off, parallel tools off and unique per-request cache salt. Not an unpatched-server A/B.",
+  "pairing": "Same source per paired task; separate projects and codebooks. Reset intended source between tasks so a failed arm cannot contaminate later input. Cold codebooks per repeat."
+}

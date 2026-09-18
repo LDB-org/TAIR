@@ -1,0 +1,68 @@
+{"repeat": 0, "value": 6, "arm": "c4", "passed": true, "seconds": 54.45300220197532, "usage_complete": true}
+{"repeat": 0, "value": 6, "arm": "generation", "passed": true, "seconds": 5.578271851001773, "usage_complete": true}
+{"repeat": 0, "value": 6, "arm": "preset", "passed": true, "seconds": 4.527314072998706, "usage_complete": true}
+{"repeat": 0, "value": 8, "arm": "preset", "passed": true, "seconds": 4.528887072985526, "usage_complete": true}
+{"repeat": 0, "value": 8, "arm": "generation", "passed": true, "seconds": 5.533996388025116, "usage_complete": true}
+{"repeat": 0, "value": 8, "arm": "c4", "passed": true, "seconds": 5.393951105012093, "usage_complete": true}
+{"repeat": 1, "value": 6, "arm": "generation", "passed": true, "seconds": 5.433816295990255, "usage_complete": true}
+{"repeat": 1, "value": 6, "arm": "c4", "passed": true, "seconds": 5.42855521896854, "usage_complete": true}
+{"repeat": 1, "value": 6, "arm": "preset", "passed": true, "seconds": 4.426194941042922, "usage_complete": true}
+{"repeat": 1, "value": 8, "arm": "generation", "passed": true, "seconds": 29.800179706013296, "usage_complete": true}
+{"repeat": 1, "value": 8, "arm": "preset", "passed": true, "seconds": 15.074563113972545, "usage_complete": true}
+{"repeat": 1, "value": 8, "arm": "c4", "passed": true, "seconds": 33.15229948499473, "usage_complete": true}
+{
+  "arms": {
+    "generation": {
+      "tasks": 4,
+      "passed": 4,
+      "wall_seconds": 46.34626424103044,
+      "median_seconds": 5.556134119513445,
+      "outer_calls": 12,
+      "nested_inference_requests": 4,
+      "preset_applied": 0,
+      "cache_hits": 0,
+      "error_records": 0,
+      "usage_complete": true,
+      "inference_requests": 16,
+      "known_input_tokens": 21930,
+      "known_generated_argument_tokens": 246,
+      "known_classification_control_records": 16,
+      "unknown_usage_requests": 0
+    },
+    "c4": {
+      "tasks": 4,
+      "passed": 4,
+      "wall_seconds": 98.42780801095068,
+      "median_seconds": 19.290427351981634,
+      "outer_calls": 12,
+      "nested_inference_requests": 4,
+      "preset_applied": 0,
+      "cache_hits": 0,
+      "error_records": 0,
+      "usage_complete": true,
+      "inference_requests": 16,
+      "known_input_tokens": 21948,
+      "known_generated_argument_tokens": 246,
+      "known_classification_control_records": 16,
+      "unknown_usage_requests": 0
+    },
+    "preset": {
+      "tasks": 4,
+      "passed": 4,
+      "wall_seconds": 28.5569592009997,
+      "median_seconds": 4.528100572992116,
+      "outer_calls": 12,
+      "nested_inference_requests": 0,
+      "preset_applied": 4,
+      "cache_hits": 0,
+      "error_records": 0,
+      "usage_complete": true,
+      "inference_requests": 12,
+      "known_input_tokens": 22608,
+      "known_generated_argument_tokens": 172,
+      "known_classification_control_records": 12,
+      "unknown_usage_requests": 0
+    }
+  },
+  "limitations": "Small integer-default fixture with a hand-written AST/behavior oracle. Real Pi loops including read, outer selection, parameters, local tools and reply; shared backend; no stable speed claim. Tool catalogs/prompts differ between arms. No automatic benchmark retries; agent recovery attempts remain in totals. Known usage is a lower bound when a task is interrupted or records are missing."
+}

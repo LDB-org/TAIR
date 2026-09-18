@@ -1,0 +1,91 @@
+{"repeat": 0, "value": 6, "arm": "generation", "passed": true, "hit": false, "seconds": 1.2817996219964698}
+{"repeat": 0, "value": 6, "arm": "c4", "passed": true, "hit": false, "seconds": 1.2392109609791078}
+{"repeat": 0, "value": 8, "arm": "c4", "passed": true, "hit": false, "seconds": 21.211431306961458}
+{"repeat": 0, "value": 8, "arm": "generation", "passed": true, "hit": false, "seconds": 5.43314353300957}
+{"repeat": 0, "value": 10, "arm": "c4", "passed": true, "hit": false, "seconds": 31.937161626992747}
+{"repeat": 0, "value": 10, "arm": "generation", "passed": true, "hit": false, "seconds": 1.3417672569630668}
+{"repeat": 0, "value": 12, "arm": "generation", "passed": true, "hit": false, "seconds": 1.2837635739706457}
+{"repeat": 0, "value": 12, "arm": "c4", "passed": true, "hit": false, "seconds": 1.990575787029229}
+{"repeat": 1, "value": 6, "arm": "generation", "passed": true, "hit": false, "seconds": 1.267080789024476}
+{"repeat": 1, "value": 6, "arm": "c4", "passed": true, "hit": false, "seconds": 1.1983533250167966}
+{"repeat": 1, "value": 8, "arm": "generation", "passed": true, "hit": false, "seconds": 1.1977411650004797}
+{"repeat": 1, "value": 8, "arm": "c4", "passed": true, "hit": false, "seconds": 1.9778921279939823}
+{"repeat": 1, "value": 10, "arm": "c4", "passed": true, "hit": false, "seconds": 1.9798929480020888}
+{"repeat": 1, "value": 10, "arm": "generation", "passed": true, "hit": false, "seconds": 1.2265356139978394}
+{"repeat": 1, "value": 12, "arm": "generation", "passed": true, "hit": false, "seconds": 1.20241582399467}
+{"repeat": 1, "value": 12, "arm": "c4", "passed": true, "hit": false, "seconds": 2.110128038970288}
+{"repeat": 2, "value": 6, "arm": "c4", "passed": true, "hit": false, "seconds": 1.4615502519882284}
+{"repeat": 2, "value": 6, "arm": "generation", "passed": true, "hit": false, "seconds": 1.3578413259820081}
+{"repeat": 2, "value": 8, "arm": "generation", "passed": true, "hit": false, "seconds": 1.3155548259965144}
+{"repeat": 2, "value": 8, "arm": "c4", "passed": true, "hit": false, "seconds": 1.9528290220187046}
+{"repeat": 2, "value": 10, "arm": "c4", "passed": true, "hit": false, "seconds": 2.065382440981921}
+{"repeat": 2, "value": 10, "arm": "generation", "passed": true, "hit": false, "seconds": 1.1911494769738056}
+{"repeat": 2, "value": 12, "arm": "c4", "passed": true, "hit": false, "seconds": 1.9452776230173185}
+{"repeat": 2, "value": 12, "arm": "generation", "passed": true, "hit": false, "seconds": 1.183509643014986}
+{
+  "arms": {
+    "generation": {
+      "attempts": 12,
+      "passed": 12,
+      "cache_hits": 0,
+      "wall_seconds": 19.28230264992453,
+      "median_seconds": 1.2744402055104729,
+      "stage_seconds": {
+        "admission": 4.398589953780174e-05,
+        "cached_validation": 4.893052391707897e-06,
+        "generated_validation": 0.008585909847170115,
+        "generation": 18.7215152719873,
+        "generation_http": 12.159428008890245,
+        "generation_preparation": 6.561209775041789,
+        "lock_wait": 4.80160815641284e-05,
+        "retrieval": 0.002855273080058396,
+        "verification": 0.33751551317982376,
+        "write": 0.19865125900832936
+      },
+      "fallback_reasons": {
+        "codebook_disabled": 12
+      },
+      "usage_complete": true,
+      "inference_requests": 12,
+      "unknown_usage_requests": 0,
+      "known_input_tokens": 5832,
+      "known_generated_argument_tokens": 126,
+      "known_classification_control_records": 12
+    },
+    "c4": {
+      "attempts": 12,
+      "passed": 12,
+      "cache_hits": 0,
+      "wall_seconds": 71.06968545995187,
+      "median_seconds": 1.9788925379980356,
+      "stage_seconds": {
+        "admission": 0.09634723007911816,
+        "cache_classification": 28.362955811084248,
+        "cache_http": 24.83204350795131,
+        "cache_preparation": 3.5303885069442913,
+        "cached_validation": 6.0868333093822e-06,
+        "generated_validation": 0.007354402972850949,
+        "generation": 42.044947005051654,
+        "generation_http": 35.70530348701868,
+        "generation_preparation": 6.338648384960834,
+        "lock_wait": 3.2093143090605736e-05,
+        "retrieval": 0.003333674103487283,
+        "verification": 0.33685877185780555,
+        "write": 0.20240602298872545
+      },
+      "fallback_reasons": {
+        "empty_or_inapplicable_codebook": 3,
+        "low_conditional_probability,low_margin": 9
+      },
+      "usage_complete": true,
+      "inference_requests": 21,
+      "unknown_usage_requests": 0,
+      "known_input_tokens": 6966,
+      "known_generated_argument_tokens": 128,
+      "known_classification_control_records": 21
+    }
+  },
+  "all_pairs_passed_with_complete_usage": true,
+  "observed_generation_over_c4_wall_ratio": 0.2713154353383231,
+  "limitations": "Small synthetic fixture; shared service; no stable speed claim. Direct nested edit calls, not a complete Pi loop. Client wall includes preparation, network, queueing, verification, writes and admission. HTTP timings overlap concurrent tokenizer requests; do not sum them as wall time. Failed inference with missing usage is unknown, not zero. No automatic retries."
+}

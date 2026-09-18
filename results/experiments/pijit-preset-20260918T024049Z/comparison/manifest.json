@@ -1,0 +1,27 @@
+{
+  "seed": 20260919,
+  "repeats": 2,
+  "values": [
+    6,
+    8
+  ],
+  "sources": {
+    "benchmarks/compare_pijit_presets.py": "5839463dfae1d802d160c92013ff8315b6b0ea129f08dcc660e57fb2f4911fd8",
+    "integrations/pijit/bridge.py": "d7121802a973a7c0de08a469a3fe1cd3ef920fa5d12d926714552cec7ec6f192",
+    "integrations/pijit/extension.ts": "936fba5254223c5aed68e2b2ed8560080af0adbf76e376fe08451a767f129f26",
+    "integrations/pijit/launch.mjs": "4269f50927dc27a899076a98d187e7724c53dc47374aff1236ef04ddd9afdf30",
+    "deploy/preset_edits.py": "537fda7ead72534e1b60dcb3189e2d01f7bbcece2770e739502d703da491d534",
+    "deploy/jit_codebook.py": "0b7d7ae77bf46e32c2e230b88d31e3dc8625caadc7eb7200ed6a935c0dde5551",
+    "deploy/direct_structural_protocol.py": "5e0b9c469fddab63ef8624761472e99610c395a9f354eea1bc47f1405a07030f",
+    "deploy/compact_structural_protocol.py": "15a7e1be3c0c8cc1a628813705714998dafbb4c13c2a7084eda4e1ca4c7b7820",
+    "deploy/structural_edit_protocol.py": "cfcdb80c64ad850149df17db9d558512543c8c018afd65273c4e77f55385d40a"
+  },
+  "arms": {
+    "generation": "gen",
+    "c4": "jit",
+    "preset": "pre"
+  },
+  "task_timeout": 120.0,
+  "timing": "Pi process start through exit, including outer and inner inference, verification, read/edit tools and final reply. Fixtures/tunnel/setup and independent post-check excluded.",
+  "pairing": "Same source per paired task; separate projects and codebooks. Reset intended source between tasks so a failed arm cannot contaminate later input. Cold codebooks per repeat."
+}
