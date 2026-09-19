@@ -73,7 +73,7 @@ def report(folder):
             assert all(e['payload']['parallel_tool_calls'] for e in native if e['event'] == 'request')
     scopes = {'all': rows, 'warm': [r for r in rows if r['round'] > 1],
               'cold': [r for r in rows if r['round'] == 1],
-              'new_tasks': [r for r in rows if r['case'] in ['cpython_untabify_default', 'cpython_md5_positive_buffer']]}
+              'new_tasks': [r for r in rows if r['case'].startswith('rich_') or r['case'] in ['cpython_untabify_default', 'cpython_md5_positive_buffer']]}
     summaries = {scope: {arm: aggregate([r for r in items if r['arm'] == arm]) for arm in manifest['arms']}
                  for scope, items in scopes.items()}
     percase = {case: {arm: aggregate([r for r in rows if r['case'] == case and r['arm'] == arm])
@@ -88,7 +88,7 @@ def report(folder):
                 artifact_audits=audits, engine_requests_verified=len(ids),
                 failures=[{k: r[k] for k in ['arm', 'case', 'repeat', 'round', 'timed_out', 'finished',
                                              'protected_changes', 'test_integrity']} for r in rows if not r['passed']],
-                limitations='48 full Agent attempts on four finite tasks in one pinned upstream repository. Two tasks are new to this experiment series. No hidden oracle in Agent context or runtime verification command. Generic unbound edits are not learned without project verification. Warm fixtures restore original source. Shared already-patched backend; native uses ordinary tools API. Not a production hit-rate or universal speed estimate.')
+                limitations=f"{len(rows)} full Agent attempts on {len(manifest['cases'])} finite tasks in the pinned {manifest.get('repository_suite', 'cpython')} repository suite. No hidden oracle in Agent context or runtime verification command. Generic unbound edits are not learned without project verification. Warm fixtures restore original source. Shared already-patched backend; native uses ordinary tools API. Not a production hit-rate or universal speed estimate.")
 
 
 if __name__ == '__main__':

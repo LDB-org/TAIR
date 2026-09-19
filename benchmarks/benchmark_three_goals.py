@@ -39,7 +39,10 @@ def main(args):
     os.environ['PIJIT_URL'] = args.url
     scenarios = SCENARIOS
     if args.repository:
-        from repository_scenarios import scenarios_for
+        if args.repository_suite == 'rich':
+            from rich_repository_scenarios import scenarios_for
+        else:
+            from repository_scenarios import scenarios_for
         scenarios = scenarios_for(args.repository)
         if args.repository_expanded:
             from repository_transfer_scenarios import extra_scenarios
@@ -65,6 +68,7 @@ def main(args):
         'rounds_by_case': rounds_by_case,
         'source_sha256': hashes, 'configurations': {a: configuration(a,args.tokenizer_revision,args.safe_codebook) for a in args.arms},
         'safe_codebook': args.safe_codebook, 'repository_expanded': args.repository_expanded,
+        'repository_suite': args.repository_suite,
         'completion_policy': '', 'seed': 923, 'repository': str(args.repository) if args.repository else None,
         'method': 'No extra completion policy or verification gate. Native single/multi differ only in parallel_tool_calls, and both permit workspace-scoped prefix caching. Hybrid retains native tool-call history and enables local bound codebook reuse; hybrid no_book/on differ only in disable-codebook. TAIR legacy keeps its classified batch planner and per-request cache salt. Sequential interleaving, no benchmark retries; all failures retained. Shared absolute task workspace across arms, independent per-arm state/cache namespaces, restored source for warm rounds, external oracle. Shared server and finite development tasks; no generic production claim.'}
     (out/'manifest.json').write_text(json.dumps(manifest,indent=2))
@@ -127,6 +131,7 @@ if __name__=='__main__':
     parser.add_argument('--warm-cases',nargs='+',help='Only these cases receive rounds after the cold round')
     parser.add_argument('--repeats',type=int,default=1);parser.add_argument('--timeout',type=float,default=120)
     parser.add_argument('--repository',type=Path)
+    parser.add_argument('--repository-suite',choices=['cpython','rich'],default='cpython')
     parser.add_argument('--safe-codebook',action='store_true',help='Use conservative persisted reuse in both hybrid arms')
     parser.add_argument('--repository-expanded',action='store_true',help='Add held-out CPython script tasks')
     raise SystemExit(main(parser.parse_args()))
