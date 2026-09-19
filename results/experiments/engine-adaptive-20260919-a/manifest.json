@@ -1,0 +1,75 @@
+{
+  "repeats": 2,
+  "jobs": [
+    [
+      "utf8_cold",
+      {
+        "text_io.py": "utf8"
+      }
+    ],
+    [
+      "utf8_warm",
+      {
+        "helpers/local_io.py": "utf8"
+      }
+    ],
+    [
+      "utf16_cold",
+      {
+        "text_io.py": "utf16"
+      }
+    ],
+    [
+      "utf16_warm",
+      {
+        "utf16_io.py": "utf16"
+      }
+    ],
+    [
+      "mixed_new_binary",
+      {
+        "text_io.py": "utf8",
+        "binary_io.py": "binary"
+      }
+    ],
+    [
+      "binary_warm",
+      {
+        "binary_io.py": "binary"
+      }
+    ],
+    [
+      "exclusive_cold",
+      {
+        "text_io.py": "exclusive"
+      }
+    ],
+    [
+      "exclusive_warm",
+      {
+        "exclusive_io.py": "exclusive"
+      }
+    ],
+    [
+      "parents_cold",
+      {
+        "text_io.py": "parents"
+      }
+    ],
+    [
+      "parents_warm",
+      {
+        "nested_io.py": "parents"
+      }
+    ]
+  ],
+  "contracts": {
+    "utf8": "Provide read_text(path) and write_text(path,text,*,append=False), UTF-8 text, str or Path paths. Read the whole file. Write overwrites by default or appends on append=True; create missing files, but do not create parent directories. Missing reads raise FileNotFoundError.",
+    "utf16": "Provide read_text(path) and write_text(path,text,*,append=False), UTF-16 (not UTF-8) text, str or Path paths. Read the whole file. Overwrite by default, append when requested. Do not create parent directories. Missing reads raise FileNotFoundError.",
+    "binary": "Provide read_bytes(path) and write_bytes(path,data,*,append=False), arbitrary binary bytes including invalid UTF-8. str or Path paths. Read entire file, overwrite by default or append when requested. No automatic parent directories. Missing reads raise FileNotFoundError.",
+    "exclusive": "Provide read_text(path) and write_text(path,text), UTF-8. Read entire file. Write creates a new file; if it exists, raise FileExistsError and preserve every byte. Never overwrite or append. Accept str or Path. Do not create parents. Missing reads raise FileNotFoundError.",
+    "parents": "Provide read_text(path) and write_text(path,text,*,append=False), UTF-8, str or Path. Read entire file, overwrite by default or append when requested. Writing MUST automatically create missing parent directories, including nested parents. Missing reads raise FileNotFoundError."
+  },
+  "method": "Two arms, sequential curriculum per independent empty book and repeat; randomized arm order per stage. No warmup or retries. C1. Same 2048 output budget. Engine directly selects one stored entry or GENERATE and continues in the same engine session. Empty book still classifies GENERATE. Entire plan must pass caller-supplied behavioral checks before automatic admission. Baseline also validates and saves generated artifacts but never receives a catalog.",
+  "timing": "Total includes on-demand tokenization/preparation, one inference HTTP, execution, behavioral verification and disk admission. Inference and preparation separately reported. Tokenization HTTP calls do not run model inference. Logical input counts engine prefix plus selected continuation, excluding unused candidate tails and control record."
+}

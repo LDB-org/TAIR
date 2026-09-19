@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "id": "5d04190926692f98ed00403cf1fb207651e8890c7fc44eadbe686e83da936506",
+      "contract": "Provide read_text(path) and write_text(path,text,*,append=False), UTF-8 text, str or Path paths. Read the whole file. Write overwrites by default or appends on append=True; create missing files, but do not create parent directories. Missing reads raise FileNotFoundError.",
+      "source": "def read_text(path):\n    with open(path, 'r', encoding='utf-8') as f:\n        return f.read()\n\ndef write_text(path, text, *, append=False):\n    mode = 'a' if append else 'w'\n    with open(path, mode, encoding='utf-8') as f:\n        f.write(text)\n",
+      "source_sha256": "45eb3f5a881797f8857253d9826d1e132d7510c12e1a74d0c59107c71890b757",
+      "verification": "Caller-supplied behavior suite v1: utf8"
+    },
+    {
+      "id": "d9e61e62be818a01b9d36e14b5290a2ea18d24b715b59de17f26e43526ffad1f",
+      "contract": "Provide read_text(path) and write_text(path,text,*,append=False), UTF-16 (not UTF-8) text, str or Path paths. Read the whole file. Overwrite by default, append when requested. Do not create parent directories. Missing reads raise FileNotFoundError.",
+      "source": "def read_text(path):\n    with open(path, 'r', encoding='utf-16') as f:\n        return f.read()\n\ndef write_text(path, text, *, append=False):\n    mode = 'a' if append else 'w'\n    with open(path, mode, encoding='utf-16') as f:\n        f.write(text)\n",
+      "source_sha256": "47afba1eebab014a82c2a425967d374847bdfe6a297d90ac76af20c2d91a1250",
+      "verification": "Caller-supplied behavior suite v1: utf16"
+    },
+    {
+      "id": "6131699a24285face1df9ba32f291ec5f06e403f313c84622ebf95a9eb4c700d",
+      "contract": "Provide read_bytes(path) and write_bytes(path,data,*,append=False), arbitrary binary bytes including invalid UTF-8. str or Path paths. Read entire file, overwrite by default or append when requested. No automatic parent directories. Missing reads raise FileNotFoundError.",
+      "source": "def read_bytes(path):\n    with open(path, 'rb') as f:\n        return f.read()\n\ndef write_bytes(path, data, *, append=False):\n    mode = 'ab' if append else 'wb'\n    with open(path, mode) as f:\n        f.write(data)\n",
+      "source_sha256": "ada48c9b1b5209021d7ed2e3935c81e7061e055b8f872ab445bbfab988c7609f",
+      "verification": "Caller-supplied behavior suite v1: binary"
+    },
+    {
+      "id": "12fa6976211c11e7e8a0d14967b12a6ffd4de096e1721a67d8691f69e65eb38d",
+      "contract": "Provide read_text(path) and write_text(path,text), UTF-8. Read entire file. Write creates a new file; if it exists, raise FileExistsError and preserve every byte. Never overwrite or append. Accept str or Path. Do not create parents. Missing reads raise FileNotFoundError.",
+      "source": "def read_text(path):\n    with open(path, 'r', encoding='utf-8') as f:\n        return f.read()\n\ndef write_text(path, text):\n    with open(path, 'x', encoding='utf-8') as f:\n        f.write(text)\n",
+      "source_sha256": "9fe4cc26b87f29ae119de3a7beffc369eac937d2bfb6a22c904d437d29fd1419",
+      "verification": "Caller-supplied behavior suite v1: exclusive"
+    },
+    {
+      "id": "49d3bbf84fbe49b787a64d954b23031de259f23b95d4f81efab0edbf2eb70a95",
+      "contract": "Provide read_text(path) and write_text(path,text,*,append=False), UTF-8, str or Path. Read entire file, overwrite by default or append when requested. Writing MUST automatically create missing parent directories, including nested parents. Missing reads raise FileNotFoundError.",
+      "source": "def read_text(path):\n    with open(path, 'r', encoding='utf-8') as f:\n        return f.read()\n\ndef write_text(path, text, *, append=False):\n    import os\n    parent = os.path.dirname(path)\n    if parent:\n        os.makedirs(parent, exist_ok=True)\n    mode = 'a' if append else 'w'\n    with open(path, mode, encoding='utf-8') as f:\n        f.write(text)\n",
+      "source_sha256": "a8a6eb5639b8d058a4e79f2d132973c68f073a6a69fda31f95f5f3bd93abc896",
+      "verification": "Caller-supplied behavior suite v1: parents"
+    }
+  ]
+}

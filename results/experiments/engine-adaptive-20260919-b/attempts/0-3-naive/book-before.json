@@ -1,0 +1,23 @@
+[
+  {
+    "id": "2ed6512e38397290653ab56018450d4ef20b8d9192cffba2f5cdf1d827dd3626",
+    "contract": "Provide read_text(path) and write_text(path,text,*,append=False), UTF-8 text, str or Path paths. Read the whole file. Write overwrites by default or appends on append=True; create missing files, but do not create parent directories. Missing reads raise FileNotFoundError.",
+    "source": "from pathlib import Path\n\n\ndef read_text(path):\n    \"\"\"Read the whole file as UTF-8 text.\n\n    Args:\n        path: A str or Path to the file to read.\n\n    Returns:\n        The contents of the file as a str.\n\n    Raises:\n        FileNotFoundError: If the file does not exist.\n    \"\"\"\n    return Path(path).read_text(encoding=\"utf-8\")\n\n\ndef write_text(path, text, *, append=False):\n    \"\"\"Write text to a file as UTF-8.\n\n    Args:\n        path: A str or Path to the file to write.\n        text: The text to write.\n        append: If True, append to the file; otherwise overwrite.\n\n    Raises:\n        FileNotFoundError: If a parent directory does not exist.\n    \"\"\"\n    mode = \"a\" if append else \"w\"\n    with open(path, mode, encoding=\"utf-8\") as f:\n        f.write(text)\n",
+    "source_sha256": "6ea7bb25382628dfb536567622e93578fd3e299468455fabfd0b0ea5cef4fcc5",
+    "verification": "Caller-supplied behavior suite v1: utf8"
+  },
+  {
+    "id": "06e305e700bb5fcb83c52477ead8b8f08db54114465660f99ecb86f29ac3b530",
+    "contract": "Provide read_text(path) and write_text(path,text,*,append=False), UTF-8 text, str or Path paths. Read the whole file. Write overwrites by default or appends on append=True; create missing files, but do not create parent directories. Missing reads raise FileNotFoundError.",
+    "source": "from pathlib import Path\n\n\ndef read_text(path):\n    \"\"\"Read the whole file as UTF-8 text.\n\n    Args:\n        path: A str or Path to the file to read.\n\n    Returns:\n        The contents of the file as a str.\n\n    Raises:\n        FileNotFoundError: If the file does not exist.\n    \"\"\"\n    return Path(path).read_text(encoding=\"utf-8\")\n\n\ndef write_text(path, text, *, append=False):\n    \"\"\"Write text to a file as UTF-8.\n\n    By default the file is overwritten. If append=True, the text is\n    appended to the file instead. Missing files are created, but parent\n    directories are not created.\n\n    Args:\n        path: A str or Path to the file to write.\n        text: The text to write.\n        append: If True, append to the file instead of overwriting.\n    \"\"\"\n    mode = \"a\" if append else \"w\"\n    with open(path, mode, encoding=\"utf-8\") as f:\n        f.write(text)\n",
+    "source_sha256": "5e487b7a39d69af9d86642135039d5f14ff26123b15686579f20af4c4248144f",
+    "verification": "Caller-supplied behavior suite v1: utf8"
+  },
+  {
+    "id": "b70c9659c7a8147d623729a11898b9d05a39b4b2db6a9838860f5163bdb039e3",
+    "contract": "Provide read_text(path) and write_text(path,text,*,append=False), UTF-16 (not UTF-8) text, str or Path paths. Read the whole file. Overwrite by default, append when requested. Do not create parent directories. Missing reads raise FileNotFoundError.",
+    "source": "from pathlib import Path\n\n\ndef read_text(path):\n    \"\"\"Read the whole file as UTF-16 text.\"\"\"\n    return Path(path).read_text(encoding='utf-16')\n\n\ndef write_text(path, text, *, append=False):\n    \"\"\"Write text as UTF-16. Overwrite by default, append when requested.\"\"\"\n    mode = 'a' if append else 'w'\n    with open(path, mode, encoding='utf-16') as f:\n        f.write(text)\n",
+    "source_sha256": "76488f37031c072f330402914c57589f50f3af0a02a44fc7e0058e0643f1a9ee",
+    "verification": "Caller-supplied behavior suite v1: utf16"
+  }
+]

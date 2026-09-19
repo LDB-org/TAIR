@@ -1,0 +1,168 @@
+{
+  "repeat": 1,
+  "stage": 3,
+  "case": "utf16_warm",
+  "arm": "naive",
+  "passed": true,
+  "book_before": 3,
+  "plan": {
+    "name": "plan",
+    "arguments": {
+      "steps": [
+        {
+          "op": "write",
+          "path": "utf16_io.py",
+          "content": "from pathlib import Path\n\n\ndef read_text(path):\n    \"\"\"Read the whole file as UTF-16 text.\"\"\"\n    return Path(path).read_text(encoding='utf-16')\n\n\ndef write_text(path, text, *, append=False):\n    \"\"\"Write text to a file as UTF-16.\n\n    Overwrites by default; appends when append=True.\n    Does not create parent directories.\n    \"\"\"\n    mode = 'a' if append else 'w'\n    with open(path, mode, encoding='utf-16') as f:\n        f.write(text)\n"
+        }
+      ]
+    }
+  },
+  "response": {
+    "id": "chatcmpl-8aebc19128810579",
+    "object": "chat.completion",
+    "created": 1789802089,
+    "model": "/model",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [
+            {
+              "id": "chatcmpl-tool-a6aaef42d7cd04c5",
+              "type": "function",
+              "function": {
+                "name": "plan",
+                "arguments": "{\"steps\": [{\"op\": \"write\", \"path\": \"utf16_io.py\", \"content\": \"from pathlib import Path\\n\\n\\ndef read_text(path):\\n    \\\"\\\"\\\"Read the whole file as UTF-16 text.\\\"\\\"\\\"\\n    return Path(path).read_text(encoding='utf-16')\\n\\n\\ndef write_text(path, text, *, append=False):\\n    \\\"\\\"\\\"Write text to a file as UTF-16.\\n\\n    Overwrites by default; appends when append=True.\\n    Does not create parent directories.\\n    \\\"\\\"\\\"\\n    mode = 'a' if append else 'w'\\n    with open(path, mode, encoding='utf-16') as f:\\n        f.write(text)\\n\"}]}"
+              }
+            }
+          ],
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.28.1rc1.dev137+g5ab628dd1-tp2-pp3-1070d36c",
+    "usage": {
+      "prompt_tokens": 480,
+      "total_tokens": 690,
+      "completion_tokens": 210,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": {
+      "time_to_first_token_ms": 134.11621283739805,
+      "generation_time_ms": 1723.1564167886972,
+      "queue_time_ms": 0.041476450860500336,
+      "mean_itl_ms": 8.244767544443526,
+      "tokens_per_second": 113.06902209735199,
+      "speculative_decoding": null
+    }
+  },
+  "request": {
+    "model": "/model",
+    "temperature": 0,
+    "max_tokens": 2048,
+    "cache_salt": "41c1b3a3eaa94571912b2306c337064a",
+    "chat_template_kwargs": {
+      "thinking": false,
+      "enable_thinking": false
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "Return one complete plan for all requested Python modules. Generate complete source. No shell, network, tests, extra files, explanations or import-time I/O."
+      },
+      {
+        "role": "user",
+        "content": "{\"task\": \"Create exactly these modules: utf16_io.py\", \"output_contracts\": {\"utf16_io.py\": \"Provide read_text(path) and write_text(path,text,*,append=False), UTF-16 (not UTF-8) text, str or Path paths. Read the whole file. Overwrite by default, append when requested. Do not create parent directories. Missing reads raise FileNotFoundError.\"}}"
+      }
+    ],
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "plan",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "steps": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "op": {
+                          "const": "write"
+                        },
+                        "path": {
+                          "type": "string",
+                          "enum": [
+                            "utf16_io.py"
+                          ]
+                        },
+                        "content": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "op",
+                        "path",
+                        "content"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              }
+            },
+            "required": [
+              "steps"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    ],
+    "tool_choice": {
+      "type": "function",
+      "function": {
+        "name": "plan"
+      }
+    },
+    "parallel_tool_calls": false
+  },
+  "preparation_seconds": 0.0,
+  "inference_seconds": 2.1546423751860857,
+  "logical_input_tokens": 480,
+  "generated_tokens": 210,
+  "controls": 0,
+  "inference_requests": 1,
+  "selected_entry": null,
+  "admitted": [
+    "185af78e173fe24fbe91ceaa1cdbe01351354a43ddfab0c75d2a14bd980d65d1"
+  ],
+  "reuse_steps": 0,
+  "seconds": 2.203090083785355,
+  "book_after": 4
+}
