@@ -1,0 +1,89 @@
+{
+  "cases": [
+    {
+      "name": "single",
+      "sources": {
+        "service_0.py": "workers = 2\ntimeout = 10\nlabel = \"preserve-0\"\n"
+      },
+      "task": "Double workers in every observed service file. Preserve all other fields and files.",
+      "fields": [
+        "workers"
+      ],
+      "target": null,
+      "fallback": false
+    },
+    {
+      "name": "four_files",
+      "sources": {
+        "service_0.py": "workers = 2\ntimeout = 10\nlabel = \"preserve-0\"\n",
+        "service_1.py": "workers = 3\ntimeout = 11\nlabel = \"preserve-1\"\n",
+        "service_2.py": "workers = 4\ntimeout = 12\nlabel = \"preserve-2\"\n",
+        "service_3.py": "workers = 5\ntimeout = 13\nlabel = \"preserve-3\"\n"
+      },
+      "task": "Double workers in every observed service file. Preserve all other fields and files.",
+      "fields": [
+        "workers"
+      ],
+      "target": null,
+      "fallback": false
+    },
+    {
+      "name": "eight_edits",
+      "sources": {
+        "service_0.py": "workers = 2\ntimeout = 10\nlabel = \"preserve-0\"\n",
+        "service_1.py": "workers = 3\ntimeout = 11\nlabel = \"preserve-1\"\n",
+        "service_2.py": "workers = 4\ntimeout = 12\nlabel = \"preserve-2\"\n",
+        "service_3.py": "workers = 5\ntimeout = 13\nlabel = \"preserve-3\"\n"
+      },
+      "task": "Double workers and timeout in every observed service file. Preserve all other fields and files.",
+      "fields": [
+        "workers",
+        "timeout"
+      ],
+      "target": null,
+      "fallback": false
+    },
+    {
+      "name": "one_of_four",
+      "sources": {
+        "service_0.py": "workers = 2\ntimeout = 10\nlabel = \"preserve-0\"\n",
+        "service_1.py": "workers = 3\ntimeout = 11\nlabel = \"preserve-1\"\n",
+        "service_2.py": "workers = 4\ntimeout = 12\nlabel = \"preserve-2\"\n",
+        "service_3.py": "workers = 5\ntimeout = 13\nlabel = \"preserve-3\"\n"
+      },
+      "task": "Double workers only in service_2.py. Preserve all other fields and files.",
+      "fields": [
+        "workers"
+      ],
+      "target": "service_2.py",
+      "fallback": false
+    },
+    {
+      "name": "new_value",
+      "sources": {
+        "service_0.py": "workers = 2\ntimeout = 10\nlabel = \"preserve-0\"\n"
+      },
+      "task": "Set workers to 7 in service_0.py. Preserve all other fields.",
+      "fields": [
+        "workers"
+      ],
+      "target": null,
+      "value": 7,
+      "fallback": true
+    },
+    {
+      "name": "new_code",
+      "sources": {
+        "app.py": "def total(values):\n    return values[0]\n"
+      },
+      "task": "Fix total(values) in app.py to sum all values, including an empty list. Preserve the signature.",
+      "fallback": true
+    }
+  ],
+  "label_setup_seconds": 6.415866958443075,
+  "repeats": 3,
+  "scope": "Synthetic Python edits, one planning/execution stage; no complete Agent.",
+  "timing": "Includes AST candidate binding, tokenization, inference, fallback, edit execution and independent oracle; excludes initial fixture creation and one-time label setup.",
+  "cache": "Fresh request salt; no learned codebook or cross-request prefix reuse.",
+  "representation": "Generator produces minimal edits, not whole-file rewrites. All arms see same sources and complete candidate edits. Binder does not receive task or expected answer."
+}
