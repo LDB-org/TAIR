@@ -1,0 +1,53 @@
+from pathlib import Path
+import json
+root=Path('/Users/zacharyzcr/Projects/TAIR')
+p=root/'results/experiments/bound-edits-skip-empty-20260919-a'
+audit=json.loads((p/'audit.json').read_text());summary=json.loads((p/'summary.json').read_text());idx={(r['scope'],r['arm']):r for r in summary}
+labels={'generate':'生成最小编辑','compact':'普通短 ID','classify':'原分类绑定','classify_skip_empty':'空候选直接生成'}
+text='''# 空候选跳过分类：单开关实验
+
+2026-09-19，Yuesheng 5090 现有服务完成 72 次任务，四组各 18 次。任务、候选编译器、提示词、schema 与上一轮相同；新增优化组仅在候选中不存在任何非 null 操作时直接调用生成。它不根据题目名称、任务关键词或标准答案路由。
+
+这是参数绑定编辑原型的可选优化，尚未接入完整 Pi Agent。候选编译器仍只支持已观察顶层整数 workers/timeout 的翻倍操作，绑定在客户端，服务内使用既有 logits 分类；无学习码表、无新引擎状态机、无服务补丁或重启。
+
+## 计时与结果
+
+每类每组重复三次，固定随机顺序交错，保留全部尝试。总时间包括候选构建、tokenization、分类/生成及回退、外部编辑和独立行为验收；初始文件恢复与一次性标签 ID 初始化单列。每次推理新 cache namespace。逻辑输入不是未缓存 GPU 工作量，API 请求数不是模型前向次数。
+
+| 配置 | 通过 | 总秒数 | 推理请求 | 生成 token | 分类控制记录 |
+|---|---:|---:|---:|---:|---:|
+'''
+for arm,label in labels.items():
+ r=idx['all',arm];text+=f"| {label} | {r['passed']}/{r['n']} | {r['total_seconds']:.3f} | {r['inference_requests']} | {r['generated_tokens']} | {r['controls']} |\n"
+text+='\n单次任务均值：\n\n| 任务 | 生成最小编辑 | 普通短 ID | 原分类绑定 | 空候选直接生成 |\n|---|---:|---:|---:|---:|\n'
+for case in audit['percase']:
+ text+='| '+case['case']+' | '+' | '.join(f"{case[arm]:.3f} 秒" for arm in labels)+' |\n'
+new=next(c for c in audit['percase'] if c['case']=='new_code')
+text+=f'''
+## 可以归因的部分
+
+三次 new_code 中，AST 无可绑定常量，目录只有 NONE；优化组直接生成：分类控制从 3 降至 0，推理请求从 6 降至 3。该类平均耗时从 {new['classify']:.3f} 秒降至 {new['classify_skip_empty']:.3f} 秒，观察下降 {100*(1-new['classify_skip_empty']/new['classify']):.2f}%。生成内容和验收要求不变。
+
+new_value 中仍有候选，但没有目标值 7；优化组照常分类、选择 NONE、生成回退，三次均为两次请求。其余四类也未改变调用路径。
+
+整体优化组比原分类组观察下降 {100*audit['ratios']['all']['classify']:.2f}%，比本轮最小编辑生成下降 {100*audit['ratios']['all']['generate']:.2f}%。整体差值还包含那些代码路径未改变任务的时间波动，不能全部归因于这个开关。应以实际少掉三次分类请求及 new_code 子集作为主要证据，不能横比不同轮次总秒数推断收益。
+
+## 局限与后续
+
+已证明结构上不可能命中时，无需让模型再次判断。有候选但请求不匹配的成本仍未消除，不能默认把任意请求直接绑定到某个候选。对这类情形，后续可比较严格的参数绑定与生成回退，但不能用宽松关键词规则冒充语义验证。
+
+当前仍是六类合成 Python 编辑、每类三次的小样本实验；不是一般软件工程质量或完整 Agent 加速结论。源码在本轮运行前后逐字节核验一致。
+
+326 项本地测试通过，覆盖空目录的一次生成请求、非空目录分类后回退，以及先前的源码保护。全部 33 个实际分类请求找到服务端 sampler bypass 证据；三次跳过分别核验无分类控制且只有一个生成请求。服务状态留在前后快照，SSH 隧道关闭。
+
+## 复现
+
+```sh
+python benchmarks/benchmark_bound_edits.py --url http://127.0.0.1:8000 \\
+  --out results/experiments/NEW_SKIP_EMPTY --repeats 3 \\
+  --arms generate compact classify classify_skip_empty
+```
+
+完整输入、输出、产物、源快照与审计记录见 `results/experiments/bound-edits-skip-empty-20260919-a/`。所有原冻结归档保持原字节；本轮独立冻结。
+'''
+(root/'docs/SKIP_EMPTY_CLASSIFICATION.md').write_text(text)
