@@ -595,3 +595,23 @@ See [the persistent cold/warm experiment](../../docs/SAFE_CODEBOOK_LOOP.md).
 原生规划器的单次生成上限可用 `PIJIT_PLANNER_MAX_TOKENS` 配置，默认 2048。
 从零生成长文件时需要留够输出预算，例如 8192；这不是总任务 token 上限。
 对照测试的原生跟踪器用 `TAIR_NATIVE_MAX_TOKENS` 设置相同预算。
+
+### Verified new-module plan mode (opt-in)
+
+`PIJIT_ADAPTIVE_PLAN=1` with `PIJIT_NATIVE_PLANNER=1` enables a **new Python module creation mode**. The first assistant request is constrained to the `plan` tool; the model supplies the task and full per-module contracts. Later turns use ordinary tools for inspection, checks, error recovery and the final answer. Do not enable this mode indiscriminately for existing-file edits or unrelated tasks. It does not alter the default Pi workflow.
+
+Configure a trusted validator through an operator-owned JSON argv array:
+
+```sh
+export PIJIT_NATIVE_PLANNER=1
+export PIJIT_ADAPTIVE_PLAN=1
+export PIJIT_PLAN_VERIFY_ARGV='["/absolute/venv/bin/python", "/absolute/project_validator.py"]'
+```
+
+The runtime appends `candidate_path`, `contract`, and `workspace` to this command, with the real workspace as cwd. The validator must check the candidate against the original task/project requirements and exit nonzero on failure. A model-written test suite or a successful compile alone is not a trusted acceptance criterion. Verification is mandatory for both generated and reused code; no validator means no plan execution. The verifier executes locally and is not an OS sandbox. Context-dependent imports may be resolved from the workspace argument.
+
+Successful complete plans publish only new files and automatically admit generated modules. Workspace state contains `plan-codebook.json` (up to 256 entries) and contract-scoped rejection records. Lexical retrieval chooses at most 15 candidates; it does **not** decide reuse. The engine classifies the candidates plus GENERATE, retains KV, and generates the remaining plan parameters. One plan still selects at most one reusable entry; other outputs may be generated.
+
+A trusted verification failure rejects an attempted reuse for that contract and permits **one** additional inference forced to generation. Both attempts are charged and recorded. A second verification failure stops without admitting the plan. Shape/path/transport errors are surfaced to the outer Agent instead of being silently retried. Multi-file publication is not a filesystem transaction.
+
+`PIJIT_PLAN_DISABLE_REUSE=1` is the ablation/control: same outer plan policy and validation, but inner inference always generates. It still persists validated code, allowing comparison of reuse with the outer policy held fixed. Model-generated contract descriptions can differ across calls; the current retrieval and rejection cache are bounded engineering mechanisms, not a universal intent or semantic equivalence solver.

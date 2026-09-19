@@ -1,0 +1,1797 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "id": "5d04190926692f98ed00403cf1fb207651e8890c7fc44eadbe686e83da936506",
+      "contract": "Provide read_text(path) and write_text(path,text,*,append=False), UTF-8 text, str or Path paths. Read the whole file. Write overwrites by default or appends on append=True; create missing files, but do not create parent directories. Missing reads raise FileNotFoundError.",
+      "source": "def read_text(path):\n    with open(path, 'r', encoding='utf-8') as f:\n        return f.read()\n\ndef write_text(path, text, *, append=False):\n    mode = 'a' if append else 'w'\n    with open(path, mode, encoding='utf-8') as f:\n        f.write(text)\n",
+      "source_sha256": "45eb3f5a881797f8857253d9826d1e132d7510c12e1a74d0c59107c71890b757",
+      "verification": "Rechecked earlier generated artifact against behavior suite"
+    },
+    {
+      "id": "d9e61e62be818a01b9d36e14b5290a2ea18d24b715b59de17f26e43526ffad1f",
+      "contract": "Provide read_text(path) and write_text(path,text,*,append=False), UTF-16 (not UTF-8) text, str or Path paths. Read the whole file. Overwrite by default, append when requested. Do not create parent directories. Missing reads raise FileNotFoundError.",
+      "source": "def read_text(path):\n    with open(path, 'r', encoding='utf-16') as f:\n        return f.read()\n\ndef write_text(path, text, *, append=False):\n    mode = 'a' if append else 'w'\n    with open(path, mode, encoding='utf-16') as f:\n        f.write(text)\n",
+      "source_sha256": "47afba1eebab014a82c2a425967d374847bdfe6a297d90ac76af20c2d91a1250",
+      "verification": "Rechecked earlier generated artifact against behavior suite"
+    },
+    {
+      "id": "6131699a24285face1df9ba32f291ec5f06e403f313c84622ebf95a9eb4c700d",
+      "contract": "Provide read_bytes(path) and write_bytes(path,data,*,append=False), arbitrary binary bytes including invalid UTF-8. str or Path paths. Read entire file, overwrite by default or append when requested. No automatic parent directories. Missing reads raise FileNotFoundError.",
+      "source": "def read_bytes(path):\n    with open(path, 'rb') as f:\n        return f.read()\n\ndef write_bytes(path, data, *, append=False):\n    mode = 'ab' if append else 'wb'\n    with open(path, mode) as f:\n        f.write(data)\n",
+      "source_sha256": "ada48c9b1b5209021d7ed2e3935c81e7061e055b8f872ab445bbfab988c7609f",
+      "verification": "Rechecked earlier generated artifact against behavior suite"
+    },
+    {
+      "id": "12fa6976211c11e7e8a0d14967b12a6ffd4de096e1721a67d8691f69e65eb38d",
+      "contract": "Provide read_text(path) and write_text(path,text), UTF-8. Read entire file. Write creates a new file; if it exists, raise FileExistsError and preserve every byte. Never overwrite or append. Accept str or Path. Do not create parents. Missing reads raise FileNotFoundError.",
+      "source": "def read_text(path):\n    with open(path, 'r', encoding='utf-8') as f:\n        return f.read()\n\ndef write_text(path, text):\n    with open(path, 'x', encoding='utf-8') as f:\n        f.write(text)\n",
+      "source_sha256": "9fe4cc26b87f29ae119de3a7beffc369eac937d2bfb6a22c904d437d29fd1419",
+      "verification": "Rechecked earlier generated artifact against behavior suite"
+    },
+    {
+      "id": "49d3bbf84fbe49b787a64d954b23031de259f23b95d4f81efab0edbf2eb70a95",
+      "contract": "Provide read_text(path) and write_text(path,text,*,append=False), UTF-8, str or Path. Read entire file, overwrite by default or append when requested. Writing MUST automatically create missing parent directories, including nested parents. Missing reads raise FileNotFoundError.",
+      "source": "def read_text(path):\n    with open(path, 'r', encoding='utf-8') as f:\n        return f.read()\n\ndef write_text(path, text, *, append=False):\n    import os\n    parent = os.path.dirname(path)\n    if parent:\n        os.makedirs(parent, exist_ok=True)\n    mode = 'a' if append else 'w'\n    with open(path, mode, encoding='utf-8') as f:\n        f.write(text)\n",
+      "source_sha256": "a8a6eb5639b8d058a4e79f2d132973c68f073a6a69fda31f95f5f3bd93abc896",
+      "verification": "Rechecked earlier generated artifact against behavior suite"
+    },
+    {
+      "id": "bdf5efc6ea0c33039e7997374e640eaa668fac20e10de6f4a9914fe79636edb7",
+      "contract": "Expose constant_0(), returning integer 0. No file I/O.",
+      "source": "def constant_0():\n    return 0\n",
+      "source_sha256": "518dbba7d337add0722807591b4484ff6005d15c0fb25d6aaabef0421bb11908",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "dae7c760c8187ffcc1baeebb487c7a88a1e5f09a71994ac3288e931b4fdd5fe7",
+      "contract": "Expose constant_1(), returning integer 1. No file I/O.",
+      "source": "def constant_1():\n    return 1\n",
+      "source_sha256": "04eb3a548aa8548854bd86aba9b846efbbe1a436ca89c4687bfa37ae4dbc2a3c",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "e331094b6466bc2da107f052b31e7c1c5f8ba6b68b7ea207633ae7531cfeb7e5",
+      "contract": "Expose constant_2(), returning integer 2. No file I/O.",
+      "source": "def constant_2():\n    return 2\n",
+      "source_sha256": "8790f24f1c2071e47ba279d5474317a7d051f139bf2929a89121993243899f44",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "34e099525a2915cfb701bcd335917774a0ad949f06f2dce2b1a2dacb1b56177c",
+      "contract": "Expose constant_3(), returning integer 3. No file I/O.",
+      "source": "def constant_3():\n    return 3\n",
+      "source_sha256": "7bdc1e6951d22b02851a4c5b45e4316e27e3c0ccfde3fbd81fa3e3209d8f3377",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "c6c44a4c1df7ca59ffe7c5cdb9d5438fb853f76ccc4ba241d40a98a1d8a0ff08",
+      "contract": "Expose constant_4(), returning integer 4. No file I/O.",
+      "source": "def constant_4():\n    return 4\n",
+      "source_sha256": "ab38d18a76daa07b081763e2f0bf3da82da241328e81c206e0d33f7b9d69f991",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "bd488f3e70bb89a00eb09bd995f3cafaf964bdb77e3ee7093be664df2cc1d9c8",
+      "contract": "Expose constant_5(), returning integer 5. No file I/O.",
+      "source": "def constant_5():\n    return 5\n",
+      "source_sha256": "ce1c758b61bd2b35b8d2fde00cbac37eb9ff16525ca21bd71b430efcc5d06e26",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "a82e6e67a2b0832423cf938e22e3a698f91ba18b148666461468c30cbbf1f4b1",
+      "contract": "Expose constant_6(), returning integer 6. No file I/O.",
+      "source": "def constant_6():\n    return 6\n",
+      "source_sha256": "550275baa6f4cce6a27d11b2da75d0f53e2b38aada496a55f1d99ec11b729fdc",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "f7ad5867ddd2307ffe7b7d079ac5d78716f2539ee85549dfdc78bbbf072650de",
+      "contract": "Expose constant_7(), returning integer 7. No file I/O.",
+      "source": "def constant_7():\n    return 7\n",
+      "source_sha256": "f499ac7345da0484e002c0e5d1ed8ab09e43dc95a62d52f1fa3114f59fa2de9b",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "4516e82778541960b69c38026ceeb4d659cfc50215bec7e3217082916a5e907b",
+      "contract": "Expose constant_8(), returning integer 8. No file I/O.",
+      "source": "def constant_8():\n    return 8\n",
+      "source_sha256": "67e3f5da3d40a6cfc16b44acd65d5e1bd05ee32fd0b2c9093917419c423a6afa",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "0691014e440ca186ab2fac5c6f23911ec72efc4cd375e79c62fc51f11836aec2",
+      "contract": "Expose constant_9(), returning integer 9. No file I/O.",
+      "source": "def constant_9():\n    return 9\n",
+      "source_sha256": "e068a3d7259778ff37a1dbf0c9d9ef4054e1034165d6185a9a06f2f96834bc53",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "55fd39d1fe7d81c24d004f8d35339728f2ca3c044b9e45f21dfdd3f68ecb82a7",
+      "contract": "Expose constant_10(), returning integer 10. No file I/O.",
+      "source": "def constant_10():\n    return 10\n",
+      "source_sha256": "a821724cbe4c829bb074c6772549c621dd1977a851d0241f89294e922b80d103",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "9ee8cb2081fa4fbc6c95e62e0877d4c54d5e86ad7a83d4093d8cb4f0e0ee494c",
+      "contract": "Expose constant_11(), returning integer 11. No file I/O.",
+      "source": "def constant_11():\n    return 11\n",
+      "source_sha256": "bb81378e89ddfa08b0e97a433e85c63875eb7fe007ffa13dd5709d782b2160fd",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "6e780ffe2fa626a3b9376ff41de9e130475b9e2cfccf36dfa8d07870f2f588c8",
+      "contract": "Expose constant_12(), returning integer 12. No file I/O.",
+      "source": "def constant_12():\n    return 12\n",
+      "source_sha256": "dfeb08c39ace4060b4fdf6430530284a0f263a8c0a6129c92ca23c1fe336cee9",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "b8152538b0c698db832e7cc912575f68ae2287b6b95a2fb234303b45eda1d145",
+      "contract": "Expose constant_13(), returning integer 13. No file I/O.",
+      "source": "def constant_13():\n    return 13\n",
+      "source_sha256": "3069a5514883f309a06f1f9b62de6e5c8608739afabcf5270c262cd0cbce8144",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "97229237b99753930383237f6e547bf48ff19f0b1c562c126354345cb0047316",
+      "contract": "Expose constant_14(), returning integer 14. No file I/O.",
+      "source": "def constant_14():\n    return 14\n",
+      "source_sha256": "e45cc4fd5a7fba032fa5d45a5aad5d231fc4564cab6c77feadac6e933d33bef2",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "84f1cfc9305c8490939b52336d5e3d6b0222b0506679e4dc7746c04d3dad19b4",
+      "contract": "Expose constant_15(), returning integer 15. No file I/O.",
+      "source": "def constant_15():\n    return 15\n",
+      "source_sha256": "c1e4171b1232bba7727bff79155808bd9b69ebee127b0e45d32644b828a86c5d",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "4fcb4aff7b41930f8891961d7dba2e92c9bd4841ef0736f0f174e9c7e78aa080",
+      "contract": "Expose constant_16(), returning integer 16. No file I/O.",
+      "source": "def constant_16():\n    return 16\n",
+      "source_sha256": "e826b0a62eea0291d1dae0014aaeb7bc1cf646596c42c2d7eb6701665ecaa6c5",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "9c64eab2b3895d5d27a5c04accf78c55bb0a54cda13b52486071339a0019ccaa",
+      "contract": "Expose constant_17(), returning integer 17. No file I/O.",
+      "source": "def constant_17():\n    return 17\n",
+      "source_sha256": "9a99bc6411b3a16132910b44c6432854e74be5c6f551411360da2648d667dc83",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "7d19002eda1094de6fc1387e10078a4aba5f30bd5017ea42811370c3134e6b51",
+      "contract": "Expose constant_18(), returning integer 18. No file I/O.",
+      "source": "def constant_18():\n    return 18\n",
+      "source_sha256": "813e661b68a06f6b3bdecdec9ce6eaae5014bc38d0094880b90775f614ddf092",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "0a4c6427b0517fb433a3a7988968ece0ab047ce80b7ce16f69ce2ece70b58afd",
+      "contract": "Expose constant_19(), returning integer 19. No file I/O.",
+      "source": "def constant_19():\n    return 19\n",
+      "source_sha256": "0151b77d6803cff401593d4e146f000c2304a09c25efe48ecc2c97e94c9b9bcd",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "0de578987ef8dbea4459877f8859b9c43c8a5631d5a00410d3a4bf04c5302214",
+      "contract": "Expose constant_20(), returning integer 20. No file I/O.",
+      "source": "def constant_20():\n    return 20\n",
+      "source_sha256": "1a08b2d97b7973427f791ac82da93a686ec58a45d06b046d286cf2ef24bd5177",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "8b3d167c157a69e919648e027711b429683c61096f724eeaad678cfae57c8b09",
+      "contract": "Expose constant_21(), returning integer 21. No file I/O.",
+      "source": "def constant_21():\n    return 21\n",
+      "source_sha256": "a711010a11e1d985c211d353a84abdadea98f9690819b352f085743b8fab181e",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "76ad7cf6d77b59a45db870e76ca93dd2a35683ffc2da6c0ab9e209639827d7c6",
+      "contract": "Expose constant_22(), returning integer 22. No file I/O.",
+      "source": "def constant_22():\n    return 22\n",
+      "source_sha256": "2923d7b19a540b6044cce13e81d9936eda0e8e1d97ea9d5c6fd8d86d8dfa2a6f",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "99ba9bb8d7da88bd48dd742460f7e13e814998c7c3f912ed6e7805b1ca9c98f4",
+      "contract": "Expose constant_23(), returning integer 23. No file I/O.",
+      "source": "def constant_23():\n    return 23\n",
+      "source_sha256": "6e5672eb0b0e99dae909a16de7c9242d1f9c05192f81f4cf6b422c6f0840ddb7",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "1fb86eef75c26c5c16e35132d63a00a22b349d7d8835abac103af0dffe66bdc9",
+      "contract": "Expose constant_24(), returning integer 24. No file I/O.",
+      "source": "def constant_24():\n    return 24\n",
+      "source_sha256": "a8bb0f0374069b99573f2da3e324bd304d9439a879c878de363229ec4f4cb858",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "57f58f9965468434b1856f27e3a831a4720a673770a880834ca147dab924be80",
+      "contract": "Expose constant_25(), returning integer 25. No file I/O.",
+      "source": "def constant_25():\n    return 25\n",
+      "source_sha256": "86883401a0163164c34a50bd3c1d927bfe76d43699e9ef3889415a617c5aacd6",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "0a7ff51b8c377a94ee7bf24072d50fa82dcadd94d92d3344eff681a54f3d9e61",
+      "contract": "Expose constant_26(), returning integer 26. No file I/O.",
+      "source": "def constant_26():\n    return 26\n",
+      "source_sha256": "d2341714d9bbb53582329d5c29ae13f03d6328138a2da11c14923d6409dde6e8",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "1f1602bdf43c4c7b8ce9f3c7158bab4151dd45f2f700b4183af2c76353790d31",
+      "contract": "Expose constant_27(), returning integer 27. No file I/O.",
+      "source": "def constant_27():\n    return 27\n",
+      "source_sha256": "14072b6adf60ba6dcadbebfd6c14a7d01ff0b96689c6069010ad8039df6a5bfa",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "e2e24e16ebe1b36ad65d9565654b7ca8998d8796e466c65641770fe7d5766fda",
+      "contract": "Expose constant_28(), returning integer 28. No file I/O.",
+      "source": "def constant_28():\n    return 28\n",
+      "source_sha256": "29a70a3b871af1bcd6bc84dc38a6374576be2e4f5f70bbdaf4c0b186a9113234",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "eb78ddcced79a2b1b09fd9867544ecffbcb24818d0700ceb6fc6e9e7fe602e25",
+      "contract": "Expose constant_29(), returning integer 29. No file I/O.",
+      "source": "def constant_29():\n    return 29\n",
+      "source_sha256": "cd4d2da9df31097e31e68698420d0adb5fda1ec372a2e7989b0552475ee253d6",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "bf3d7a1a58a79dae1956a8ccc2bbd85add3e60df25c21500deabfc7603886609",
+      "contract": "Expose constant_30(), returning integer 30. No file I/O.",
+      "source": "def constant_30():\n    return 30\n",
+      "source_sha256": "bb2cbdc197812ffb6ddc476d38d54484fc05a1dbf77bd5b3ca8cb5be80b4b94f",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "9ae915b0e8d39f774bdeba4856bd7ae474f8c763216b6a2f8db6b3ae6a4e1519",
+      "contract": "Expose constant_31(), returning integer 31. No file I/O.",
+      "source": "def constant_31():\n    return 31\n",
+      "source_sha256": "2578e00f71e53eb0be87274e09eef5955bcce5dfe2157b208ddc3d9c94866ccf",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "c05f2cce5c906ea9d5c8043f6339d1ca87282c9671b42f019d6961a3f447bfa5",
+      "contract": "Expose constant_32(), returning integer 32. No file I/O.",
+      "source": "def constant_32():\n    return 32\n",
+      "source_sha256": "339c6b175860df42f666f75d2a00664565948a090a0c95ab06011b64f84acad5",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "cb9458b8bfbbae465421477198de0fefacc5c56c9c33d87337bcc552f20ffa27",
+      "contract": "Expose constant_33(), returning integer 33. No file I/O.",
+      "source": "def constant_33():\n    return 33\n",
+      "source_sha256": "491aa84b151a34a857bfe5a6b0104081c3683d33a48dced181be38c6b4b363f6",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "4c2991da50be2643d4b201bae42a6432b398e80e1f971772f11995b992b7157c",
+      "contract": "Expose constant_34(), returning integer 34. No file I/O.",
+      "source": "def constant_34():\n    return 34\n",
+      "source_sha256": "d3c82985d4faf537dbeb639a5e5c92f1da0d4d5857c22767740fdc5fd2d86c0d",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "338bd9ec5cce24e72d71f01f9a7ca960a9f8fc224faf4df769f64e590c45b9ab",
+      "contract": "Expose constant_35(), returning integer 35. No file I/O.",
+      "source": "def constant_35():\n    return 35\n",
+      "source_sha256": "3f83eaed4ccbd4a7f4de8b2d198e7b5a322cf59e206faf1d9929613ca0ceb991",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "49dd0557b5c0b0ba18d2161ce954d0814980c074ff1bcaa9e2a81d32d310da84",
+      "contract": "Expose constant_36(), returning integer 36. No file I/O.",
+      "source": "def constant_36():\n    return 36\n",
+      "source_sha256": "9dc3292d66ef4584ac68055d0fb63851a26561113d59a4616803c10b06b06eab",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "8e5ab7cb03a602613a6d0062aed2d2f061db183e1c04ce38986b97756419af20",
+      "contract": "Expose constant_37(), returning integer 37. No file I/O.",
+      "source": "def constant_37():\n    return 37\n",
+      "source_sha256": "68cdff0264d7ed76af09b70262c0cb70fcd1c2a56c914d687dc3df016e567f4b",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "61cc9c38bdb6d146e0070a5fa9f9a528d527a740eeb4aa1681310032c6be3249",
+      "contract": "Expose constant_38(), returning integer 38. No file I/O.",
+      "source": "def constant_38():\n    return 38\n",
+      "source_sha256": "1b516fca0687813a52d83786c5a601d35f73836f3f8ab69ed386fe57256555a6",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "f269c1fdfb5ac8bcd8e775ca4652a7115105b08896154eff9391e0e0d175e9e9",
+      "contract": "Expose constant_39(), returning integer 39. No file I/O.",
+      "source": "def constant_39():\n    return 39\n",
+      "source_sha256": "623b531b37237d224ffeeeeba107267004a745c60f73e8020bca329050bda274",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "21c179ae389e38ccfa6f0fe95b2e04db4c87f218e93b4598ab7eee2ae7c30d86",
+      "contract": "Expose constant_40(), returning integer 40. No file I/O.",
+      "source": "def constant_40():\n    return 40\n",
+      "source_sha256": "9f9aa299b94536c66478c6255524a7ee0c20dff654774c5c8ec7d76fc394bef8",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "36eade9b2f5bbe8e90ee68041f667304465165a3a4eec1dd7bd8a910401fa31e",
+      "contract": "Expose constant_41(), returning integer 41. No file I/O.",
+      "source": "def constant_41():\n    return 41\n",
+      "source_sha256": "20c1286567cf8bfc4609b98778a30ebb603f1c66415b14670a8799ee02ce132c",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "e3a8ce6bb9c332bb00e8c8965d21b4318fa73e5179275cf13629c080246abd5a",
+      "contract": "Expose constant_42(), returning integer 42. No file I/O.",
+      "source": "def constant_42():\n    return 42\n",
+      "source_sha256": "a1c160059a5be0d2f44224f1cc98b93b1f450e53c4f149276009556087b51f9e",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "0102b6b960b3c3a907275cd63ccd81e50c8bc5c7ad56cd5f383b4c30a90ecc72",
+      "contract": "Expose constant_43(), returning integer 43. No file I/O.",
+      "source": "def constant_43():\n    return 43\n",
+      "source_sha256": "aa1db1222874b6ca537b3f8598390f20a8ad49825a4efe7b1600352263fff2d0",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "d10913fe7d9914c2757fdf6aaef1795319d8f8e7d6e517270a258f03e94cf69e",
+      "contract": "Expose constant_44(), returning integer 44. No file I/O.",
+      "source": "def constant_44():\n    return 44\n",
+      "source_sha256": "9f598ae1745c0ac34dd355ca3e3ef49a88b147aa13c781cdb19cdd5dc45105c0",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "b6ebd6da273d1869561c99be2752525ba22a6a916edc3a8d115555371f1edd7b",
+      "contract": "Expose constant_45(), returning integer 45. No file I/O.",
+      "source": "def constant_45():\n    return 45\n",
+      "source_sha256": "7b6e70078ef29320d1172662c1c271c28ea242822ec39edf7c244690596680ad",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "283ba4de93874fc08d687b5297afa6806037b1b420fcdb9ff1f9b4575445c6a2",
+      "contract": "Expose constant_46(), returning integer 46. No file I/O.",
+      "source": "def constant_46():\n    return 46\n",
+      "source_sha256": "295b404266ec55f619cae5842a5e51ba4e1dbf8b29aaa07ea7bdbe1ba6b4f4b8",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "3e3265637db13887aa0a2a5c70dc1fa2c92c8befd7fdac7462bf8d3af15bfd58",
+      "contract": "Expose constant_47(), returning integer 47. No file I/O.",
+      "source": "def constant_47():\n    return 47\n",
+      "source_sha256": "5b580c4192e5d94c523caa60e47e771ce5d124e2df61089550f3698401300a25",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "9960ebc081f4b8c449b3ab1601f401897a56bc36adad72fca91a7fb29a1ed3e0",
+      "contract": "Expose constant_48(), returning integer 48. No file I/O.",
+      "source": "def constant_48():\n    return 48\n",
+      "source_sha256": "1ad1340effe394c430476b2f3a0e602f67f0b1626652ccda4ecfee136f9fb907",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "d7126512aef64a94ab21916c39a7abb69bde83fd6f0dc89608ef51f13145da95",
+      "contract": "Expose constant_49(), returning integer 49. No file I/O.",
+      "source": "def constant_49():\n    return 49\n",
+      "source_sha256": "ab2ddf62993e8eab425e70e8d4863f0b1d3bd9b4c480c7e4497bf0e8330dbac9",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "97f58c0fe0208db0579cebe1d7dda153c7b38066475e82badf6b20be2e285820",
+      "contract": "Expose constant_50(), returning integer 50. No file I/O.",
+      "source": "def constant_50():\n    return 50\n",
+      "source_sha256": "22bf3a7d06a5cded1299176c0848c4c09c2d84dbeb5a8851a1c7f426e9306770",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "875f535c84665518968ae0c6ed7c624ef4f123bdfdea325869d80e3025fc2ae7",
+      "contract": "Expose constant_51(), returning integer 51. No file I/O.",
+      "source": "def constant_51():\n    return 51\n",
+      "source_sha256": "0d85c3fad75159d5470a0b89e6f4c55e27ce0b74e8d027acc205376bd80dbef5",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "99ea3005bd3b7ca5d1ccc29e4c40d9e2d590173e86d49d3d33c5bb17822c6a79",
+      "contract": "Expose constant_52(), returning integer 52. No file I/O.",
+      "source": "def constant_52():\n    return 52\n",
+      "source_sha256": "23c05094b84926ea9271f4b3356c6934db8dd1a9d475b4fac4d65fe0f14d83ef",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "7d4c09444873aea305153844d99e8e27591b0c1afe22357f4bb3c3351fd4eff9",
+      "contract": "Expose constant_53(), returning integer 53. No file I/O.",
+      "source": "def constant_53():\n    return 53\n",
+      "source_sha256": "ee50cbe0c40f985a00b297bc3231da0aef6681ae6a2cc6ebb07ea9a559695326",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "11ca2666e94497780e628e31848fbee93e283b9fb0723c453d75b9b98f62fdd8",
+      "contract": "Expose constant_54(), returning integer 54. No file I/O.",
+      "source": "def constant_54():\n    return 54\n",
+      "source_sha256": "25aac3657cec203d56d3b5401cd69581c9e184fd8214e913d8c786e861d4690f",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "e72a55036b9083bca6e8800f94b790622d3678af0a9e6161da7db83098524e42",
+      "contract": "Expose constant_55(), returning integer 55. No file I/O.",
+      "source": "def constant_55():\n    return 55\n",
+      "source_sha256": "3617ce5f3f20cbaf1ca0513e419a38c64eaf541e6482148e85ff8872341506bb",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "ddc456d162490185ae2b036f7ce60dad2556fa17830f4ab09ec60d7c6ec36c5f",
+      "contract": "Expose constant_56(), returning integer 56. No file I/O.",
+      "source": "def constant_56():\n    return 56\n",
+      "source_sha256": "671e4f318c99fc704b95662a719efebf82a52dee816d899e56caaaf8b85638d2",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "2aa192fdad0174a5d3e46b76665fa090759c18248f8f4607917a066811efe1cd",
+      "contract": "Expose constant_57(), returning integer 57. No file I/O.",
+      "source": "def constant_57():\n    return 57\n",
+      "source_sha256": "7211b0d4d4ef874b68e5b7e95021def1e0dcae8dcfe489872f7c7c27a7398b4e",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "d8cf131334bb3449c97b5229c31556e9bb61a89c49313bd06e5e0d721f27a8c2",
+      "contract": "Expose constant_58(), returning integer 58. No file I/O.",
+      "source": "def constant_58():\n    return 58\n",
+      "source_sha256": "b80a6e26a675b2c2eae8065a659d19e4f772d9e9dfff47b06e35e76f634e4ca6",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "c1ac1d00dc3e8f3a13f53688ba3b4aa777d79ddb367426dca5544ff128b7a254",
+      "contract": "Expose constant_59(), returning integer 59. No file I/O.",
+      "source": "def constant_59():\n    return 59\n",
+      "source_sha256": "d680bf96041fdf0f547bd120f0744f4a9b96341587ef6a8c024af4769cfec82d",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "3aa14607ba94a44b50e18d9b7f1273ee80d9bcea5a079f3c94f77391e8af3554",
+      "contract": "Expose constant_60(), returning integer 60. No file I/O.",
+      "source": "def constant_60():\n    return 60\n",
+      "source_sha256": "29ddaa0b9ec11deb94a3685bcb9a95bd905f4750e0ac2954e9d207d46cff3ed6",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "f07a2baef32a66a3f249489fb58d394cf0b9412ecc57ee62b39a2f3d9870299f",
+      "contract": "Expose constant_61(), returning integer 61. No file I/O.",
+      "source": "def constant_61():\n    return 61\n",
+      "source_sha256": "c6c370314d5abf300cc7a72a128921847ac7225982f802aac38fa8fb945fd936",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "f4a2dd79cd358eb1e398376bcc1822fc38b0f8479dfb29ecc513f44bffeca52d",
+      "contract": "Expose constant_62(), returning integer 62. No file I/O.",
+      "source": "def constant_62():\n    return 62\n",
+      "source_sha256": "8367ebfe4f09045475c8016ffcaca01167055fe771adbd4c2a2f9b44e36cb16b",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "b40be8619617e70587c00c97671655de08cf105637c4c6dd90ea83572a699f26",
+      "contract": "Expose constant_63(), returning integer 63. No file I/O.",
+      "source": "def constant_63():\n    return 63\n",
+      "source_sha256": "3139f9eb5e43c3ca182896129801d059bad7605b87298c2e5c15dad35592f19d",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "72c64562f92f8ffb8c5368fcdfad3e51b1ea60ec5fe6ecc692410c469d3776ad",
+      "contract": "Expose constant_64(), returning integer 64. No file I/O.",
+      "source": "def constant_64():\n    return 64\n",
+      "source_sha256": "d9b4d46644c68ff8c6022494c0da86124d02b7933cb77bd4c52293fa65ee107d",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "dc30c1aab36de1ff224b784985aa7d42e02a456f887b09d1f4ec4695c1d99b28",
+      "contract": "Expose constant_65(), returning integer 65. No file I/O.",
+      "source": "def constant_65():\n    return 65\n",
+      "source_sha256": "15c1426daea308d37f2800938deb2b112337e6357484e61b43f38b9f0d172f3c",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "0c28cf8b814ec1f621f0fa626be766cc1e016a98996d99a21a447b13c4d9609b",
+      "contract": "Expose constant_66(), returning integer 66. No file I/O.",
+      "source": "def constant_66():\n    return 66\n",
+      "source_sha256": "b60b49063932731f0f0c0180f92d6ea042c32661598de8231ca11949f7e4ecb9",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "799d00d674b867b4409540099b6887950340c1f6990e23eb4f34b6e435a1e3ce",
+      "contract": "Expose constant_67(), returning integer 67. No file I/O.",
+      "source": "def constant_67():\n    return 67\n",
+      "source_sha256": "45d92ef40b652ee64ec1d31bd4c94e89bf991189b16851d73ba794d4f868208d",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "fc6c60bf5cac9a67885f0f8df9f6358c6abedccbd5eae649098fdb29790442aa",
+      "contract": "Expose constant_68(), returning integer 68. No file I/O.",
+      "source": "def constant_68():\n    return 68\n",
+      "source_sha256": "66ef9d61cd6e951df34123f4300f8c8ef347faf6cc89a87c746a9b9ba17f551d",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "981af7ba5d24c012ba2cabaa22279511a4e00aeefe402b840c917124d962157a",
+      "contract": "Expose constant_69(), returning integer 69. No file I/O.",
+      "source": "def constant_69():\n    return 69\n",
+      "source_sha256": "fa0fdcb014965ce02779b71309f8e202c17f5cc94cd008f0405e9ee7545a0b18",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "5c09de292854a84c8f20c46d732164094655ce59852abb9867b8cb42eca3c278",
+      "contract": "Expose constant_70(), returning integer 70. No file I/O.",
+      "source": "def constant_70():\n    return 70\n",
+      "source_sha256": "d7362f4c2859775fda58bd627790386180f068edfb18344c518c3a2a439d96b8",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "597306a4703197c6e1ac3b784a147c9bb777ea2e1da40cc8a9b3cadc02e6a343",
+      "contract": "Expose constant_71(), returning integer 71. No file I/O.",
+      "source": "def constant_71():\n    return 71\n",
+      "source_sha256": "41146e25a9d773a78acaa3e1ee0a0db968f861c4cffe2ddc354b0b3338580121",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "f8dbb18b03a177994e233d068234d951e163e1fabe4b75f9f8ff51bf6c205aa8",
+      "contract": "Expose constant_72(), returning integer 72. No file I/O.",
+      "source": "def constant_72():\n    return 72\n",
+      "source_sha256": "9710d4177a9c6c858bf174fb8f87495d991270f3ca4e04c62f93027b959815f8",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "77c60f3e58cc0a3738dca379125277fff57e9774b886f3369ab73208b93c562d",
+      "contract": "Expose constant_73(), returning integer 73. No file I/O.",
+      "source": "def constant_73():\n    return 73\n",
+      "source_sha256": "db8c19724a205de34a6b59d44db3b5afec977abebfe2b0e11120feb94e1d385e",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "609d0306d5a87a465c5ac9f1568cde218b49ea89357c4e1edfae1a002c14b20c",
+      "contract": "Expose constant_74(), returning integer 74. No file I/O.",
+      "source": "def constant_74():\n    return 74\n",
+      "source_sha256": "8b6abf8f9a8b169436bf26dfd443c32abc7d09e82501a80e7f34f7bcb6d39baa",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "c140327d96f8d7832955344aab2b262390449c47423c05ff620a28357d3ab325",
+      "contract": "Expose constant_75(), returning integer 75. No file I/O.",
+      "source": "def constant_75():\n    return 75\n",
+      "source_sha256": "bf9cdcd5c812682c569ab85b4ed4027337ebf73e88df101c44e4c391065158de",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "f0ba96c8bfd06abb0eee8c80ae7b662985b568d34d50a22d83566124af4aba96",
+      "contract": "Expose constant_76(), returning integer 76. No file I/O.",
+      "source": "def constant_76():\n    return 76\n",
+      "source_sha256": "2ed3d71af2a5aaeec024379b66128f385c45849da6f98d7fc06105782df624da",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "79fc08e67108ba55ad499079ad8279553af25441cf2b2e75ecad2dd5c3001c05",
+      "contract": "Expose constant_77(), returning integer 77. No file I/O.",
+      "source": "def constant_77():\n    return 77\n",
+      "source_sha256": "2c0c8296bfd7d3f0b37931b33b63a2389fa18b33e3bc2decd28ffde18257d493",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "9688c26ba37f6bade4168b73fd22b6d452782764adc3dda7a416cd056c282232",
+      "contract": "Expose constant_78(), returning integer 78. No file I/O.",
+      "source": "def constant_78():\n    return 78\n",
+      "source_sha256": "cdda9ba5096104638811f7879e26decac448f74d20ddaaecf1e7cf12303a167f",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "d192a5f2396bb0d76d65dd0ff1c31f5c7b53f0b6eb7e86f14c5898752f82a3c5",
+      "contract": "Expose constant_79(), returning integer 79. No file I/O.",
+      "source": "def constant_79():\n    return 79\n",
+      "source_sha256": "c0564bb8299a7b5fc8a84c29e88aff060938d3f2bc1fa67055ae5b0cf24de3b7",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "adca2b1c68ad288934234fdf33018ed9b848c7af62ff8db0191eb1a33f42d577",
+      "contract": "Expose constant_80(), returning integer 80. No file I/O.",
+      "source": "def constant_80():\n    return 80\n",
+      "source_sha256": "e402a643b432b7ef7c5d1f830f8bdc0b625f9ebfa6b3881390e436c40fc9ba5e",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "67f9fd26b58b7ee8f3a2eebc07b68d02b141f6d4fdb421a83bf2afd15468290a",
+      "contract": "Expose constant_81(), returning integer 81. No file I/O.",
+      "source": "def constant_81():\n    return 81\n",
+      "source_sha256": "954b56275011775a3e21dfd14a9a03e8ed6ea36fdd8409b8a64cef5c433b3ac0",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "35dcd6e2f948782f79ae7c10ce7e3ffe544381b73676027382af212e4215e81d",
+      "contract": "Expose constant_82(), returning integer 82. No file I/O.",
+      "source": "def constant_82():\n    return 82\n",
+      "source_sha256": "b08e895bdb7d8cc13e4a8978b9e4d0ef94f090aea628def236a2f16fd1b10b4e",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "dfba0b0bec684fbfd0130edfae1236fb21795952ba24175953af42a8584a19be",
+      "contract": "Expose constant_83(), returning integer 83. No file I/O.",
+      "source": "def constant_83():\n    return 83\n",
+      "source_sha256": "31ee9e14d765fb64aef4b63d573eec7c494964ba6d8b0eb69aa4f66164c91701",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "e02dc146ba61cc40d15b37f2611c78d329010d2c9d0a78cbf90e0d1165d552d4",
+      "contract": "Expose constant_84(), returning integer 84. No file I/O.",
+      "source": "def constant_84():\n    return 84\n",
+      "source_sha256": "711a887336e3039ed21404abf7252ea0f2b436dc3d141b64a4785e89f834a789",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "5d7ea46f36f237f70d3ddfec5b0a4f5907136dd41664203cb4925f5a2c151f04",
+      "contract": "Expose constant_85(), returning integer 85. No file I/O.",
+      "source": "def constant_85():\n    return 85\n",
+      "source_sha256": "befc3e1113e2888a8504f7f4c28d9c283bdf1bd95b72d3570b87138e05f76b73",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "9e1cf1f39bbb2f20d044dc400b53d7a7abebe8615d50a6916adcb0eb112af6d9",
+      "contract": "Expose constant_86(), returning integer 86. No file I/O.",
+      "source": "def constant_86():\n    return 86\n",
+      "source_sha256": "4390a7be5bae2bdffdf313933db22a60bcdda1959d0903a9924ef320dcee02f0",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "9d34d067b5fe039a095e8e8b54f72007155e6bf61d99894c63291d0a22a08b82",
+      "contract": "Expose constant_87(), returning integer 87. No file I/O.",
+      "source": "def constant_87():\n    return 87\n",
+      "source_sha256": "99f1f66e1e9269b5120ccb2563e58ecba16c3c17a46b2cf07ed4e3be8af9f073",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "5dbb3d411725030d976d807106e46aa95903c686533cb0cd9e3e8a6d9a0d3dd1",
+      "contract": "Expose constant_88(), returning integer 88. No file I/O.",
+      "source": "def constant_88():\n    return 88\n",
+      "source_sha256": "5450f0915b12b2e750848d366e27fe4ad9ea26c06a1b8eb59e3666182a819024",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "d00b19213f54be1561c96beaa57aeadd21937262da094f1b3b0f5ec8ba93c4d8",
+      "contract": "Expose constant_89(), returning integer 89. No file I/O.",
+      "source": "def constant_89():\n    return 89\n",
+      "source_sha256": "0b45d3d666b1dd135e1fb38d68a5177ed1206a8c15d5f764b564d2060d24ec19",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "cc62f8b4b3790fc0efd171a9699e56891a6f47563c0eb95a5b55c53223ff4301",
+      "contract": "Expose constant_90(), returning integer 90. No file I/O.",
+      "source": "def constant_90():\n    return 90\n",
+      "source_sha256": "d9c40597f5e36ed7000f0ba0719633395ad67a5854fc373a4189b0859db54cf4",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "7e57aef83d8810aa923490425f9a736d4aa336d5b3a53f9576efe350bc4e5b49",
+      "contract": "Expose constant_91(), returning integer 91. No file I/O.",
+      "source": "def constant_91():\n    return 91\n",
+      "source_sha256": "00ba449f8175e8269ca734afd9b2e444684031cb39b7fd9f2c18c14523ccb184",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "f9eb3b1e12b277711036ba1492731f7564cacdd7a866823dadaef4f3b79e08b2",
+      "contract": "Expose constant_92(), returning integer 92. No file I/O.",
+      "source": "def constant_92():\n    return 92\n",
+      "source_sha256": "c7d1bbc00ac55a8726883a9d35e316321d5c47a7a972186421f5a88260fee3a1",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "4859b811ae2e6e0bfbf319ac04d45836fc8cf958adbfa3366a238b508aca39a4",
+      "contract": "Expose constant_93(), returning integer 93. No file I/O.",
+      "source": "def constant_93():\n    return 93\n",
+      "source_sha256": "b5f325fab6791632868d62d3157899e46a3dff240da9cfece61ae68e2b7f2664",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "1a337ce71f72efd56df687c6ab99213c70ebb89a8261b376e80f7516216102bb",
+      "contract": "Expose constant_94(), returning integer 94. No file I/O.",
+      "source": "def constant_94():\n    return 94\n",
+      "source_sha256": "f927d074192bd0dcdbb6194d50774f49e5e0ebd24e722c94c91cb17bed69fe5b",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "da8d4acf28f8e60910b18d64e42a5183db49e5f38f6e69b2af77aa275f7e1a9c",
+      "contract": "Expose constant_95(), returning integer 95. No file I/O.",
+      "source": "def constant_95():\n    return 95\n",
+      "source_sha256": "5d5ae571a07e94436acfef06b76a37b1676d30d241e54d72fc1affb691375223",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "21dd9b00bec075f0f40e3198851db6857dfedf4b710eec86b5837ba8926f4cb5",
+      "contract": "Expose constant_96(), returning integer 96. No file I/O.",
+      "source": "def constant_96():\n    return 96\n",
+      "source_sha256": "9afb525ebb9e6347c7e2683b69ad14d0575f69235b4b492060d07210d6c0d1b7",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "efb669548ddb7a76f9ffae7b10fb3e8efebb252c21b263f5b0f1b576f7e52717",
+      "contract": "Expose constant_97(), returning integer 97. No file I/O.",
+      "source": "def constant_97():\n    return 97\n",
+      "source_sha256": "e52df8a376737bf2d8ee47a8fdf25127e143341052c15434c7237d686b97a725",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "f63e5e20f43ce0c84e326b1fb40a6ae5e32f08fc176fb8f70e1084010aa61bd0",
+      "contract": "Expose constant_98(), returning integer 98. No file I/O.",
+      "source": "def constant_98():\n    return 98\n",
+      "source_sha256": "16f02313b3ba27be0ca2b5be9da561686454888eaa84a860787e37d74de18276",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "ecabf4a71974af9ca464d0596e4b88bef1780cf66e81587cf2a0f321944ea7e3",
+      "contract": "Expose constant_99(), returning integer 99. No file I/O.",
+      "source": "def constant_99():\n    return 99\n",
+      "source_sha256": "ef6598ca7c87e70de4b2a6cf5ade719fd5e4c7446f25f309e06d07174b2d46b5",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "8a7d55bd9dcefa8f791e3acdbf7fd4baf237a6e8a4d7ec17573c9960609390de",
+      "contract": "Expose constant_100(), returning integer 100. No file I/O.",
+      "source": "def constant_100():\n    return 100\n",
+      "source_sha256": "a42d8555a8668c398686275a8b48e281ca96504108cd33adc1baf69d5aecbf25",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "8b315d37c262513c11353f9124dd7f336d4663efdebf335c1da63642bf9cd94a",
+      "contract": "Expose constant_101(), returning integer 101. No file I/O.",
+      "source": "def constant_101():\n    return 101\n",
+      "source_sha256": "05cff1558493c6435e23e222f115fdafc66b49a70b284c8814ef6375f793217d",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "344ce96ca59dde0970417000edebc153b1a15096a0cc3fa0fba202570aa3d27c",
+      "contract": "Expose constant_102(), returning integer 102. No file I/O.",
+      "source": "def constant_102():\n    return 102\n",
+      "source_sha256": "9d334288f02669a158781934c61dac8f7177d8c4880ed989ac0fd2afcb84ee66",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "f5263c522867f11c08801f9a82c62c546354468bdf8407384d6009df3a9a6c07",
+      "contract": "Expose constant_103(), returning integer 103. No file I/O.",
+      "source": "def constant_103():\n    return 103\n",
+      "source_sha256": "9d99477c439073cbefed00b6dcd166e33856cb14b777467cc89278c33a94ef0b",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "722525b25dab8634481b10b4ba6dd70a425706603cd0317485b81e2f84c8d30f",
+      "contract": "Expose constant_104(), returning integer 104. No file I/O.",
+      "source": "def constant_104():\n    return 104\n",
+      "source_sha256": "89fc2a990dd657161ec1a6fcf23f448968ccdbeebf209d066b44ef55e11d16df",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "dbfe04ab794969c928083d8f49bac1eee1a287950035c7bbeb790ee68e300d17",
+      "contract": "Expose constant_105(), returning integer 105. No file I/O.",
+      "source": "def constant_105():\n    return 105\n",
+      "source_sha256": "2296ba1c3de99c347e6a86173a5a25286860dbd513e11de2d8d39d22583425fa",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "c434a3cea1f7a53c21ee134ff5e9235504e4034884a694b9b371ec523c07bd5a",
+      "contract": "Expose constant_106(), returning integer 106. No file I/O.",
+      "source": "def constant_106():\n    return 106\n",
+      "source_sha256": "4c614cd551c30e66fe8e5ad4f0b91b02382709386bc62d1e4498ebe748c0c897",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "ec8ebd481af77762e0f79bde25f15fede918eb2c93dde4b9c553e370ca1008b0",
+      "contract": "Expose constant_107(), returning integer 107. No file I/O.",
+      "source": "def constant_107():\n    return 107\n",
+      "source_sha256": "828fd455eeedca6990c06db21fbbec5692dc87d0c95dc0370a8b8b600079b6a6",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "1803a34b6241345f58ae820f3f31e2e23e052c2683f9de1ad568926a17fe3381",
+      "contract": "Expose constant_108(), returning integer 108. No file I/O.",
+      "source": "def constant_108():\n    return 108\n",
+      "source_sha256": "cb969c7127d23bda6566ff09a46c4bf2926619713b9cdbbdb86087cdf63d5ace",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "1ee21690a9a19ae9e688628012b9d37d8fb58626e358b6bf8afeb41d18cbffd0",
+      "contract": "Expose constant_109(), returning integer 109. No file I/O.",
+      "source": "def constant_109():\n    return 109\n",
+      "source_sha256": "bf491ff69e3781094caca505f1dd097604f6af390f0d409ac0f0d672bf142098",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "f62c96f0bc13d52b5a77fa11c0b8c551ebf30c9388eb56207f7285012fbae671",
+      "contract": "Expose constant_110(), returning integer 110. No file I/O.",
+      "source": "def constant_110():\n    return 110\n",
+      "source_sha256": "0cc50e31db289d2960c206efefaa0fdee71e3d6f1364ee24421fa02496198da4",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "152c09b7df5dccab3517ca991dc97a424df3b5e7ee1ccbc87389f2e454b14da9",
+      "contract": "Expose constant_111(), returning integer 111. No file I/O.",
+      "source": "def constant_111():\n    return 111\n",
+      "source_sha256": "67efcbdf2d886b73d20a96bc263c18cd743a7381e62932c3d72457d96d94f98f",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "106ceecaaa464ef2b0484a3a895cd97c298cf8d7b27178d04fea30bf637c2cba",
+      "contract": "Expose constant_112(), returning integer 112. No file I/O.",
+      "source": "def constant_112():\n    return 112\n",
+      "source_sha256": "e57c11a6ef4a9a145ff1a12c92b1b60734a9282a2c85c03fc4c381e0d6cc7077",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "86cd71641b91b62e5b930582f14484abe02429c6d4b1e5a2c0facbaa032e713d",
+      "contract": "Expose constant_113(), returning integer 113. No file I/O.",
+      "source": "def constant_113():\n    return 113\n",
+      "source_sha256": "30c4f58e5987c5f3eba487e7af119c22689bfc3154a282d195fcbb70536ea935",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "92fca0bdb307e41d26284545f534c4ea4df2028ef3f08adcd440517ad4f47e5f",
+      "contract": "Expose constant_114(), returning integer 114. No file I/O.",
+      "source": "def constant_114():\n    return 114\n",
+      "source_sha256": "95a04ccde8327e151398cc84edc1d4aefd62f0a76ad5e01e809734e2e0764ea8",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "a7efad3ceac427378219d9941419a1d2ce1a80e34b6240e62777e413283ad6f2",
+      "contract": "Expose constant_115(), returning integer 115. No file I/O.",
+      "source": "def constant_115():\n    return 115\n",
+      "source_sha256": "f3195833dc2f5c8ab0ea20a106675b16f2cef80fa004e9053205e6e45226ba7d",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "919537d0e397a2590f03cf91cf8657271e32c3decccda80753f2ca2602fdc40f",
+      "contract": "Expose constant_116(), returning integer 116. No file I/O.",
+      "source": "def constant_116():\n    return 116\n",
+      "source_sha256": "5e013bcafb9f146a82bc7321ef458dd6380e6423399ef9b19356ea42d9b8bb0e",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "dd6b10d1bd16cec07fc429a0a7de1ae62e9991b2191b7d73fce328e4841cba5f",
+      "contract": "Expose constant_117(), returning integer 117. No file I/O.",
+      "source": "def constant_117():\n    return 117\n",
+      "source_sha256": "5ba9a581eda82af566f2eb3c3046240f682a1a35806d5353a1b7d5380f88e2ec",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "05a557fcf01db70b4edd3ba853482897a0915bb86903a054f71e3a0122d5245d",
+      "contract": "Expose constant_118(), returning integer 118. No file I/O.",
+      "source": "def constant_118():\n    return 118\n",
+      "source_sha256": "7ec494e0b540691e0135f118fa041db118c0b57c33fd141cd5840000d9914c71",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "a62da19eb1e50ded3c9cbf357c462f02a45a6bb892b835d5b111bece8900d6a5",
+      "contract": "Expose constant_119(), returning integer 119. No file I/O.",
+      "source": "def constant_119():\n    return 119\n",
+      "source_sha256": "6c7512d884aaf3c46dc898cd5abfe2815383ab83537ea088bee3cf74a0923a3f",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "2f428b4e3c1c8d35659fa4e32e80b0e39e25655217bf12901a9b297949baa304",
+      "contract": "Expose constant_120(), returning integer 120. No file I/O.",
+      "source": "def constant_120():\n    return 120\n",
+      "source_sha256": "5d3423cb1e191a26b3ed1957f40b483bb9ad189a03c6d985508d1ac0f592b233",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "66286dbac84ff149ac28f10360d706583dcff13652887f0e675d03d964f8c520",
+      "contract": "Expose constant_121(), returning integer 121. No file I/O.",
+      "source": "def constant_121():\n    return 121\n",
+      "source_sha256": "0ce20ecaffd1508ab26362583d534e56fb3a6c540d8960a319e4a512b85a7b38",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "390c1afb0588c2818bfdcb5bde4417ac805e861f931a3b560e4d610e620451f6",
+      "contract": "Expose constant_122(), returning integer 122. No file I/O.",
+      "source": "def constant_122():\n    return 122\n",
+      "source_sha256": "9aa10a919093285e752333d7c83f01cca4bfa10074259cf4fcb8fb6a6e44084e",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "e2253abb55306bc013d996ac29d9f6a17fb57da720472a0a7711d2588742b037",
+      "contract": "Expose constant_123(), returning integer 123. No file I/O.",
+      "source": "def constant_123():\n    return 123\n",
+      "source_sha256": "43b031bf85d7dfce2b10dc46b62c28e737720bddb0715e7b4eb258d9c729b8ef",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "3a9456e1d33fa5774deb955bcbe779ffde335eb8a49cc7385f31967df62b89e9",
+      "contract": "Expose constant_124(), returning integer 124. No file I/O.",
+      "source": "def constant_124():\n    return 124\n",
+      "source_sha256": "dd66e04c6ab1d95284c3cb48a05d8f8a274cff7ff0ff7d933820dfbc42ddc12f",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "13666b1d463c6f584578d0ddfd1b8e1ce86ac0b5bec3a59f46f37f6445c25062",
+      "contract": "Expose constant_125(), returning integer 125. No file I/O.",
+      "source": "def constant_125():\n    return 125\n",
+      "source_sha256": "99bfa3e63e400c0a86a8ba81c15f581c1fc6f561d510c443d1a37d291c899fd1",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "26a90509100d8fc0fffbc5360aa1c3a65154912ffb8f030987ad6873c030fa13",
+      "contract": "Expose constant_126(), returning integer 126. No file I/O.",
+      "source": "def constant_126():\n    return 126\n",
+      "source_sha256": "fe3d8a43c56f2c26a35e5db5b2edee9c8a84573670a18649c52c1ac2f1c6992e",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "c6fb3ecc5163674dbcfc6833da3e7d7df136a4f62c3b5ec814a13f797e05b143",
+      "contract": "Expose constant_127(), returning integer 127. No file I/O.",
+      "source": "def constant_127():\n    return 127\n",
+      "source_sha256": "9cbc25ea61187932bf4bd02db8fffd40106b5b50fe217979ada7594ae6cd00d3",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "2489d2d64992018516197a76b7b36b8772d9d2a8ec9b07b9082c7d0ff1138fe5",
+      "contract": "Expose constant_128(), returning integer 128. No file I/O.",
+      "source": "def constant_128():\n    return 128\n",
+      "source_sha256": "5b89f28e848109d7700316908740a82c01ec7fcd9bfa7dfe342f2c8aa7ff3fbe",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "3067c7d104c9bcbf877679e558f2eb6db8c3562891f28b6230213096bbf40a35",
+      "contract": "Expose constant_129(), returning integer 129. No file I/O.",
+      "source": "def constant_129():\n    return 129\n",
+      "source_sha256": "019fdb9a3a69662c47b46e3a5ba48bad84020754e03c255884f70b9bc8fd877d",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "2ad83d994c83ad075a5757f38e04805c1a77da47b5ab9ab1e2e3635729dd3a8b",
+      "contract": "Expose constant_130(), returning integer 130. No file I/O.",
+      "source": "def constant_130():\n    return 130\n",
+      "source_sha256": "51e187fe5674e21dc1c32076b05b886cfb367d681f5c125fd66d72f7ab7a748e",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "c83b1ea5e36f5cc696a00110936ab41ca2587fd0e0c8c020c16d377870c56b0a",
+      "contract": "Expose constant_131(), returning integer 131. No file I/O.",
+      "source": "def constant_131():\n    return 131\n",
+      "source_sha256": "585cecab9fedda6ecb68509e83edfe5e85c8cb0c09c5125690a0f41368981f57",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "2b2fbc14e90858607fc62477dea4f3f7575422212cde4d9008351f44f28edc93",
+      "contract": "Expose constant_132(), returning integer 132. No file I/O.",
+      "source": "def constant_132():\n    return 132\n",
+      "source_sha256": "8a683bdd1b2245c65f61364a622cdecf4188f970fd263260b2fc4cbf5104631d",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "bf25dbe138234f9a8d1372e1aef72118de5bccdb387b5161b2d235ce98e173a8",
+      "contract": "Expose constant_133(), returning integer 133. No file I/O.",
+      "source": "def constant_133():\n    return 133\n",
+      "source_sha256": "d81704773a6f89ce4fb0d088f50d95327c7ae1a1e9430c373193edd8552769f8",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "93c24259359209d200839f9b8616b57dc7fdd73b0966836d955f1872d90f0ec8",
+      "contract": "Expose constant_134(), returning integer 134. No file I/O.",
+      "source": "def constant_134():\n    return 134\n",
+      "source_sha256": "f877b0913c7f7be7e04a0e9228058884b5e89c11c33c4c133ae04bf54d119d58",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "20848350c87219235ebcd7509e15699aa81594c29b85e090194423b214bcf06c",
+      "contract": "Expose constant_135(), returning integer 135. No file I/O.",
+      "source": "def constant_135():\n    return 135\n",
+      "source_sha256": "4e16226b9a6b3df8b6b8c311835a92947f0cf256ee23f9025ca7b53594c96544",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "0438b7cc802c25df75b931aaee7af8299a7737fc30e99f50b4eba75cf3aa649a",
+      "contract": "Expose constant_136(), returning integer 136. No file I/O.",
+      "source": "def constant_136():\n    return 136\n",
+      "source_sha256": "a70b22471bc0328925bce724d71cf2d9d87af42f74c0de7c27cbb3b0fb817943",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "7980f782924273b1707980608415675153f62fd8a0c744c65a8b15ead42d5261",
+      "contract": "Expose constant_137(), returning integer 137. No file I/O.",
+      "source": "def constant_137():\n    return 137\n",
+      "source_sha256": "c704d4053b3e65f848b082a875e601d503475f712be5b52759065f02db1dbf27",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "a9592839f1b57d669eaefc1fc33c9a0996943466ba2a3f1ce38897d97ac8a059",
+      "contract": "Expose constant_138(), returning integer 138. No file I/O.",
+      "source": "def constant_138():\n    return 138\n",
+      "source_sha256": "ca32cd7e6e395c25eba7816f40d5521baa5655960612681bb758a43a3cd7b2a3",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "d3b0e33aa5c692f57845112f066e5125e7cb3d0c53f88db6d5cb2fcdcd32acf9",
+      "contract": "Expose constant_139(), returning integer 139. No file I/O.",
+      "source": "def constant_139():\n    return 139\n",
+      "source_sha256": "277bb37c4c9e9a7bed2edd1889a77febbd53a52db4c75ae754fb13529f29833d",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "3cabb300e122ce6ebd013505250b5117dc2a2854ea888be73f7f9d84c88d84b9",
+      "contract": "Expose constant_140(), returning integer 140. No file I/O.",
+      "source": "def constant_140():\n    return 140\n",
+      "source_sha256": "bc0d34490b877694f35934e96d74e44baae2505c55d7faec3498563d6d539e5b",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "0e19d2e9a4f5e7ebe589567e6c3c6fbfbc4246aab9b7e69c504ff247af5d8380",
+      "contract": "Expose constant_141(), returning integer 141. No file I/O.",
+      "source": "def constant_141():\n    return 141\n",
+      "source_sha256": "773e19f329caa7d5f2ede525c1c971e99cfc1c1dc4271e27a8b136a6ff15f088",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "a0c6031884b524c8ae6d24ade7a48b2c227270c45fecedd804be5f66d51429cd",
+      "contract": "Expose constant_142(), returning integer 142. No file I/O.",
+      "source": "def constant_142():\n    return 142\n",
+      "source_sha256": "7b40457967f72adf00803eebd57523d1a656487eab60db9fb2d30c68d3c5bcf4",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "564f8c074eb60546684c9c3fbcd358be1c414d7c35d12dab114ca77b39748e9e",
+      "contract": "Expose constant_143(), returning integer 143. No file I/O.",
+      "source": "def constant_143():\n    return 143\n",
+      "source_sha256": "b20202fad259a76d4dfe07cafb64fb3c03466c544e1d7db236373fe2097a6ac9",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "e920b7f2d96af655a28446256898daa7ceae579e4c736190495c13963b4b851a",
+      "contract": "Expose constant_144(), returning integer 144. No file I/O.",
+      "source": "def constant_144():\n    return 144\n",
+      "source_sha256": "441c572fdbebea1e63765f4d9146896be756539dd2d326a06511756f148d4bba",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "d5f0d724dcf89ad8a548c748744f16b589593d582615fda5053893b3d4e1f8eb",
+      "contract": "Expose constant_145(), returning integer 145. No file I/O.",
+      "source": "def constant_145():\n    return 145\n",
+      "source_sha256": "6f8940ff718a1d59d9560ced5bb7ebf2c6a86f97432e8e86b6ea418b8e78df4f",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "9a3dbe421549a3c6e1f4b81db23b5f5b733a4a883cf5be59f452998c6f6112e1",
+      "contract": "Expose constant_146(), returning integer 146. No file I/O.",
+      "source": "def constant_146():\n    return 146\n",
+      "source_sha256": "132bae856579c8efb94f27488fb2f7a6a5532c10c7acf5725c17919fa82d478b",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "2a281cb49cab93112f2d18ddd7c73a3c3075cb3a05236ffeaddc75db90c1317c",
+      "contract": "Expose constant_147(), returning integer 147. No file I/O.",
+      "source": "def constant_147():\n    return 147\n",
+      "source_sha256": "958a397dfa5af3d81fd0155d1675b36802150df85d1922131c6dffc651457383",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "6525521b6957636d03baa6c64d7c3816ab6f9ecdb610403adf1e564bd6136413",
+      "contract": "Expose constant_148(), returning integer 148. No file I/O.",
+      "source": "def constant_148():\n    return 148\n",
+      "source_sha256": "18dc184751b6b5a79ab320b62de078eb9c52ff1824791d2774b9b1b85e5d3adb",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "0b269770bb16b4d9a82eb17994c201398c1e09be2b8ff21a479cbc3cf6823e2c",
+      "contract": "Expose constant_149(), returning integer 149. No file I/O.",
+      "source": "def constant_149():\n    return 149\n",
+      "source_sha256": "1be99f6b50a1ffa471f2f8dd5d94c6dd9444057c1438d9b604d6d70ab9dae515",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "bfdecfba0d69b4131331a5c82c282fcf400e7d8af379b7b30236923e14455b5a",
+      "contract": "Expose constant_150(), returning integer 150. No file I/O.",
+      "source": "def constant_150():\n    return 150\n",
+      "source_sha256": "4012ca8c806bbdeb3afe3a5622d46ce8bf52b3d337af443a92842acea04ee1d7",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "ac2c0fb42beebac03d1815d6c5f2febbe6ecd804931e60427fe7e21c7238d4a8",
+      "contract": "Expose constant_151(), returning integer 151. No file I/O.",
+      "source": "def constant_151():\n    return 151\n",
+      "source_sha256": "8d47918017d6c9c3c3b9af43bec24bd1c9d9a7ca044377c0aee81e7452cc2c2e",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "47a53dd20694517e3dabe8cd538babe0fa3fdc2f2d6f66914c6b60cbde4302c6",
+      "contract": "Expose constant_152(), returning integer 152. No file I/O.",
+      "source": "def constant_152():\n    return 152\n",
+      "source_sha256": "50d2a56067451bd14e667717d93d3531c030d9c00a62723fc0882c080f860474",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "75dfae4e3e5014a42d27fe8285845ba8eb07c82d6899c5dfbbc94dcfd4589dc2",
+      "contract": "Expose constant_153(), returning integer 153. No file I/O.",
+      "source": "def constant_153():\n    return 153\n",
+      "source_sha256": "75fea5b002e7faf491b84410f3da192a4ceaf0e148a01297bd07059d8130dd27",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "609a4f15057e8565e355b918c14ed6fc848fda7c82c6840fa0f0b3c56425930a",
+      "contract": "Expose constant_154(), returning integer 154. No file I/O.",
+      "source": "def constant_154():\n    return 154\n",
+      "source_sha256": "fea8f9b6c74d7f3e3f39ee024a84adae0f1c15b46089ea26fa720141674f625d",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "fb494b630d0853504a50a70e700901641b7c6b683f9df554da6029384c9a3460",
+      "contract": "Expose constant_155(), returning integer 155. No file I/O.",
+      "source": "def constant_155():\n    return 155\n",
+      "source_sha256": "853d6e47fffcc2690b1a030d9a370d49acadd32b418b9fcfc51cbf3f173ad1fb",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "dbb961342190bdef9b3f09dc94fbe969adb51fcb2d29c61a9eb5742876c2b820",
+      "contract": "Expose constant_156(), returning integer 156. No file I/O.",
+      "source": "def constant_156():\n    return 156\n",
+      "source_sha256": "160416fa3e99375737bfec20a51f13485a2c3edee1d5064da771267afad80720",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "59e50a1e48615bb3564278047db38c7f2d8df16ae9ee4fac54c12544680e3098",
+      "contract": "Expose constant_157(), returning integer 157. No file I/O.",
+      "source": "def constant_157():\n    return 157\n",
+      "source_sha256": "8380ccf6e4fc20e683e18a85078b31d2c4459721eedbcc38de79efa29f6114de",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "8491961b94aa0b64b32383a5f61f35df27abc37d0fddf2bc9c14a698dc1b430e",
+      "contract": "Expose constant_158(), returning integer 158. No file I/O.",
+      "source": "def constant_158():\n    return 158\n",
+      "source_sha256": "0f5e7cfd0a1149fa793b0b7830d06cdf7b11a8b3b81b8ded1b8e116cfc26adf5",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "32c9502185d023d6fb848ed71ede129099ceb57c2d6114fce40c46dd547226a2",
+      "contract": "Expose constant_159(), returning integer 159. No file I/O.",
+      "source": "def constant_159():\n    return 159\n",
+      "source_sha256": "b2b42a4f3e9d15157091644e1012927b0ee886cc657bab1511cac343e3edf383",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "28934c41ec9b7a7b3eb6b24ace0210ec92436b26b5f21f9e5a1ba653e774dddf",
+      "contract": "Expose constant_160(), returning integer 160. No file I/O.",
+      "source": "def constant_160():\n    return 160\n",
+      "source_sha256": "5568869f7a9f037d1aaeb82e67aacb6d4402283af61bc58727333d3b04356510",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "8171baedab367327c5a211f35ff5c3b4954a979f10b42349eb41a28cd472b908",
+      "contract": "Expose constant_161(), returning integer 161. No file I/O.",
+      "source": "def constant_161():\n    return 161\n",
+      "source_sha256": "14bf9df4dd8090319a7a4a9d74c2272e5e956f7daf3ebc72e77886a9e6210476",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "dcf6372225fad7c15da9c39d9f327bffbded1b9957a0a5ac300efb30a5b8b1ff",
+      "contract": "Expose constant_162(), returning integer 162. No file I/O.",
+      "source": "def constant_162():\n    return 162\n",
+      "source_sha256": "0cab839f51b773a615c5aa662122692f52f2a8d1e60953499b06cc85fdfb2e31",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "520b0e1039fa2a3b1921937eea1bec30c570269151621366d952d12efc30f80a",
+      "contract": "Expose constant_163(), returning integer 163. No file I/O.",
+      "source": "def constant_163():\n    return 163\n",
+      "source_sha256": "3ed49402cd4b37576ce6ac5aabbd465e30c0555de62e53a7badef842fdc0e9a4",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "2fc0b40fe542c52b34d081b989a29448a64a23a262df246862bec98c2e8be6a5",
+      "contract": "Expose constant_164(), returning integer 164. No file I/O.",
+      "source": "def constant_164():\n    return 164\n",
+      "source_sha256": "b037652a8d6686df81f589411800a70eafb420796c7df40bbc05a0194e9dbd34",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "35d88d403c21c115279b26bfaa81b66c572163ccf15baa151bcbdf5e556b3001",
+      "contract": "Expose constant_165(), returning integer 165. No file I/O.",
+      "source": "def constant_165():\n    return 165\n",
+      "source_sha256": "e7f4ce85427938f63f32e038a642bd6e6366292eec0366bad8e407e9ca49370f",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "3109749a3b0ce442aa640732594735e4345bf225d9d2aa87469b9050b17d052a",
+      "contract": "Expose constant_166(), returning integer 166. No file I/O.",
+      "source": "def constant_166():\n    return 166\n",
+      "source_sha256": "25d2d150d5c6f393e04b792538e179bc00a58ce5e1725b4fe36c45d64b2a9ae5",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "2128e6a13af9cd93c42c0649f1afa7965a7b29a5c7cd150719be65cb1193c1a0",
+      "contract": "Expose constant_167(), returning integer 167. No file I/O.",
+      "source": "def constant_167():\n    return 167\n",
+      "source_sha256": "8163b80816b36ef2d1f30d12894788ad62ba0a7fc6fe6fcc9fa64b0dfcf355a2",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "3d1ec6f0d544919b51b0d3e53f137e97c792ad1bca232399162e3cea6b850b76",
+      "contract": "Expose constant_168(), returning integer 168. No file I/O.",
+      "source": "def constant_168():\n    return 168\n",
+      "source_sha256": "99d09a0b2d95e0a75610c9f09bf3dfdf6ee7bb3b9468dab50b378523c308d664",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "4b408e226a68af8a119be03df2b31e03319c75cdd6dbf70da3f23b7f72e44a36",
+      "contract": "Expose constant_169(), returning integer 169. No file I/O.",
+      "source": "def constant_169():\n    return 169\n",
+      "source_sha256": "58176d4877de323e20f962b36f43843c12730939d4a9ed32101867ba284c3d7e",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "476cc59387138de611d2ab6d2282552d14ccd0b6ecfde0fa6779d8ab5377a1ed",
+      "contract": "Expose constant_170(), returning integer 170. No file I/O.",
+      "source": "def constant_170():\n    return 170\n",
+      "source_sha256": "aa816afce49cbb5f5fb1c6caa8c5e4c196fdba09f75a44c31a39f634d935383e",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "7b93fecacfccf787307c087e4ea003a1b5e42028366340dfced4d6a3fb663135",
+      "contract": "Expose constant_171(), returning integer 171. No file I/O.",
+      "source": "def constant_171():\n    return 171\n",
+      "source_sha256": "5b45bc6877662d6e0045c5dccc5d1ae274206bd4e6522458235638bda82b5382",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "9b848c71ff3d655f6b5d5351dafe9b28080c5ddfbb895fc54e1031062d9801c1",
+      "contract": "Expose constant_172(), returning integer 172. No file I/O.",
+      "source": "def constant_172():\n    return 172\n",
+      "source_sha256": "c6f5b8f5448f0aff6bacf93338ffe97f2e09e2f748f7ef27e5069a14a725b56e",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "df4740b96bcaa8f66575f129651c0df2226f688e0610b10883e8144fcfac8fa6",
+      "contract": "Expose constant_173(), returning integer 173. No file I/O.",
+      "source": "def constant_173():\n    return 173\n",
+      "source_sha256": "e6bba3389373a09bf99f629c19af4059e1ea5ee6d077bfee3c8abc1206bc4825",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "c6fcd70d6441f74f216945fac246776945b819d5e42102a40ca66386b2fa38c0",
+      "contract": "Expose constant_174(), returning integer 174. No file I/O.",
+      "source": "def constant_174():\n    return 174\n",
+      "source_sha256": "1c0586012b89b692820db512c75a19fe8419887d5c7b8bcf11eebe2f03db4078",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "6a50bd52a50d9791366cb3f297402f99a8bfccd0c4c16272366d39ad26c0df5b",
+      "contract": "Expose constant_175(), returning integer 175. No file I/O.",
+      "source": "def constant_175():\n    return 175\n",
+      "source_sha256": "7b44a7e1a1a1968a9b2f1260e39eea8c91b642ef9a43175fcccfbae5ee40d460",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "ac66747ea76a3b709f8a4a4f466cc3a95b05afd361db9fa96c660000b4da29c8",
+      "contract": "Expose constant_176(), returning integer 176. No file I/O.",
+      "source": "def constant_176():\n    return 176\n",
+      "source_sha256": "8e2dadbde849e500a1c588f5837debab154bcb019eaba748ab1604e51fe5b398",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "c6a78a60e21a2ded7d07f05a0eb7b470c23dfe439b7fc63756b229219774cadb",
+      "contract": "Expose constant_177(), returning integer 177. No file I/O.",
+      "source": "def constant_177():\n    return 177\n",
+      "source_sha256": "fc1b63a04ed8a87fdff3837336e1413e0581fd7d96f540dd665c1e2b1dd6181a",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "f7d3b9a3e8d04424827268b7b15f27f5c5231c6e95366e90b75a4919262cc41a",
+      "contract": "Expose constant_178(), returning integer 178. No file I/O.",
+      "source": "def constant_178():\n    return 178\n",
+      "source_sha256": "f6da315bd688127e9c54c4df5546a6ab8f1bccf925a0570af6f2ef4bb6a329f7",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "e1136b8d127980b66ed4e1d420699d534f5f878851405f43d8c30ec3bf00001d",
+      "contract": "Expose constant_179(), returning integer 179. No file I/O.",
+      "source": "def constant_179():\n    return 179\n",
+      "source_sha256": "468981c1e4e22d450eab8f12803f95b77d00881d70467a7986fcff9899d8ed69",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "bc57e75c3ed362df40776a683a6f8b36e706af650e87e43f1e4b305ee626d3bf",
+      "contract": "Expose constant_180(), returning integer 180. No file I/O.",
+      "source": "def constant_180():\n    return 180\n",
+      "source_sha256": "f3caeaf9b90a59f4a97b26051d81cadec079ec7f1fb7255295329b601f17e41d",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "12cb461cb5e794fc811faa792f1138b2f5cc3feab8dce249f9c89e1a2119122e",
+      "contract": "Expose constant_181(), returning integer 181. No file I/O.",
+      "source": "def constant_181():\n    return 181\n",
+      "source_sha256": "b5a5cbd4db93f4fc7597f4bf74b1b7472117079aa29ffe70950b635fc56dfe95",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "9b5e06734324a0e492a69780c74e35355f7750a7cfab901b0371bd45a89d7f56",
+      "contract": "Expose constant_182(), returning integer 182. No file I/O.",
+      "source": "def constant_182():\n    return 182\n",
+      "source_sha256": "6b2a47896ff064a8c1cfe7bb391a6dca4a52f2d515f1481f5e1f73a8e1a1623b",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "a0d747882126313cfbb54b2e3b4891597d71eac15ba430a2ba07d2ee078140b7",
+      "contract": "Expose constant_183(), returning integer 183. No file I/O.",
+      "source": "def constant_183():\n    return 183\n",
+      "source_sha256": "ceb6d70945dd4bb1930b00ef05d6dc08de3151e07c9bb93199ee2a8b3595a3ac",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "90bf131df3ad5c899a765fbb3d9b72c9f79506042f80d42ef371ce11bfc1e67b",
+      "contract": "Expose constant_184(), returning integer 184. No file I/O.",
+      "source": "def constant_184():\n    return 184\n",
+      "source_sha256": "7e12eb7f2bc142cdccc59b2a6de131f85f2396897bb627b236719fec98021fb4",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "4ecd7063fbfe1fd78ff2661a9f71cb3a9e4d5bd863203bf4b2ae369b70e9648d",
+      "contract": "Expose constant_185(), returning integer 185. No file I/O.",
+      "source": "def constant_185():\n    return 185\n",
+      "source_sha256": "213be73faba3cae8a57bdf12fcd524bfa8fc7caa9315f10d08936fe0d5d17ae0",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "b606bbdb8b8d67d7908aad3d288892ef99b9a675841e779313b3bb761181649c",
+      "contract": "Expose constant_186(), returning integer 186. No file I/O.",
+      "source": "def constant_186():\n    return 186\n",
+      "source_sha256": "9abb4b578cc27ac13e688ebc92150e0395c7e9eff5ff40389c6e3a13d75df441",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "ba45bb938503dea27444e80115f936522adf113913d4688399660d87f7d8da7d",
+      "contract": "Expose constant_187(), returning integer 187. No file I/O.",
+      "source": "def constant_187():\n    return 187\n",
+      "source_sha256": "711f64e3237d97568efd7817b3a523aafd63ab69a584bd47f0641c2fafafc005",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "0b7e755e3311110c86898b4bf569359d1fc6697ba10812da0b2c25010ca66697",
+      "contract": "Expose constant_188(), returning integer 188. No file I/O.",
+      "source": "def constant_188():\n    return 188\n",
+      "source_sha256": "6832953440b0abcdd4cced425354beabea45dd24381a22005d93bbc54f318b14",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "0cf002a533a42606d3666fcb8b8ab509b90d1589df56d8791f63e2d129ccb8a0",
+      "contract": "Expose constant_189(), returning integer 189. No file I/O.",
+      "source": "def constant_189():\n    return 189\n",
+      "source_sha256": "aadff1897ba9b5f066eeb2dc5212599cbb9971eb7d5592188de9144932274007",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "ce81b77b9807a0ce81dfe7e67f55a471f75c7865bb82541004df384c2752bbf2",
+      "contract": "Expose constant_190(), returning integer 190. No file I/O.",
+      "source": "def constant_190():\n    return 190\n",
+      "source_sha256": "80bdc16d1130b109ff25c855abe391feeae3e1e9b5a3e992940dd22face66a80",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "c9dea46d6ab1833e36480be3d2362c42b0962127d9aa91d77b518ed36cba3260",
+      "contract": "Expose constant_191(), returning integer 191. No file I/O.",
+      "source": "def constant_191():\n    return 191\n",
+      "source_sha256": "38a3846150035ca290d4dbec4c566c5624926b6b394ec8c31efa8ca6e52ba509",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "86a980396beb7ed31bbc2a629325a7f5c29ac8aaf24f153649e5928e6c337a53",
+      "contract": "Expose constant_192(), returning integer 192. No file I/O.",
+      "source": "def constant_192():\n    return 192\n",
+      "source_sha256": "c24284e8e33835bbc6b9957424373e0afa241442489610a5d70a88c3581b3e86",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "0e0c22d7f40c02ba441bdcf929d32388ac4a52a5a558ab15649bd45715669d69",
+      "contract": "Expose constant_193(), returning integer 193. No file I/O.",
+      "source": "def constant_193():\n    return 193\n",
+      "source_sha256": "95e24e2b1cea8b96c5351482ae6a3e73c106fea09de4dcdd075e335b94964dea",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "3640a1892b782a764d60b679396be3f221154863744cf9b33da987b21b83cb75",
+      "contract": "Expose constant_194(), returning integer 194. No file I/O.",
+      "source": "def constant_194():\n    return 194\n",
+      "source_sha256": "46d408480536d009d86e96e64a6b1c3be132ce3dd9708f3f7a2f8b40e916333a",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "3a2f7b2ceb120960ed581990cee4ca0fdf91c8fa59e7b7ed5e616f50bdbbbd64",
+      "contract": "Expose constant_195(), returning integer 195. No file I/O.",
+      "source": "def constant_195():\n    return 195\n",
+      "source_sha256": "26187d82b187a74084aba5aee18da37a2593584e52cf37a15a3111cb0e191ffe",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "f005c4c67ee505a1be7bdb474741b075c8eba1e58ed3c34a16b420a0b062a6b9",
+      "contract": "Expose constant_196(), returning integer 196. No file I/O.",
+      "source": "def constant_196():\n    return 196\n",
+      "source_sha256": "35b11343514a64e800360c8e2c4e9889f2904ab37ec038b2bcecdd30a6be40a7",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "77377de37bea8901af2f0adf8f29129c84b89e677618bc3579d347bc068cdc55",
+      "contract": "Expose constant_197(), returning integer 197. No file I/O.",
+      "source": "def constant_197():\n    return 197\n",
+      "source_sha256": "24f820fdbf6c016df33c1c96ca1b5e03b96a720298d6dce6498575c7ca54d197",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "2f3c90da13548affa17e3d88350f8a5c1575c2c515e71857d8ad734585684870",
+      "contract": "Expose constant_198(), returning integer 198. No file I/O.",
+      "source": "def constant_198():\n    return 198\n",
+      "source_sha256": "9bb396ccdbc8305fd0d99dcd6bb8af0f65880e28a63ba187b4bf597591dcd6cb",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "8c2c757bf7e21d41580566ace9c5b3f83738e958fd0c59f10bf9318ac31dd842",
+      "contract": "Expose constant_199(), returning integer 199. No file I/O.",
+      "source": "def constant_199():\n    return 199\n",
+      "source_sha256": "1e0222a541bb9d1e5b782e574b119bb4da3e1ffed49c84a0ea33b22f90659751",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "e5fd19eb0d9f3dac0080ef03d7520c1de5feeff2dca5400f7753a66200c98243",
+      "contract": "Expose constant_200(), returning integer 200. No file I/O.",
+      "source": "def constant_200():\n    return 200\n",
+      "source_sha256": "6ff7fc08df2dd34d5d66e265d7d0d2e0712e86f7f4b1a2087b1726fb7790716e",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "719e43cb7fedd1fb77f3bfe266fffa2c473a549cae37c4d48320a8e78242d4da",
+      "contract": "Expose constant_201(), returning integer 201. No file I/O.",
+      "source": "def constant_201():\n    return 201\n",
+      "source_sha256": "15e7ba90d62954ca9acebe233dc17dfbf0574376d510f79a05e43e1807164bdf",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "844dd79a1331f7aa0ac7049627e2a9cd04c9d4814b650795267fa5170e4b550e",
+      "contract": "Expose constant_202(), returning integer 202. No file I/O.",
+      "source": "def constant_202():\n    return 202\n",
+      "source_sha256": "01ebbc49332de3c633aff3998fac5803a5c36d082e151e01dd5bf72540394f3f",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "a9d8745b348a922fdede14b337df8ba81679e1c7e4aa46d92c315bfa7c2143bd",
+      "contract": "Expose constant_203(), returning integer 203. No file I/O.",
+      "source": "def constant_203():\n    return 203\n",
+      "source_sha256": "924f80c1af4ff20445a88ef44e28ab81939fb6853a1ae5722af864e79526eb75",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "f51a6ff98bc37d0507e7a8f966c6f076c6300fefa6a5828daa3c9a2dd544240d",
+      "contract": "Expose constant_204(), returning integer 204. No file I/O.",
+      "source": "def constant_204():\n    return 204\n",
+      "source_sha256": "e2c8d3fafb9cde5a2b7b12c20c2425e01c266852e102999a2631299457decc73",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "66af35188d242599842b51ccb1831297801c48e3ca4ec67ce92f24c8a138353e",
+      "contract": "Expose constant_205(), returning integer 205. No file I/O.",
+      "source": "def constant_205():\n    return 205\n",
+      "source_sha256": "e54dc40ea06498a3757a1a24e0d2c899b9ec66b28f2210bd642cf7d708abde3e",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "7c167fe261917aa7dfd0767409010f8444037f52aedb49447843518aa4482183",
+      "contract": "Expose constant_206(), returning integer 206. No file I/O.",
+      "source": "def constant_206():\n    return 206\n",
+      "source_sha256": "9e9a4fdcd0bbd94cf8bb98bca2d6e59f750ad8462515956cdf768bacee78c8b5",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "4bb3945a1f76b31563536481c62a35c182bf31581ead6bee050f50a5e22f75d4",
+      "contract": "Expose constant_207(), returning integer 207. No file I/O.",
+      "source": "def constant_207():\n    return 207\n",
+      "source_sha256": "5346b370f2abb129837008ec5a958cf3967a23130746be941716204cdb4992a9",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "338d39fcc9a94613bec466c054363b98a07099edec4de84db0f531943eb33621",
+      "contract": "Expose constant_208(), returning integer 208. No file I/O.",
+      "source": "def constant_208():\n    return 208\n",
+      "source_sha256": "79c7345b033324d8a0b2d3484a802051074b6661b59a40f98453381b156b40c3",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "13511fbd39c986cfb16697a813da26a6978f02028cbe890cb32eac472c8215c3",
+      "contract": "Expose constant_209(), returning integer 209. No file I/O.",
+      "source": "def constant_209():\n    return 209\n",
+      "source_sha256": "5a3288b1f82b291ea05e700dad3f79da5f1516d5eda171a57c64e50c2ee5428b",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "b0e27dfbe75f3f2b5fe3ec33885e48b8bf927ca782bf0f6ba9bbdad1d06976d1",
+      "contract": "Expose constant_210(), returning integer 210. No file I/O.",
+      "source": "def constant_210():\n    return 210\n",
+      "source_sha256": "c67b234d223a671b70681136bf6d759dac94d52c4cda552d43a45207dc8a4e4c",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "0ba15b9f133e94e8c11cbc2468f62d72735885cbe98fdd2573810dadb9248a0e",
+      "contract": "Expose constant_211(), returning integer 211. No file I/O.",
+      "source": "def constant_211():\n    return 211\n",
+      "source_sha256": "312ec4f0375c51c7715b2a024dbfb307a2b370cba8857ad3649f25a389faf423",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "db9ce41def6a401fe9ad967797d19e59e591002797b41dfaf2a17ecbe5a4962a",
+      "contract": "Expose constant_212(), returning integer 212. No file I/O.",
+      "source": "def constant_212():\n    return 212\n",
+      "source_sha256": "fcf2de16112cd7ef0b5748f8b7a506e8e3afcaf1afdcbf8da873af85d135e0c1",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "7785a7d26a19d3ad7a5700d27cf71c7960ec7157b531e1e13bd1ecb7f15c3441",
+      "contract": "Expose constant_213(), returning integer 213. No file I/O.",
+      "source": "def constant_213():\n    return 213\n",
+      "source_sha256": "a9fab9b9d09114095aada7111325911103c96550cc9fb11247a720a17222b427",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "786d91dd743f37ff42bba8a2bc954963f2a364dbdd9a1e79feb982bea79867d4",
+      "contract": "Expose constant_214(), returning integer 214. No file I/O.",
+      "source": "def constant_214():\n    return 214\n",
+      "source_sha256": "5fe02524ee964cee3a17c1a8061ab57f1c259f48773c2ec92ff5c09b23c2baa2",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "65537c228587b6bcf288c45e9980f1553990757fa16e68650646462ba27aa0a2",
+      "contract": "Expose constant_215(), returning integer 215. No file I/O.",
+      "source": "def constant_215():\n    return 215\n",
+      "source_sha256": "510e019491481dbe7364946b0f4e1ce81c356cc9b9812ccc4a77eb3b206eb1bb",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "b57545fe3a2659574953cfd3a92b7f303cee7e3e9dc14d52ba1b99a3fa84ee92",
+      "contract": "Expose constant_216(), returning integer 216. No file I/O.",
+      "source": "def constant_216():\n    return 216\n",
+      "source_sha256": "0a3b01428d0b5b41ecce43ff67e6707addf32bd1af046ee357cff467f57572a4",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "6ad39fd7f126ecfa619072d212440c69b2fb354928be2ff97bcbd7ffebf7bdb0",
+      "contract": "Expose constant_217(), returning integer 217. No file I/O.",
+      "source": "def constant_217():\n    return 217\n",
+      "source_sha256": "41c703523c231202a9f0f5a0d3af00bbf95a93119884e0976b7ef3a083ea63dd",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "fa68360a8a97cd93fe7be2c6f5406375302b5b31a3e17e7be075767fb733e8f6",
+      "contract": "Expose constant_218(), returning integer 218. No file I/O.",
+      "source": "def constant_218():\n    return 218\n",
+      "source_sha256": "e6f0bfdbf1c1eaaa3731963eb2d00b6747305b655b4a8195e9571635aa296341",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "29fd11c623d1a8900cdca19a954d4afa24895214177d4f7cd1a9a567858ec322",
+      "contract": "Expose constant_219(), returning integer 219. No file I/O.",
+      "source": "def constant_219():\n    return 219\n",
+      "source_sha256": "bc7118d3d18b4a7a585b6e2e1110a6d32a9fb4ad7f5a68268d9734e71320890b",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "35a0d17dc6a29ff1536177cbe5532441d948a11fd492215b78a35f4bc37f9e51",
+      "contract": "Expose constant_220(), returning integer 220. No file I/O.",
+      "source": "def constant_220():\n    return 220\n",
+      "source_sha256": "b2e0b73d47b82faee96e7624e783196b049bcabf96490004b8407d632b6568f2",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "39aaec60e07c315792e18ddbf4ac91a2741997109052e2b0216eb22f69e9713e",
+      "contract": "Expose constant_221(), returning integer 221. No file I/O.",
+      "source": "def constant_221():\n    return 221\n",
+      "source_sha256": "af3415036b2791d79529fb8f7771a5d4d1163d42bbaf0f6af9d308193921f493",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "1dc6d01fbef715d21ab29617717838ce1c8e24d8115443f4f3af953dbce07ac7",
+      "contract": "Expose constant_222(), returning integer 222. No file I/O.",
+      "source": "def constant_222():\n    return 222\n",
+      "source_sha256": "b4eaecd09df7bc1025b122dfb6390a882a55609a8365bcadc0b75570200b8661",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "6b81c481a68b9d4b7c17decb09189e9bb7ac9c8630cda4a81c699447e6183724",
+      "contract": "Expose constant_223(), returning integer 223. No file I/O.",
+      "source": "def constant_223():\n    return 223\n",
+      "source_sha256": "9dd474180ba41a2d6a66565e660259073577c2ef82a91edb0839252ff381a9f2",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "ee9d70a19a0fa3cf26b6a191d5a2876408e66822040fcf55bf634e8cd4f2d6f9",
+      "contract": "Expose constant_224(), returning integer 224. No file I/O.",
+      "source": "def constant_224():\n    return 224\n",
+      "source_sha256": "e9b5a779536e3da2e1cd5ed774598d5d2105123049ea9cd0ea269a164ab11349",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "4e12f074bacb007ee060c87a3650b4bcd9444940747eaf24599108ca2cb3dcf2",
+      "contract": "Expose constant_225(), returning integer 225. No file I/O.",
+      "source": "def constant_225():\n    return 225\n",
+      "source_sha256": "f718ef89ccd82f5392f3c692959c3dcb283ebaef2c01b6ac72e39361e2a04738",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "5e95483a5d7e639b70c549428d052ce90f00258195a29f4dbd0b66e27ad64e00",
+      "contract": "Expose constant_226(), returning integer 226. No file I/O.",
+      "source": "def constant_226():\n    return 226\n",
+      "source_sha256": "482f752e062d29f75ae1fc86a31c33e0e56b25a7d43013d6223292e4951d925e",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "5984845e8a3aee9e43739e9f82f179cddf1fbc26b80c6b4fced82f31f626c4bf",
+      "contract": "Expose constant_227(), returning integer 227. No file I/O.",
+      "source": "def constant_227():\n    return 227\n",
+      "source_sha256": "23a7e5d30aaacfb7b3fc5862b0c53f3928cbf8635ef3095d9e0315f268b4548e",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "6773c24e72b5054a24a2eb46b64e5883313a02ef2c97a603f09af63baea3a595",
+      "contract": "Expose constant_228(), returning integer 228. No file I/O.",
+      "source": "def constant_228():\n    return 228\n",
+      "source_sha256": "9a87ea65387518be58f34dd2a2d4690cd90f7cc7d83ad27ac96df655bc5421f3",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "80e9405ea01d83f0209d753eca965460682aa8fc6bbdbba30e51af5e786df864",
+      "contract": "Expose constant_229(), returning integer 229. No file I/O.",
+      "source": "def constant_229():\n    return 229\n",
+      "source_sha256": "91b7f7ef023c0cf580707efd54a030c6c7fd131e794fb8a0977ddca73c035f3a",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "410eb100655653fbdd7108235b6dfcf63a1ec8788bb70a343f4d493c02184517",
+      "contract": "Expose constant_230(), returning integer 230. No file I/O.",
+      "source": "def constant_230():\n    return 230\n",
+      "source_sha256": "ebec5cca3b9314d209186fd17bb55c6a3189c8543d0c4ef447d26e4858debb20",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "60e05b7a2ae5bef90a78245a407f038d5c82dff2fa40fc1eee680b7a21771807",
+      "contract": "Expose constant_231(), returning integer 231. No file I/O.",
+      "source": "def constant_231():\n    return 231\n",
+      "source_sha256": "bd78f3b8d4fb6ee87eb1df72541a32be0bca54ad230a7b39e4a6b6d4cf4c1c68",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "0bba661b840ca6bec4269aaed9d9af98b6abeed6b2fa41ef1a5a7a55ec33afc1",
+      "contract": "Expose constant_232(), returning integer 232. No file I/O.",
+      "source": "def constant_232():\n    return 232\n",
+      "source_sha256": "a87c5f569c7c1138fb10041535256e6e1713c8739eb44ab64264ea02a07f3a5a",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "836406975b76e414b6d391d1e7c5acfffa668c71dedc0245e8aa4d6e871841f1",
+      "contract": "Expose constant_233(), returning integer 233. No file I/O.",
+      "source": "def constant_233():\n    return 233\n",
+      "source_sha256": "e155d297d00466ccd7525a84ccb1ee890a6ff205bacdbf0355f3a63d784a322b",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "c5c8fe5c920307ed79c2528d8ecc827b7c880be1a9e2a508e18b87e9e9eb9f53",
+      "contract": "Expose constant_234(), returning integer 234. No file I/O.",
+      "source": "def constant_234():\n    return 234\n",
+      "source_sha256": "eab17c819e286f5bec61193dfa03852466ff64f4546d6a8fc3648b85348b65f3",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "997998d5473e66892e0116a94716cfd30036ac2b7bab97ea60c6d599888fa1ed",
+      "contract": "Expose constant_235(), returning integer 235. No file I/O.",
+      "source": "def constant_235():\n    return 235\n",
+      "source_sha256": "3daee283415054676a566ecc3a972b2c48fbccecb8209fcb98255f0464c55370",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "9b4186fcda7e11d4b0a1855b8baba949099c6f14c5e918011907505d410b7d28",
+      "contract": "Expose constant_236(), returning integer 236. No file I/O.",
+      "source": "def constant_236():\n    return 236\n",
+      "source_sha256": "49701fb7d49446465089f3571e6ae8350f7966748458a6bbb9f6040a214e34e8",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "d02fd4161da00b91bf316a0c58f2610c70fd00a2c7ba71c531dc4552f9066674",
+      "contract": "Expose constant_237(), returning integer 237. No file I/O.",
+      "source": "def constant_237():\n    return 237\n",
+      "source_sha256": "b187ca8685786bb28835622e06ccd385d3d1121d8e6efcd2cd3d7ac49875cecf",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "a708effacfa5ea0e33b0dd89d4884a24aceb4bbd8a37a1c3cb43fe0036b52676",
+      "contract": "Expose constant_238(), returning integer 238. No file I/O.",
+      "source": "def constant_238():\n    return 238\n",
+      "source_sha256": "aa2cd794ef6d0e3f5bec98395c9bffe1a02413bfe4445bc0d7cefd9b06539be7",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "ee9fe82b8ae91cfaf47322eebf6202d3655ce9e7e67132fcd61bc693cfc580d8",
+      "contract": "Expose constant_239(), returning integer 239. No file I/O.",
+      "source": "def constant_239():\n    return 239\n",
+      "source_sha256": "266e1ff83245f42bd3ac598b43fff82dc36871890fa35245d6b68c65bf0a0110",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "c58d78c3f126be8accd6514df7c0ec18cac254cbdb3932000eb932ce67570ef2",
+      "contract": "Expose constant_240(), returning integer 240. No file I/O.",
+      "source": "def constant_240():\n    return 240\n",
+      "source_sha256": "d22eb7703f0a140c2c64b1d97b6d78077ebb0a0b4d5fc42a416ff6d0e27d901f",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "0f0bb1cf79bb4c357b513ba0114003997c153698f916c0072d11b6213bc91771",
+      "contract": "Expose constant_241(), returning integer 241. No file I/O.",
+      "source": "def constant_241():\n    return 241\n",
+      "source_sha256": "c08171d57e119d556c7b8486f91ba3e93f5a52e78d0057976769d2af16ef73b1",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "b75c8a9f0dbc2d12904ccba5ed08fd85e655ebec32b114000750ecd2de73f39e",
+      "contract": "Expose constant_242(), returning integer 242. No file I/O.",
+      "source": "def constant_242():\n    return 242\n",
+      "source_sha256": "42ef4c343c365985e232468a9ada971ddf56dc3236ccbc3c783a9d63c6a76b1a",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "ec795257baa1d960fd4768d1bc69a10a78736f1c7d02bb85bf88804a7bfcc25f",
+      "contract": "Expose constant_243(), returning integer 243. No file I/O.",
+      "source": "def constant_243():\n    return 243\n",
+      "source_sha256": "e99bcbe351660a5eb5912cb7a41fae4bfa5525e4c0bd6131cb4b5371424c4bd6",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "ae5463563a8fdc799ce8e3529fe3b53dda104eeb2b2d460ae2f9838cc2a9824e",
+      "contract": "Expose constant_244(), returning integer 244. No file I/O.",
+      "source": "def constant_244():\n    return 244\n",
+      "source_sha256": "05a2835acc9645d4b45c287e8a62a14a783b712f1b568f6e6f5af207966b3efb",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "052726dfda34155b14fa48c63fee7cf662b90eee4efd7f28a677d4daf3a47ed0",
+      "contract": "Expose constant_245(), returning integer 245. No file I/O.",
+      "source": "def constant_245():\n    return 245\n",
+      "source_sha256": "4d611934a37bb08a834b4d8fc09b6cf5d835c7bb0f838d322aa6a0c2694eaef5",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "bc07631bd736e464343fea8fcf7bc80878a81d9d9771dd59f17aa5d5add07566",
+      "contract": "Expose constant_246(), returning integer 246. No file I/O.",
+      "source": "def constant_246():\n    return 246\n",
+      "source_sha256": "4e24bc706c9cca0a3f5783df2a20e5766ae3eedc6458a87d5f8a617634e4d967",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "29f8f6add422e9f904afda74987eac22893a00b14e4b026d4754cac16c2ca962",
+      "contract": "Expose constant_247(), returning integer 247. No file I/O.",
+      "source": "def constant_247():\n    return 247\n",
+      "source_sha256": "efa0bd6cfacc239155357d2eb3ca1592fff4e7165459b2aef20a5968667f59bc",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "ee1fc089612b345fbf187266332c1a336f0dfefeb01f9c65f44dc87954e40074",
+      "contract": "Expose constant_248(), returning integer 248. No file I/O.",
+      "source": "def constant_248():\n    return 248\n",
+      "source_sha256": "112d6c852846b80cdd78ef7fb4c333559f63125e770f5db506e7e922342a83a9",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "c390312ddaaf96b83415fe705df66117cd1be8751f63d1f2ad9408cdfdb72280",
+      "contract": "Expose constant_249(), returning integer 249. No file I/O.",
+      "source": "def constant_249():\n    return 249\n",
+      "source_sha256": "2716253203cef6a3f263172d4f92e7960b1bbd86a8d658264864ea30f586d7a8",
+      "verification": "AST constant-return audit for synthetic distractor"
+    },
+    {
+      "id": "7347218aaf669a1cc8c7521fb0cd3708e50f27595c456e678740cba9154c23e4",
+      "contract": "Expose constant_250(), returning integer 250. No file I/O.",
+      "source": "def constant_250():\n    return 250\n",
+      "source_sha256": "e96a7943a4bccf4f0895e6a3ed925a7b88ffa202b72209f613dcfd0dd6d19e30",
+      "verification": "AST constant-return audit for synthetic distractor"
+    }
+  ]
+}

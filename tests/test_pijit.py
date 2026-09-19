@@ -1231,3 +1231,73 @@ def test_initial_read_rejects_symlink_escape(project):
     (project / 'link.py').symlink_to(outside)
     assert b.route_initial_read({'cwd': str(project), 'context': {'tools': [{'name': 'read'}],
         'messages': [{'role': 'user', 'content': 'Read link.py.'}]}}) is None
+
+
+def test_adaptive_plan_requires_operator_validator(project, monkeypatch):
+    monkeypatch.setenv('PIJIT_ADAPTIVE_PLAN', '1')
+    monkeypatch.delenv('PIJIT_PLAN_VERIFY_ARGV', raising=False)
+    with pytest.raises(ValueError, match='trusted'):
+        b.adaptive(dict(cwd=str(project), task='make module', contracts={'new.py':'value 2'}))
+    assert not (project/'new.py').exists()
+
+
+def test_adaptive_bridge_verifies_recovers_and_persists(project, monkeypatch):
+    import sys
+    monkeypatch.setenv('PIJIT_ADAPTIVE_PLAN', '1')
+    monkeypatch.setenv('PIJIT_URL', 'http://unused')
+    check='import sys;from pathlib import Path;assert Path(sys.argv[1]).read_text()=="value = 2"'
+    monkeypatch.setenv('PIJIT_PLAN_VERIFY_ARGV', json.dumps([sys.executable,'-c',check]))
+    calls=[]
+    def infer(*args, force_generate=False, **kwargs):
+        calls.append(force_generate)
+        return dict(plan=dict(name='plan',arguments=dict(steps=[dict(op='write',path='new.py',content='value = 2' if force_generate else 'value = 1')])),
+                    candidate_ids=[],generated_tokens=10,controls=1,logical_input_tokens=100)
+    monkeypatch.setattr(b.adaptive_plan, 'infer', infer)
+    result=b.adaptive(dict(cwd=str(project),task='make module',contracts={'new.py':'value must be 2'}))
+    assert calls==[False,True] and result['recovered']
+    assert result['generated_argument_tokens']==20 and result['classification_control_records']==2
+    assert (project/'new.py').read_text()=='value = 2'
+    book=b.adaptive_plan.PlanBook(b.paths(str(project))/'plan-codebook.json')
+    assert len(book.load())==1 and book.load()[0]['source']=='value = 2'
+
+
+def test_adaptive_policy_only_when_tool_is_available(project, monkeypatch):
+    monkeypatch.setenv('PIJIT_NATIVE_PLANNER','1')
+    monkeypatch.setenv('PIJIT_ADAPTIVE_PLAN','1')
+    monkeypatch.setenv('PIJIT_LOCAL_ROUTING','0')
+    monkeypatch.setenv('PIJIT_PLANNER_EFFICIENCY','0')
+    policies=[]; choices=[]
+    def chat(payload,post,model,policy,*args,**kwargs):
+        policies.append(policy); choices.append(kwargs.get('tool_choice'))
+        return {}
+    monkeypatch.setattr(b.native_planner,'chat',chat)
+    for tools,messages in (([],[]),([{'name':'plan'}],[]),([{'name':'plan'}],[{'role':'assistant'}])):
+        b.chat(dict(cwd=str(project),context=dict(tools=tools,messages=messages)))
+    assert 'use the plan tool' not in policies[0]
+    assert 'use the plan tool' in policies[1] and 'workspace-relative' in policies[1]
+    assert choices==[None,'plan',None]
+
+
+def test_plan_normalizes_paths_and_rejects_duplicate_aliases(project, monkeypatch):
+    import sys
+    monkeypatch.setenv('PIJIT_ADAPTIVE_PLAN','1')
+    monkeypatch.setenv('PIJIT_URL','http://unused')
+    monkeypatch.setenv('PIJIT_PLAN_VERIFY_ARGV',json.dumps([sys.executable,'-c','pass']))
+    def run_plan(url,task,contracts,folder,book,verify,transport,**kwargs):
+        assert contracts=={'new.py':'contract'}
+        return dict(attempts=[dict(candidate_ids=[],generated_tokens=0,controls=0,logical_input_tokens=0)],
+                    recovered=False,reuse_steps=0,admitted=[])
+    monkeypatch.setattr(b.adaptive_plan,'run_plan',run_plan)
+    b.adaptive(dict(cwd=str(project),task='create',contracts={str(project/'new.py'):'contract'}))
+    with pytest.raises(ValueError,match='Duplicate'):
+        b.adaptive(dict(cwd=str(project),task='create',contracts={'new.py':'contract',str(project/'new.py'):'contract'}))
+    with pytest.raises(ValueError,match='escapes'):
+        b.adaptive(dict(cwd=str(project),task='create',contracts={'../outside.py':'contract'}))
+
+
+def test_legacy_bridge_import_does_not_require_optional_jsonschema():
+    import subprocess
+    import sys
+    script='import importlib.util,sys; s=importlib.util.spec_from_file_location("bridge",'+repr(str(Path(__file__).resolve().parents[1]/'integrations/pijit/bridge.py'))+');m=importlib.util.module_from_spec(s);s.loader.exec_module(m);assert "jsonschema" not in sys.modules'
+    completed=subprocess.run([sys.executable,'-S','-c',script],capture_output=True,text=True)
+    assert completed.returncode==0,completed.stderr

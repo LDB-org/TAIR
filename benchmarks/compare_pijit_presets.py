@@ -109,6 +109,8 @@ def attempt(project, state, folder, arm, value, timeout, scenario=None, env_over
     if scenario is not None:
         prompt = scenario['prompt']
         tools = 'read,edit,write,bash,compact_edit' + (',set_cli_default' if is_preset else '')
+    if env.get('PIJIT_ADAPTIVE_PLAN') == '1':
+        tools += ',plan'
     command = ['node', str(ROOT / 'integrations/pijit/launch.mjs'), '--no-session', '--mode', 'json',
                '--tools', tools, '-p', prompt]
     (folder / 'prompt.txt').write_text(prompt)

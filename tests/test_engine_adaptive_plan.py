@@ -89,5 +89,60 @@ def test_concurrent_admission_merges_and_bounds_catalog(tmp_path):
     for index in range(4, 17):
         add(index)
     entries = PlanBook(path).load()
-    assert len(entries) == 15
+    assert len(entries) == 17
     assert entries[-1]['source'] == 'value = 16\n'
+
+
+def test_shortlist_does_not_truncate_storage_and_rejects_scoped_pair(tmp_path):
+    book = PlanBook(tmp_path/'book.json')
+    book.admit([(f'Unrelated counter contract {i}', f'value = {i}', 'check') for i in range(40)])
+    identity, = book.admit([('Parse UTF-16 binary records', 'value = 99', 'check')])
+    candidates = book.candidates('parse records', {'a.py':'Parse UTF-16 binary records'})
+    assert len(book.load()) == 41 and len(candidates) == 15
+    assert candidates[0]['id'] == identity
+    book.reject(identity, 'Parse UTF-16 binary records')
+    assert identity not in {e['id'] for e in book.candidates('parse records', {'a.py':'Parse UTF-16 binary records'})}
+    assert identity in {e['id'] for e in book.candidates('parse records', {'a.py':'Parse UTF-16 binary records again'})}
+
+
+def test_storage_retains_most_recent_256_entries(tmp_path):
+    book = PlanBook(tmp_path/'book.json')
+    book.admit([(f'constant {i}',f'value = {i}','constant check') for i in range(260)])
+    entries = book.load()
+    assert len(entries)==256
+    assert entries[0]['source']=='value = 4' and entries[-1]['source']=='value = 259'
+
+
+def test_rejected_reuse_recovers_once_and_preserves_both_attempts(tmp_path, monkeypatch):
+    import adaptive_plan as module
+    book = PlanBook(tmp_path/'book.json')
+    identity, = book.admit([('value is 2', 'value = 1', 'old check')])
+    calls = []
+    def fake(*args, force_generate=False, **kwargs):
+        calls.append(force_generate)
+        step = dict(op='write', path='a.py', content='value = 2') if force_generate else dict(
+            op='reuse', path='a.py', content='value = 1', source_sha256=digest('value = 1'), entry_id=identity)
+        return result([step])
+    monkeypatch.setattr(module, 'infer', fake)
+    def verify(path, contract):
+        if path.read_text() != 'value = 2':raise ValueError('Wrong value')
+        return 'Independent expected value 2'
+    actual = module.run_plan('', '', {'a.py':'value is 2'}, tmp_path/'output', book, verify)
+    assert calls == [False, True] and actual['recovered']
+    assert len(actual['attempts']) == 2 and 'verification_error' in actual['attempts'][0]
+    assert (tmp_path/'output/a.py').read_text() == 'value = 2'
+    assert identity not in {e['id'] for e in book.candidates('', {'a.py':'value is 2'})}
+
+
+def test_recovery_failure_stops_after_two_and_never_publishes(tmp_path, monkeypatch):
+    import adaptive_plan as module
+    calls = []
+    def fake(*args, **kwargs):
+        calls.append(kwargs['force_generate'])
+        return result([dict(op='write', path='a.py', content='value = 1')])
+    monkeypatch.setattr(module, 'infer', fake)
+    def reject(*args):raise ValueError('Wrong value')
+    book = PlanBook(tmp_path/'book.json')
+    with pytest.raises(module.VerificationError):
+        module.run_plan('', '', {'a.py':'value is 2'}, tmp_path/'output', book, reject)
+    assert calls == [False, True] and not (tmp_path/'output').exists() and book.load()==[]

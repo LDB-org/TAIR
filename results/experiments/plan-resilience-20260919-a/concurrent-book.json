@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "id": "6131699a24285face1df9ba32f291ec5f06e403f313c84622ebf95a9eb4c700d",
+      "contract": "Provide read_bytes(path) and write_bytes(path,data,*,append=False), arbitrary binary bytes including invalid UTF-8. str or Path paths. Read entire file, overwrite by default or append when requested. No automatic parent directories. Missing reads raise FileNotFoundError.",
+      "source": "def read_bytes(path):\n    with open(path, 'rb') as f:\n        return f.read()\n\ndef write_bytes(path, data, *, append=False):\n    mode = 'ab' if append else 'wb'\n    with open(path, mode) as f:\n        f.write(data)\n",
+      "source_sha256": "ada48c9b1b5209021d7ed2e3935c81e7061e055b8f872ab445bbfab988c7609f",
+      "verification": "Caller-supplied behavior suite v1: binary"
+    },
+    {
+      "id": "d9e61e62be818a01b9d36e14b5290a2ea18d24b715b59de17f26e43526ffad1f",
+      "contract": "Provide read_text(path) and write_text(path,text,*,append=False), UTF-16 (not UTF-8) text, str or Path paths. Read the whole file. Overwrite by default, append when requested. Do not create parent directories. Missing reads raise FileNotFoundError.",
+      "source": "def read_text(path):\n    with open(path, 'r', encoding='utf-16') as f:\n        return f.read()\n\ndef write_text(path, text, *, append=False):\n    mode = 'a' if append else 'w'\n    with open(path, mode, encoding='utf-16') as f:\n        f.write(text)\n",
+      "source_sha256": "47afba1eebab014a82c2a425967d374847bdfe6a297d90ac76af20c2d91a1250",
+      "verification": "Caller-supplied behavior suite v1: utf16"
+    }
+  ]
+}

@@ -17,6 +17,9 @@ import tempfile
 import time
 import urllib.request
 
+from jsonschema import validate
+
+
 def digest(text):
     return hashlib.sha256(text.encode()).hexdigest()
 
@@ -189,8 +192,6 @@ def prepare(url, task, contracts, entries, transport=post):
 
 
 def infer(url, task, contracts, book, transport=post, force_generate=False):
-    from jsonschema import validate
-
     start = time.perf_counter()
     entries = [] if force_generate else book.candidates(task, contracts)
     payload = prepare(url, task, contracts, entries, transport)

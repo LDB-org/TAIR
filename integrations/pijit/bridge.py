@@ -27,6 +27,7 @@ import jit_codebook as jit
 import preset_edits as presets
 import schema_actions
 import native_planner
+import adaptive_plan
 
 STATE = Path(os.environ.get('PIJIT_STATE_DIR', str(Path.home() / '.pijit')))
 MODEL = os.environ.get('PIJIT_MODEL', '/model')
@@ -498,11 +499,22 @@ def chat(payload):
                   if os.environ.get('PIJIT_COMPLETION_CHECKS') == '1' else '')
         if efficient:
             policy += '\n' + planner_efficiency_policy(payload)
-        trace_update(native_planner=True)
+        available = [tool['name'] for tool in payload['context'].get('tools', [])]
+        if os.environ.get('PIJIT_ADAPTIVE_PLAN') == '1' and 'plan' in available:
+            policy += ('\nFor requested NEW Python modules, use the plan tool with workspace-relative destination paths '
+                       'and COMPLETE per-module behavior contracts, including imports and negative constraints. '
+                       'Do not pre-create empty output files. Do not implement those modules through write or bash '
+                       'before trying plan. Existing-file edits and non-Python outputs use ordinary tools. '
+                       'After a plan error, use the reported verification failure to recover with ordinary tools. '
+                       'Avoid repeating an inventory or source read already present in observations.')
+        first_plan = (os.environ.get('PIJIT_ADAPTIVE_PLAN') == '1' and 'plan' in available
+                      and not any(m['role'] == 'assistant' for m in payload['context']['messages']))
+        trace_update(native_planner=True, available_tools=available)
         return native_planner.chat(payload, post, MODEL, policy,
                                    workspace_cache=os.environ.get('PIJIT_NATIVE_PREFIX_CACHE') == '1',
                                    cache_namespace=str(STATE.resolve()),
-                                   max_tokens=int(os.environ.get('PIJIT_PLANNER_MAX_TOKENS', '2048')))
+                                   max_tokens=int(os.environ.get('PIJIT_PLANNER_MAX_TOKENS', '2048')),
+                                   tool_choice='plan' if first_plan else None)
     context = payload['context']
     tools = [{key: t[key] for key in ('name', 'description', 'parameters')} for t in context.get('tools', [])]
     contextual = batched and os.environ.get('PIJIT_PLAN_CONTEXT') == '1'
@@ -935,6 +947,49 @@ def apply_edit(path, source, updated, cwd, directory):
     return backup, verification
 
 
+def adaptive(payload):
+    if os.environ.get('PIJIT_ADAPTIVE_PLAN') != '1':
+        raise ValueError('Adaptive plan is not enabled')
+    command = json.loads(os.environ.get('PIJIT_PLAN_VERIFY_ARGV', '[]'))
+    if not command or not all(isinstance(arg, str) and arg for arg in command):
+        raise ValueError('A trusted PIJIT_PLAN_VERIFY_ARGV validator is required; use ordinary tools otherwise')
+    cwd = Path(payload['cwd']).resolve()
+    contracts = payload['contracts']
+    if not isinstance(contracts, dict) or not contracts or not all(isinstance(c, str) and c.strip() for c in contracts.values()):
+        raise ValueError('Provide nonempty per-module contracts')
+    normalized = {}
+    for name, contract in contracts.items():
+        target = (cwd / name).resolve()
+        if not target.is_relative_to(cwd) or target == cwd:
+            raise ValueError('Plan destination escapes workspace')
+        relative = str(target.relative_to(cwd))
+        if relative in normalized:
+            raise ValueError('Duplicate normalized plan destination')
+        normalized[relative] = contract
+    contracts = normalized
+    directory = paths(str(cwd))
+    book = adaptive_plan.PlanBook(directory / 'plan-codebook.json')
+    def verify(path, contract):
+        result = subprocess.run(command + [str(path), contract, str(cwd)], cwd=cwd,
+                                capture_output=True, text=True, timeout=30)
+        if result.returncode:
+            raise ValueError('Trusted project verification failed: ' + (result.stderr or result.stdout)[-1500:])
+        return 'Configured validator passed: ' + hashlib.sha256(json.dumps(command).encode()).hexdigest()
+    def transport(_url, route, body):
+        return post(route, body)
+    result = adaptive_plan.run_plan(os.environ['PIJIT_URL'].rstrip('/'), payload['task'], contracts,
+                                    cwd, book, verify, transport, reuse=os.environ.get('PIJIT_PLAN_DISABLE_REUSE') != '1')
+    attempts = result['attempts']
+    trace_update(adaptive_plan=True, recovery=result['recovered'], reuse_steps=result['reuse_steps'],
+                 admitted=result['admitted'], candidates=[a['candidate_ids'] for a in attempts],
+                 verification_errors=[a.get('verification_error') for a in attempts])
+    return dict(paths=list(contracts), validation='trusted project behavior validator',
+                cache_hit=result['reuse_steps'] > 0, recovered=result['recovered'], admitted=result['admitted'],
+                generated_argument_tokens=sum(a['generated_tokens'] for a in attempts),
+                classification_control_records=sum(a['controls'] for a in attempts),
+                input_tokens=sum(a['logical_input_tokens'] for a in attempts))
+
+
 def run(payload):
     started = time.perf_counter()
     trace = {'metrics_version': 2, 'trace_id': uuid.uuid4().hex,
@@ -942,7 +997,10 @@ def run(payload):
              'stage_seconds': {}, 'http_requests': []}
     token = TRACE.set(trace)
     try:
-        result = chat(payload) if payload['action'] == 'chat' else edit(payload)
+        if payload['action'] == 'plan':
+            result = adaptive(payload)
+        else:
+            result = chat(payload) if payload['action'] == 'chat' else edit(payload)
         result['status'] = 'ok'
     except Exception as error:
         result = {'status': 'cancelled' if isinstance(error, CancelledError) else 'error',

@@ -58,14 +58,15 @@ export default function(pi: any) {
   let cwd = process.cwd();
   let sessionId: string | undefined;
   let ui: any;
-  let totals = { generated: 0, controls: 0, hits: 0, schema: 0, edits: 0 };
+  let totals = { generated: 0, controls: 0, hits: 0, schema: 0, edits: 0, plans: 0, planHits: 0 };
   function record(result: any, edit = false) {
     totals.generated += result.generated_argument_tokens ?? 0;
     totals.controls += result.classification_control_records ?? 0;
     if (edit) totals.edits++;
-    if (result.cache_hit) totals.hits++;
+    if (result.adaptive_plan) { totals.plans++; if (result.cache_hit) totals.planHits++; }
+    else if (result.cache_hit) totals.hits++;
     if (result.schema_hit) totals.schema++;
-    ui?.setStatus('pijit', `pijit · gen ${totals.generated} · cls ${totals.controls} · JIT ${totals.hits}/${totals.edits} · schema ${totals.schema}`);
+    ui?.setStatus('pijit', `pijit · gen ${totals.generated} · cls ${totals.controls} · JIT ${totals.hits}/${totals.edits} · schema ${totals.schema} · plan ${totals.planHits}/${totals.plans}`);
   }
   pi.on('session_start', async (_event: any, ctx: any) => {
     cwd = ctx.cwd; ui = ctx.ui; sessionId = ctx.sessionManager.getSessionId();
@@ -123,6 +124,23 @@ export default function(pi: any) {
       return stream;
     },
   });
+  if (process.env.PIJIT_ADAPTIVE_PLAN === '1') pi.registerTool({
+    name: 'plan', label: 'plan · verified reuse', executionMode: 'sequential',
+    description: 'Create new Python modules through engine classification and a persistent codebook. '
+      + 'Use workspace-relative destination paths and the complete behavior contract, including imports and API details. '
+      + 'A configured trusted project validator checks every module before publication and learning. '
+      + 'Existing files are never overwritten. For eligible new Python modules prefer plan; '
+      + 'use ordinary tools for edits, documentation, or unsupported tasks. Do not pass test commands.',
+    parameters: Type.Object({ task: Type.String(), contracts: Type.Record(Type.String(), Type.String()) }),
+    async execute(id: string, args: any, signal: AbortSignal, _onUpdate: any, ctx: any) {
+      const result = await bridge({ ...args, action: 'plan', cwd: ctx.cwd,
+        session_id: ctx.sessionManager.getSessionId(), parent_tool_call_id: id }, signal);
+      record(result);
+      return { content: [{ type: 'text', text: `Created ${result.paths.join(', ')}. `
+        + `Validation: ${result.validation}. Reused: ${result.cache_hit}. Recovered: ${result.recovered}.` }],
+        details: result, usage: usage(result) };
+    },
+  });
   pi.registerTool({
     name: 'compact_edit', label: 'compact_edit · pijit',
     executionMode: batched ? 'sequential' : undefined,
@@ -164,7 +182,10 @@ export default function(pi: any) {
       const directory = join(process.env.PIJIT_STATE_DIR!, 'workspaces', workspace);
       const file = join(directory, 'codebook.json');
       const count = existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')).length : 0;
+      const planFile = join(directory, 'plan-codebook.json');
+      const plans = existsSync(planFile) ? JSON.parse(readFileSync(planFile, 'utf8')).entries.length : 0;
       ctx.ui.notify(`pijit: ${count} source-bound entries; this session ${totals.hits}/${totals.edits} edit hits.\n`
+        + `Verified plan entries ${plans}; this session ${totals.planHits}/${totals.plans} plan hits.\n`
         + `Generated tokens ${totals.generated}; classification controls ${totals.controls}.\n`
         + `State: ${directory}\nCompact edits: Python only. Reuse: typed CLI bindings or exact task/source; explicit bindings also allow AST-equivalent snapshots.\n`
         + (process.env.PIJIT_VERIFY_CMD ? 'Configured project verification enabled.' : 'Validation: schema + compile only; semantic correctness unverified.'), 'info');

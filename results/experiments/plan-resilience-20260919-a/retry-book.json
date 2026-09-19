@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "id": "49d3bbf84fbe49b787a64d954b23031de259f23b95d4f81efab0edbf2eb70a95",
+      "contract": "Provide read_text(path) and write_text(path,text,*,append=False), UTF-8, str or Path. Read entire file, overwrite by default or append when requested. Writing MUST automatically create missing parent directories, including nested parents. Missing reads raise FileNotFoundError.",
+      "source": "def read_text(path):\n    with open(path, 'r', encoding='utf-8') as f:\n        return f.read()\n\ndef write_text(path, text, *, append=False):\n    import os\n    parent = os.path.dirname(path)\n    if parent:\n        os.makedirs(parent, exist_ok=True)\n    mode = 'a' if append else 'w'\n    with open(path, mode, encoding='utf-8') as f:\n        f.write(text)\n",
+      "source_sha256": "a8a6eb5639b8d058a4e79f2d132973c68f073a6a69fda31f95f5f3bd93abc896",
+      "verification": "Earlier artifact reverified"
+    },
+    {
+      "id": "386749d5d786a6ab46558bbd3bfc40fa441d73a16da71a47cfccf4049f2a5a62",
+      "contract": "Provide read_text(path) and write_text(path,text,*,append=False), UTF-8, str or Path. Read entire file, overwrite by default or append when requested. Writing MUST automatically create missing parent directories, including nested parents. Missing reads raise FileNotFoundError.",
+      "source": "import os\nfrom pathlib import Path\n\ndef read_text(path):\n    \"\"\"Read entire file as UTF-8 text.\"\"\"\n    return Path(path).read_text(encoding='utf-8')\n\ndef write_text(path, text, *, append=False):\n    \"\"\"Write text to file, creating parent directories if needed.\"\"\"\n    path = Path(path)\n    path.parent.mkdir(parents=True, exist_ok=True)\n    mode = 'a' if append else 'w'\n    with open(path, mode, encoding='utf-8') as f:\n        f.write(text)\n",
+      "source_sha256": "3468075ec36972d99332da072a4494782de8a6811c541f080b5d708e03b7ec2b",
+      "verification": "Caller-supplied behavior suite v1: parents"
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 # 引擎分类与自动入表闭环
 
+本页保留首轮独立原型的结果。后续完整 Agent 接入、256 条存储、验证拒绝恢复和更强原生对照见 [后续实验](PLAN_AGENT_INTEGRATION.md)。
+
 2026-09-19，新增 `deploy/adaptive_plan.py`，接入既有 `/v1/openjev/toolcall` 引擎接口。没有安装新补丁、修改 tokenizer 或重启服务；也没有改变默认 Pi Agent 路径。
 
 ## 已实现的数据流

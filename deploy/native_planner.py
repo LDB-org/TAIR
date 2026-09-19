@@ -32,7 +32,7 @@ def messages_for(context, policy=''):
     return messages
 
 
-def chat(payload, post, model, policy='', workspace_cache=False, cache_namespace='', max_tokens=2048):
+def chat(payload, post, model, policy='', workspace_cache=False, cache_namespace='', max_tokens=2048, tool_choice=None):
     if type(max_tokens) is not int or max_tokens < 1:
         raise ValueError('Planner max_tokens must be a positive integer')
     context = payload['context']
@@ -44,7 +44,8 @@ def chat(payload, post, model, policy='', workspace_cache=False, cache_namespace
         'tools': [{'type': 'function', 'function': tool} for tool in tools],
         'temperature': 0, 'max_tokens': max_tokens, 'parallel_tool_calls': True,
         'cache_salt': salt,
-        'chat_template_kwargs': {'thinking': False, 'enable_thinking': False}})
+        'chat_template_kwargs': {'thinking': False, 'enable_thinking': False},
+        **({'tool_choice': {'type': 'function', 'function': {'name': tool_choice}}} if tool_choice else {})})
     choice = response['choices'][0]
     if choice['finish_reason'] not in ('stop', 'tool_calls'):
         raise ValueError('Native planner did not finish: ' + str(choice['finish_reason']))
