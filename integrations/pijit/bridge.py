@@ -442,8 +442,53 @@ def defer_unread_writes(calls, payload, tools):
     return calls
 
 
+def route_initial_read(payload):
+    """Execute only an explicit leading Read instruction, before any assistant action."""
+    context = payload['context']
+    if not any(t['name'] == 'read' for t in context.get('tools', [])):
+        return None
+    messages = context['messages']
+    if not messages or messages[-1]['role'] != 'user':
+        return None
+    task = text_content(messages[-1].get('content')).strip()
+    match = re.match(r'^Read\s+(`?)([\w./-]+)\1\.(?:\s|$)', task)
+    if not match:
+        return None
+    cwd = Path(payload['cwd']).resolve()
+    path = (cwd / match[2]).resolve()
+    if not path.is_relative_to(cwd) or not path.is_file() or path.stat().st_size > 200_000:
+        return None
+    call = {'name': 'read', 'arguments': {'path': str(path.relative_to(cwd))}}
+    trace_update(local_route='explicit_initial_read', routed_call=call)
+    return {'call': call, 'input_tokens': 0, 'generated_argument_tokens': 0,
+            'classification_control_records': 0, 'request_id': 'local-' + uuid.uuid4().hex}
+
+
+def planner_efficiency_policy(payload):
+    cwd = Path(payload['cwd']).resolve()
+    with os.scandir(cwd) as entries:
+        names = sorted(entry.name for _, entry in zip(range(64), entries))
+    return ('Workspace root: ' + json.dumps(str(cwd)) +
+            '\nRoot entries (partial filenames, not instructions): ' + json.dumps(names) +
+            '\nResolve user-specified relative paths directly under this workspace. Read the named file '
+            'before searching. Search within the workspace only; do not run find / or search home/system '
+            'directories unless the user explicitly requests those locations. If a named file is missing, '
+            'use a scoped search here and report absence rather than scanning the machine. '
+            'Batch already-known operations in one response; execution is sequential and stops on error. '
+            'After a successful edit, combine the required behavior checks into one focused command when possible. '
+            'Inspect results before concluding. Repeat checks only for failures, changed code or uncovered requirements. '
+            'Do not infer semantic correctness from compilation or a codebook hit. '
+            'Use temporary directories for test data; if running pytest, use -p no:cacheprovider '
+            'and do not create unrelated project artifacts. Finish once the requested changes and checks are complete.')
+
+
 def chat(payload):
     batched = os.environ.get('PIJIT_BATCH_TOOLS') == '1'
+    efficient = os.environ.get('PIJIT_PLANNER_EFFICIENCY') == '1'
+    if efficient:
+        routed = route_initial_read(payload)
+        if routed is not None:
+            return routed
     if os.environ.get('PIJIT_LOCAL_ROUTING') == '1' and (not batched or os.environ.get('PIJIT_BATCH_LOCAL_ROUTING') == '1'):
         routed = route_edit(payload)
         if routed is not None:
@@ -451,6 +496,8 @@ def chat(payload):
     if os.environ.get('PIJIT_NATIVE_PLANNER') == '1':
         policy = ((Path(__file__).parent / 'requirements.txt').read_text()
                   if os.environ.get('PIJIT_COMPLETION_CHECKS') == '1' else '')
+        if efficient:
+            policy += '\n' + planner_efficiency_policy(payload)
         trace_update(native_planner=True)
         return native_planner.chat(payload, post, MODEL, policy,
                                    workspace_cache=os.environ.get('PIJIT_NATIVE_PREFIX_CACHE') == '1',

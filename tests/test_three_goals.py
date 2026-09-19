@@ -26,3 +26,12 @@ def test_safe_hybrid_control_changes_only_codebook_enablement():
     on, off = (configuration(a, 'revision', safe_codebook=True) for a in ('hybrid', 'hybrid_no_book'))
     assert differences(on, off) == {'PIJIT_DISABLE_CODEBOOK'}
     assert on['PIJIT_SAFE_CODEBOOK'] == off['PIJIT_SAFE_CODEBOOK'] == '1'
+
+
+def test_efficiency_control_changes_only_planner_flag():
+    on, off = (configuration(a, 'revision', True, True) for a in ('hybrid', 'hybrid_unoptimized'))
+    assert differences(on, off) == {'PIJIT_PLANNER_EFFICIENCY'}
+    assert on['PIJIT_PLANNER_EFFICIENCY'] == '1' and off['PIJIT_PLANNER_EFFICIENCY'] == '0'
+    no_book = configuration('hybrid_no_book', 'revision', True, True)
+    assert differences(on, no_book) == {'PIJIT_DISABLE_CODEBOOK'}
+    assert configuration('native_multi', 'revision', True, True)['PIJIT_PLANNER_EFFICIENCY'] == '0'

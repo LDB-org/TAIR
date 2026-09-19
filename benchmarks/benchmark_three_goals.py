@@ -14,7 +14,7 @@ from expanded_agent_scenarios import SCENARIOS
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def configuration(arm, revision, safe_codebook=False):
+def configuration(arm, revision, safe_codebook=False, planner_efficiency=False):
     flags = {k: '0' for k in ('PIJIT_SCHEMA_ACTIONS', 'PIJIT_JIT_ACTIONS', 'PIJIT_PRESET_EDITS',
         'PIJIT_SERIAL_PREPARATION', 'PIJIT_CONTINUATION_CACHE', 'PIJIT_DIRECTORY_GUARD',
         'PIJIT_BATCH_TOOLS', 'PIJIT_PLAN_CONTEXT', 'PIJIT_LOCAL_ROUTING', 'PIJIT_BATCH_LOCAL_ROUTING')}
@@ -22,6 +22,7 @@ def configuration(arm, revision, safe_codebook=False):
     flags.update(PIJIT_DISABLE_CODEBOOK='1' if arm.endswith('_no_book') else '0',
                  PIJIT_SAFE_CODEBOOK='1' if safe_codebook and hybrid else '0',
                  PIJIT_COMPLETION_CHECKS='0',
+                 PIJIT_PLANNER_EFFICIENCY='1' if planner_efficiency and hybrid and arm != 'hybrid_unoptimized' else '0',
                  PIJIT_NATIVE_PLANNER='1' if hybrid else '0',
                  PIJIT_BOUND_REUSE='1' if hybrid else '0',
                  PIJIT_NATIVE_PREFIX_CACHE='1' if hybrid else '0',
@@ -66,8 +67,8 @@ def main(args):
         dest.parent.mkdir(parents=True, exist_ok=True); shutil.copyfile(p, dest)
     manifest = {'arms': args.arms, 'cases': list(scenarios), 'rounds': args.rounds, 'repeats': args.repeats,
         'rounds_by_case': rounds_by_case,
-        'source_sha256': hashes, 'configurations': {a: configuration(a,args.tokenizer_revision,args.safe_codebook) for a in args.arms},
-        'safe_codebook': args.safe_codebook, 'repository_expanded': args.repository_expanded,
+        'source_sha256': hashes, 'configurations': {a: configuration(a,args.tokenizer_revision,args.safe_codebook,args.planner_efficiency) for a in args.arms},
+        'planner_efficiency': args.planner_efficiency, 'safe_codebook': args.safe_codebook, 'repository_expanded': args.repository_expanded,
         'repository_suite': args.repository_suite,
         'completion_policy': '', 'seed': 923, 'repository': str(args.repository) if args.repository else None,
         'method': 'No extra completion policy or verification gate. Native single/multi differ only in parallel_tool_calls, and both permit workspace-scoped prefix caching. Hybrid retains native tool-call history and enables local bound codebook reuse; hybrid no_book/on differ only in disable-codebook. TAIR legacy keeps its classified batch planner and per-request cache salt. Sequential interleaving, no benchmark retries; all failures retained. Shared absolute task workspace across arms, independent per-arm state/cache namespaces, restored source for warm rounds, external oracle. Shared server and finite development tasks; no generic production claim.'}
@@ -91,7 +92,7 @@ def main(args):
                         folder=out/f'{repeat}-{name}-{arm}-{round_}';folder.mkdir()
                         native=arm.startswith('native')
                         row=b.attempt(project,state,folder,'native' if native else 'c4',0,args.timeout,
-                            scenario=scenario,env_overrides=configuration(arm,args.tokenizer_revision,args.safe_codebook),
+                            scenario=scenario,env_overrides=configuration(arm,args.tokenizer_revision,args.safe_codebook,args.planner_efficiency),
                             append_system_prompt=None)
                         row.update(arm=arm,case=name,repeat=repeat,round=round_,order=order,
                                    task_variant='cold' if round_==1 else 'new_binding' if variants and round_>2 else 'exact_repeat')
@@ -126,12 +127,13 @@ if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out',type=Path,required=True);parser.add_argument('--url',required=True)
     parser.add_argument('--tokenizer-revision',required=True)
-    parser.add_argument('--arms',nargs='+',choices=['native_single','native_multi','tair_no_book','tair','hybrid_no_book','hybrid'],default=['native_single','native_multi','tair','hybrid'])
+    parser.add_argument('--arms',nargs='+',choices=['native_single','native_multi','tair_no_book','tair','hybrid_no_book','hybrid','hybrid_unoptimized'],default=['native_single','native_multi','tair','hybrid'])
     parser.add_argument('--cases',nargs='+');parser.add_argument('--rounds',type=int,default=2)
     parser.add_argument('--warm-cases',nargs='+',help='Only these cases receive rounds after the cold round')
     parser.add_argument('--repeats',type=int,default=1);parser.add_argument('--timeout',type=float,default=120)
     parser.add_argument('--repository',type=Path)
     parser.add_argument('--repository-suite',choices=['cpython','rich'],default='cpython')
+    parser.add_argument('--planner-efficiency',action='store_true')
     parser.add_argument('--safe-codebook',action='store_true',help='Use conservative persisted reuse in both hybrid arms')
     parser.add_argument('--repository-expanded',action='store_true',help='Add held-out CPython script tasks')
     raise SystemExit(main(parser.parse_args()))

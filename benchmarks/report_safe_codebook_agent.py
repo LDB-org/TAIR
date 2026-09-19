@@ -33,7 +33,7 @@ def aggregate(rows):
                     'known_classification_control_records', 'unknown_usage_requests']})
 
 
-def report(folder):
+def report(folder, *, verify_current_sources=True):
     rows = [json.loads(s) for s in (folder / 'rows.jsonl').read_text().splitlines()]
     manifest = json.loads((folder / 'manifest.json').read_text())
     planned = sum(manifest['rounds_by_case'].values()) * len(manifest['arms']) * manifest['repeats']
@@ -43,7 +43,8 @@ def report(folder):
     assert {k for k in on.keys() | off.keys() if on.get(k) != off.get(k)} == {'PIJIT_DISABLE_CODEBOOK'}
     assert on['PIJIT_SAFE_CODEBOOK'] == off['PIJIT_SAFE_CODEBOOK'] == '1'
     for relative, digest in manifest['source_sha256'].items():
-        assert hashlib.sha256((ROOT / relative).read_bytes()).hexdigest() == digest, relative
+        if verify_current_sources:
+            assert hashlib.sha256((ROOT / relative).read_bytes()).hexdigest() == digest, relative
         assert hashlib.sha256((folder / 'sources' / relative).read_bytes()).hexdigest() == digest, relative
     assert (folder / 'server-before.txt').read_bytes() == (folder / 'server-after.txt').read_bytes()
     audits = []
@@ -65,7 +66,7 @@ def report(folder):
         row['passed'] &= scope_ok
         for record in row['metrics']:
             if record.get('cache_hit'):
-                assert row['arm'] == 'hybrid'
+                assert configs[row['arm']]['PIJIT_DISABLE_CODEBOOK'] == '0'
                 assert record['accounting']['inference_requests'] == 0
                 assert record['accounting']['known_generated_argument_tokens'] == 0
         if row['arm'] == 'native_multi':
@@ -95,7 +96,9 @@ if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('folder', type=Path)
     p.add_argument('--out', type=Path, required=True)
+    p.add_argument('--frozen-sources', action='store_true',
+                   help='Verify archived source hashes without requiring the current checkout to match')
     args = p.parse_args()
-    data = report(args.folder)
+    data = report(args.folder, verify_current_sources=not args.frozen_sources)
     args.out.write_text(json.dumps(data, indent=2))
     print(json.dumps({k: v for k, v in data.items() if k not in ['percase', 'artifact_audits']}, indent=2))

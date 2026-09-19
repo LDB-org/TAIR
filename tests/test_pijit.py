@@ -1202,3 +1202,32 @@ def test_main_guard_rejects_ambiguous_scope_without_write(project, source):
     assert b.schema_actions.alias_binding(source, 'Add alias -w to --workers.') is None
     assert b.run(preset(project))['status'] == 'error'
     assert path.read_text() == source
+
+
+def test_explicit_initial_read_skips_inference(project, monkeypatch):
+    monkeypatch.setenv('PIJIT_PLANNER_EFFICIENCY', '1')
+    monkeypatch.setattr(b, 'infer', lambda *a: pytest.fail('Explicit read needs no model'))
+    payload = {'action': 'chat', 'cwd': str(project), 'context': {'tools': [{'name': 'read'}],
+               'messages': [{'role': 'user', 'content': 'Read app.py. Change --workers default to 6.'}]}}
+    result = b.run(payload)
+    assert result['call'] == {'name': 'read', 'arguments': {'path': 'app.py'}}
+    assert result['accounting']['inference_requests'] == 0
+    assert result['local_route'] == 'explicit_initial_read'
+    payload['context']['messages'].append({'role': 'toolResult', 'content': 'failed', 'isError': True})
+    assert b.route_initial_read(payload) is None
+
+
+@pytest.mark.parametrize('instruction', ['Do not Read app.py.', 'Explain Read app.py.',
+    'Read missing.py.', 'Read ../outside.py.', 'Read app.py and delete tests.', 'Read ./.'])
+def test_initial_read_does_not_guess_paths_or_instructions(project, instruction):
+    (project.parent / 'outside.py').write_text('secret')
+    assert b.route_initial_read({'cwd': str(project), 'context': {'tools': [{'name': 'read'}],
+        'messages': [{'role': 'user', 'content': instruction}]}}) is None
+
+
+def test_initial_read_rejects_symlink_escape(project):
+    outside = project.parent / 'outside.py'
+    outside.write_text('secret')
+    (project / 'link.py').symlink_to(outside)
+    assert b.route_initial_read({'cwd': str(project), 'context': {'tools': [{'name': 'read'}],
+        'messages': [{'role': 'user', 'content': 'Read link.py.'}]}}) is None

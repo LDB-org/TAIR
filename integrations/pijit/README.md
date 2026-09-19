@@ -577,3 +577,17 @@ The new mode does not learn arbitrary ordinary `edit`/`write` calls outside
 `compact_edit`, does not train model weights, and is not a general semantic cache.
 
 See [the persistent cold/warm experiment](../../docs/SAFE_CODEBOOK_LOOP.md).
+
+### 外层规划效率（可选）
+
+在 `PIJIT_NATIVE_PLANNER=1 PIJIT_BATCH_TOOLS=1` 的混合路径中，设置
+`PIJIT_PLANNER_EFFICIENCY=1`：
+
+- 对用户消息开头明确的 `Read relative/file.py.`，若文件存在、位于当前项目内且不超过 200 KB，直接发出 read 工具调用，省掉决定这次读取的模型请求。缺失文件、越界路径、symlink 越界或无法严格解析的句式仍交给模型；不会跳过读取结果或失败处理。
+- 给原生规划器提供工作区根目录及最多 64 个根条目，并提示直接读取用户指定的文件、搜索限制在工作区、合并已确定的操作和必要检查，避免无变化时反复检查。
+- 提示 pytest 使用 `-p no:cacheprovider`、临时数据放临时目录，减少无关项目产物。
+
+默认关闭。搜索范围和检查合并属于规划提示，不是 shell 拦截器或操作系统沙箱；用户明确要求搜索外部位置时提示允许该范围。读取直达为确定性代码路径，其余行为需要用轨迹验证，不能保证消除所有冗余调用。不会自动跳过语义验证或因码表命中提前结束任务。
+
+实测对照见 `docs/PLANNER_EFFICIENCY.md`；测试入口增加 `--planner-efficiency` 和
+`hybrid_unoptimized` 对照组，后者保持码表开启、仅关闭外层效率开关。
