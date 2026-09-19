@@ -46,21 +46,27 @@ def set_cli_keyword(source, option, keyword, expected_default, value):
     if not isinstance(call.func.value, ast.Name):
         raise ValueError('Unsupported parser receiver')
     parser = call.func.value.id
-    owners = [n for n in ast.walk(tree) if isinstance(n, (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef))
+    main_guards = [n for n in tree.body if isinstance(n, ast.If)
+                   and ast.dump(n.test) == ast.dump(ast.parse('__name__ == "__main__"', mode='eval').body)]
+    owners = [n for n in ast.walk(tree) if (isinstance(n, (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef))
+              or n in main_guards)
               and any(isinstance(s, ast.Expr) and s.value is call for s in n.body)]
     if len(owners) != 1:
-        raise ValueError('Preset requires a direct statement in a function or module')
+        raise ValueError('Preset requires a direct statement in a function, module or top-level main guard')
     owner = owners[0]
     bindings = [n for n in owner.body if isinstance(n, ast.Assign) and len(n.targets) == 1
                 and isinstance(n.targets[0], ast.Name) and n.targets[0].id == parser
                 and isinstance(n.value, ast.Call) and ast.unparse(n.value.func) == 'argparse.ArgumentParser'
                 and n.lineno < call.lineno]
-    stores = [n for n in ast.walk(owner) if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Store)
+    scope = tree if owner in main_guards else owner
+    stores = [n for n in ast.walk(scope) if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Store)
               and n.id == parser]
     if len(bindings) != 1 or len(stores) != 1 or parser in protected:
         raise ValueError('Preset requires an unambiguous argparse.ArgumentParser binding')
-    if not any(isinstance(n, ast.Import) and any(a.name == 'argparse' and a.asname in (None, 'argparse')
-               for a in n.names) for n in tree.body):
+    imports = tree.body + (owner.body if owner in main_guards else [])
+    if not any(isinstance(n, ast.Import) and (owner not in main_guards or n.lineno < bindings[0].lineno)
+               and any(a.name == 'argparse' and a.asname in (None, 'argparse') for a in n.names)
+               for n in imports):
         raise ValueError('Preset requires import argparse')
     for node in ast.walk(tree):
         if ((isinstance(node, ast.Name) and isinstance(node.ctx, ast.Store) and node.id in protected)

@@ -1156,3 +1156,49 @@ def test_high_confidence_cannot_authorize_unbound_negated_or_partial_tasks(monke
         candidate, record = b.pick_cached(SOURCE, instruction, [option])
         assert candidate is None
         assert 'unverified_task_match' in record['decision']['rejection_reasons']
+
+
+MAIN_GUARD_SOURCE = ('if __name__ == "__main__":\n    import argparse\n'
+                     '    p = argparse.ArgumentParser()\n'
+                     '    p.add_argument("--workers", type=int, default=4)\n')
+
+
+@pytest.mark.parametrize('source', [MAIN_GUARD_SOURCE,
+    'import argparse\n' + MAIN_GUARD_SOURCE.replace('    import argparse\n', '')])
+def test_main_guard_routes_learns_and_reuses_new_value(project, monkeypatch, source):
+    monkeypatch.setenv('PIJIT_SAFE_CODEBOOK', '1')
+    path = project / 'app.py'
+    path.write_text(source)
+    assert b.route_edit(read_context(project, 'Change --workers default to 6.')) is not None
+    assert b.schema_actions.alias_binding(source, 'Add alias -w to --workers.') is not None
+    monkeypatch.setattr(b, 'infer', lambda *args: generated(6))
+    first = b.run(dict(task(project), action='edit'))
+    assert first['status'] == 'ok' and not first['cache_hit'] and first['admitted'] == 2
+    monkeypatch.setattr(b, 'infer', lambda *args: pytest.fail('Warm edit must not generate'))
+    second = b.run(dict(task(project, 8), action='edit'))
+    assert second['status'] == 'ok' and second['cache_hit']
+    assert second['accounting']['inference_requests'] == 0
+    assert path.read_text() == source.replace('default=4', 'default=8')
+    namespace = {'__name__': '__main__'}
+    exec(compile(path.read_text(), '<test-main-guard>', 'exec'), namespace)
+    assert namespace['p'].parse_args([]).workers == 8
+
+
+@pytest.mark.parametrize('source', [
+    MAIN_GUARD_SOURCE.replace('__name__ == "__main__"', 'enabled'),
+    MAIN_GUARD_SOURCE.replace('    import argparse\n', '    if enabled:\n        import argparse\n'),
+    MAIN_GUARD_SOURCE.replace('    import argparse\n', '') + 'import argparse\n',
+    'p = custom_parser()\n' + MAIN_GUARD_SOURCE,
+    MAIN_GUARD_SOURCE + 'p = custom_parser()\n',
+    MAIN_GUARD_SOURCE.replace('    p.add_argument', '    p = custom_parser()\n    p.add_argument'),
+    MAIN_GUARD_SOURCE.replace('    p.add_argument', '    if enabled:\n        p.add_argument'),
+    MAIN_GUARD_SOURCE.replace('    p =', '    int = str\n    p ='),
+    'def main():\n' + ''.join('    ' + line for line in MAIN_GUARD_SOURCE.splitlines(keepends=True)),
+])
+def test_main_guard_rejects_ambiguous_scope_without_write(project, source):
+    path = project / 'app.py'
+    path.write_text(source)
+    assert b.schema_actions.bind(source, 'Change --workers default to 6.') is None
+    assert b.schema_actions.alias_binding(source, 'Add alias -w to --workers.') is None
+    assert b.run(preset(project))['status'] == 'error'
+    assert path.read_text() == source
