@@ -1,0 +1,70 @@
+{
+  "arms": [
+    "generate_no_catalog",
+    "generate_with_catalog",
+    "adaptive"
+  ],
+  "cases": [
+    {
+      "name": "exact_contract",
+      "task": "Create text_io.py. Provide read_text(path) and write_text(path,text,*,append=False), UTF-8 text, str or Path paths. Read the whole file. Write overwrites by default or appends on append=True; create missing files, but do not create parent directories. Missing reads raise FileNotFoundError.",
+      "outputs": {
+        "text_io.py": "utf8"
+      }
+    },
+    {
+      "name": "chinese_paraphrase",
+      "task": "\u7f16\u5199 local_io.py\uff1aread_text \u8bfb\u53d6\u6574\u4e2a UTF-8 \u6587\u4ef6\uff1bwrite_text(path,text,*,append=False) \u9ed8\u8ba4\u8986\u76d6\uff0cappend=True \u624d\u8ffd\u52a0\u3002\u652f\u6301\u5b57\u7b26\u4e32\u548c Path\u3002\u6587\u4ef6\u4e0d\u5b58\u5728\u53ef\u65b0\u5efa\uff0c\u4f46\u4e0d\u81ea\u52a8\u521b\u5efa\u7236\u76ee\u5f55\uff1b\u8bfb\u53d6\u4e0d\u5b58\u5728\u7684\u6587\u4ef6\u629b\u51fa FileNotFoundError\u3002",
+      "outputs": {
+        "local_io.py": "utf8"
+      }
+    },
+    {
+      "name": "new_destination",
+      "task": "Create helpers/files.py. Provide read_text(path) and write_text(path,text,*,append=False), UTF-8 text, str or Path paths. Read the whole file. Write overwrites by default or appends on append=True; create missing files, but do not create parent directories. Missing reads raise FileNotFoundError.",
+      "outputs": {
+        "helpers/files.py": "utf8"
+      }
+    },
+    {
+      "name": "different_encoding",
+      "task": "Create text_io.py with read_text(path) and write_text(path,text,*,append=False). Use UTF-16, NOT UTF-8, for both reading and writing. Support overwrite/append, str and Path; do not create parent directories.",
+      "outputs": {
+        "text_io.py": "utf16"
+      }
+    },
+    {
+      "name": "create_parents",
+      "task": "Create text_io.py. Provide read_text(path) and write_text(path,text,*,append=False), UTF-8 text, str or Path paths. Read the whole file. Write overwrites by default or appends on append=True; create missing files, but do not create parent directories. Missing reads raise FileNotFoundError. EXCEPTION: writing must automatically create any missing parent directories, including nested parents.",
+      "outputs": {
+        "text_io.py": "parents"
+      }
+    },
+    {
+      "name": "exclusive_write",
+      "task": "Create text_io.py providing read_text(path) and write_text(path,text). Use UTF-8. write_text must create a new file but raise FileExistsError and preserve all bytes if the destination already exists. Never overwrite or append. Do not create parent directories.",
+      "outputs": {
+        "text_io.py": "exclusive"
+      }
+    },
+    {
+      "name": "binary",
+      "task": "Create binary_io.py with read_bytes(path)->bytes and write_bytes(path,data,*,append=False). Binary files, arbitrary bytes including invalid UTF-8, overwrite by default, append when requested, str/Path accepted. Do not create parent directories.",
+      "outputs": {
+        "binary_io.py": "binary"
+      }
+    },
+    {
+      "name": "mixed_plan",
+      "task": "Create two modules. text_io.py: Provide read_text(path) and write_text(path,text,*,append=False), UTF-8 text, str or Path paths. Read the whole file. Write overwrites by default or appends on append=True; create missing files, but do not create parent directories. Missing reads raise FileNotFoundError. Also create binary_io.py with read_bytes(path) and write_bytes(path,data,*,append=False), arbitrary binary bytes, overwrite or append, no automatic parent directories.",
+      "outputs": {
+        "text_io.py": "utf8",
+        "binary_io.py": "binary"
+      }
+    }
+  ],
+  "repeats": 2,
+  "policy": "Return exactly one plan tool call containing every requested output file. Only create the listed files. No shell, network, tests, explanations or extra files. Generate small standard-library Python modules with no import-time I/O. The persisted catalog contains earlier validated source, not a guarantee that its contract satisfies this task. Reuse an entry only if its entire contract satisfies the request; bind its destination path. Otherwise emit a write step with complete new source IN THIS SAME RESPONSE. A plan may mix reuse and write steps. Do not change an entry via reuse parameters: the only supported binding is destination path. Do not choose a vaguely similar entry or ignore a new requirement.",
+  "max_tokens": 4096,
+  "method": "Exactly one model request per attempt, both reuse and new source in one plan. Fresh cache namespace, randomized interleaving, no retry. Fixed persisted catalog from earlier validated model output, no admission during timed evaluation. First generator sees no catalog; second shares the adaptive catalog. No regex intent dispatch and no special logits classification kernel. Independent hidden checks do not choose branches or repair plans."
+}

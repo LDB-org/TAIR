@@ -1,0 +1,167 @@
+{
+  "arm": "generate_no_catalog",
+  "case": "chinese_paraphrase",
+  "passed": true,
+  "inference_requests": 1,
+  "input_tokens": 589,
+  "output_tokens": 232,
+  "controls": 0,
+  "usage_complete": true,
+  "request": {
+    "model": "/model",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Return exactly one plan tool call containing every requested output file. Only create the listed files. No shell, network, tests, explanations or extra files. Generate small standard-library Python modules with no import-time I/O. The persisted catalog contains earlier validated source, not a guarantee that its contract satisfies this task. Reuse an entry only if its entire contract satisfies the request; bind its destination path. Otherwise emit a write step with complete new source IN THIS SAME RESPONSE. A plan may mix reuse and write steps. Do not change an entry via reuse parameters: the only supported binding is destination path. Do not choose a vaguely similar entry or ignore a new requirement. This interface accepts write only; generate complete source for every requested file."
+      },
+      {
+        "role": "user",
+        "content": "{\"task\": \"编写 local_io.py：read_text 读取整个 UTF-8 文件；write_text(path,text,*,append=False) 默认覆盖，append=True 才追加。支持字符串和 Path。文件不存在可新建，但不自动创建父目录；读取不存在的文件抛出 FileNotFoundError。\", \"allowed_paths\": [\"local_io.py\"]}"
+      }
+    ],
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "plan",
+          "description": "One plan containing all file operations.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "steps": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 4,
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "op": {
+                          "type": "string",
+                          "enum": [
+                            "write"
+                          ]
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "content": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "op",
+                        "path",
+                        "content"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              }
+            },
+            "required": [
+              "steps"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    ],
+    "tool_choice": {
+      "type": "function",
+      "function": {
+        "name": "plan"
+      }
+    },
+    "parallel_tool_calls": false,
+    "temperature": 0,
+    "max_tokens": 4096,
+    "cache_salt": "05216a4aa5af42eabb9d450fe7bfb873",
+    "chat_template_kwargs": {
+      "thinking": false,
+      "enable_thinking": false
+    }
+  },
+  "response": {
+    "id": "chatcmpl-beb6f9a43ee99aba",
+    "object": "chat.completion",
+    "created": 1789800326,
+    "model": "/model",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [
+            {
+              "id": "chatcmpl-tool-99ec87ffa8d821f8",
+              "type": "function",
+              "function": {
+                "name": "plan",
+                "arguments": "{\"steps\": [{\"op\": \"write\", \"path\": \"local_io.py\", \"content\": \"from pathlib import Path\\n\\n\\ndef read_text(path):\\n    \\\"\\\"\\\"Read the entire contents of a UTF-8 text file.\\\"\\\"\\\"\\n    return Path(path).read_text(encoding=\\\"utf-8\\\")\\n\\n\\ndef write_text(path, text, *, append=False):\\n    \\\"\\\"\\\"Write text to a file.\\n\\n    By default the file is overwritten. If append=True, the text is\\n    appended to the file instead. The file is created if it does not\\n    exist, but parent directories are not created automatically.\\n    \\\"\\\"\\\"\\n    mode = \\\"a\\\" if append else \\\"w\\\"\\n    with open(path, mode, encoding=\\\"utf-8\\\") as f:\\n        f.write(text)\\n\"}]}"
+              }
+            }
+          ],
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.28.1rc1.dev137+g5ab628dd1-tp2-pp3-1070d36c",
+    "usage": {
+      "prompt_tokens": 589,
+      "total_tokens": 821,
+      "completion_tokens": 232,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": {
+      "time_to_first_token_ms": 135.26378571987152,
+      "generation_time_ms": 1911.6979893296957,
+      "queue_time_ms": 0.03685150295495987,
+      "mean_itl_ms": 8.275748871557125,
+      "tokens_per_second": 113.33870657862289,
+      "speculative_decoding": null
+    }
+  },
+  "inference_seconds": 2.3161523332819343,
+  "plan": {
+    "steps": [
+      {
+        "op": "write",
+        "path": "local_io.py",
+        "content": "from pathlib import Path\n\n\ndef read_text(path):\n    \"\"\"Read the entire contents of a UTF-8 text file.\"\"\"\n    return Path(path).read_text(encoding=\"utf-8\")\n\n\ndef write_text(path, text, *, append=False):\n    \"\"\"Write text to a file.\n\n    By default the file is overwritten. If append=True, the text is\n    appended to the file instead. The file is created if it does not\n    exist, but parent directories are not created automatically.\n    \"\"\"\n    mode = \"a\" if append else \"w\"\n    with open(path, mode, encoding=\"utf-8\") as f:\n        f.write(text)\n"
+      }
+    ]
+  },
+  "reuse_steps": 0,
+  "write_steps": 1,
+  "file_checks": [
+    {
+      "path": "local_io.py",
+      "passed": true
+    }
+  ],
+  "seconds": 2.3874714579433203,
+  "index": 30,
+  "repeat": 1
+}

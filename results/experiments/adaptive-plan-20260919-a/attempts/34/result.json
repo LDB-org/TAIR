@@ -1,0 +1,167 @@
+{
+  "arm": "generate_no_catalog",
+  "case": "binary",
+  "passed": true,
+  "inference_requests": 1,
+  "input_tokens": 579,
+  "output_tokens": 305,
+  "controls": 0,
+  "usage_complete": true,
+  "request": {
+    "model": "/model",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Return exactly one plan tool call containing every requested output file. Only create the listed files. No shell, network, tests, explanations or extra files. Generate small standard-library Python modules with no import-time I/O. The persisted catalog contains earlier validated source, not a guarantee that its contract satisfies this task. Reuse an entry only if its entire contract satisfies the request; bind its destination path. Otherwise emit a write step with complete new source IN THIS SAME RESPONSE. A plan may mix reuse and write steps. Do not change an entry via reuse parameters: the only supported binding is destination path. Do not choose a vaguely similar entry or ignore a new requirement. This interface accepts write only; generate complete source for every requested file."
+      },
+      {
+        "role": "user",
+        "content": "{\"task\": \"Create binary_io.py with read_bytes(path)->bytes and write_bytes(path,data,*,append=False). Binary files, arbitrary bytes including invalid UTF-8, overwrite by default, append when requested, str/Path accepted. Do not create parent directories.\", \"allowed_paths\": [\"binary_io.py\"]}"
+      }
+    ],
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "plan",
+          "description": "One plan containing all file operations.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "steps": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 4,
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "op": {
+                          "type": "string",
+                          "enum": [
+                            "write"
+                          ]
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "content": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "op",
+                        "path",
+                        "content"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              }
+            },
+            "required": [
+              "steps"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    ],
+    "tool_choice": {
+      "type": "function",
+      "function": {
+        "name": "plan"
+      }
+    },
+    "parallel_tool_calls": false,
+    "temperature": 0,
+    "max_tokens": 4096,
+    "cache_salt": "b89a74754c3b417087c46cea2e260b5a",
+    "chat_template_kwargs": {
+      "thinking": false,
+      "enable_thinking": false
+    }
+  },
+  "response": {
+    "id": "chatcmpl-9ec4c39ea99d6a17",
+    "object": "chat.completion",
+    "created": 1789800336,
+    "model": "/model",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [
+            {
+              "id": "chatcmpl-tool-be82465e4f893e68",
+              "type": "function",
+              "function": {
+                "name": "plan",
+                "arguments": "{\"steps\": [{\"op\": \"write\", \"path\": \"binary_io.py\", \"content\": \"def read_bytes(path):\\n    \\\"\\\"\\\"Read the entire contents of a binary file and return as bytes.\\n\\n    Args:\\n        path: A str or Path-like object pointing to the file to read.\\n\\n    Returns:\\n        The file contents as a bytes object.\\n    \\\"\\\"\\\"\\n    with open(path, 'rb') as f:\\n        return f.read()\\n\\n\\ndef write_bytes(path, data, *, append=False):\\n    \\\"\\\"\\\"Write bytes to a binary file.\\n\\n    Args:\\n        path: A str or Path-like object pointing to the file to write.\\n        data: The bytes to write.\\n        append: If True, append to the file instead of overwriting it.\\n\\n    The file is opened in binary mode. By default the file is overwritten;\\n    when append=True, data is appended to the end of the file. Parent\\n    directories are not created.\\n    \\\"\\\"\\\"\\n    mode = 'ab' if append else 'wb'\\n    with open(path, mode) as f:\\n        f.write(data)\\n\"}]}"
+              }
+            }
+          ],
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.28.1rc1.dev137+g5ab628dd1-tp2-pp3-1070d36c",
+    "usage": {
+      "prompt_tokens": 579,
+      "total_tokens": 884,
+      "completion_tokens": 305,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": {
+      "time_to_first_token_ms": 132.75865465402603,
+      "generation_time_ms": 2509.5370477065444,
+      "queue_time_ms": 0.02774503082036972,
+      "mean_itl_ms": 8.255056077982053,
+      "tokens_per_second": 115.42992698641547,
+      "speculative_decoding": null
+    }
+  },
+  "inference_seconds": 2.896468124818057,
+  "plan": {
+    "steps": [
+      {
+        "op": "write",
+        "path": "binary_io.py",
+        "content": "def read_bytes(path):\n    \"\"\"Read the entire contents of a binary file and return as bytes.\n\n    Args:\n        path: A str or Path-like object pointing to the file to read.\n\n    Returns:\n        The file contents as a bytes object.\n    \"\"\"\n    with open(path, 'rb') as f:\n        return f.read()\n\n\ndef write_bytes(path, data, *, append=False):\n    \"\"\"Write bytes to a binary file.\n\n    Args:\n        path: A str or Path-like object pointing to the file to write.\n        data: The bytes to write.\n        append: If True, append to the file instead of overwriting it.\n\n    The file is opened in binary mode. By default the file is overwritten;\n    when append=True, data is appended to the end of the file. Parent\n    directories are not created.\n    \"\"\"\n    mode = 'ab' if append else 'wb'\n    with open(path, mode) as f:\n        f.write(data)\n"
+      }
+    ]
+  },
+  "reuse_steps": 0,
+  "write_steps": 1,
+  "file_checks": [
+    {
+      "path": "binary_io.py",
+      "passed": true
+    }
+  ],
+  "seconds": 3.044572291895747,
+  "index": 34,
+  "repeat": 0
+}

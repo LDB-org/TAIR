@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "id": "text_io_v1",
+      "source": "\"\"\"Small standard-library-only file I/O helpers.\"\"\"\n\nfrom pathlib import Path\n\n\ndef read_text(path) -> str:\n    \"\"\"Read the full contents of a file as UTF-8 text.\"\"\"\n    return Path(path).read_text(encoding=\"utf-8\")\n\n\ndef write_text(path, text, *, append=False) -> None:\n    \"\"\"Write text to a file as UTF-8.\n\n    Creates a missing file. Overwrites by default, or appends when\n    append=True. Does not create missing parent directories.\n    \"\"\"\n    mode = \"a\" if append else \"w\"\n    with open(path, mode, encoding=\"utf-8\", newline=\"\") as f:\n        f.write(text)\n",
+      "source_sha256": "d6149a666cc1cb7ab2ba6435099e9ebdd0804c66fc0dcc9041357afa84626524",
+      "contract": "UTF-8 text module: read_text(path) returns all text; write_text(path,text,*,append=False) creates files, overwrites by default, appends only when requested. Accepts str/Path. Missing reads raise FileNotFoundError. Does NOT create parent directories. No binary API, encoding parameter, or exclusive-create behavior.",
+      "bindings": [
+        "path"
+      ],
+      "origin": "results/experiments/file-io-20260919-a/hybrid/project-after/file_io.py",
+      "admission": "Independent UTF-8 read/write behavior checks on earlier model-generated artifact"
+    }
+  ]
+}
