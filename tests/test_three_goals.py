@@ -20,3 +20,9 @@ def test_hybrid_codebook_control_changes_only_codebook_enablement():
     assert differences(on, off) == {'PIJIT_DISABLE_CODEBOOK'}
     assert on['PIJIT_BOUND_REUSE'] == on['PIJIT_NATIVE_PLANNER'] == '1'
     assert on['PIJIT_COMPLETION_CHECKS'] == '0'
+
+
+def test_safe_hybrid_control_changes_only_codebook_enablement():
+    on, off = (configuration(a, 'revision', safe_codebook=True) for a in ('hybrid', 'hybrid_no_book'))
+    assert differences(on, off) == {'PIJIT_DISABLE_CODEBOOK'}
+    assert on['PIJIT_SAFE_CODEBOOK'] == off['PIJIT_SAFE_CODEBOOK'] == '1'
