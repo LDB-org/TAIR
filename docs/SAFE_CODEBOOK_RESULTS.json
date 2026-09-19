@@ -1,0 +1,411 @@
+{
+  "attempts": 64,
+  "passed": 64,
+  "source_checks": [
+    {
+      "path": "deploy/toolcall_service.py",
+      "sha256": "aa1775672745208c07fdf00cd05a809f31418f7f44f53163722db8b37e6d10b3"
+    },
+    {
+      "path": "deploy/logit_toolcall.py",
+      "sha256": "29b5ac57dfcf7b1d322f5b7f25a9e966308136cbbfa85aa075f896571eb1cbb5"
+    },
+    {
+      "path": "deploy/pi_engine_protocol.py",
+      "sha256": "0c04821490858d4187457df981ce9af5fd5f70d3a1b782089a3aa141a14023d5"
+    },
+    {
+      "path": "deploy/direct_structural_protocol.py",
+      "sha256": "5e0b9c469fddab63ef8624761472e99610c395a9f354eea1bc47f1405a07030f"
+    },
+    {
+      "path": "deploy/compact_structural_protocol.py",
+      "sha256": "15a7e1be3c0c8cc1a628813705714998dafbb4c13c2a7084eda4e1ca4c7b7820"
+    },
+    {
+      "path": "deploy/schema_actions.py",
+      "sha256": "715c869c03a03edcfd0669166376d96ff33e6c3f179deba48195c69850b01bba"
+    },
+    {
+      "path": "deploy/native_planner.py",
+      "sha256": "d0486aeca080589703228f45913a8fc18a3805bfb9c83464b8b16bbf16793a64"
+    },
+    {
+      "path": "deploy/applicable_structural_protocol.py",
+      "sha256": "2ccc524050bd137725f12c2067e6ee6385c2447d6e12e89fb261e0db1718a1e4"
+    },
+    {
+      "path": "deploy/install_vllm_direct_tools.py",
+      "sha256": "59600450b448f4fe9ec64b5ee0fcfecacf8f9699592d915f47b462e1c63a5ed2"
+    },
+    {
+      "path": "deploy/jit_codebook.py",
+      "sha256": "82df3aade94a56166fa1b324ec6c5a48c8c2cf35f20884590a10a20a9331c6e5"
+    },
+    {
+      "path": "deploy/vllm_direct_tools.py",
+      "sha256": "4370cfc8286dd70ade2ba8c17a89e7ed701b784e4e54ce8ac4304664f4315d39"
+    },
+    {
+      "path": "deploy/preset_edits.py",
+      "sha256": "74aabb3cd7da917b864d29f76868a254e08f5a87f37200bc7c969f31262847f1"
+    },
+    {
+      "path": "deploy/region_edit_protocol.py",
+      "sha256": "5e7de9384a4e89ada981ed86f49c00b2f8fdd57274fa0e80af4d84945e938d1f"
+    },
+    {
+      "path": "deploy/structural_edit_protocol.py",
+      "sha256": "7495c0da0706fa4b83e833c75ef81134f6fe88eb54dd02836286b54763168a2e"
+    },
+    {
+      "path": "integrations/pijit/bridge.py",
+      "sha256": "ff1d8115c57eced26e37fe821f80768b3ca022a58eca3b0dbe73758a7a98ac87"
+    },
+    {
+      "path": "benchmarks/benchmark_safe_codebook.py",
+      "sha256": "7b5231feefeb1d59918ddc9d4db9bddb716085114890527faaae269cca772a75"
+    }
+  ],
+  "summaries": [
+    {
+      "scope": "all",
+      "arm": "generate",
+      "n": 32,
+      "passed": 32,
+      "seconds": 46.40352970454842,
+      "median_seconds": 1.374875124776736,
+      "hits": 0,
+      "bound_hits": 0,
+      "exact_hits": 0,
+      "inference_requests": 32,
+      "known_input_tokens": 15776,
+      "known_generated_argument_tokens": 418,
+      "known_classification_control_records": 32
+    },
+    {
+      "scope": "all",
+      "arm": "safe_book",
+      "n": 32,
+      "passed": 32,
+      "seconds": 26.140018539503217,
+      "median_seconds": 1.1407654790673405,
+      "hits": 14,
+      "bound_hits": 10,
+      "exact_hits": 4,
+      "inference_requests": 18,
+      "known_input_tokens": 8774,
+      "known_generated_argument_tokens": 240,
+      "known_classification_control_records": 18
+    },
+    {
+      "scope": "warm",
+      "arm": "generate",
+      "n": 14,
+      "passed": 14,
+      "seconds": 21.05943258246407,
+      "median_seconds": 1.3999578333459795,
+      "hits": 0,
+      "bound_hits": 0,
+      "exact_hits": 0,
+      "inference_requests": 14,
+      "known_input_tokens": 7002,
+      "known_generated_argument_tokens": 178,
+      "known_classification_control_records": 14
+    },
+    {
+      "scope": "warm",
+      "arm": "safe_book",
+      "n": 14,
+      "passed": 14,
+      "seconds": 1.4143429580144584,
+      "median_seconds": 0.09803906292654574,
+      "hits": 14,
+      "bound_hits": 10,
+      "exact_hits": 4,
+      "inference_requests": 0,
+      "known_input_tokens": 0,
+      "known_generated_argument_tokens": 0,
+      "known_classification_control_records": 0
+    },
+    {
+      "scope": "cold_or_rejected",
+      "arm": "generate",
+      "n": 18,
+      "passed": 18,
+      "seconds": 25.34409712208435,
+      "median_seconds": 1.3513263538479805,
+      "hits": 0,
+      "bound_hits": 0,
+      "exact_hits": 0,
+      "inference_requests": 18,
+      "known_input_tokens": 8774,
+      "known_generated_argument_tokens": 240,
+      "known_classification_control_records": 18
+    },
+    {
+      "scope": "cold_or_rejected",
+      "arm": "safe_book",
+      "n": 18,
+      "passed": 18,
+      "seconds": 24.72567558148876,
+      "median_seconds": 1.363435791572556,
+      "hits": 0,
+      "bound_hits": 0,
+      "exact_hits": 0,
+      "inference_requests": 18,
+      "known_input_tokens": 8774,
+      "known_generated_argument_tokens": 240,
+      "known_classification_control_records": 18
+    }
+  ],
+  "percase": [
+    {
+      "case": "cold_default",
+      "generate": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.5220088544301689,
+        "hits": 0
+      },
+      "safe_book": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.653294874355197,
+        "hits": 0
+      }
+    },
+    {
+      "case": "repeat_default",
+      "generate": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.6209054577630013,
+        "hits": 0
+      },
+      "safe_book": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 0.10207420797087252,
+        "hits": 2
+      }
+    },
+    {
+      "case": "new_parameter",
+      "generate": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.9790541036054492,
+        "hits": 0
+      },
+      "safe_book": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 0.09635002096183598,
+        "hits": 2
+      }
+    },
+    {
+      "case": "updated_snapshot",
+      "generate": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.3472030623815954,
+        "hits": 0
+      },
+      "safe_book": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 0.10294858366250992,
+        "hits": 2
+      }
+    },
+    {
+      "case": "cold_help",
+      "generate": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.2916539586149156,
+        "hits": 0
+      },
+      "safe_book": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.3497932918835431,
+        "hits": 0
+      }
+    },
+    {
+      "case": "new_help",
+      "generate": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.3510195836424828,
+        "hits": 0
+      },
+      "safe_book": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 0.10310097900219262,
+        "hits": 2
+      }
+    },
+    {
+      "case": "cold_alias",
+      "generate": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.2707460834644735,
+        "hits": 0
+      },
+      "safe_book": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.1951597288716584,
+        "hits": 0
+      }
+    },
+    {
+      "case": "new_alias",
+      "generate": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.3209894585888833,
+        "hits": 0
+      },
+      "safe_book": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 0.10902389604598284,
+        "hits": 2
+      }
+    },
+    {
+      "case": "compound_cold",
+      "generate": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.7198533746413887,
+        "hits": 0
+      },
+      "safe_book": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.6824408750981092,
+        "hits": 0
+      }
+    },
+    {
+      "case": "compound_repeat",
+      "generate": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.5556503748521209,
+        "hits": 0
+      },
+      "safe_book": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 0.10180020844563842,
+        "hits": 2
+      }
+    },
+    {
+      "case": "negated_scope",
+      "generate": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.3444735833909363,
+        "hits": 0
+      },
+      "safe_book": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.439202124485746,
+        "hits": 0
+      }
+    },
+    {
+      "case": "guard_cold",
+      "generate": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.3823142077308148,
+        "hits": 0
+      },
+      "safe_book": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.3292933125048876,
+        "hits": 0
+      }
+    },
+    {
+      "case": "guard_repeat",
+      "generate": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.3548942503985018,
+        "hits": 0
+      },
+      "safe_book": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 0.09187358291819692,
+        "hits": 2
+      }
+    },
+    {
+      "case": "changed_guard",
+      "generate": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.6732808330561966,
+        "hits": 0
+      },
+      "safe_book": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.250315125565976,
+        "hits": 0
+      }
+    },
+    {
+      "case": "stale_source",
+      "generate": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.2203118742909282,
+        "hits": 0
+      },
+      "safe_book": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.3225729789119214,
+        "hits": 0
+      }
+    },
+    {
+      "case": "unverified_no_admission",
+      "generate": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.2474057914223522,
+        "hits": 0
+      },
+      "safe_book": {
+        "passed": 2,
+        "n": 2,
+        "mean_seconds": 1.1407654790673405,
+        "hits": 0
+      }
+    }
+  ],
+  "generation_requests_verified": 50,
+  "saved_fraction": {
+    "all": 0.4366803838859482,
+    "warm": 0.9328404052447185,
+    "cold_or_rejected": 0.024401008945657443
+  },
+  "scope": "Actual compact_edit runtime and persisted learned book, fresh process for every request. Not full Agent or universal natural-language reuse."
+}

@@ -545,3 +545,35 @@ The completion-check prompt is experimental and opt-in with
 preserved in the pilot archive, not kept as an active completion gate.
 See [three-goal experiments](../../docs/THREE_GOALS_EXPERIMENT.md) for evidence,
 strong native baseline definitions and limitations.
+
+### Verified dynamic codebook mode
+
+Set `PIJIT_SAFE_CODEBOOK=1` to use conservative learned reuse inside the actual
+`compact_edit` bridge. This is opt-in and cannot be combined with
+`PIJIT_SCHEMA_ACTIONS=1` or `PIJIT_JIT_ACTIONS=1`; `PIJIT_DISABLE_CODEBOOK=1`
+still disables admission and retrieval.
+
+The first request generates an edit. After source checks, decoding, compilation
+and any configured `PIJIT_VERIFY_CMD` succeed, the bridge writes a learned entry
+atomically to its workspace codebook. A unique applicable learned entry bypasses
+model selection; file application and the current verification command still run.
+
+- Fully parsed CLI requests may reuse a learned typed operation with a new value,
+  help string or supported alias. The whole request must match the local parser.
+- Other edits are admitted in this mode only when a project verification command
+  is configured. Reuse requires the exact task, exact source and path, and matching
+  recorded verification-command provenance. Generic edits without such a check
+  may execute, but are not learned. Old unverified generic entries are not eligible.
+- Changed or ambiguous entries miss and generate. Verification failure rolls back
+  the write and prevents admission. Changing the verification command invalidates
+  generic reuse; existing legacy entries are not automatically promoted.
+- A configured test command is not a proof of arbitrary task semantics. It must
+  cover the requested behavior; this mode does not infer new tests or guarantee
+  that an inadequate project suite detects every wrong generation.
+
+All cache-selection modes now require explicit binding or exact task/source
+matching; high classification scores alone no longer authorize a cached edit.
+The new mode does not learn arbitrary ordinary `edit`/`write` calls outside
+`compact_edit`, does not train model weights, and is not a general semantic cache.
+
+See [the persistent cold/warm experiment](../../docs/SAFE_CODEBOOK_LOOP.md).

@@ -1,0 +1,178 @@
+{
+  "cases": [
+    {
+      "name": "cold_default",
+      "task": "Change --workers default to 6.",
+      "kind": "cli",
+      "source": "import argparse\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4, help='workers')\n    p.add_argument('--timeout', type=int, default=3, help='timeout')\n    return p\n",
+      "workers": 6,
+      "timeout": 3,
+      "help": "timeout",
+      "alias": null,
+      "verify": true
+    },
+    {
+      "name": "repeat_default",
+      "task": "Change --workers default to 6.",
+      "kind": "cli",
+      "source": "import argparse\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4, help='workers')\n    p.add_argument('--timeout', type=int, default=3, help='timeout')\n    return p\n",
+      "workers": 6,
+      "timeout": 3,
+      "help": "timeout",
+      "alias": null,
+      "verify": true
+    },
+    {
+      "name": "new_parameter",
+      "task": "Change --workers default to 8.",
+      "kind": "cli",
+      "source": "import argparse\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4, help='workers')\n    p.add_argument('--timeout', type=int, default=3, help='timeout')\n    return p\n",
+      "workers": 8,
+      "timeout": 3,
+      "help": "timeout",
+      "alias": null,
+      "verify": true
+    },
+    {
+      "name": "updated_snapshot",
+      "task": "Change --workers default to 10.",
+      "kind": "cli",
+      "source": "import argparse\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4, help='workers')\n    p.add_argument('--timeout', type=int, default=3, help='timeout')\n    return p\n",
+      "workers": 10,
+      "timeout": 3,
+      "help": "timeout",
+      "alias": null,
+      "verify": true,
+      "previous": true
+    },
+    {
+      "name": "cold_help",
+      "task": "Change --timeout help to \"Wait duration\".",
+      "kind": "cli",
+      "source": "import argparse\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4, help='workers')\n    p.add_argument('--timeout', type=int, default=3, help='timeout')\n    return p\n",
+      "workers": 4,
+      "timeout": 3,
+      "help": "Wait duration",
+      "alias": null,
+      "verify": true
+    },
+    {
+      "name": "new_help",
+      "task": "Change --timeout help to \"Deadline\".",
+      "kind": "cli",
+      "source": "import argparse\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4, help='workers')\n    p.add_argument('--timeout', type=int, default=3, help='timeout')\n    return p\n",
+      "workers": 4,
+      "timeout": 3,
+      "help": "Deadline",
+      "alias": null,
+      "verify": true
+    },
+    {
+      "name": "cold_alias",
+      "task": "Add alias -w to --workers.",
+      "kind": "cli",
+      "source": "import argparse\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4, help='workers')\n    p.add_argument('--timeout', type=int, default=3, help='timeout')\n    return p\n",
+      "workers": 4,
+      "timeout": 3,
+      "help": "timeout",
+      "alias": "-w",
+      "verify": true
+    },
+    {
+      "name": "new_alias",
+      "task": "Add alias -x to --workers.",
+      "kind": "cli",
+      "source": "import argparse\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4, help='workers')\n    p.add_argument('--timeout', type=int, default=3, help='timeout')\n    return p\n",
+      "workers": 4,
+      "timeout": 3,
+      "help": "timeout",
+      "alias": "-x",
+      "verify": true
+    },
+    {
+      "name": "compound_cold",
+      "task": "Change --workers default to 8 and --timeout default to 5.",
+      "kind": "cli",
+      "source": "import argparse\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4, help='workers')\n    p.add_argument('--timeout', type=int, default=3, help='timeout')\n    return p\n",
+      "workers": 8,
+      "timeout": 5,
+      "help": "timeout",
+      "alias": null,
+      "verify": true
+    },
+    {
+      "name": "compound_repeat",
+      "task": "Change --workers default to 8 and --timeout default to 5.",
+      "kind": "cli",
+      "source": "import argparse\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4, help='workers')\n    p.add_argument('--timeout', type=int, default=3, help='timeout')\n    return p\n",
+      "workers": 8,
+      "timeout": 5,
+      "help": "timeout",
+      "alias": null,
+      "verify": true
+    },
+    {
+      "name": "negated_scope",
+      "task": "Do not change --workers. Change --timeout default to 7.",
+      "kind": "cli",
+      "source": "import argparse\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4, help='workers')\n    p.add_argument('--timeout', type=int, default=3, help='timeout')\n    return p\n",
+      "workers": 4,
+      "timeout": 7,
+      "help": "timeout",
+      "alias": null,
+      "verify": true
+    },
+    {
+      "name": "guard_cold",
+      "task": "Return None from divide when b == 0.",
+      "kind": "guard",
+      "source": "def divide(a, b):\n    return a / b\n",
+      "result": "None",
+      "verify": true
+    },
+    {
+      "name": "guard_repeat",
+      "task": "Return None from divide when b == 0.",
+      "kind": "guard",
+      "source": "def divide(a, b):\n    return a / b\n",
+      "result": "None",
+      "verify": true
+    },
+    {
+      "name": "changed_guard",
+      "task": "Return 0 from divide when b == 0.",
+      "kind": "guard",
+      "source": "def divide(a, b):\n    return a / b\n",
+      "result": "0",
+      "verify": true
+    },
+    {
+      "name": "stale_source",
+      "task": "Change --workers default to 6.",
+      "kind": "cli",
+      "source": "import argparse\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4, help='workers')\n    p.add_argument('--timeout', type=int, default=3, help='timeout')\n    return p\nNEW_VERSION = True\n",
+      "workers": 6,
+      "timeout": 3,
+      "help": "timeout",
+      "alias": null,
+      "verify": true
+    },
+    {
+      "name": "unverified_no_admission",
+      "task": "Return None from divide when b == 0.",
+      "kind": "guard",
+      "source": "def divide(a, b):\n    return a / b\n",
+      "result": "None",
+      "verify": false
+    }
+  ],
+  "repeats": 2,
+  "arms": [
+    "generate",
+    "safe_book"
+  ],
+  "scope": "Real compact_edit bridge, fresh process every task, persistent per-arm state. Single edit stage, not full Agent.",
+  "learning": "Initially empty book, no preloaded answers. Cases ordered to test learning; arms interleaved randomly within each step. Current configured project check reruns on every application.",
+  "validation": "Runtime behavioral check validates task behavior; independent AST oracle checks other code. Checks never sent to model.",
+  "timing": "Process startup, preparation, model calls, writing, runtime verification and external AST/behavior verification included; fixture reset and validator file setup excluded."
+}
