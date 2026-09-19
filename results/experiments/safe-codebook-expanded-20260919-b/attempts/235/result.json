@@ -1,0 +1,173 @@
+{
+  "arm": "generate",
+  "case": "unverified_no_admission",
+  "repeat": 3,
+  "passed": true,
+  "response": {
+    "metrics_version": 2,
+    "trace_id": "e40aa37f94004d68817d8e34155eb188",
+    "session_id": null,
+    "parent_tool_call_id": null,
+    "stage_seconds": {
+      "lock_wait": 3.4170225262641907e-06,
+      "retrieval": 0.00046304240822792053,
+      "cached_validation": 4.1676685214042664e-07,
+      "generation_preparation": 0.388090334367007,
+      "generation_http": 0.7243709582835436,
+      "generation": 1.1126990001648664,
+      "generated_validation": 0.0265433331951499,
+      "write": 0.0042709168046712875,
+      "verification": 7.292255759239197e-06,
+      "admission": 8.417293429374695e-06
+    },
+    "http_requests": [
+      {
+        "route": "/tokenize",
+        "status": "ok",
+        "usage_complete": false,
+        "started_at": 1789782818.087942,
+        "http_status": 200,
+        "request_id": null,
+        "seconds": 0.3294025002978742
+      },
+      {
+        "route": "/tokenize",
+        "status": "ok",
+        "usage_complete": false,
+        "started_at": 1789782818.088073,
+        "http_status": 200,
+        "request_id": null,
+        "seconds": 0.3806283753365278
+      },
+      {
+        "route": "/tokenize",
+        "status": "ok",
+        "usage_complete": false,
+        "started_at": 1789782818.088196,
+        "http_status": 200,
+        "request_id": null,
+        "seconds": 0.328082375228405
+      },
+      {
+        "route": "/tokenize",
+        "status": "ok",
+        "usage_complete": false,
+        "started_at": 1789782818.088298,
+        "http_status": 200,
+        "request_id": null,
+        "seconds": 0.38000283297151327
+      },
+      {
+        "route": "/tokenize",
+        "status": "ok",
+        "usage_complete": false,
+        "started_at": 1789782818.0884311,
+        "http_status": 200,
+        "request_id": null,
+        "seconds": 0.3297032918781042
+      },
+      {
+        "route": "/tokenize",
+        "status": "ok",
+        "usage_complete": false,
+        "started_at": 1789782818.0885482,
+        "http_status": 200,
+        "request_id": null,
+        "seconds": 0.3799935416318476
+      },
+      {
+        "route": "/tokenize",
+        "status": "ok",
+        "usage_complete": false,
+        "started_at": 1789782818.08864,
+        "http_status": 200,
+        "request_id": null,
+        "seconds": 0.3297247923910618
+      },
+      {
+        "route": "/tokenize",
+        "status": "ok",
+        "usage_complete": false,
+        "started_at": 1789782818.088725,
+        "http_status": 200,
+        "request_id": null,
+        "seconds": 0.32904858281835914
+      },
+      {
+        "route": "/tokenize",
+        "status": "ok",
+        "usage_complete": false,
+        "started_at": 1789782818.088809,
+        "http_status": 200,
+        "request_id": null,
+        "seconds": 0.37850137520581484
+      },
+      {
+        "route": "/v1/openjev/toolcall",
+        "status": "ok",
+        "usage_complete": true,
+        "started_at": 1789782818.47623,
+        "http_status": 200,
+        "request_id": "openjev-b3a0d0caa1b641b7afe52e32c8b9ef4f",
+        "input_tokens": 433,
+        "generated_argument_tokens": 15,
+        "classification_control_records": 1,
+        "engine_seconds": 0.4132191501557827,
+        "classification_seconds": 0.14221097622066736,
+        "classification_timing": null,
+        "seconds": 0.7239361251704395
+      }
+    ],
+    "codebook_enabled": false,
+    "cache_hit": false,
+    "applied": true,
+    "retrieval": {
+      "book_entries": 0,
+      "task_path_matches": 0,
+      "source_matches": 0,
+      "candidate_count": 0
+    },
+    "candidates": [],
+    "jit_entries_before": 0,
+    "jit_hit": false,
+    "fallback_reason": "codebook_disabled",
+    "label_cache_hit": false,
+    "backup": "/Users/zacharyzcr/Projects/TAIR/results/experiments/safe-codebook-expanded-20260919-b/state/3-generate/workspaces/691126acfcc00718025a/backup-63f15a03ff9b419e93fd0fea301a3b32.py",
+    "source_sha256": "4f719d2b104c917e0ce623395e00e0c44dbf1940414d87fc2b66ede6e3d67b12",
+    "updated_sha256": "f1cf51c53a0372156aa25aee0724d8927e3f3aa5a374eb90a529deedae591d07",
+    "jit_admission_origin": null,
+    "safe_codebook": true,
+    "exact_reuse_hit": false,
+    "admission_skipped_reason": null,
+    "bound_reuse_hit": false,
+    "schema_hit": false,
+    "jit_admitted": 0,
+    "jit_entries_after": 0,
+    "validation": "schema + Python compile; semantic correctness unverified",
+    "accounting": {
+      "inference_requests": 1,
+      "usage_complete": true,
+      "unknown_usage_requests": 0,
+      "known_input_tokens": 433,
+      "known_generated_argument_tokens": 15,
+      "known_classification_control_records": 1
+    },
+    "path": "/Users/zacharyzcr/Projects/TAIR/results/experiments/safe-codebook-expanded-20260919-b/workspace/main/app.py",
+    "admitted": 0,
+    "diff": "--- /Users/zacharyzcr/Projects/TAIR/results/experiments/safe-codebook-expanded-20260919-b/workspace/main/app.py\n+++ /Users/zacharyzcr/Projects/TAIR/results/experiments/safe-codebook-expanded-20260919-b/workspace/main/app.py\n@@ -1,2 +1,4 @@\n def divide(a, b):\n+    if b == 0:\n+        return None\n     return a / b\n",
+    "input_tokens": 433,
+    "generated_argument_tokens": 15,
+    "classification_control_records": 1,
+    "requests": [
+      {
+        "input_tokens": 433,
+        "generated_argument_tokens": 15,
+        "classification_control_records": 1,
+        "request_id": "openjev-b3a0d0caa1b641b7afe52e32c8b9ef4f"
+      }
+    ],
+    "status": "ok",
+    "wall_seconds": 1.1445098337717354
+  },
+  "seconds": 1.2538006668910384
+}

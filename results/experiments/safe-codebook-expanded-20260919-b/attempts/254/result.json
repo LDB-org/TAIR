@@ -1,0 +1,79 @@
+{
+  "arm": "safe_book",
+  "case": "comment_only_source",
+  "repeat": 3,
+  "passed": true,
+  "response": {
+    "metrics_version": 2,
+    "trace_id": "5c0d175c59564779a9a8b68919403141",
+    "session_id": null,
+    "parent_tool_call_id": null,
+    "stage_seconds": {
+      "lock_wait": 4.209112375974655e-06,
+      "retrieval": 0.0008719996549189091,
+      "cached_validation": 0.0011994168162345886,
+      "write": 0.000755042303353548,
+      "verification": 0.025762666948139668,
+      "admission": 0.0016917497850954533
+    },
+    "http_requests": [],
+    "codebook_enabled": true,
+    "cache_hit": true,
+    "applied": true,
+    "retrieval": {
+      "book_entries": 22,
+      "task_path_matches": 22,
+      "source_matches": 0,
+      "candidate_count": 1
+    },
+    "candidates": [
+      {
+        "id": 0,
+        "description": "Change --workers default to 6.",
+        "edits": [
+          [
+            "kw",
+            "--workers",
+            "default",
+            6
+          ]
+        ],
+        "source_match": "ast_equivalent"
+      }
+    ],
+    "jit_entries_before": 0,
+    "jit_hit": false,
+    "fallback_reason": null,
+    "cache_selected_valid": true,
+    "backup": "/Users/zacharyzcr/Projects/TAIR/results/experiments/safe-codebook-expanded-20260919-b/state/3-safe_book/workspaces/691126acfcc00718025a/backup-ea213aed56cb4af1be88e6ce44d2b7e0.py",
+    "source_sha256": "075442299e36a8570bd3b0a3377a4cee751e24a16aacad7d1cad65f60efa0392",
+    "updated_sha256": "c209d960ec33fb1757e0246f8d3222c6ed7dcf6805aebe50ff0571ee65981b0b",
+    "jit_admission_origin": null,
+    "safe_codebook": true,
+    "exact_reuse_hit": false,
+    "admission_skipped_reason": null,
+    "bound_reuse_hit": true,
+    "schema_hit": false,
+    "jit_admitted": 0,
+    "jit_entries_after": 0,
+    "validation": "schema + Python compile + configured project command (not a task oracle)",
+    "accounting": {
+      "inference_requests": 0,
+      "usage_complete": true,
+      "unknown_usage_requests": 0,
+      "known_input_tokens": 0,
+      "known_generated_argument_tokens": 0,
+      "known_classification_control_records": 0
+    },
+    "path": "/Users/zacharyzcr/Projects/TAIR/results/experiments/safe-codebook-expanded-20260919-b/workspace/main/app.py",
+    "admitted": 2,
+    "diff": "--- /Users/zacharyzcr/Projects/TAIR/results/experiments/safe-codebook-expanded-20260919-b/workspace/main/app.py\n+++ /Users/zacharyzcr/Projects/TAIR/results/experiments/safe-codebook-expanded-20260919-b/workspace/main/app.py\n@@ -2,6 +2,6 @@\n import argparse\n def build_parser():\n     p = argparse.ArgumentParser()\n-    p.add_argument('--workers', type=int, default=4, help='workers')\n+    p.add_argument('--workers', type=int, default=6, help='workers')\n     p.add_argument('--timeout', type=int, default=3, help='timeout')\n     return p\n",
+    "input_tokens": 0,
+    "generated_argument_tokens": 0,
+    "classification_control_records": 0,
+    "requests": [],
+    "status": "ok",
+    "wall_seconds": 0.03067108429968357
+  },
+  "seconds": 0.10385025013238192
+}

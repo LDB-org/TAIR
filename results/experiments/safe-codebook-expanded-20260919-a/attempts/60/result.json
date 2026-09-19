@@ -1,0 +1,81 @@
+{
+  "arm": "safe_book",
+  "case": "original_verifier_restored",
+  "repeat": 0,
+  "passed": true,
+  "response": {
+    "metrics_version": 2,
+    "trace_id": "0c432688166f48578a2bccd87375f8ef",
+    "session_id": null,
+    "parent_tool_call_id": null,
+    "stage_seconds": {
+      "lock_wait": 4.00003045797348e-06,
+      "retrieval": 0.0007332093082368374,
+      "cached_validation": 0.0017300406470894814,
+      "write": 0.0006090831011533737,
+      "verification": 0.019971332978457212,
+      "admission": 0.0007457081228494644
+    },
+    "http_requests": [],
+    "codebook_enabled": true,
+    "cache_hit": true,
+    "applied": true,
+    "retrieval": {
+      "book_entries": 24,
+      "task_path_matches": 1,
+      "source_matches": 1,
+      "candidate_count": 1
+    },
+    "candidates": [
+      {
+        "id": 12,
+        "description": "Return None from divide when b == 0.",
+        "edits": [
+          [
+            "return_if",
+            "divide",
+            "b == 0",
+            "None"
+          ]
+        ],
+        "exact_task": "Return None from divide when b == 0.",
+        "source_sha256": "4f719d2b104c917e0ce623395e00e0c44dbf1940414d87fc2b66ede6e3d67b12",
+        "source_match": "exact"
+      }
+    ],
+    "jit_entries_before": 0,
+    "jit_hit": false,
+    "fallback_reason": null,
+    "cache_selected_valid": true,
+    "backup": "/Users/zacharyzcr/Projects/TAIR/results/experiments/safe-codebook-expanded-20260919-a/state/0-safe_book/workspaces/789b590c99c86b6d1971/backup-6158c020532b4454b76dc9e84b343853.py",
+    "source_sha256": "4f719d2b104c917e0ce623395e00e0c44dbf1940414d87fc2b66ede6e3d67b12",
+    "updated_sha256": "f1cf51c53a0372156aa25aee0724d8927e3f3aa5a374eb90a529deedae591d07",
+    "jit_admission_origin": null,
+    "safe_codebook": true,
+    "exact_reuse_hit": true,
+    "admission_skipped_reason": null,
+    "bound_reuse_hit": false,
+    "schema_hit": false,
+    "jit_admitted": 0,
+    "jit_entries_after": 0,
+    "validation": "schema + Python compile + configured project command (not a task oracle)",
+    "accounting": {
+      "inference_requests": 0,
+      "usage_complete": true,
+      "unknown_usage_requests": 0,
+      "known_input_tokens": 0,
+      "known_generated_argument_tokens": 0,
+      "known_classification_control_records": 0
+    },
+    "path": "/Users/zacharyzcr/Projects/TAIR/results/experiments/safe-codebook-expanded-20260919-a/workspace/main/app.py",
+    "admitted": 0,
+    "diff": "--- /Users/zacharyzcr/Projects/TAIR/results/experiments/safe-codebook-expanded-20260919-a/workspace/main/app.py\n+++ /Users/zacharyzcr/Projects/TAIR/results/experiments/safe-codebook-expanded-20260919-a/workspace/main/app.py\n@@ -1,2 +1,4 @@\n def divide(a, b):\n+    if b == 0:\n+        return None\n     return a / b\n",
+    "input_tokens": 0,
+    "generated_argument_tokens": 0,
+    "classification_control_records": 0,
+    "requests": [],
+    "status": "ok",
+    "wall_seconds": 0.024169040843844414
+  },
+  "seconds": 0.09692770894616842
+}
