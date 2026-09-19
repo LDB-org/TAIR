@@ -457,3 +457,91 @@ calibration cost, normal Agent recovery, tests and replies remain in wall time.
 custom path, but remained 3.1% above native Pi. Covered warm tasks improved;
 ordinary logic repair showed regressions and recovery variation. All formal
 samples and calibration costs are included.
+
+### Context-aware batch planning (experimental)
+
+**Expanded-test finding:** the deployed xgrammar 0.2.3 rejects legal JSON escapes
+when compiling the added `oldText.minLength=1` constraint. This causes repeated
+failed edits and severe regressions on broader tasks. The bridge now stops adding
+that constraint; empty spans remain rejected by the edit tool at execution.
+The repaired mode remains opt-in. A subsequent six-family ablation completed
+without timeouts but still failed both CSV tasks; it is not a general correctness
+or rollout result. See [single-factor results](../../docs/MECHANISM_ABLATION.md).
+[Reproducer and evidence](../../docs/JSON_STRING_GRAMMAR_COMPATIBILITY.md).
+
+`PIJIT_BATCH_TOOLS=1 PIJIT_PLAN_CONTEXT=1` adds a partial workspace-root listing
+(up to 64 non-hidden names, no automatic source reads). Edit tools become available
+only for paths with a successful read/write result in the current conversation.
+In a nonempty project, write is also withheld until the first successful file
+observation; an empty workspace still permits creating files immediately.
+The edit grammar rejects empty edit lists; the edit executor rejects empty
+`oldText`. A planned write to
+an unread existing file is replaced by a read; subsequent steps are deferred until
+another planning turn. Generated tokens for deferred operations remain charged.
+
+This is a planning aid, not a filesystem permission boundary or freshness proof:
+partial reads count as observations, external changes are not tracked, and bash
+can still operate on files. The inner learned edit codebook is unchanged. Both
+flags default to off. Compare against the previous batch implementation using
+`benchmark_codebook_agent.py --plan-context-comparison --tokenizer-revision ...`.
+
+[Initial small-suite context-aware comparison](../../docs/BATCH_CONTEXT_OPTIMIZATION.md): final 36/36 tasks passed;
+99.69 seconds versus previous batched 117.24 seconds and native 131.98 seconds.
+The failed/slower pilot remains archived separately. Small shared-backend workload only.
+
+### Expanded controlled benchmark
+
+`benchmark_codebook_agent.py --suite expanded --plan-context-comparison --repeats 2`
+(with the usual `--url`, `--out`, and pinned `--tokenizer-revision`) runs 120 full
+Agent attempts: ten families, two independent repeats, cold/warm pairs, three
+arms. Use `--timeout 180` for this suite. It adds cross-file features, nested
+packages, CSV parsing, JSON config edits, exception handling, and an 84-file
+project with 80 unrelated modules. Before GPU execution, run
+`python benchmarks/verify_expanded_scenarios.py` to validate the seven new oracles
+against both broken initial fixtures and offline reference implementations.
+
+`python benchmarks/report_expanded_agent.py <out>` requires a complete suite and
+reports all-attempt success, latency percentiles, per-family results and the
+subset of identical tasks completed by all arms. Failed samples stay in the
+all-attempt totals. This is a synthetic workload, not a public coding benchmark
+or a production-throughput evaluation.
+
+[Expanded results](../../docs/EXPANDED_AGENT_BENCHMARK.md): all 120 attempts are
+preserved. Basic success was native 40/40, prior batched 38/40, contextual 24/40;
+additional requested-test audits yield 40/40, 36/40 and 23/40. Contextual took
+2229.15 seconds, including eight timeouts. Its minLength/deployed-grammar
+incompatibility is independently reproduced; the earlier small-suite gain must
+not be generalized to this broader workload.
+
+### Native planner and bound reuse experiments
+
+The new controls are opt-in; they are not a general correctness guarantee:
+
+- `PIJIT_NATIVE_PLANNER=1` keeps ordinary OpenAI tool-call messages and tool
+  results for outer planning. Local explicit-clause routing and `compact_edit`
+  remain available. Unsupported edits use the ordinary edit/write tools.
+- `PIJIT_NATIVE_PREFIX_CACHE=1` gives that planner a stable per-workspace cache
+  salt, permitting the server's existing prefix cache. This is a vLLM facility,
+  not learned-codebook speedup. Different benchmark arms have separate workspaces.
+- `PIJIT_BOUND_REUSE=1` skips model selection only when source-bound retrieval
+  yields one candidate exactly matching a supported typed task binding. Cold
+  generation/admission remains necessary. Source checks, operation validation,
+  compile and any configured project verification still run. Other candidates
+  retain the existing classifier and generation fallback.
+- `PIJIT_BATCH_LOCAL_ROUTING=1`, together with batch and local-routing flags,
+  permits supported clauses to reach `compact_edit` from batch mode.
+
+Aliases that would change argparse's implicit destination are rejected before
+compact editing writes a file; use normal editing to retain the original field.
+Automatic alias binding additionally requires a recognized argparse receiver.
+Unsupported/dynamic parser patterns conservatively fall back.
+
+Cache/timing details remain in tool metadata, traces and the status display;
+model-facing compact-edit results contain the applied diff and validation scope.
+This avoids changing the planning prompt merely because a cached edit was used.
+
+The completion-check prompt is experimental and opt-in with
+`PIJIT_COMPLETION_CHECKS=1`. The failed mandatory verification prototype is
+preserved in the pilot archive, not kept as an active completion gate.
+See [three-goal experiments](../../docs/THREE_GOALS_EXPERIMENT.md) for evidence,
+strong native baseline definitions and limitations.

@@ -1,0 +1,1425 @@
+{
+  "xgrammar_version": "0.2.3",
+  "scope": "CPU matcher on full execute_plan schemas exported from patched bridge; no model inference",
+  "rows": [
+    {
+      "legacy": false,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "const": "edit"
+                    },
+                    "arguments": {
+                      "type": "object",
+                      "required": [
+                        "path",
+                        "edits"
+                      ],
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "enum": [
+                            "app.py"
+                          ]
+                        },
+                        "edits": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "oldText",
+                              "newText"
+                            ],
+                            "properties": {
+                              "oldText": {
+                                "type": "string",
+                                "description": "Exact text for one targeted replacement. It must be unique in the original file and must not overlap with any other edits[].oldText in the same call."
+                              },
+                              "newText": {
+                                "type": "string",
+                                "description": "Replacement text for this targeted edit."
+                              }
+                            }
+                          },
+                          "description": "One or more targeted replacements. Each edit is matched against the original file, not incrementally. Do not include overlapping or nested edits. If two changes touch the same block or nearby lines, merge them into one edit instead.",
+                          "minItems": 1
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "arguments"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "steps"
+        ],
+        "additionalProperties": false
+      },
+      "payload": {
+        "steps": [
+          {
+            "name": "edit",
+            "arguments": {
+              "path": "app.py",
+              "edits": [
+                {
+                  "oldText": "plain text",
+                  "newText": "new\n\"value\"\\"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "expected": true,
+      "accepted": true
+    },
+    {
+      "legacy": false,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "const": "edit"
+                    },
+                    "arguments": {
+                      "type": "object",
+                      "required": [
+                        "path",
+                        "edits"
+                      ],
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "enum": [
+                            "app.py"
+                          ]
+                        },
+                        "edits": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "oldText",
+                              "newText"
+                            ],
+                            "properties": {
+                              "oldText": {
+                                "type": "string",
+                                "description": "Exact text for one targeted replacement. It must be unique in the original file and must not overlap with any other edits[].oldText in the same call."
+                              },
+                              "newText": {
+                                "type": "string",
+                                "description": "Replacement text for this targeted edit."
+                              }
+                            }
+                          },
+                          "description": "One or more targeted replacements. Each edit is matched against the original file, not incrementally. Do not include overlapping or nested edits. If two changes touch the same block or nearby lines, merge them into one edit instead.",
+                          "minItems": 1
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "arguments"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "steps"
+        ],
+        "additionalProperties": false
+      },
+      "payload": {
+        "steps": [
+          {
+            "name": "edit",
+            "arguments": {
+              "path": "app.py",
+              "edits": [
+                {
+                  "oldText": "\"port\": 8080",
+                  "newText": "new\n\"value\"\\"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "expected": true,
+      "accepted": true
+    },
+    {
+      "legacy": false,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "const": "edit"
+                    },
+                    "arguments": {
+                      "type": "object",
+                      "required": [
+                        "path",
+                        "edits"
+                      ],
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "enum": [
+                            "app.py"
+                          ]
+                        },
+                        "edits": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "oldText",
+                              "newText"
+                            ],
+                            "properties": {
+                              "oldText": {
+                                "type": "string",
+                                "description": "Exact text for one targeted replacement. It must be unique in the original file and must not overlap with any other edits[].oldText in the same call."
+                              },
+                              "newText": {
+                                "type": "string",
+                                "description": "Replacement text for this targeted edit."
+                              }
+                            }
+                          },
+                          "description": "One or more targeted replacements. Each edit is matched against the original file, not incrementally. Do not include overlapping or nested edits. If two changes touch the same block or nearby lines, merge them into one edit instead.",
+                          "minItems": 1
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "arguments"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "steps"
+        ],
+        "additionalProperties": false
+      },
+      "payload": {
+        "steps": [
+          {
+            "name": "edit",
+            "arguments": {
+              "path": "app.py",
+              "edits": [
+                {
+                  "oldText": "first\nsecond",
+                  "newText": "new\n\"value\"\\"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "expected": true,
+      "accepted": true
+    },
+    {
+      "legacy": false,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "const": "edit"
+                    },
+                    "arguments": {
+                      "type": "object",
+                      "required": [
+                        "path",
+                        "edits"
+                      ],
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "enum": [
+                            "app.py"
+                          ]
+                        },
+                        "edits": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "oldText",
+                              "newText"
+                            ],
+                            "properties": {
+                              "oldText": {
+                                "type": "string",
+                                "description": "Exact text for one targeted replacement. It must be unique in the original file and must not overlap with any other edits[].oldText in the same call."
+                              },
+                              "newText": {
+                                "type": "string",
+                                "description": "Replacement text for this targeted edit."
+                              }
+                            }
+                          },
+                          "description": "One or more targeted replacements. Each edit is matched against the original file, not incrementally. Do not include overlapping or nested edits. If two changes touch the same block or nearby lines, merge them into one edit instead.",
+                          "minItems": 1
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "arguments"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "steps"
+        ],
+        "additionalProperties": false
+      },
+      "payload": {
+        "steps": [
+          {
+            "name": "edit",
+            "arguments": {
+              "path": "app.py",
+              "edits": [
+                {
+                  "oldText": "path\\name",
+                  "newText": "new\n\"value\"\\"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "expected": true,
+      "accepted": true
+    },
+    {
+      "legacy": false,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "const": "edit"
+                    },
+                    "arguments": {
+                      "type": "object",
+                      "required": [
+                        "path",
+                        "edits"
+                      ],
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "enum": [
+                            "app.py"
+                          ]
+                        },
+                        "edits": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "oldText",
+                              "newText"
+                            ],
+                            "properties": {
+                              "oldText": {
+                                "type": "string",
+                                "description": "Exact text for one targeted replacement. It must be unique in the original file and must not overlap with any other edits[].oldText in the same call."
+                              },
+                              "newText": {
+                                "type": "string",
+                                "description": "Replacement text for this targeted edit."
+                              }
+                            }
+                          },
+                          "description": "One or more targeted replacements. Each edit is matched against the original file, not incrementally. Do not include overlapping or nested edits. If two changes touch the same block or nearby lines, merge them into one edit instead.",
+                          "minItems": 1
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "arguments"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "steps"
+        ],
+        "additionalProperties": false
+      },
+      "payload": {
+        "steps": [
+          {
+            "name": "edit",
+            "arguments": {
+              "path": "app.py",
+              "edits": [
+                {
+                  "oldText": "tab\tvalue",
+                  "newText": "new\n\"value\"\\"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "expected": true,
+      "accepted": true
+    },
+    {
+      "legacy": false,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "const": "edit"
+                    },
+                    "arguments": {
+                      "type": "object",
+                      "required": [
+                        "path",
+                        "edits"
+                      ],
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "enum": [
+                            "app.py"
+                          ]
+                        },
+                        "edits": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "oldText",
+                              "newText"
+                            ],
+                            "properties": {
+                              "oldText": {
+                                "type": "string",
+                                "description": "Exact text for one targeted replacement. It must be unique in the original file and must not overlap with any other edits[].oldText in the same call."
+                              },
+                              "newText": {
+                                "type": "string",
+                                "description": "Replacement text for this targeted edit."
+                              }
+                            }
+                          },
+                          "description": "One or more targeted replacements. Each edit is matched against the original file, not incrementally. Do not include overlapping or nested edits. If two changes touch the same block or nearby lines, merge them into one edit instead.",
+                          "minItems": 1
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "arguments"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "steps"
+        ],
+        "additionalProperties": false
+      },
+      "payload": {
+        "steps": [
+          {
+            "name": "edit",
+            "arguments": {
+              "path": "app.py",
+              "edits": [
+                {
+                  "oldText": "\u4e2d\u6587",
+                  "newText": "new\n\"value\"\\"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "expected": true,
+      "accepted": true
+    },
+    {
+      "legacy": false,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "const": "edit"
+                    },
+                    "arguments": {
+                      "type": "object",
+                      "required": [
+                        "path",
+                        "edits"
+                      ],
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "enum": [
+                            "app.py"
+                          ]
+                        },
+                        "edits": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "oldText",
+                              "newText"
+                            ],
+                            "properties": {
+                              "oldText": {
+                                "type": "string",
+                                "description": "Exact text for one targeted replacement. It must be unique in the original file and must not overlap with any other edits[].oldText in the same call."
+                              },
+                              "newText": {
+                                "type": "string",
+                                "description": "Replacement text for this targeted edit."
+                              }
+                            }
+                          },
+                          "description": "One or more targeted replacements. Each edit is matched against the original file, not incrementally. Do not include overlapping or nested edits. If two changes touch the same block or nearby lines, merge them into one edit instead.",
+                          "minItems": 1
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "arguments"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "steps"
+        ],
+        "additionalProperties": false
+      },
+      "payload": {
+        "steps": [
+          {
+            "name": "edit",
+            "arguments": {
+              "path": "app.py",
+              "edits": [
+                {
+                  "oldText": "",
+                  "newText": "new\n\"value\"\\"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "expected": true,
+      "accepted": true
+    },
+    {
+      "legacy": false,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "const": "edit"
+                    },
+                    "arguments": {
+                      "type": "object",
+                      "required": [
+                        "path",
+                        "edits"
+                      ],
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "enum": [
+                            "app.py"
+                          ]
+                        },
+                        "edits": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "oldText",
+                              "newText"
+                            ],
+                            "properties": {
+                              "oldText": {
+                                "type": "string",
+                                "description": "Exact text for one targeted replacement. It must be unique in the original file and must not overlap with any other edits[].oldText in the same call."
+                              },
+                              "newText": {
+                                "type": "string",
+                                "description": "Replacement text for this targeted edit."
+                              }
+                            }
+                          },
+                          "description": "One or more targeted replacements. Each edit is matched against the original file, not incrementally. Do not include overlapping or nested edits. If two changes touch the same block or nearby lines, merge them into one edit instead.",
+                          "minItems": 1
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "arguments"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "steps"
+        ],
+        "additionalProperties": false
+      },
+      "payload": {
+        "steps": []
+      },
+      "expected": false,
+      "accepted": false
+    },
+    {
+      "legacy": false,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "const": "edit"
+                    },
+                    "arguments": {
+                      "type": "object",
+                      "required": [
+                        "path",
+                        "edits"
+                      ],
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "enum": [
+                            "app.py"
+                          ]
+                        },
+                        "edits": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "oldText",
+                              "newText"
+                            ],
+                            "properties": {
+                              "oldText": {
+                                "type": "string",
+                                "description": "Exact text for one targeted replacement. It must be unique in the original file and must not overlap with any other edits[].oldText in the same call."
+                              },
+                              "newText": {
+                                "type": "string",
+                                "description": "Replacement text for this targeted edit."
+                              }
+                            }
+                          },
+                          "description": "One or more targeted replacements. Each edit is matched against the original file, not incrementally. Do not include overlapping or nested edits. If two changes touch the same block or nearby lines, merge them into one edit instead.",
+                          "minItems": 1
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "arguments"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "steps"
+        ],
+        "additionalProperties": false
+      },
+      "payload": {
+        "steps": [
+          {
+            "name": "edit",
+            "arguments": {
+              "path": "unobserved.py",
+              "edits": [
+                {
+                  "oldText": "",
+                  "newText": "new\n\"value\"\\"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "expected": false,
+      "accepted": false
+    },
+    {
+      "legacy": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "const": "edit"
+                    },
+                    "arguments": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "enum": [
+                            "app.py"
+                          ]
+                        },
+                        "oldText": {
+                          "type": "string"
+                        },
+                        "newText": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "oldText",
+                        "newText"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "arguments"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "steps"
+        ],
+        "additionalProperties": false
+      },
+      "payload": {
+        "steps": [
+          {
+            "name": "edit",
+            "arguments": {
+              "path": "app.py",
+              "oldText": "plain text",
+              "newText": "new\n\"value\"\\"
+            }
+          }
+        ]
+      },
+      "expected": true,
+      "accepted": true
+    },
+    {
+      "legacy": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "const": "edit"
+                    },
+                    "arguments": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "enum": [
+                            "app.py"
+                          ]
+                        },
+                        "oldText": {
+                          "type": "string"
+                        },
+                        "newText": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "oldText",
+                        "newText"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "arguments"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "steps"
+        ],
+        "additionalProperties": false
+      },
+      "payload": {
+        "steps": [
+          {
+            "name": "edit",
+            "arguments": {
+              "path": "app.py",
+              "oldText": "\"port\": 8080",
+              "newText": "new\n\"value\"\\"
+            }
+          }
+        ]
+      },
+      "expected": true,
+      "accepted": true
+    },
+    {
+      "legacy": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "const": "edit"
+                    },
+                    "arguments": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "enum": [
+                            "app.py"
+                          ]
+                        },
+                        "oldText": {
+                          "type": "string"
+                        },
+                        "newText": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "oldText",
+                        "newText"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "arguments"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "steps"
+        ],
+        "additionalProperties": false
+      },
+      "payload": {
+        "steps": [
+          {
+            "name": "edit",
+            "arguments": {
+              "path": "app.py",
+              "oldText": "first\nsecond",
+              "newText": "new\n\"value\"\\"
+            }
+          }
+        ]
+      },
+      "expected": true,
+      "accepted": true
+    },
+    {
+      "legacy": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "const": "edit"
+                    },
+                    "arguments": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "enum": [
+                            "app.py"
+                          ]
+                        },
+                        "oldText": {
+                          "type": "string"
+                        },
+                        "newText": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "oldText",
+                        "newText"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "arguments"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "steps"
+        ],
+        "additionalProperties": false
+      },
+      "payload": {
+        "steps": [
+          {
+            "name": "edit",
+            "arguments": {
+              "path": "app.py",
+              "oldText": "path\\name",
+              "newText": "new\n\"value\"\\"
+            }
+          }
+        ]
+      },
+      "expected": true,
+      "accepted": true
+    },
+    {
+      "legacy": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "const": "edit"
+                    },
+                    "arguments": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "enum": [
+                            "app.py"
+                          ]
+                        },
+                        "oldText": {
+                          "type": "string"
+                        },
+                        "newText": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "oldText",
+                        "newText"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "arguments"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "steps"
+        ],
+        "additionalProperties": false
+      },
+      "payload": {
+        "steps": [
+          {
+            "name": "edit",
+            "arguments": {
+              "path": "app.py",
+              "oldText": "tab\tvalue",
+              "newText": "new\n\"value\"\\"
+            }
+          }
+        ]
+      },
+      "expected": true,
+      "accepted": true
+    },
+    {
+      "legacy": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "const": "edit"
+                    },
+                    "arguments": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "enum": [
+                            "app.py"
+                          ]
+                        },
+                        "oldText": {
+                          "type": "string"
+                        },
+                        "newText": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "oldText",
+                        "newText"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "arguments"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "steps"
+        ],
+        "additionalProperties": false
+      },
+      "payload": {
+        "steps": [
+          {
+            "name": "edit",
+            "arguments": {
+              "path": "app.py",
+              "oldText": "\u4e2d\u6587",
+              "newText": "new\n\"value\"\\"
+            }
+          }
+        ]
+      },
+      "expected": true,
+      "accepted": true
+    },
+    {
+      "legacy": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "const": "edit"
+                    },
+                    "arguments": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "enum": [
+                            "app.py"
+                          ]
+                        },
+                        "oldText": {
+                          "type": "string"
+                        },
+                        "newText": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "oldText",
+                        "newText"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "arguments"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "steps"
+        ],
+        "additionalProperties": false
+      },
+      "payload": {
+        "steps": [
+          {
+            "name": "edit",
+            "arguments": {
+              "path": "app.py",
+              "oldText": "",
+              "newText": "new\n\"value\"\\"
+            }
+          }
+        ]
+      },
+      "expected": true,
+      "accepted": true
+    },
+    {
+      "legacy": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "const": "edit"
+                    },
+                    "arguments": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "enum": [
+                            "app.py"
+                          ]
+                        },
+                        "oldText": {
+                          "type": "string"
+                        },
+                        "newText": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "oldText",
+                        "newText"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "arguments"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "steps"
+        ],
+        "additionalProperties": false
+      },
+      "payload": {
+        "steps": []
+      },
+      "expected": false,
+      "accepted": false
+    },
+    {
+      "legacy": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "const": "edit"
+                    },
+                    "arguments": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "enum": [
+                            "app.py"
+                          ]
+                        },
+                        "oldText": {
+                          "type": "string"
+                        },
+                        "newText": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "oldText",
+                        "newText"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "arguments"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "steps"
+        ],
+        "additionalProperties": false
+      },
+      "payload": {
+        "steps": [
+          {
+            "name": "edit",
+            "arguments": {
+              "path": "unobserved.py",
+              "oldText": "",
+              "newText": "new\n\"value\"\\"
+            }
+          }
+        ]
+      },
+      "expected": false,
+      "accepted": false
+    }
+  ],
+  "mismatches": 0
+}

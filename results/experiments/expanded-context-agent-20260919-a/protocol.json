@@ -1,0 +1,26 @@
+{
+  "planned_attempts": 120,
+  "families": 10,
+  "repeats": 2,
+  "rounds": [
+    "cold",
+    "warm"
+  ],
+  "arms": [
+    "native",
+    "batched",
+    "contextual"
+  ],
+  "agent_timeout_seconds": 180,
+  "oracle_timeout_seconds": 15,
+  "client_concurrency": 1,
+  "retry_failed_attempts": false,
+  "runtime_changes_during_run": false,
+  "new_oracle_preflight": "oracle-preflight.json",
+  "percentiles": "Linear interpolation over all 40 attempts per arm; not a production tail estimate",
+  "incomplete_usage": "Timed-out in-flight calls may lack final trace records; recorded inference/token counts are lower bounds for affected arms",
+  "completed_attempts": 120,
+  "benchmark_exit_code": 1,
+  "exit_reason": "Full matrix completed with task failures; no retry replacement",
+  "ssh_tunnel_closed": true
+}

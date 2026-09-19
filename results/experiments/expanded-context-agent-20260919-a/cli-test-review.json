@@ -1,0 +1,219 @@
+[
+  {
+    "case": "0-multifile_feature-batched-1",
+    "base_passed": true,
+    "original_suite_passed": true,
+    "original_stderr": "test_lowercase_and_hyphenate (test_app.SlugifyTest.test_lowercase_and_hyphenate) ... ok\ntest_multiple_spaces (test_app.SlugifyTest.test_multiple_spaces) ... ok\ntest_whitespace_only (test_app.SlugifyTest.test_whitespace_only) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n",
+    "utility": {
+      "caught": true,
+      "failed_tests": [
+        "test_lowercase_and_hyphenate (test_app.SlugifyTest.test_lowercase_and_hyphenate)",
+        "test_multiple_spaces (test_app.SlugifyTest.test_multiple_spaces)",
+        "test_whitespace_only (test_app.SlugifyTest.test_whitespace_only)"
+      ]
+    },
+    "echo": {
+      "caught": false,
+      "stderr": "test_lowercase_and_hyphenate (test_app.SlugifyTest.test_lowercase_and_hyphenate) ... ok\ntest_multiple_spaces (test_app.SlugifyTest.test_multiple_spaces) ... ok\ntest_whitespace_only (test_app.SlugifyTest.test_whitespace_only) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n"
+    },
+    "slug": {
+      "caught": false,
+      "stderr": "test_lowercase_and_hyphenate (test_app.SlugifyTest.test_lowercase_and_hyphenate) ... ok\ntest_multiple_spaces (test_app.SlugifyTest.test_multiple_spaces) ... ok\ntest_whitespace_only (test_app.SlugifyTest.test_whitespace_only) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n"
+    },
+    "requested_tests_effective": false
+  },
+  {
+    "case": "0-multifile_feature-native-1",
+    "base_passed": true,
+    "original_suite_passed": true,
+    "original_stderr": "test_echo_mode_preserves_original_text (test_app.CliTests.test_echo_mode_preserves_original_text) ... ok\ntest_slug_mode_outputs_slug (test_app.CliTests.test_slug_mode_outputs_slug) ... ok\ntest_slug_mode_whitespace_only (test_app.CliTests.test_slug_mode_whitespace_only) ... ok\ntest_empty_string_returns_empty_string (test_app.SlugifyTests.test_empty_string_returns_empty_string) ... ok\ntest_extra_whitespace_collapses (test_app.SlugifyTests.test_extra_whitespace_collapses) ... ok\ntest_lowercases_and_joins_with_hyphens (test_app.SlugifyTests.test_lowercases_and_joins_with_hyphens) ... ok\ntest_multiple_words (test_app.SlugifyTests.test_multiple_words) ... ok\ntest_single_word (test_app.SlugifyTests.test_single_word) ... ok\ntest_whitespace_only_returns_empty_string (test_app.SlugifyTests.test_whitespace_only_returns_empty_string) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 0.001s\n\nOK\n",
+    "utility": {
+      "caught": true,
+      "failed_tests": [
+        "test_empty_string_returns_empty_string (test_app.SlugifyTests.test_empty_string_returns_empty_string)",
+        "test_extra_whitespace_collapses (test_app.SlugifyTests.test_extra_whitespace_collapses)",
+        "test_lowercases_and_joins_with_hyphens (test_app.SlugifyTests.test_lowercases_and_joins_with_hyphens)",
+        "test_multiple_words (test_app.SlugifyTests.test_multiple_words)",
+        "test_single_word (test_app.SlugifyTests.test_single_word)",
+        "test_whitespace_only_returns_empty_string (test_app.SlugifyTests.test_whitespace_only_returns_empty_string)"
+      ]
+    },
+    "echo": {
+      "caught": true,
+      "stderr": "test_echo_mode_preserves_original_text (test_app.CliTests.test_echo_mode_preserves_original_text) ... FAIL\ntest_slug_mode_outputs_slug (test_app.CliTests.test_slug_mode_outputs_slug) ... ok\ntest_slug_mode_whitespace_only (test_app.CliTests.test_slug_mode_whitespace_only) ... ok\ntest_empty_string_returns_empty_string (test_app.SlugifyTests.test_empty_string_returns_empty_string) ... ok\ntest_extra_whitespace_collapses (test_app.SlugifyTests.test_extra_whitespace_collapses) ... ok\ntest_lowercases_and_joins_with_hyphens (test_app.SlugifyTests.test_lowercases_and_joins_with_hyphens) ... ok\ntest_multiple_words (test_app.SlugifyTests.test_multiple_words) ... ok\ntest_single_word (test_app.SlugifyTests.test_single_word) ... ok\ntest_whitespace_only_returns_empty_string (test_app.SlugifyTests.test_whitespace_only_returns_empty_string) ... ok\n\n======================================================================\nFAIL: test_echo_mode_preserves_original_text (test_app.CliTests.test_echo_mode_preserves_original_text)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-cli-test-audit-3eph0846/project/test_app.py\", line 37, in test_echo_mode_preserves_original_text\n    self.assertEqual(self.run_cli(['Hello World']), 'Hello World\\n')\nAssertionError: '__BROKEN_CLI__\\n' != 'Hello World\\n'\n- __BROKEN_CLI__\n+ Hello World\n\n\n----------------------------------------------------------------------\nRan 9 tests in 0.001s\n\nFAILED (failures=1)\n"
+    },
+    "slug": {
+      "caught": true,
+      "stderr": "test_echo_mode_preserves_original_text (test_app.CliTests.test_echo_mode_preserves_original_text) ... ok\ntest_slug_mode_outputs_slug (test_app.CliTests.test_slug_mode_outputs_slug) ... FAIL\ntest_slug_mode_whitespace_only (test_app.CliTests.test_slug_mode_whitespace_only) ... FAIL\ntest_empty_string_returns_empty_string (test_app.SlugifyTests.test_empty_string_returns_empty_string) ... ok\ntest_extra_whitespace_collapses (test_app.SlugifyTests.test_extra_whitespace_collapses) ... ok\ntest_lowercases_and_joins_with_hyphens (test_app.SlugifyTests.test_lowercases_and_joins_with_hyphens) ... ok\ntest_multiple_words (test_app.SlugifyTests.test_multiple_words) ... ok\ntest_single_word (test_app.SlugifyTests.test_single_word) ... ok\ntest_whitespace_only_returns_empty_string (test_app.SlugifyTests.test_whitespace_only_returns_empty_string) ... ok\n\n======================================================================\nFAIL: test_slug_mode_outputs_slug (test_app.CliTests.test_slug_mode_outputs_slug)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-cli-test-audit-3eph0846/project/test_app.py\", line 40, in test_slug_mode_outputs_slug\n    self.assertEqual(self.run_cli(['--slug', 'Hello World']), 'hello-world\\n')\nAssertionError: '__BROKEN_CLI__\\n' != 'hello-world\\n'\n- __BROKEN_CLI__\n+ hello-world\n\n\n======================================================================\nFAIL: test_slug_mode_whitespace_only (test_app.CliTests.test_slug_mode_whitespace_only)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-cli-test-audit-3eph0846/project/test_app.py\", line 43, in test_slug_mode_whitespace_only\n    self.assertEqual(self.run_cli(['--slug', '   ']), '\\n')\nAssertionError: '__BROKEN_CLI__\\n' != '\\n'\n- __BROKEN_CLI__\n+ \n\n\n----------------------------------------------------------------------\nRan 9 tests in 0.001s\n\nFAILED (failures=2)\n"
+    },
+    "requested_tests_effective": true
+  },
+  {
+    "case": "0-multifile_feature-batched-2",
+    "base_passed": true,
+    "original_suite_passed": true,
+    "original_stderr": "test_echo_mode (test_app.CliTest.test_echo_mode) ... ok\ntest_slug_mode (test_app.CliTest.test_slug_mode) ... ok\ntest_empty (test_app.SlugifyTest.test_empty) ... ok\ntest_lowercase_and_hyphens (test_app.SlugifyTest.test_lowercase_and_hyphens) ... ok\ntest_whitespace_only (test_app.SlugifyTest.test_whitespace_only) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.035s\n\nOK\n",
+    "utility": {
+      "caught": true,
+      "failed_tests": [
+        "test_empty (test_app.SlugifyTest.test_empty)",
+        "test_lowercase_and_hyphens (test_app.SlugifyTest.test_lowercase_and_hyphens)",
+        "test_whitespace_only (test_app.SlugifyTest.test_whitespace_only)"
+      ]
+    },
+    "echo": {
+      "caught": true,
+      "stderr": "test_echo_mode (test_app.CliTest.test_echo_mode) ... FAIL\ntest_slug_mode (test_app.CliTest.test_slug_mode) ... ok\ntest_empty (test_app.SlugifyTest.test_empty) ... ok\ntest_lowercase_and_hyphens (test_app.SlugifyTest.test_lowercase_and_hyphens) ... ok\ntest_whitespace_only (test_app.SlugifyTest.test_whitespace_only) ... ok\n\n======================================================================\nFAIL: test_echo_mode (test_app.CliTest.test_echo_mode)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-cli-test-audit-7gcuok_5/project/test_app.py\", line 19, in test_echo_mode\n    self.assertEqual(out.decode().strip(), 'Hello World')\nAssertionError: '__BROKEN_CLI__' != 'Hello World'\n- __BROKEN_CLI__\n+ Hello World\n\n\n----------------------------------------------------------------------\nRan 5 tests in 0.034s\n\nFAILED (failures=1)\n"
+    },
+    "slug": {
+      "caught": true,
+      "stderr": "test_echo_mode (test_app.CliTest.test_echo_mode) ... ok\ntest_slug_mode (test_app.CliTest.test_slug_mode) ... FAIL\ntest_empty (test_app.SlugifyTest.test_empty) ... ok\ntest_lowercase_and_hyphens (test_app.SlugifyTest.test_lowercase_and_hyphens) ... ok\ntest_whitespace_only (test_app.SlugifyTest.test_whitespace_only) ... ok\n\n======================================================================\nFAIL: test_slug_mode (test_app.CliTest.test_slug_mode)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-cli-test-audit-7gcuok_5/project/test_app.py\", line 24, in test_slug_mode\n    self.assertEqual(out.decode().strip(), 'hello-world')\nAssertionError: '__BROKEN_CLI__' != 'hello-world'\n- __BROKEN_CLI__\n+ hello-world\n\n\n----------------------------------------------------------------------\nRan 5 tests in 0.033s\n\nFAILED (failures=1)\n"
+    },
+    "requested_tests_effective": true
+  },
+  {
+    "case": "0-multifile_feature-native-2",
+    "base_passed": true,
+    "original_suite_passed": true,
+    "original_stderr": "test_echo_mode_preserves_original (test_app.CliTests.test_echo_mode_preserves_original) ... ok\ntest_slug_mode (test_app.CliTests.test_slug_mode) ... ok\ntest_slug_mode_whitespace_only (test_app.CliTests.test_slug_mode_whitespace_only) ... ok\ntest_empty_string_returns_empty (test_app.SlugifyTests.test_empty_string_returns_empty) ... ok\ntest_lowercases_and_joins_with_hyphens (test_app.SlugifyTests.test_lowercases_and_joins_with_hyphens) ... ok\ntest_multiple_whitespace_collapses (test_app.SlugifyTests.test_multiple_whitespace_collapses) ... ok\ntest_single_word (test_app.SlugifyTests.test_single_word) ... ok\ntest_whitespace_only_returns_empty (test_app.SlugifyTests.test_whitespace_only_returns_empty) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.001s\n\nOK\n",
+    "utility": {
+      "caught": true,
+      "failed_tests": [
+        "test_empty_string_returns_empty (test_app.SlugifyTests.test_empty_string_returns_empty)",
+        "test_lowercases_and_joins_with_hyphens (test_app.SlugifyTests.test_lowercases_and_joins_with_hyphens)",
+        "test_multiple_whitespace_collapses (test_app.SlugifyTests.test_multiple_whitespace_collapses)",
+        "test_single_word (test_app.SlugifyTests.test_single_word)",
+        "test_whitespace_only_returns_empty (test_app.SlugifyTests.test_whitespace_only_returns_empty)"
+      ]
+    },
+    "echo": {
+      "caught": true,
+      "stderr": "test_echo_mode_preserves_original (test_app.CliTests.test_echo_mode_preserves_original) ... FAIL\ntest_slug_mode (test_app.CliTests.test_slug_mode) ... ok\ntest_slug_mode_whitespace_only (test_app.CliTests.test_slug_mode_whitespace_only) ... ok\ntest_empty_string_returns_empty (test_app.SlugifyTests.test_empty_string_returns_empty) ... ok\ntest_lowercases_and_joins_with_hyphens (test_app.SlugifyTests.test_lowercases_and_joins_with_hyphens) ... ok\ntest_multiple_whitespace_collapses (test_app.SlugifyTests.test_multiple_whitespace_collapses) ... ok\ntest_single_word (test_app.SlugifyTests.test_single_word) ... ok\ntest_whitespace_only_returns_empty (test_app.SlugifyTests.test_whitespace_only_returns_empty) ... ok\n\n======================================================================\nFAIL: test_echo_mode_preserves_original (test_app.CliTests.test_echo_mode_preserves_original)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-cli-test-audit-n2zn8yhx/project/test_app.py\", line 35, in test_echo_mode_preserves_original\n    self.assertEqual(self.run_cli(['Hello World']), 'Hello World\\n')\nAssertionError: '__BROKEN_CLI__\\n' != 'Hello World\\n'\n- __BROKEN_CLI__\n+ Hello World\n\n\n----------------------------------------------------------------------\nRan 8 tests in 0.001s\n\nFAILED (failures=1)\n"
+    },
+    "slug": {
+      "caught": true,
+      "stderr": "test_echo_mode_preserves_original (test_app.CliTests.test_echo_mode_preserves_original) ... ok\ntest_slug_mode (test_app.CliTests.test_slug_mode) ... FAIL\ntest_slug_mode_whitespace_only (test_app.CliTests.test_slug_mode_whitespace_only) ... FAIL\ntest_empty_string_returns_empty (test_app.SlugifyTests.test_empty_string_returns_empty) ... ok\ntest_lowercases_and_joins_with_hyphens (test_app.SlugifyTests.test_lowercases_and_joins_with_hyphens) ... ok\ntest_multiple_whitespace_collapses (test_app.SlugifyTests.test_multiple_whitespace_collapses) ... ok\ntest_single_word (test_app.SlugifyTests.test_single_word) ... ok\ntest_whitespace_only_returns_empty (test_app.SlugifyTests.test_whitespace_only_returns_empty) ... ok\n\n======================================================================\nFAIL: test_slug_mode (test_app.CliTests.test_slug_mode)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-cli-test-audit-n2zn8yhx/project/test_app.py\", line 38, in test_slug_mode\n    self.assertEqual(self.run_cli(['--slug', 'Hello World']), 'hello-world\\n')\nAssertionError: '__BROKEN_CLI__\\n' != 'hello-world\\n'\n- __BROKEN_CLI__\n+ hello-world\n\n\n======================================================================\nFAIL: test_slug_mode_whitespace_only (test_app.CliTests.test_slug_mode_whitespace_only)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-cli-test-audit-n2zn8yhx/project/test_app.py\", line 41, in test_slug_mode_whitespace_only\n    self.assertEqual(self.run_cli(['--slug', '   ']), '\\n')\nAssertionError: '__BROKEN_CLI__\\n' != '\\n'\n- __BROKEN_CLI__\n+ \n\n\n----------------------------------------------------------------------\nRan 8 tests in 0.001s\n\nFAILED (failures=2)\n"
+    },
+    "requested_tests_effective": true
+  },
+  {
+    "case": "1-multifile_feature-batched-1",
+    "base_passed": true,
+    "original_suite_passed": true,
+    "original_stderr": "test_echo_without_slug (test_app.CliTest.test_echo_without_slug) ... ok\ntest_slug_mode (test_app.CliTest.test_slug_mode) ... ok\ntest_empty (test_app.SlugifyTest.test_empty) ... ok\ntest_lowercase_and_hyphens (test_app.SlugifyTest.test_lowercase_and_hyphens) ... ok\ntest_whitespace_only (test_app.SlugifyTest.test_whitespace_only) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.036s\n\nOK\n",
+    "utility": {
+      "caught": true,
+      "failed_tests": [
+        "test_empty (test_app.SlugifyTest.test_empty)",
+        "test_lowercase_and_hyphens (test_app.SlugifyTest.test_lowercase_and_hyphens)",
+        "test_whitespace_only (test_app.SlugifyTest.test_whitespace_only)"
+      ]
+    },
+    "echo": {
+      "caught": true,
+      "stderr": "test_echo_without_slug (test_app.CliTest.test_echo_without_slug) ... FAIL\ntest_slug_mode (test_app.CliTest.test_slug_mode) ... ok\ntest_empty (test_app.SlugifyTest.test_empty) ... ok\ntest_lowercase_and_hyphens (test_app.SlugifyTest.test_lowercase_and_hyphens) ... ok\ntest_whitespace_only (test_app.SlugifyTest.test_whitespace_only) ... ok\n\n======================================================================\nFAIL: test_echo_without_slug (test_app.CliTest.test_echo_without_slug)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-cli-test-audit-c94s0xct/project/test_app.py\", line 19, in test_echo_without_slug\n    self.assertEqual(out.decode().strip(), 'Hello World')\nAssertionError: '__BROKEN_CLI__' != 'Hello World'\n- __BROKEN_CLI__\n+ Hello World\n\n\n----------------------------------------------------------------------\nRan 5 tests in 0.034s\n\nFAILED (failures=1)\n"
+    },
+    "slug": {
+      "caught": true,
+      "stderr": "test_echo_without_slug (test_app.CliTest.test_echo_without_slug) ... ok\ntest_slug_mode (test_app.CliTest.test_slug_mode) ... FAIL\ntest_empty (test_app.SlugifyTest.test_empty) ... ok\ntest_lowercase_and_hyphens (test_app.SlugifyTest.test_lowercase_and_hyphens) ... ok\ntest_whitespace_only (test_app.SlugifyTest.test_whitespace_only) ... ok\n\n======================================================================\nFAIL: test_slug_mode (test_app.CliTest.test_slug_mode)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-cli-test-audit-c94s0xct/project/test_app.py\", line 24, in test_slug_mode\n    self.assertEqual(out.decode().strip(), 'hello-world')\nAssertionError: '__BROKEN_CLI__' != 'hello-world'\n- __BROKEN_CLI__\n+ hello-world\n\n\n----------------------------------------------------------------------\nRan 5 tests in 0.033s\n\nFAILED (failures=1)\n"
+    },
+    "requested_tests_effective": true
+  },
+  {
+    "case": "1-multifile_feature-contextual-1",
+    "base_passed": true,
+    "original_suite_passed": true,
+    "original_stderr": "test_echo_mode (test_app.TestCLI.test_echo_mode) ... ok\ntest_slug_mode (test_app.TestCLI.test_slug_mode) ... ok\ntest_lowercase_and_hyphenate (test_app.TestSlugify.test_lowercase_and_hyphenate) ... ok\ntest_whitespace_only (test_app.TestSlugify.test_whitespace_only) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+    "utility": {
+      "caught": true,
+      "failed_tests": [
+        "test_lowercase_and_hyphenate (test_app.TestSlugify.test_lowercase_and_hyphenate)",
+        "test_whitespace_only (test_app.TestSlugify.test_whitespace_only)"
+      ]
+    },
+    "echo": {
+      "caught": false,
+      "stderr": "test_echo_mode (test_app.TestCLI.test_echo_mode) ... ok\ntest_slug_mode (test_app.TestCLI.test_slug_mode) ... ok\ntest_lowercase_and_hyphenate (test_app.TestSlugify.test_lowercase_and_hyphenate) ... ok\ntest_whitespace_only (test_app.TestSlugify.test_whitespace_only) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n"
+    },
+    "slug": {
+      "caught": false,
+      "stderr": "test_echo_mode (test_app.TestCLI.test_echo_mode) ... ok\ntest_slug_mode (test_app.TestCLI.test_slug_mode) ... ok\ntest_lowercase_and_hyphenate (test_app.TestSlugify.test_lowercase_and_hyphenate) ... ok\ntest_whitespace_only (test_app.TestSlugify.test_whitespace_only) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n"
+    },
+    "requested_tests_effective": false
+  },
+  {
+    "case": "1-multifile_feature-native-1",
+    "base_passed": true,
+    "original_suite_passed": true,
+    "original_stderr": "test_echo_mode_preserves_original_text (test_app.CliTests.test_echo_mode_preserves_original_text) ... ok\ntest_slug_mode_outputs_slug (test_app.CliTests.test_slug_mode_outputs_slug) ... ok\ntest_slug_mode_whitespace_only (test_app.CliTests.test_slug_mode_whitespace_only) ... ok\ntest_empty_string_returns_empty_string (test_app.SlugifyTests.test_empty_string_returns_empty_string) ... ok\ntest_lowercases_and_joins_with_hyphens (test_app.SlugifyTests.test_lowercases_and_joins_with_hyphens) ... ok\ntest_multiple_whitespace_collapses (test_app.SlugifyTests.test_multiple_whitespace_collapses) ... ok\ntest_single_word (test_app.SlugifyTests.test_single_word) ... ok\ntest_whitespace_only_returns_empty_string (test_app.SlugifyTests.test_whitespace_only_returns_empty_string) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.001s\n\nOK\n",
+    "utility": {
+      "caught": true,
+      "failed_tests": [
+        "test_empty_string_returns_empty_string (test_app.SlugifyTests.test_empty_string_returns_empty_string)",
+        "test_lowercases_and_joins_with_hyphens (test_app.SlugifyTests.test_lowercases_and_joins_with_hyphens)",
+        "test_multiple_whitespace_collapses (test_app.SlugifyTests.test_multiple_whitespace_collapses)",
+        "test_single_word (test_app.SlugifyTests.test_single_word)",
+        "test_whitespace_only_returns_empty_string (test_app.SlugifyTests.test_whitespace_only_returns_empty_string)"
+      ]
+    },
+    "echo": {
+      "caught": true,
+      "stderr": "test_echo_mode_preserves_original_text (test_app.CliTests.test_echo_mode_preserves_original_text) ... FAIL\ntest_slug_mode_outputs_slug (test_app.CliTests.test_slug_mode_outputs_slug) ... ok\ntest_slug_mode_whitespace_only (test_app.CliTests.test_slug_mode_whitespace_only) ... ok\ntest_empty_string_returns_empty_string (test_app.SlugifyTests.test_empty_string_returns_empty_string) ... ok\ntest_lowercases_and_joins_with_hyphens (test_app.SlugifyTests.test_lowercases_and_joins_with_hyphens) ... ok\ntest_multiple_whitespace_collapses (test_app.SlugifyTests.test_multiple_whitespace_collapses) ... ok\ntest_single_word (test_app.SlugifyTests.test_single_word) ... ok\ntest_whitespace_only_returns_empty_string (test_app.SlugifyTests.test_whitespace_only_returns_empty_string) ... ok\n\n======================================================================\nFAIL: test_echo_mode_preserves_original_text (test_app.CliTests.test_echo_mode_preserves_original_text)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-cli-test-audit-t4p20q_v/project/test_app.py\", line 36, in test_echo_mode_preserves_original_text\n    self.assertEqual(output, 'Hello World\\n')\nAssertionError: '__BROKEN_CLI__\\n' != 'Hello World\\n'\n- __BROKEN_CLI__\n+ Hello World\n\n\n----------------------------------------------------------------------\nRan 8 tests in 0.001s\n\nFAILED (failures=1)\n"
+    },
+    "slug": {
+      "caught": true,
+      "stderr": "test_echo_mode_preserves_original_text (test_app.CliTests.test_echo_mode_preserves_original_text) ... ok\ntest_slug_mode_outputs_slug (test_app.CliTests.test_slug_mode_outputs_slug) ... FAIL\ntest_slug_mode_whitespace_only (test_app.CliTests.test_slug_mode_whitespace_only) ... FAIL\ntest_empty_string_returns_empty_string (test_app.SlugifyTests.test_empty_string_returns_empty_string) ... ok\ntest_lowercases_and_joins_with_hyphens (test_app.SlugifyTests.test_lowercases_and_joins_with_hyphens) ... ok\ntest_multiple_whitespace_collapses (test_app.SlugifyTests.test_multiple_whitespace_collapses) ... ok\ntest_single_word (test_app.SlugifyTests.test_single_word) ... ok\ntest_whitespace_only_returns_empty_string (test_app.SlugifyTests.test_whitespace_only_returns_empty_string) ... ok\n\n======================================================================\nFAIL: test_slug_mode_outputs_slug (test_app.CliTests.test_slug_mode_outputs_slug)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-cli-test-audit-t4p20q_v/project/test_app.py\", line 40, in test_slug_mode_outputs_slug\n    self.assertEqual(output, 'hello-world\\n')\nAssertionError: '__BROKEN_CLI__\\n' != 'hello-world\\n'\n- __BROKEN_CLI__\n+ hello-world\n\n\n======================================================================\nFAIL: test_slug_mode_whitespace_only (test_app.CliTests.test_slug_mode_whitespace_only)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-cli-test-audit-t4p20q_v/project/test_app.py\", line 44, in test_slug_mode_whitespace_only\n    self.assertEqual(output, '\\n')\nAssertionError: '__BROKEN_CLI__\\n' != '\\n'\n- __BROKEN_CLI__\n+ \n\n\n----------------------------------------------------------------------\nRan 8 tests in 0.001s\n\nFAILED (failures=2)\n"
+    },
+    "requested_tests_effective": true
+  },
+  {
+    "case": "1-multifile_feature-batched-2",
+    "base_passed": true,
+    "original_suite_passed": true,
+    "original_stderr": "test_echo_without_slug (test_app.CliTests.test_echo_without_slug) ... ok\ntest_slug_mode (test_app.CliTests.test_slug_mode) ... ok\ntest_empty_string_returns_empty_string (test_app.SlugifyTests.test_empty_string_returns_empty_string) ... ok\ntest_lowercases_and_joins_with_hyphens (test_app.SlugifyTests.test_lowercases_and_joins_with_hyphens) ... ok\ntest_splits_on_whitespace (test_app.SlugifyTests.test_splits_on_whitespace) ... ok\ntest_whitespace_only_returns_empty_string (test_app.SlugifyTests.test_whitespace_only_returns_empty_string) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.000s\n\nOK\n",
+    "utility": {
+      "caught": true,
+      "failed_tests": [
+        "test_empty_string_returns_empty_string (test_app.SlugifyTests.test_empty_string_returns_empty_string)",
+        "test_lowercases_and_joins_with_hyphens (test_app.SlugifyTests.test_lowercases_and_joins_with_hyphens)",
+        "test_splits_on_whitespace (test_app.SlugifyTests.test_splits_on_whitespace)",
+        "test_whitespace_only_returns_empty_string (test_app.SlugifyTests.test_whitespace_only_returns_empty_string)"
+      ]
+    },
+    "echo": {
+      "caught": false,
+      "stderr": "test_echo_without_slug (test_app.CliTests.test_echo_without_slug) ... ok\ntest_slug_mode (test_app.CliTests.test_slug_mode) ... ok\ntest_empty_string_returns_empty_string (test_app.SlugifyTests.test_empty_string_returns_empty_string) ... ok\ntest_lowercases_and_joins_with_hyphens (test_app.SlugifyTests.test_lowercases_and_joins_with_hyphens) ... ok\ntest_splits_on_whitespace (test_app.SlugifyTests.test_splits_on_whitespace) ... ok\ntest_whitespace_only_returns_empty_string (test_app.SlugifyTests.test_whitespace_only_returns_empty_string) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.000s\n\nOK\n"
+    },
+    "slug": {
+      "caught": false,
+      "stderr": "test_echo_without_slug (test_app.CliTests.test_echo_without_slug) ... ok\ntest_slug_mode (test_app.CliTests.test_slug_mode) ... ok\ntest_empty_string_returns_empty_string (test_app.SlugifyTests.test_empty_string_returns_empty_string) ... ok\ntest_lowercases_and_joins_with_hyphens (test_app.SlugifyTests.test_lowercases_and_joins_with_hyphens) ... ok\ntest_splits_on_whitespace (test_app.SlugifyTests.test_splits_on_whitespace) ... ok\ntest_whitespace_only_returns_empty_string (test_app.SlugifyTests.test_whitespace_only_returns_empty_string) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.000s\n\nOK\n"
+    },
+    "requested_tests_effective": false
+  },
+  {
+    "case": "1-multifile_feature-native-2",
+    "base_passed": true,
+    "original_suite_passed": true,
+    "original_stderr": "test_echo_mode_preserves_original_text (test_app.CliTests.test_echo_mode_preserves_original_text) ... ok\ntest_slug_mode (test_app.CliTests.test_slug_mode) ... ok\ntest_slug_mode_whitespace_only (test_app.CliTests.test_slug_mode_whitespace_only) ... ok\ntest_empty_string_returns_empty_string (test_app.SlugifyTests.test_empty_string_returns_empty_string) ... ok\ntest_lowercases_and_joins_with_hyphens (test_app.SlugifyTests.test_lowercases_and_joins_with_hyphens) ... ok\ntest_multiple_words (test_app.SlugifyTests.test_multiple_words) ... ok\ntest_single_word (test_app.SlugifyTests.test_single_word) ... ok\ntest_whitespace_only_returns_empty_string (test_app.SlugifyTests.test_whitespace_only_returns_empty_string) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.052s\n\nOK\n",
+    "utility": {
+      "caught": true,
+      "failed_tests": [
+        "test_echo_mode_preserves_original_text (test_app.CliTests.test_echo_mode_preserves_original_text)",
+        "test_empty_string_returns_empty_string (test_app.SlugifyTests.test_empty_string_returns_empty_string)",
+        "test_lowercases_and_joins_with_hyphens (test_app.SlugifyTests.test_lowercases_and_joins_with_hyphens)",
+        "test_multiple_words (test_app.SlugifyTests.test_multiple_words)",
+        "test_single_word (test_app.SlugifyTests.test_single_word)",
+        "test_whitespace_only_returns_empty_string (test_app.SlugifyTests.test_whitespace_only_returns_empty_string)"
+      ]
+    },
+    "echo": {
+      "caught": true,
+      "stderr": "test_echo_mode_preserves_original_text (test_app.CliTests.test_echo_mode_preserves_original_text) ... FAIL\ntest_slug_mode (test_app.CliTests.test_slug_mode) ... ok\ntest_slug_mode_whitespace_only (test_app.CliTests.test_slug_mode_whitespace_only) ... ok\ntest_empty_string_returns_empty_string (test_app.SlugifyTests.test_empty_string_returns_empty_string) ... ok\ntest_lowercases_and_joins_with_hyphens (test_app.SlugifyTests.test_lowercases_and_joins_with_hyphens) ... ok\ntest_multiple_words (test_app.SlugifyTests.test_multiple_words) ... ok\ntest_single_word (test_app.SlugifyTests.test_single_word) ... ok\ntest_whitespace_only_returns_empty_string (test_app.SlugifyTests.test_whitespace_only_returns_empty_string) ... ok\n\n======================================================================\nFAIL: test_echo_mode_preserves_original_text (test_app.CliTests.test_echo_mode_preserves_original_text)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-cli-test-audit-1msdmcb7/project/test_app.py\", line 37, in test_echo_mode_preserves_original_text\n    self.assertEqual(result.stdout, 'Hello World\\n')\nAssertionError: '__BROKEN_CLI__\\n' != 'Hello World\\n'\n- __BROKEN_CLI__\n+ Hello World\n\n\n----------------------------------------------------------------------\nRan 8 tests in 0.052s\n\nFAILED (failures=1)\n"
+    },
+    "slug": {
+      "caught": true,
+      "stderr": "test_echo_mode_preserves_original_text (test_app.CliTests.test_echo_mode_preserves_original_text) ... ok\ntest_slug_mode (test_app.CliTests.test_slug_mode) ... FAIL\ntest_slug_mode_whitespace_only (test_app.CliTests.test_slug_mode_whitespace_only) ... FAIL\ntest_empty_string_returns_empty_string (test_app.SlugifyTests.test_empty_string_returns_empty_string) ... ok\ntest_lowercases_and_joins_with_hyphens (test_app.SlugifyTests.test_lowercases_and_joins_with_hyphens) ... ok\ntest_multiple_words (test_app.SlugifyTests.test_multiple_words) ... ok\ntest_single_word (test_app.SlugifyTests.test_single_word) ... ok\ntest_whitespace_only_returns_empty_string (test_app.SlugifyTests.test_whitespace_only_returns_empty_string) ... ok\n\n======================================================================\nFAIL: test_slug_mode (test_app.CliTests.test_slug_mode)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-cli-test-audit-1msdmcb7/project/test_app.py\", line 47, in test_slug_mode\n    self.assertEqual(result.stdout, 'hello-world\\n')\nAssertionError: '__BROKEN_CLI__\\n' != 'hello-world\\n'\n- __BROKEN_CLI__\n+ hello-world\n\n\n======================================================================\nFAIL: test_slug_mode_whitespace_only (test_app.CliTests.test_slug_mode_whitespace_only)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-cli-test-audit-1msdmcb7/project/test_app.py\", line 57, in test_slug_mode_whitespace_only\n    self.assertEqual(result.stdout, '\\n')\nAssertionError: '__BROKEN_CLI__\\n' != '\\n'\n- __BROKEN_CLI__\n+ \n\n\n----------------------------------------------------------------------\nRan 8 tests in 0.050s\n\nFAILED (failures=2)\n"
+    },
+    "requested_tests_effective": true
+  }
+]

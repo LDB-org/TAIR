@@ -1,0 +1,614 @@
+{
+  "arm": "contextual",
+  "value": 0,
+  "seconds": 6.6870037079788744,
+  "timed_out": false,
+  "validated_seconds": 6.7755443742498755,
+  "exit_code": 0,
+  "finished": true,
+  "validation": {
+    "passed": true,
+    "seconds": 0.0885406662710011,
+    "stderr": ""
+  },
+  "passed": true,
+  "metrics": [
+    {
+      "metrics_version": 2,
+      "trace_id": "d8de1392feef4d67b07ed331916a0157",
+      "session_id": "01a0b617-b2dd-7700-808d-fbe33d4e0e9d",
+      "parent_tool_call_id": null,
+      "stage_seconds": {
+        "plan_preparation": 0.00013424968346953392,
+        "generation_preparation": 0.22765420796349645,
+        "generation_http": 0.9173207497224212,
+        "generation": 1.1450460418127477
+      },
+      "http_requests": [
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789761401.637093,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.22595845814794302
+        },
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789761401.864853,
+          "http_status": 200,
+          "request_id": "openjev-23162b6412564ae682b6b0b166a49467",
+          "input_tokens": 1551,
+          "generated_argument_tokens": 32,
+          "classification_control_records": 1,
+          "engine_seconds": 0.5945386569947004,
+          "classification_seconds": 0.19292833842337132,
+          "classification_timing": null,
+          "seconds": 0.9167255833745003
+        }
+      ],
+      "plan_known_files": [],
+      "plan_inventory_entries": 2,
+      "continuation_cache_hit": true,
+      "label_cache_hit": true,
+      "batch_tool_count": 2,
+      "batch_tool_names": [
+        "read",
+        "read"
+      ],
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 1551,
+        "known_generated_argument_tokens": 32,
+        "known_classification_control_records": 1
+      },
+      "request_id": "openjev-23162b6412564ae682b6b0b166a49467",
+      "decision": {
+        "index": 1,
+        "name": "execute_plan",
+        "control_id": 36,
+        "logprobs": [
+          -5.0385355949401855,
+          -0.03853556141257286
+        ],
+        "classification_seconds": 0.19292833842337132
+      },
+      "generated_argument_tokens": 32,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 0.5945386569947004,
+      "finish_reason": "stop",
+      "input_tokens": 1551,
+      "calls": [
+        {
+          "name": "read",
+          "arguments": {
+            "path": "app.py"
+          }
+        },
+        {
+          "name": "read",
+          "arguments": {
+            "path": "test_app.py"
+          }
+        }
+      ],
+      "status": "ok",
+      "wall_seconds": 1.2024201662279665,
+      "action": "chat",
+      "timestamp": 1789761402.83895
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "4f82a54d63ea4670a108e42a85481a7f",
+      "session_id": "01a0b617-b2dd-7700-808d-fbe33d4e0e9d",
+      "parent_tool_call_id": null,
+      "stage_seconds": {
+        "plan_preparation": 0.00022412510588765144,
+        "generation_preparation": 0.244009958114475,
+        "generation_http": 1.5632599582895637,
+        "generation": 1.8073522918857634
+      },
+      "http_requests": [
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789761402.90176,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.23589070793241262
+        },
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789761403.148106,
+          "http_status": 200,
+          "request_id": "openjev-1dae3c26a4c5411ea0172717f7477e00",
+          "input_tokens": 3118,
+          "generated_argument_tokens": 83,
+          "classification_control_records": 1,
+          "engine_seconds": 1.097512248903513,
+          "classification_seconds": 0.24658846575766802,
+          "classification_timing": null,
+          "seconds": 1.5603941245935857
+        }
+      ],
+      "plan_known_files": [
+        "app.py",
+        "test_app.py"
+      ],
+      "plan_inventory_entries": 2,
+      "label_cache_hit": true,
+      "continuation_cache_hit": true,
+      "batch_tool_count": 2,
+      "batch_tool_names": [
+        "compact_edit",
+        "bash"
+      ],
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 3118,
+        "known_generated_argument_tokens": 83,
+        "known_classification_control_records": 1
+      },
+      "request_id": "openjev-1dae3c26a4c5411ea0172717f7477e00",
+      "decision": {
+        "index": 1,
+        "name": "execute_plan",
+        "control_id": 36,
+        "logprobs": [
+          -3.9268834590911865,
+          -0.051883406937122345
+        ],
+        "classification_seconds": 0.24658846575766802
+      },
+      "generated_argument_tokens": 83,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 1.097512248903513,
+      "finish_reason": "stop",
+      "input_tokens": 3118,
+      "calls": [
+        {
+          "name": "compact_edit",
+          "arguments": {
+            "path": "app.py",
+            "task": "Change --timeout default to 2.5. Change --host default to \"remote\". Change --verbose default to true. Change --workers help to \"Worker count\". Change --workers required to true."
+          }
+        },
+        {
+          "name": "bash",
+          "arguments": {
+            "command": "python -m unittest -v"
+          }
+        }
+      ],
+      "status": "ok",
+      "wall_seconds": 1.8506918749772012,
+      "action": "chat",
+      "timestamp": 1789761404.751702
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "79113dfc92b74b3e9cdab0dad7ab0fb3",
+      "session_id": "01a0b617-b2dd-7700-808d-fbe33d4e0e9d",
+      "parent_tool_call_id": "openjev-1dae3c26a4c5411ea0172717f7477e00-0",
+      "stage_seconds": {
+        "lock_wait": 5.375128239393234e-06,
+        "retrieval": 0.0005542081780731678,
+        "cache_preparation": 0.20906862523406744,
+        "cache_http": 0.3715754169970751,
+        "cache_classification": 0.580971417017281,
+        "cached_validation": 0.017191209364682436,
+        "write": 0.003803292289376259,
+        "verification": 1.3084150850772858e-05,
+        "admission": 0.0008534169755876064
+      },
+      "http_requests": [
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789761404.804965,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.20476458314806223
+        },
+        {
+          "route": "/v1/completions",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789761405.014271,
+          "http_status": 200,
+          "request_id": "cmpl-a5ba985df47307c3",
+          "input_tokens": 288,
+          "generated_argument_tokens": 0,
+          "classification_control_records": 1,
+          "seconds": 0.3711766661144793
+        }
+      ],
+      "codebook_enabled": true,
+      "cache_hit": true,
+      "applied": true,
+      "retrieval": {
+        "book_entries": 1,
+        "task_path_matches": 1,
+        "source_matches": 1,
+        "candidate_count": 1
+      },
+      "candidates": [
+        {
+          "id": 0,
+          "description": "Change --timeout default to 2.5. Change --host default to \"remote\". Change --verbose default to true. Change --workers help to \"Worker count\". Change --workers required to true.",
+          "edits": [
+            [
+              "kw",
+              "--timeout",
+              "default",
+              2.5
+            ],
+            [
+              "kw",
+              "--host",
+              "default",
+              "remote"
+            ],
+            [
+              "kw",
+              "--verbose",
+              "default",
+              true
+            ],
+            [
+              "kw",
+              "--workers",
+              "help",
+              "Worker count"
+            ],
+            [
+              "kw",
+              "--workers",
+              "required",
+              true
+            ]
+          ],
+          "exact_task": "Change --timeout default to 2.5. Change --host default to \"remote\". Change --verbose default to true. Change --workers help to \"Worker count\". Change --workers required to true.",
+          "source_sha256": "ff3ce632ba63131cea6bcea647abf9f1a684f1fe5d2f5c051aae4370c9690d5b",
+          "source_match": "exact"
+        }
+      ],
+      "jit_entries_before": 0,
+      "jit_hit": false,
+      "fallback_reason": null,
+      "cache_decision": {
+        "candidates": [
+          {
+            "id": 0,
+            "description": "Change --timeout default to 2.5. Change --host default to \"remote\". Change --verbose default to true. Change --workers help to \"Worker count\". Change --workers required to true.",
+            "edits": [
+              [
+                "kw",
+                "--timeout",
+                "default",
+                2.5
+              ],
+              [
+                "kw",
+                "--host",
+                "default",
+                "remote"
+              ],
+              [
+                "kw",
+                "--verbose",
+                "default",
+                true
+              ],
+              [
+                "kw",
+                "--workers",
+                "help",
+                "Worker count"
+              ],
+              [
+                "kw",
+                "--workers",
+                "required",
+                true
+              ]
+            ],
+            "exact_task": "Change --timeout default to 2.5. Change --host default to \"remote\". Change --verbose default to true. Change --workers help to \"Worker count\". Change --workers required to true.",
+            "source_sha256": "ff3ce632ba63131cea6bcea647abf9f1a684f1fe5d2f5c051aae4370c9690d5b",
+            "source_match": "exact"
+          },
+          null
+        ],
+        "omitted_candidates": 0,
+        "thresholds": {
+          "conditional_probability": 0.95,
+          "margin": 3
+        },
+        "accepted": true,
+        "rejection_reasons": [],
+        "scores": [
+          -0.002784187439829111,
+          -6.377784252166748
+        ],
+        "selected_index": 0,
+        "selected_candidate": {
+          "id": 0,
+          "description": "Change --timeout default to 2.5. Change --host default to \"remote\". Change --verbose default to true. Change --workers help to \"Worker count\". Change --workers required to true.",
+          "edits": [
+            [
+              "kw",
+              "--timeout",
+              "default",
+              2.5
+            ],
+            [
+              "kw",
+              "--host",
+              "default",
+              "remote"
+            ],
+            [
+              "kw",
+              "--verbose",
+              "default",
+              true
+            ],
+            [
+              "kw",
+              "--workers",
+              "help",
+              "Worker count"
+            ],
+            [
+              "kw",
+              "--workers",
+              "required",
+              true
+            ]
+          ],
+          "exact_task": "Change --timeout default to 2.5. Change --host default to \"remote\". Change --verbose default to true. Change --workers help to \"Worker count\". Change --workers required to true.",
+          "source_sha256": "ff3ce632ba63131cea6bcea647abf9f1a684f1fe5d2f5c051aae4370c9690d5b",
+          "source_match": "exact"
+        },
+        "request_id": "cmpl-a5ba985df47307c3",
+        "gate": {
+          "conditional_probability": 0.99829927769846,
+          "margin": 6.375000064726919,
+          "candidate_mass": 0.9989185679013446
+        },
+        "acceptance_basis": "exact_task"
+      },
+      "label_cache_hit": true,
+      "cache_selected_valid": true,
+      "backup": "/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-expanded-agent-css9twwz/1-properties-contextual/state/workspaces/b18239d12f87a8a5c9d7/backup-216da4a0a5ac4b33bafd67f92bedc31c.py",
+      "source_sha256": "ff3ce632ba63131cea6bcea647abf9f1a684f1fe5d2f5c051aae4370c9690d5b",
+      "updated_sha256": "054fe73e11c344585b7081ef43cfc94b324e51650e44996a1ff0b048f1579a21",
+      "jit_admission_origin": null,
+      "schema_hit": false,
+      "jit_admitted": 0,
+      "jit_entries_after": 0,
+      "validation": "schema + Python compile; semantic correctness unverified",
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 288,
+        "known_generated_argument_tokens": 0,
+        "known_classification_control_records": 1
+      },
+      "path": "/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-expanded-agent-css9twwz/1-properties-contextual/project/app.py",
+      "admitted": 0,
+      "input_tokens": 288,
+      "generated_argument_tokens": 0,
+      "classification_control_records": 1,
+      "requests": [
+        {
+          "gate": {
+            "conditional_probability": 0.99829927769846,
+            "margin": 6.375000064726919,
+            "candidate_mass": 0.9989185679013446
+          },
+          "decision": {
+            "candidates": [
+              {
+                "id": 0,
+                "description": "Change --timeout default to 2.5. Change --host default to \"remote\". Change --verbose default to true. Change --workers help to \"Worker count\". Change --workers required to true.",
+                "edits": [
+                  [
+                    "kw",
+                    "--timeout",
+                    "default",
+                    2.5
+                  ],
+                  [
+                    "kw",
+                    "--host",
+                    "default",
+                    "remote"
+                  ],
+                  [
+                    "kw",
+                    "--verbose",
+                    "default",
+                    true
+                  ],
+                  [
+                    "kw",
+                    "--workers",
+                    "help",
+                    "Worker count"
+                  ],
+                  [
+                    "kw",
+                    "--workers",
+                    "required",
+                    true
+                  ]
+                ],
+                "exact_task": "Change --timeout default to 2.5. Change --host default to \"remote\". Change --verbose default to true. Change --workers help to \"Worker count\". Change --workers required to true.",
+                "source_sha256": "ff3ce632ba63131cea6bcea647abf9f1a684f1fe5d2f5c051aae4370c9690d5b",
+                "source_match": "exact"
+              },
+              null
+            ],
+            "omitted_candidates": 0,
+            "thresholds": {
+              "conditional_probability": 0.95,
+              "margin": 3
+            },
+            "accepted": true,
+            "rejection_reasons": [],
+            "scores": [
+              -0.002784187439829111,
+              -6.377784252166748
+            ],
+            "selected_index": 0,
+            "selected_candidate": {
+              "id": 0,
+              "description": "Change --timeout default to 2.5. Change --host default to \"remote\". Change --verbose default to true. Change --workers help to \"Worker count\". Change --workers required to true.",
+              "edits": [
+                [
+                  "kw",
+                  "--timeout",
+                  "default",
+                  2.5
+                ],
+                [
+                  "kw",
+                  "--host",
+                  "default",
+                  "remote"
+                ],
+                [
+                  "kw",
+                  "--verbose",
+                  "default",
+                  true
+                ],
+                [
+                  "kw",
+                  "--workers",
+                  "help",
+                  "Worker count"
+                ],
+                [
+                  "kw",
+                  "--workers",
+                  "required",
+                  true
+                ]
+              ],
+              "exact_task": "Change --timeout default to 2.5. Change --host default to \"remote\". Change --verbose default to true. Change --workers help to \"Worker count\". Change --workers required to true.",
+              "source_sha256": "ff3ce632ba63131cea6bcea647abf9f1a684f1fe5d2f5c051aae4370c9690d5b",
+              "source_match": "exact"
+            },
+            "request_id": "cmpl-a5ba985df47307c3",
+            "gate": {
+              "conditional_probability": 0.99829927769846,
+              "margin": 6.375000064726919,
+              "candidate_mass": 0.9989185679013446
+            },
+            "acceptance_basis": "exact_task"
+          },
+          "input_tokens": 288,
+          "classification_control_records": 1,
+          "generated_argument_tokens": 0,
+          "request_id": "cmpl-a5ba985df47307c3"
+        }
+      ],
+      "status": "ok",
+      "wall_seconds": 0.6039087921380997,
+      "action": "edit",
+      "timestamp": 1789761405.408162
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "df3a8dc7a6ee43f69522a0d2f4e5b378",
+      "session_id": "01a0b617-b2dd-7700-808d-fbe33d4e0e9d",
+      "parent_tool_call_id": null,
+      "stage_seconds": {
+        "plan_preparation": 0.00022220797836780548,
+        "generation_preparation": 0.2978919167071581,
+        "generation_http": 1.9865647498518229,
+        "generation": 2.284557458013296
+      },
+      "http_requests": [
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789761405.517053,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.2970089167356491
+        },
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789761405.81536,
+          "http_status": 200,
+          "request_id": "openjev-ab022d8eb95448d686ec97b95c59687d",
+          "input_tokens": 3148,
+          "generated_argument_tokens": 146,
+          "classification_control_records": 1,
+          "engine_seconds": 1.6475397208705544,
+          "classification_seconds": 0.2932733688503504,
+          "classification_timing": null,
+          "seconds": 1.985584583133459
+        }
+      ],
+      "plan_known_files": [
+        "app.py",
+        "test_app.py"
+      ],
+      "plan_inventory_entries": 2,
+      "continuation_cache_hit": true,
+      "label_cache_hit": true,
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 3148,
+        "known_generated_argument_tokens": 146,
+        "known_classification_control_records": 1
+      },
+      "request_id": "openjev-ab022d8eb95448d686ec97b95c59687d",
+      "decision": {
+        "index": 0,
+        "name": "reply_user",
+        "control_id": 35,
+        "logprobs": [
+          -0.041510652750730515,
+          -6.041510581970215
+        ],
+        "classification_seconds": 0.2932733688503504
+      },
+      "generated_argument_tokens": 146,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 1.6475397208705544,
+      "finish_reason": "stop",
+      "input_tokens": 3148,
+      "status": "ok",
+      "wall_seconds": 2.284980167169124,
+      "action": "chat",
+      "timestamp": 1789761407.801667
+    }
+  ],
+  "malformed_event_lines": 0,
+  "usage_complete": true
+}

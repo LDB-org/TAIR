@@ -1,0 +1,32 @@
+{
+  "repeats": 3,
+  "rounds": 2,
+  "cases": [
+    [
+      "float",
+      "Change --timeout default to 2.5.",
+      "import argparse\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--timeout', type=float, default=2.5, help='old')\n    return p\n",
+      "assert p.parse_args([]).timeout==2.5\nassert p.parse_args([\"--timeout\",\"0.25\"]).timeout==0.25\n"
+    ],
+    [
+      "help",
+      "Change --timeout help to \"Wait time\".",
+      "import argparse\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--timeout', type=float, default=1.5, help='Wait time')\n    return p\n",
+      "assert \"Wait time\" in p.format_help()\nassert p.parse_args([]).timeout==1.5\n"
+    ],
+    [
+      "alias",
+      "Add alias -t to --timeout.",
+      "import argparse\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('-t', '--timeout', type=float, default=1.5, help='old')\n    return p\n",
+      "assert p.parse_args([\"-t\",\"0.5\"]).timeout==0.5\nassert p.parse_args([\"--timeout\",\"0.25\"]).timeout==0.25\nassert p.parse_args([]).timeout==1.5\n"
+    ]
+  ],
+  "arms": [
+    "generate",
+    "schema_only",
+    "schema_jit"
+  ],
+  "timing": "bridge.run wall includes HTTP preparation, inference, backup/apply and identical configured AST+behavior oracle, excludes fixture restore and final metrics append.",
+  "pairing": "Restore same original source at same path for second round; retain learned book and label cache. No preseeded action. Arm order reversed in round two and rotated across repeats.",
+  "tokenizer_revision": null
+}

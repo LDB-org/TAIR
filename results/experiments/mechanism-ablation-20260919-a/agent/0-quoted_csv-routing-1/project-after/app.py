@@ -1,0 +1,13 @@
+import csv
+
+
+def parse_people(text):
+    reader = csv.reader(text.splitlines())
+    header = next(reader)
+    result = []
+    for row in reader:
+        if not row or all(not cell.strip() for cell in row):
+            continue
+        name, age, active = row
+        result.append({'name': name, 'age': int(age), 'active': active == 'yes'})
+    return result

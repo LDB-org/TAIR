@@ -1,0 +1,437 @@
+{
+  "arm": "c4",
+  "value": 0,
+  "seconds": 9.32186529180035,
+  "timed_out": false,
+  "validated_seconds": 9.441108208615333,
+  "exit_code": 0,
+  "finished": true,
+  "validation": {
+    "passed": true,
+    "seconds": 0.11924291681498289,
+    "stderr": ""
+  },
+  "passed": true,
+  "metrics": [
+    {
+      "metrics_version": 2,
+      "trace_id": "5369a1c1ef294f91980017f0fa14e5e9",
+      "session_id": "01a0b6d2-92dc-74fd-93ee-bb88ebdd13a9",
+      "parent_tool_call_id": null,
+      "stage_seconds": {},
+      "http_requests": [
+        {
+          "route": "/v1/chat/completions",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789773648.680641,
+          "http_status": 200,
+          "request_id": "chatcmpl-afc4990af00ce4f9",
+          "input_tokens": 1651,
+          "generated_argument_tokens": 80,
+          "classification_control_records": 0,
+          "cached_input_tokens": null,
+          "seconds": 1.4869445408694446
+        }
+      ],
+      "native_planner": true,
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 1651,
+        "known_generated_argument_tokens": 80,
+        "known_classification_control_records": 0
+      },
+      "request_id": "chatcmpl-afc4990af00ce4f9",
+      "input_tokens": 1651,
+      "generated_argument_tokens": 80,
+      "classification_control_records": 0,
+      "calls": [
+        {
+          "name": "bash",
+          "arguments": {
+            "command": "ls -la && echo \"---\" && find . -name \"*.py\" -not -path \"*/node_modules/*\" | head -50"
+          }
+        }
+      ],
+      "status": "ok",
+      "wall_seconds": 1.4921397916041315,
+      "action": "chat",
+      "timestamp": 1789773650.173406
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "888cbc63661e41b4a71942b778318f50",
+      "session_id": "01a0b6d2-92dc-74fd-93ee-bb88ebdd13a9",
+      "parent_tool_call_id": null,
+      "stage_seconds": {},
+      "http_requests": [
+        {
+          "route": "/v1/chat/completions",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789773650.329104,
+          "http_status": 200,
+          "request_id": "chatcmpl-9e428d9d135ec717",
+          "input_tokens": 1854,
+          "generated_argument_tokens": 75,
+          "classification_control_records": 0,
+          "cached_input_tokens": null,
+          "seconds": 1.2464299169369042
+        }
+      ],
+      "native_planner": true,
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 1854,
+        "known_generated_argument_tokens": 75,
+        "known_classification_control_records": 0
+      },
+      "request_id": "chatcmpl-9e428d9d135ec717",
+      "input_tokens": 1854,
+      "generated_argument_tokens": 75,
+      "classification_control_records": 0,
+      "calls": [
+        {
+          "name": "read",
+          "arguments": {
+            "path": "app.py"
+          }
+        },
+        {
+          "name": "read",
+          "arguments": {
+            "path": "test_app.py"
+          }
+        }
+      ],
+      "status": "ok",
+      "wall_seconds": 1.2467407090589404,
+      "action": "chat",
+      "timestamp": 1789773651.576001
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "6de3b58cfde643a589acca472e75b2e2",
+      "session_id": "01a0b6d2-92dc-74fd-93ee-bb88ebdd13a9",
+      "parent_tool_call_id": null,
+      "stage_seconds": {},
+      "http_requests": [],
+      "local_route": "supported_user_clause",
+      "routed_call": {
+        "name": "compact_edit",
+        "arguments": {
+          "path": "app.py",
+          "task": "Change --timeout default to 2.5. Change --host default to \"remote\". Change --verbose default to true. Change --workers help to \"Worker count\". Change --workers required to true."
+        }
+      },
+      "accounting": {
+        "inference_requests": 0,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 0,
+        "known_generated_argument_tokens": 0,
+        "known_classification_control_records": 0
+      },
+      "input_tokens": 0,
+      "generated_argument_tokens": 0,
+      "classification_control_records": 0,
+      "request_id": "local-555191e78cd0408487dbf0b205bef197",
+      "status": "ok",
+      "wall_seconds": 0.0025329580530524254,
+      "action": "chat",
+      "timestamp": 1789773651.6563818
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "1961fd0639704687a16034996d976c42",
+      "session_id": "01a0b6d2-92dc-74fd-93ee-bb88ebdd13a9",
+      "parent_tool_call_id": "local-555191e78cd0408487dbf0b205bef197",
+      "stage_seconds": {
+        "lock_wait": 4.041939973831177e-06,
+        "retrieval": 0.0004992503672838211,
+        "cached_validation": 3.3387914299964905e-07,
+        "generation_preparation": 0.8721624580211937,
+        "generation_http": 1.1374902501702309,
+        "generation": 2.0097505003213882,
+        "generated_validation": 0.016251000110059977,
+        "write": 0.001664457842707634,
+        "verification": 1.8041115254163742e-05,
+        "admission": 0.0007322081364691257
+      },
+      "http_requests": [
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773651.730304,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.5993300001136959
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773651.730474,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.5942699583247304
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773651.7306082,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.5944367093034089
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773651.730718,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.7397994580678642
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773651.730864,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.7361619174480438
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773651.731004,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.7367300000041723
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773651.731141,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.8613469582051039
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773651.731244,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.8671441250480711
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773651.73145,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.868241417221725
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773651.7315588,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.7364473752677441
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773651.731661,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.7368689998984337
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773651.731785,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.7392015000805259
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773651.731873,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.7381906248629093
+        },
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789773652.602525,
+          "http_status": 200,
+          "request_id": "openjev-afc537adf688421c9dca3a9a7ddd151e",
+          "input_tokens": 592,
+          "generated_argument_tokens": 46,
+          "classification_control_records": 1,
+          "engine_seconds": 0.6739269774407148,
+          "classification_seconds": 0.1519167684018612,
+          "classification_timing": null,
+          "seconds": 1.1370045831426978
+        }
+      ],
+      "codebook_enabled": true,
+      "cache_hit": false,
+      "applied": true,
+      "retrieval": {
+        "book_entries": 0,
+        "task_path_matches": 0,
+        "source_matches": 0,
+        "candidate_count": 0
+      },
+      "candidates": [],
+      "jit_entries_before": 0,
+      "jit_hit": false,
+      "fallback_reason": "empty_or_inapplicable_codebook",
+      "label_cache_hit": false,
+      "backup": "/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-three-goals-3t3nwetn/0-properties-hybrid/state/workspaces/d51ad12555790ac67bca/backup-6a6b175de5a149ee92d2884e96d1323f.py",
+      "source_sha256": "ff3ce632ba63131cea6bcea647abf9f1a684f1fe5d2f5c051aae4370c9690d5b",
+      "updated_sha256": "054fe73e11c344585b7081ef43cfc94b324e51650e44996a1ff0b048f1579a21",
+      "jit_admission_origin": null,
+      "bound_reuse_hit": false,
+      "schema_hit": false,
+      "jit_admitted": 0,
+      "jit_entries_after": 0,
+      "validation": "schema + Python compile; semantic correctness unverified",
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 592,
+        "known_generated_argument_tokens": 46,
+        "known_classification_control_records": 1
+      },
+      "path": "/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-three-goals-3t3nwetn/0-properties-hybrid/project/app.py",
+      "admitted": 1,
+      "input_tokens": 592,
+      "generated_argument_tokens": 46,
+      "classification_control_records": 1,
+      "requests": [
+        {
+          "input_tokens": 592,
+          "generated_argument_tokens": 46,
+          "classification_control_records": 1,
+          "request_id": "openjev-afc537adf688421c9dca3a9a7ddd151e"
+        }
+      ],
+      "status": "ok",
+      "wall_seconds": 2.0297081670723855,
+      "action": "edit",
+      "timestamp": 1789773653.7587578
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "09deee5ddea24989bcea36bbcd9d8d6f",
+      "session_id": "01a0b6d2-92dc-74fd-93ee-bb88ebdd13a9",
+      "parent_tool_call_id": null,
+      "stage_seconds": {},
+      "http_requests": [
+        {
+          "route": "/v1/chat/completions",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789773653.825075,
+          "http_status": 200,
+          "request_id": "chatcmpl-9aedae6525c7c9c6",
+          "input_tokens": 2654,
+          "generated_argument_tokens": 59,
+          "classification_control_records": 0,
+          "cached_input_tokens": null,
+          "seconds": 1.0675610420294106
+        }
+      ],
+      "native_planner": true,
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 2654,
+        "known_generated_argument_tokens": 59,
+        "known_classification_control_records": 0
+      },
+      "request_id": "chatcmpl-9aedae6525c7c9c6",
+      "input_tokens": 2654,
+      "generated_argument_tokens": 59,
+      "classification_control_records": 0,
+      "calls": [
+        {
+          "name": "bash",
+          "arguments": {
+            "command": "cd \"$(pwd)\" && python -m unittest -v 2>&1"
+          }
+        }
+      ],
+      "status": "ok",
+      "wall_seconds": 1.0692812497727573,
+      "action": "chat",
+      "timestamp": 1789773654.905937
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "489ecbb0acd34f24b3aa48692b6c31c3",
+      "session_id": "01a0b6d2-92dc-74fd-93ee-bb88ebdd13a9",
+      "parent_tool_call_id": null,
+      "stage_seconds": {},
+      "http_requests": [
+        {
+          "route": "/v1/chat/completions",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789773655.074229,
+          "http_status": 200,
+          "request_id": "chatcmpl-af792d2687569577",
+          "input_tokens": 2817,
+          "generated_argument_tokens": 228,
+          "classification_control_records": 0,
+          "cached_input_tokens": null,
+          "seconds": 2.408831332810223
+        }
+      ],
+      "native_planner": true,
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 2817,
+        "known_generated_argument_tokens": 228,
+        "known_classification_control_records": 0
+      },
+      "request_id": "chatcmpl-af792d2687569577",
+      "input_tokens": 2817,
+      "generated_argument_tokens": 228,
+      "classification_control_records": 0,
+      "status": "ok",
+      "wall_seconds": 2.4105340829119086,
+      "action": "chat",
+      "timestamp": 1789773657.4838212
+    }
+  ],
+  "malformed_event_lines": 0,
+  "usage_complete": true
+}

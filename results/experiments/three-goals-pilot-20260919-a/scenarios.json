@@ -1,0 +1,18 @@
+{
+  "quoted_csv": {
+    "files": {
+      "app.py": "def parse_people(text):\n    return [{'name': parts[0], 'age': int(parts[1]), 'active': parts[2]=='yes'}\n            for line in text.splitlines()[1:] if line.strip()\n            for parts in [line.split(',')]]\n",
+      "test_app.py": "import unittest\nfrom app import parse_people\nclass TestCSV(unittest.TestCase):\n    def test_comma(self):\n        self.assertEqual(parse_people('name,age,active\\n\"Doe, Jane\",31,yes\\n'),[{'name':'Doe, Jane','age':31,'active':True}])\n    def test_empty(self):\n        self.assertEqual(parse_people('name,age,active\\n'),[])\n"
+    },
+    "prompt": "Fix parse_people(text) to parse CSV using the standard library, including quoted commas, escaped quotes, quoted embedded newlines, and CRLF. The header fields are name, age, active; return dictionaries preserving name text, converting age with int, and active true only for the literal yes. Ignore blank records. Invalid ages must raise ValueError. Keep existing tests unchanged. Run python -m unittest -v and summarize.",
+    "check": "import csv,io\nfrom app import parse_people\nrows=[['Doe, Jane','31','yes'],['He said \"Hi\"','-2','no'],['Multi'+chr(10)+'line','7','YES'],['  spaced  ','0','yes']]\ns=io.StringIO(); writer=csv.writer(s);writer.writerow(['name','age','active']);writer.writerows(rows)\nassert parse_people(s.getvalue())==[{'name':r[0],'age':int(r[1]),'active':r[2]=='yes'} for r in rows]\nassert parse_people('name,age,active\\n\\n')==[]\ntry: parse_people('name,age,active\\nAlice,invalid,yes\\n')\nexcept ValueError: pass\nelse: raise AssertionError('invalid age swallowed')\n\nfrom pathlib import Path\n\nimport subprocess,sys\nr=subprocess.run([sys.executable,'-B','-m','unittest','-v'],capture_output=True,text=True,timeout=10)\nassert r.returncode==0,(r.stdout,r.stderr)\n"
+  },
+  "summary_bug": {
+    "files": {
+      "app.py": "def summarize(values):\n    return {'count': len(set(values)), 'total': sum(values), 'mean': sum(values)/len(values), 'min': min(values), 'max': max(values)}\n",
+      "test_app.py": "import unittest\nfrom app import summarize\nclass TestSummary(unittest.TestCase):\n    def test_duplicates(self):\n        self.assertEqual(summarize([2,2,5])['count'],3)\n    def test_empty(self):\n        self.assertEqual(summarize([]),{'count':0,'total':0,'mean':None,'min':None,'max':None})\n"
+    },
+    "prompt": "Inspect this project and fix summarize: count must include duplicates; empty input must return count=0,total=0,mean=None,min=None,max=None. Preserve input order and contents and handle negative/floating-point values. Add unittest coverage for negative values and input immutability, keeping existing tests. Run python -m unittest -v and summarize the result.",
+    "check": "from app import summarize\nfor xs in [[],[2,2,5],[-4,-2],[0.25,1.25,2.5],[9]]:\n before=list(xs)\n expected={'count':len(xs),'total':sum(xs),'mean':sum(xs)/len(xs) if xs else None,'min':min(xs) if xs else None,'max':max(xs) if xs else None}\n assert summarize(xs)==expected\n assert xs==before\nfrom pathlib import Path\nassert 'unittest' in Path('test_app.py').read_text()\n\nfrom pathlib import Path\n\nimport subprocess,sys\nr=subprocess.run([sys.executable,'-B','-m','unittest','-v'],capture_output=True,text=True,timeout=10)\nassert r.returncode==0,(r.stdout,r.stderr)\n"
+  }
+}

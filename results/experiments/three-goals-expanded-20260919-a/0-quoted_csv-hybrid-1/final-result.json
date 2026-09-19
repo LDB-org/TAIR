@@ -1,0 +1,267 @@
+{
+  "arm": "hybrid",
+  "value": 0,
+  "seconds": 10.151127540972084,
+  "timed_out": false,
+  "validated_seconds": 10.227600706741214,
+  "exit_code": 0,
+  "finished": true,
+  "validation": {
+    "passed": true,
+    "seconds": 0.07647316576912999,
+    "stderr": ""
+  },
+  "passed": true,
+  "metrics": [
+    {
+      "metrics_version": 2,
+      "trace_id": "9d1baac3f362493e9bf19c6cb212f418",
+      "session_id": "01a0b6d6-3c74-7526-8f5d-723388847eb4",
+      "parent_tool_call_id": null,
+      "stage_seconds": {},
+      "http_requests": [
+        {
+          "route": "/v1/chat/completions",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789773888.700941,
+          "http_status": 200,
+          "request_id": "chatcmpl-bf571255fd054606",
+          "input_tokens": 1666,
+          "generated_argument_tokens": 129,
+          "classification_control_records": 0,
+          "cached_input_tokens": null,
+          "seconds": 1.623372667003423
+        }
+      ],
+      "native_planner": true,
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 1666,
+        "known_generated_argument_tokens": 129,
+        "known_classification_control_records": 0
+      },
+      "request_id": "chatcmpl-bf571255fd054606",
+      "input_tokens": 1666,
+      "generated_argument_tokens": 129,
+      "classification_control_records": 0,
+      "calls": [
+        {
+          "name": "bash",
+          "arguments": {
+            "command": "cd /private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-three-goals-3t3nwetn/0-quoted_csv-hybrid/project && ls -la && find . -type f -not -path '*/\\.*' | head -50"
+          }
+        }
+      ],
+      "status": "ok",
+      "wall_seconds": 1.6236716248095036,
+      "action": "chat",
+      "timestamp": 1789773890.325488
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "ef74f09619dd41a68dfc28bd4743432a",
+      "session_id": "01a0b6d6-3c74-7526-8f5d-723388847eb4",
+      "parent_tool_call_id": null,
+      "stage_seconds": {},
+      "http_requests": [
+        {
+          "route": "/v1/chat/completions",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789773890.4782,
+          "http_status": 200,
+          "request_id": "chatcmpl-bb162e5f4ff82fe7",
+          "input_tokens": 1911,
+          "generated_argument_tokens": 175,
+          "classification_control_records": 0,
+          "cached_input_tokens": null,
+          "seconds": 1.8162014167755842
+        }
+      ],
+      "native_planner": true,
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 1911,
+        "known_generated_argument_tokens": 175,
+        "known_classification_control_records": 0
+      },
+      "request_id": "chatcmpl-bb162e5f4ff82fe7",
+      "input_tokens": 1911,
+      "generated_argument_tokens": 175,
+      "classification_control_records": 0,
+      "calls": [
+        {
+          "name": "read",
+          "arguments": {
+            "path": "/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-three-goals-3t3nwetn/0-quoted_csv-hybrid/project/app.py"
+          }
+        },
+        {
+          "name": "read",
+          "arguments": {
+            "path": "/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-three-goals-3t3nwetn/0-quoted_csv-hybrid/project/test_app.py"
+          }
+        }
+      ],
+      "status": "ok",
+      "wall_seconds": 1.816480416804552,
+      "action": "chat",
+      "timestamp": 1789773892.294762
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "2ec3f37a03b64e76ab86f3df5d7bcd9b",
+      "session_id": "01a0b6d6-3c74-7526-8f5d-723388847eb4",
+      "parent_tool_call_id": null,
+      "stage_seconds": {},
+      "http_requests": [
+        {
+          "route": "/v1/chat/completions",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789773892.4134772,
+          "http_status": 200,
+          "request_id": "chatcmpl-b2915d170ccc79f2",
+          "input_tokens": 2252,
+          "generated_argument_tokens": 222,
+          "classification_control_records": 0,
+          "cached_input_tokens": null,
+          "seconds": 2.2971565830521286
+        }
+      ],
+      "native_planner": true,
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 2252,
+        "known_generated_argument_tokens": 222,
+        "known_classification_control_records": 0
+      },
+      "request_id": "chatcmpl-b2915d170ccc79f2",
+      "input_tokens": 2252,
+      "generated_argument_tokens": 222,
+      "classification_control_records": 0,
+      "calls": [
+        {
+          "name": "write",
+          "arguments": {
+            "path": "/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-three-goals-3t3nwetn/0-quoted_csv-hybrid/project/app.py",
+            "content": "import csv\nimport io\n\n\ndef parse_people(text):\n    reader = csv.reader(io.StringIO(text))\n    header = next(reader, None)\n    if header is None:\n        return []\n    records = []\n    for row in reader:\n        if not row or all(not field.strip() for field in row):\n            continue\n        name, age, active = row\n        records.append({\n            'name': name,\n            'age': int(age),\n            'active': active == 'yes',\n        })\n    return records\n"
+          }
+        }
+      ],
+      "status": "ok",
+      "wall_seconds": 2.29818516690284,
+      "action": "chat",
+      "timestamp": 1789773894.711213
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "3de7155a58ea4cd1929fbf28ad3b69a6",
+      "session_id": "01a0b6d6-3c74-7526-8f5d-723388847eb4",
+      "parent_tool_call_id": null,
+      "stage_seconds": {},
+      "http_requests": [
+        {
+          "route": "/v1/chat/completions",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789773894.783495,
+          "http_status": 200,
+          "request_id": "chatcmpl-a0b949cb81ab7275",
+          "input_tokens": 2541,
+          "generated_argument_tokens": 100,
+          "classification_control_records": 0,
+          "cached_input_tokens": null,
+          "seconds": 1.2558567500673234
+        }
+      ],
+      "native_planner": true,
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 2541,
+        "known_generated_argument_tokens": 100,
+        "known_classification_control_records": 0
+      },
+      "request_id": "chatcmpl-a0b949cb81ab7275",
+      "input_tokens": 2541,
+      "generated_argument_tokens": 100,
+      "classification_control_records": 0,
+      "calls": [
+        {
+          "name": "bash",
+          "arguments": {
+            "command": "cd /private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-three-goals-3t3nwetn/0-quoted_csv-hybrid/project && python -m unittest -v"
+          }
+        }
+      ],
+      "status": "ok",
+      "wall_seconds": 1.2568031251430511,
+      "action": "chat",
+      "timestamp": 1789773896.039693
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "befdf60c573648359265dab572a892d6",
+      "session_id": "01a0b6d6-3c74-7526-8f5d-723388847eb4",
+      "parent_tool_call_id": null,
+      "stage_seconds": {},
+      "http_requests": [
+        {
+          "route": "/v1/chat/completions",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789773896.172669,
+          "http_status": 200,
+          "request_id": "chatcmpl-b64ab0d2ccfbae96",
+          "input_tokens": 2697,
+          "generated_argument_tokens": 204,
+          "classification_control_records": 0,
+          "cached_input_tokens": null,
+          "seconds": 2.135284457821399
+        }
+      ],
+      "native_planner": true,
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 2697,
+        "known_generated_argument_tokens": 204,
+        "known_classification_control_records": 0
+      },
+      "request_id": "chatcmpl-b64ab0d2ccfbae96",
+      "input_tokens": 2697,
+      "generated_argument_tokens": 204,
+      "classification_control_records": 0,
+      "status": "ok",
+      "wall_seconds": 2.14025375014171,
+      "action": "chat",
+      "timestamp": 1789773898.313211
+    }
+  ],
+  "malformed_event_lines": 0,
+  "usage_complete": true,
+  "case": "quoted_csv",
+  "repeat": 0,
+  "round": 1,
+  "order": [
+    "native_single",
+    "native_multi",
+    "tair",
+    "hybrid"
+  ],
+  "task_variant": "cold",
+  "test_integrity": true,
+  "protected_changes": [],
+  "multi_tool_responses": 1,
+  "tool_errors": 0
+}

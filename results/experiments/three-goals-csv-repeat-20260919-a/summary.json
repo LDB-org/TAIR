@@ -1,0 +1,59 @@
+{
+  "arms": {
+    "hybrid": {
+      "tasks": 3,
+      "passed": 3,
+      "wall_seconds": 29.711952457670122,
+      "median_seconds": 9.889913625083864,
+      "pi_loop_seconds": 29.52401483245194,
+      "outer_calls": 15,
+      "nested_inference_requests": 0,
+      "preset_applied": 0,
+      "cache_hits": 0,
+      "error_records": 0,
+      "usage_complete": true,
+      "inference_requests": 15,
+      "known_input_tokens": 32853,
+      "known_generated_argument_tokens": 2385,
+      "known_classification_control_records": 0,
+      "unknown_usage_requests": 0
+    },
+    "native_multi": {
+      "tasks": 3,
+      "passed": 1,
+      "wall_seconds": 39.523624583147466,
+      "median_seconds": 10.780768083874136,
+      "pi_loop_seconds": 39.31005312455818,
+      "outer_calls": 19,
+      "nested_inference_requests": 0,
+      "preset_applied": 0,
+      "cache_hits": 0,
+      "error_records": 0,
+      "usage_complete": true,
+      "inference_requests": 19,
+      "known_input_tokens": 54477,
+      "known_generated_argument_tokens": 3466,
+      "known_classification_control_records": 0,
+      "unknown_usage_requests": 0
+    },
+    "tair": {
+      "tasks": 3,
+      "passed": 1,
+      "wall_seconds": 23.487446541897953,
+      "median_seconds": 7.95853174990043,
+      "pi_loop_seconds": 23.294678749982268,
+      "outer_calls": 9,
+      "nested_inference_requests": 0,
+      "preset_applied": 0,
+      "cache_hits": 0,
+      "error_records": 0,
+      "usage_complete": true,
+      "inference_requests": 9,
+      "known_input_tokens": 23222,
+      "known_generated_argument_tokens": 1246,
+      "known_classification_control_records": 9,
+      "unknown_usage_requests": 0
+    }
+  },
+  "limitations": "No extra completion policy or verification gate. Native single/multi differ only in parallel_tool_calls, and both permit workspace-scoped prefix caching. Hybrid retains native tool-call history and enables local bound codebook reuse; hybrid no_book/on differ only in disable-codebook. TAIR legacy keeps its classified batch planner and per-request cache salt. Sequential interleaving, no benchmark retries; all failures retained. Shared absolute task workspace across arms, independent per-arm state/cache namespaces, restored source for warm rounds, external oracle. Shared server and finite development tasks; no generic production claim."
+}

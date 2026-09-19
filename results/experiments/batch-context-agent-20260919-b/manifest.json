@@ -1,0 +1,43 @@
+{
+  "arms": [
+    "native",
+    "batched",
+    "contextual"
+  ],
+  "rounds": 2,
+  "repeats": 2,
+  "scenarios": {
+    "properties": {
+      "files": {
+        "app.py": "import argparse\n\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4, help='old', required=False)\n    p.add_argument('--timeout', type=float, default=1.5)\n    p.add_argument('--host', default='localhost')\n    p.add_argument('--verbose', action='store_true', default=False)\n    return p\n",
+        "test_app.py": "import unittest\nfrom app import build_parser\nclass TestConfig(unittest.TestCase):\n    def test_defaults(self):\n        p=build_parser()\n        a=p.parse_args(['--workers','3'])\n        self.assertEqual((a.workers,a.timeout,a.host,a.verbose),(3,2.5,'remote',True))\n        self.assertIn('Worker count',p.format_help())\n        with self.assertRaises(SystemExit): p.parse_args([])\n    def test_overrides(self):\n        a=build_parser().parse_args(['--workers','9','--timeout','0.25','--host','custom'])\n        self.assertEqual((a.workers,a.timeout,a.host),(9,0.25,'custom'))\n"
+      },
+      "prompt": "Inspect this Python project. Change --timeout default to 2.5. Change --host default to \"remote\". Change --verbose default to true. Change --workers help to \"Worker count\". Change --workers required to true. Preserve explicit overrides and unrelated code. Do not change tests. Run python -m unittest -v and summarize.",
+      "check": "from app import build_parser\np=build_parser();a=p.parse_args(['--workers','7'])\nassert (a.workers,a.timeout,a.host,a.verbose)==(7,2.5,'remote',True)\nassert 'Worker count' in p.format_help()\nassert next(a for a in p._actions if a.dest=='workers').required\nb=p.parse_args(['--workers','8','--timeout','0.5','--host','elsewhere'])\nassert (b.workers,b.timeout,b.host)==(8,0.5,'elsewhere')\n"
+    },
+    "alias": {
+      "files": {
+        "app.py": "import argparse\ndef build_parser():\n    p = argparse.ArgumentParser()\n    p.add_argument('--workers', type=int, default=4)\n    return p\n",
+        "test_app.py": "import unittest\nfrom app import build_parser\nclass TestAlias(unittest.TestCase):\n    def test_alias(self):\n        p=build_parser()\n        self.assertEqual(p.parse_args(['-w','9']).workers,9)\n        self.assertEqual(p.parse_args(['--workers','7']).workers,7)\n        self.assertEqual(p.parse_args([]).workers,4)\n"
+      },
+      "prompt": "Inspect this Python project. Add alias -w to --workers. Preserve its default, type, long option and all unrelated behavior. Do not change tests. Run python -m unittest -v and summarize.",
+      "check": "from app import build_parser\np=build_parser()\nassert p.parse_args(['-w','13']).workers==13\nassert p.parse_args(['--workers','17']).workers==17\nassert p.parse_args([]).workers==4\n"
+    },
+    "summary_bug": {
+      "files": {
+        "app.py": "def summarize(values):\n    return {'count': len(set(values)), 'total': sum(values), 'mean': sum(values)/len(values), 'min': min(values), 'max': max(values)}\n",
+        "test_app.py": "import unittest\nfrom app import summarize\nclass TestSummary(unittest.TestCase):\n    def test_duplicates(self):\n        self.assertEqual(summarize([2,2,5])['count'],3)\n    def test_empty(self):\n        self.assertEqual(summarize([]),{'count':0,'total':0,'mean':None,'min':None,'max':None})\n"
+      },
+      "prompt": "Inspect this project and fix summarize: count must include duplicates; empty input must return count=0,total=0,mean=None,min=None,max=None. Preserve input order and contents and handle negative/floating-point values. Add unittest coverage for negative values and input immutability, keeping existing tests. Run python -m unittest -v and summarize the result.",
+      "check": "from app import summarize\nfor xs in [[],[2,2,5],[-4,-2],[0.25,1.25,2.5],[9]]:\n before=list(xs)\n expected={'count':len(xs),'total':sum(xs),'mean':sum(xs)/len(xs) if xs else None,'min':min(xs) if xs else None,'max':max(xs) if xs else None}\n assert summarize(xs)==expected\n assert xs==before\nfrom pathlib import Path\nassert 'unittest' in Path('test_app.py').read_text()\n"
+    }
+  },
+  "seed": 921,
+  "outer_optimized": false,
+  "tokenizer_revision": "c90dfa01249db1be4245780a052ede752e1361c612ac6d08e2bdada7d599476b:6ac8c8dc065ed118161d02dd532749ae3f52c243deac27872134fae2f50d8547",
+  "batch_comparison": false,
+  "plan_context_comparison": true,
+  "contextual_arm": "Batched with bounded root filename inventory, observed-file edit grammar, nonempty edits, no writes before first observation in a nonempty project, and deferred writes to unread existing files; context gathering and deferred generations included.",
+  "batched_arm": "Same tokenizer caches and directory guard as optimized, but replace single-tool outer choices with a 1..8-operation plan and final reply; bypass local single-clause dispatcher; sequential Pi execution, stop remaining steps on error. Plan generation is included in time and tokens; plans themselves are not learned.",
+  "method": "real Pi 0.85.1; fresh sessions; restore original project before warm round; persist runtime state; no schema/preset/exact replay; optimized arm enables batched explicit-clause routing, revision-pinned tokenizer caches and directory guard; end-to-end includes planning, tools, tests, recovery and final answer; shared remote backend over SSH"
+}

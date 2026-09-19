@@ -1,0 +1,338 @@
+{
+  "arm": "contextual",
+  "value": 0,
+  "seconds": 7.861374542117119,
+  "timed_out": false,
+  "validated_seconds": 7.908093667123467,
+  "exit_code": 0,
+  "finished": true,
+  "validation": {
+    "passed": false,
+    "seconds": 0.046719125006347895,
+    "stderr": "Traceback (most recent call last):\n  File \"/Users/zacharyzcr/Projects/TAIR/results/experiments/expanded-context-agent-20260919-a/1-quoted_csv-contextual-2/oracle.py\", line 7, in <module>\n    assert parse_people(s.getvalue())==[{'name':r[0],'age':int(r[1]),'active':r[2]=='yes'} for r in rows]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  },
+  "passed": false,
+  "metrics": [
+    {
+      "metrics_version": 2,
+      "trace_id": "e5a5722d600946b6b23b00305fecbe5e",
+      "session_id": "01a0b623-6d4a-719f-a1c8-17a525314afe",
+      "parent_tool_call_id": null,
+      "stage_seconds": {
+        "plan_preparation": 0.000132082961499691,
+        "generation_preparation": 0.23583316616714,
+        "generation_http": 1.0135464170016348,
+        "generation": 1.2494384590536356
+      },
+      "http_requests": [
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789762170.256427,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.23401704197749496
+        },
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789762170.491321,
+          "http_status": 200,
+          "request_id": "openjev-ba49691deb4c440d9507d41b591f901b",
+          "input_tokens": 1566,
+          "generated_argument_tokens": 49,
+          "classification_control_records": 1,
+          "engine_seconds": 0.7312983982264996,
+          "classification_seconds": 0.19354259222745895,
+          "classification_timing": null,
+          "seconds": 1.0131059591658413
+        }
+      ],
+      "plan_known_files": [],
+      "plan_inventory_entries": 2,
+      "label_cache_hit": true,
+      "continuation_cache_hit": true,
+      "batch_tool_count": 3,
+      "batch_tool_names": [
+        "read",
+        "read",
+        "bash"
+      ],
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 1566,
+        "known_generated_argument_tokens": 49,
+        "known_classification_control_records": 1
+      },
+      "request_id": "openjev-ba49691deb4c440d9507d41b591f901b",
+      "decision": {
+        "index": 1,
+        "name": "execute_plan",
+        "control_id": 36,
+        "logprobs": [
+          -3.358555793762207,
+          -0.10855575650930405
+        ],
+        "classification_seconds": 0.19354259222745895
+      },
+      "generated_argument_tokens": 49,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 0.7312983982264996,
+      "finish_reason": "stop",
+      "input_tokens": 1566,
+      "calls": [
+        {
+          "name": "read",
+          "arguments": {
+            "path": "app.py"
+          }
+        },
+        {
+          "name": "read",
+          "arguments": {
+            "path": "test_app.py"
+          }
+        },
+        {
+          "name": "bash",
+          "arguments": {
+            "command": "python -m unittest -v"
+          }
+        }
+      ],
+      "status": "ok",
+      "wall_seconds": 1.3059847499243915,
+      "action": "chat",
+      "timestamp": 1789762171.560937
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "d03c538cb88d492ab6e04838150952c2",
+      "session_id": "01a0b623-6d4a-719f-a1c8-17a525314afe",
+      "parent_tool_call_id": null,
+      "stage_seconds": {
+        "plan_preparation": 0.00021783309057354927,
+        "generation_preparation": 0.27621516585350037,
+        "generation_http": 2.7918012500740588,
+        "generation": 3.0681019579060376
+      },
+      "http_requests": [
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789762171.645409,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.27516849990934134
+        },
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789762171.9219258,
+          "http_status": 200,
+          "request_id": "openjev-cb430405e48f4978b397995d21a95395",
+          "input_tokens": 3546,
+          "generated_argument_tokens": 245,
+          "classification_control_records": 1,
+          "engine_seconds": 2.4399356618523598,
+          "classification_seconds": 0.23499222937971354,
+          "classification_timing": null,
+          "seconds": 2.7909678746946156
+        }
+      ],
+      "plan_known_files": [
+        "app.py",
+        "test_app.py"
+      ],
+      "plan_inventory_entries": 2,
+      "label_cache_hit": true,
+      "continuation_cache_hit": true,
+      "batch_tool_count": 5,
+      "batch_tool_names": [
+        "edit",
+        "edit",
+        "edit",
+        "edit",
+        "bash"
+      ],
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 3546,
+        "known_generated_argument_tokens": 245,
+        "known_classification_control_records": 1
+      },
+      "request_id": "openjev-cb430405e48f4978b397995d21a95395",
+      "decision": {
+        "index": 1,
+        "name": "execute_plan",
+        "control_id": 36,
+        "logprobs": [
+          -4.0300750732421875,
+          -0.030075060203671455
+        ],
+        "classification_seconds": 0.23499222937971354
+      },
+      "generated_argument_tokens": 245,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 2.4399356618523598,
+      "finish_reason": "stop",
+      "input_tokens": 3546,
+      "calls": [
+        {
+          "name": "edit",
+          "arguments": {
+            "path": "app.py",
+            "edits": [
+              {
+                "oldText": "def parse_people(text):",
+                "newText": "import csv\n\ndef parse_people(text):"
+              }
+            ]
+          }
+        },
+        {
+          "name": "edit",
+          "arguments": {
+            "path": "app.py",
+            "edits": [
+              {
+                "oldText": "    return [{'name': parts[0], 'age': int(parts[1]), 'active': parts[2]=='yes'}",
+                "newText": "    return [{'name': row['name'], 'age': int(row['age']), 'active': row['active']=='yes'}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "edit",
+          "arguments": {
+            "path": "app.py",
+            "edits": [
+              {
+                "oldText": "            for line in text.splitlines()[1:] if line.strip()",
+                "newText": "            for row in csv.DictReader(text.splitlines())"
+              }
+            ]
+          }
+        },
+        {
+          "name": "edit",
+          "arguments": {
+            "path": "app.py",
+            "edits": [
+              {
+                "oldText": "            for parts in [line.split(',')]]",
+                "newText": "            if any(row.values())]"
+              }
+            ]
+          }
+        },
+        {
+          "name": "bash",
+          "arguments": {
+            "command": "python -m unittest -v"
+          }
+        }
+      ],
+      "status": "ok",
+      "wall_seconds": 3.1448941249400377,
+      "action": "chat",
+      "timestamp": 1789762174.7895749
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "631879f18b82466d956f3f54f410a70b",
+      "session_id": "01a0b623-6d4a-719f-a1c8-17a525314afe",
+      "parent_tool_call_id": null,
+      "stage_seconds": {
+        "plan_preparation": 0.00027358299121260643,
+        "generation_preparation": 0.33908529207110405,
+        "generation_http": 2.4384930417872965,
+        "generation": 2.7776742917485535
+      },
+      "http_requests": [
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789762174.8914719,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.3382661668583751
+        },
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789762175.232509,
+          "http_status": 200,
+          "request_id": "openjev-a2213011dc594e3dab8e02a05bad512c",
+          "input_tokens": 3576,
+          "generated_argument_tokens": 194,
+          "classification_control_records": 1,
+          "engine_seconds": 2.0602102633565664,
+          "classification_seconds": 0.287252520211041,
+          "classification_timing": null,
+          "seconds": 2.4359762920066714
+        }
+      ],
+      "plan_known_files": [
+        "app.py",
+        "test_app.py"
+      ],
+      "plan_inventory_entries": 2,
+      "label_cache_hit": true,
+      "continuation_cache_hit": true,
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 3576,
+        "known_generated_argument_tokens": 194,
+        "known_classification_control_records": 1
+      },
+      "request_id": "openjev-a2213011dc594e3dab8e02a05bad512c",
+      "decision": {
+        "index": 0,
+        "name": "reply_user",
+        "control_id": 35,
+        "logprobs": [
+          -0.08187706768512726,
+          -3.9568769931793213
+        ],
+        "classification_seconds": 0.287252520211041
+      },
+      "generated_argument_tokens": 194,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 2.0602102633565664,
+      "finish_reason": "stop",
+      "input_tokens": 3576,
+      "status": "ok",
+      "wall_seconds": 2.778127667028457,
+      "action": "chat",
+      "timestamp": 1789762177.670277
+    }
+  ],
+  "malformed_event_lines": 0,
+  "usage_complete": true,
+  "case": "quoted_csv",
+  "repeat": 1,
+  "round": 2,
+  "order": [
+    "contextual",
+    "native",
+    "batched"
+  ],
+  "tests_unchanged": true,
+  "test_integrity": true
+}

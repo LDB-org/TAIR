@@ -1,0 +1,10 @@
+{
+  "quoted_csv": {
+    "files": {
+      "app.py": "def parse_people(text):\n    return [{'name': parts[0], 'age': int(parts[1]), 'active': parts[2]=='yes'}\n            for line in text.splitlines()[1:] if line.strip()\n            for parts in [line.split(',')]]\n",
+      "test_app.py": "import unittest\nfrom app import parse_people\nclass TestCSV(unittest.TestCase):\n    def test_comma(self):\n        self.assertEqual(parse_people('name,age,active\\n\"Doe, Jane\",31,yes\\n'),[{'name':'Doe, Jane','age':31,'active':True}])\n    def test_empty(self):\n        self.assertEqual(parse_people('name,age,active\\n'),[])\n"
+    },
+    "prompt": "Fix parse_people(text) to parse CSV using the standard library, including quoted commas, escaped quotes, quoted embedded newlines, and CRLF. The header fields are name, age, active; return dictionaries preserving name text, converting age with int, and active true only for the literal yes. Ignore blank records. Invalid ages must raise ValueError. Keep existing tests unchanged. Run python -m unittest -v and summarize.",
+    "check": "import csv,io\nfrom app import parse_people\nrows=[['Doe, Jane','31','yes'],['He said \"Hi\"','-2','no'],['Multi'+chr(10)+'line','7','YES'],['  spaced  ','0','yes']]\ns=io.StringIO(); writer=csv.writer(s);writer.writerow(['name','age','active']);writer.writerows(rows)\nassert parse_people(s.getvalue())==[{'name':r[0],'age':int(r[1]),'active':r[2]=='yes'} for r in rows]\nassert parse_people('name,age,active\\n\\n')==[]\ntry: parse_people('name,age,active\\nAlice,invalid,yes\\n')\nexcept ValueError: pass\nelse: raise AssertionError('invalid age swallowed')\n\nfrom pathlib import Path\n\nimport subprocess,sys\nr=subprocess.run([sys.executable,'-B','-m','unittest','-v'],capture_output=True,text=True,timeout=10)\nassert r.returncode==0,(r.stdout,r.stderr)\n"
+  }
+}

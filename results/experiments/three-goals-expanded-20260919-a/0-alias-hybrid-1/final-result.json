@@ -1,0 +1,457 @@
+{
+  "arm": "hybrid",
+  "value": 0,
+  "seconds": 8.017223082948476,
+  "timed_out": false,
+  "validated_seconds": 8.094502083025873,
+  "exit_code": 0,
+  "finished": true,
+  "validation": {
+    "passed": true,
+    "seconds": 0.07727900007739663,
+    "stderr": ""
+  },
+  "passed": true,
+  "metrics": [
+    {
+      "metrics_version": 2,
+      "trace_id": "e11a4b9e443d49de80eb21f2ac7ad38f",
+      "session_id": "01a0b6d2-b7ee-7607-8fb8-0f1aa3b07dce",
+      "parent_tool_call_id": null,
+      "stage_seconds": {},
+      "http_requests": [
+        {
+          "route": "/v1/chat/completions",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789773658.1687732,
+          "http_status": 200,
+          "request_id": "chatcmpl-a9a0334054915566",
+          "input_tokens": 1622,
+          "generated_argument_tokens": 73,
+          "classification_control_records": 0,
+          "cached_input_tokens": null,
+          "seconds": 1.177938542328775
+        }
+      ],
+      "native_planner": true,
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 1622,
+        "known_generated_argument_tokens": 73,
+        "known_classification_control_records": 0
+      },
+      "request_id": "chatcmpl-a9a0334054915566",
+      "input_tokens": 1622,
+      "generated_argument_tokens": 73,
+      "classification_control_records": 0,
+      "calls": [
+        {
+          "name": "bash",
+          "arguments": {
+            "command": "ls -la && echo \"---\" && find . -type f -name \"*.py\" | head -50"
+          }
+        }
+      ],
+      "status": "ok",
+      "wall_seconds": 1.1782315000891685,
+      "action": "chat",
+      "timestamp": 1789773659.3476212
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "31f4fb0df97a407fae71a0537f634b59",
+      "session_id": "01a0b6d2-b7ee-7607-8fb8-0f1aa3b07dce",
+      "parent_tool_call_id": null,
+      "stage_seconds": {},
+      "http_requests": [
+        {
+          "route": "/v1/chat/completions",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789773659.4458659,
+          "http_status": 200,
+          "request_id": "chatcmpl-a35754d7cbb7fe56",
+          "input_tokens": 1818,
+          "generated_argument_tokens": 75,
+          "classification_control_records": 0,
+          "cached_input_tokens": null,
+          "seconds": 1.0876647094264627
+        }
+      ],
+      "native_planner": true,
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 1818,
+        "known_generated_argument_tokens": 75,
+        "known_classification_control_records": 0
+      },
+      "request_id": "chatcmpl-a35754d7cbb7fe56",
+      "input_tokens": 1818,
+      "generated_argument_tokens": 75,
+      "classification_control_records": 0,
+      "calls": [
+        {
+          "name": "read",
+          "arguments": {
+            "path": "app.py"
+          }
+        },
+        {
+          "name": "read",
+          "arguments": {
+            "path": "test_app.py"
+          }
+        }
+      ],
+      "status": "ok",
+      "wall_seconds": 1.0879607922397554,
+      "action": "chat",
+      "timestamp": 1789773660.534112
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "9faddb6676f5434db8a4a9359e9f77c5",
+      "session_id": "01a0b6d2-b7ee-7607-8fb8-0f1aa3b07dce",
+      "parent_tool_call_id": null,
+      "stage_seconds": {},
+      "http_requests": [],
+      "local_route": "supported_user_clause",
+      "routed_call": {
+        "name": "compact_edit",
+        "arguments": {
+          "path": "app.py",
+          "task": "Add alias -w to --workers."
+        }
+      },
+      "accounting": {
+        "inference_requests": 0,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 0,
+        "known_generated_argument_tokens": 0,
+        "known_classification_control_records": 0
+      },
+      "input_tokens": 0,
+      "generated_argument_tokens": 0,
+      "classification_control_records": 0,
+      "request_id": "local-6d04837cefc9461086379d49b3622216",
+      "status": "ok",
+      "wall_seconds": 0.0010741250589489937,
+      "action": "chat",
+      "timestamp": 1789773660.668747
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "fa9cce83719345a0828380b5dd7a7cf7",
+      "session_id": "01a0b6d2-b7ee-7607-8fb8-0f1aa3b07dce",
+      "parent_tool_call_id": "local-6d04837cefc9461086379d49b3622216",
+      "stage_seconds": {
+        "lock_wait": 4.0424056351184845e-06,
+        "retrieval": 0.000760749913752079,
+        "cached_validation": 2.50060111284256e-07,
+        "generation_preparation": 0.6169523750431836,
+        "generation_http": 0.790990833658725,
+        "generation": 1.4080092082731426,
+        "generated_validation": 0.003839666023850441,
+        "write": 0.0016437908634543419,
+        "verification": 8.124858140945435e-06,
+        "admission": 0.0014158328995108604
+      },
+      "http_requests": [
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773660.718305,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.6127447918988764
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773660.718461,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.6148139168508351
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773660.718605,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.6129589579068124
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773660.718723,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.61257733264938
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773660.718847,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.6142303328961134
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773660.718955,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.6149873747490346
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773660.719063,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.6139214169234037
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773660.719168,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.6115689589641988
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773660.719261,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.6109868749044836
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773660.7193432,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.6127278748899698
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773660.719425,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.6114509589970112
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773660.719511,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.6110441670753062
+        },
+        {
+          "route": "/tokenize",
+          "status": "ok",
+          "usage_complete": false,
+          "started_at": 1789773660.71962,
+          "http_status": 200,
+          "request_id": null,
+          "seconds": 0.6122145419940352
+        },
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789773661.335237,
+          "http_status": 200,
+          "request_id": "openjev-c6538a37965542f480c397f9bb51ae36",
+          "input_tokens": 475,
+          "generated_argument_tokens": 10,
+          "classification_control_records": 1,
+          "engine_seconds": 0.3569074096158147,
+          "classification_seconds": 0.1434656484052539,
+          "classification_timing": null,
+          "seconds": 0.7906693341210485
+        }
+      ],
+      "codebook_enabled": true,
+      "cache_hit": false,
+      "applied": true,
+      "retrieval": {
+        "book_entries": 0,
+        "task_path_matches": 0,
+        "source_matches": 0,
+        "candidate_count": 0
+      },
+      "candidates": [],
+      "jit_entries_before": 0,
+      "jit_hit": false,
+      "fallback_reason": "empty_or_inapplicable_codebook",
+      "label_cache_hit": false,
+      "backup": "/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-three-goals-3t3nwetn/0-alias-hybrid/state/workspaces/85fea81c6fb73142d87f/backup-6966673fc83941ccbecc767535f83d6c.py",
+      "source_sha256": "a28b2139afdc58b3f2c0a360ec2e62d2f86291790413fbcb87c26f72fe63543a",
+      "updated_sha256": "2bcd416b79d043840b5e5e9fbddba9d1f3a2a4a3706cb01e919f0bfcf06e375f",
+      "jit_admission_origin": null,
+      "bound_reuse_hit": false,
+      "schema_hit": false,
+      "jit_admitted": 0,
+      "jit_entries_after": 0,
+      "validation": "schema + Python compile; semantic correctness unverified",
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 475,
+        "known_generated_argument_tokens": 10,
+        "known_classification_control_records": 1
+      },
+      "path": "/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-three-goals-3t3nwetn/0-alias-hybrid/project/app.py",
+      "admitted": 2,
+      "input_tokens": 475,
+      "generated_argument_tokens": 10,
+      "classification_control_records": 1,
+      "requests": [
+        {
+          "input_tokens": 475,
+          "generated_argument_tokens": 10,
+          "classification_control_records": 1,
+          "request_id": "openjev-c6538a37965542f480c397f9bb51ae36"
+        }
+      ],
+      "status": "ok",
+      "wall_seconds": 1.4162678751163185,
+      "action": "edit",
+      "timestamp": 1789773662.1331918
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "265d4154604f44e7b2437ebbdb26c110",
+      "session_id": "01a0b6d2-b7ee-7607-8fb8-0f1aa3b07dce",
+      "parent_tool_call_id": null,
+      "stage_seconds": {},
+      "http_requests": [
+        {
+          "route": "/v1/chat/completions",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789773662.201191,
+          "http_status": 200,
+          "request_id": "chatcmpl-bf6d4a4483b2cc8d",
+          "input_tokens": 2345,
+          "generated_argument_tokens": 129,
+          "classification_control_records": 0,
+          "cached_input_tokens": null,
+          "seconds": 1.5727010001428425
+        }
+      ],
+      "native_planner": true,
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 2345,
+        "known_generated_argument_tokens": 129,
+        "known_classification_control_records": 0
+      },
+      "request_id": "chatcmpl-bf6d4a4483b2cc8d",
+      "input_tokens": 2345,
+      "generated_argument_tokens": 129,
+      "classification_control_records": 0,
+      "calls": [
+        {
+          "name": "read",
+          "arguments": {
+            "path": "app.py"
+          }
+        },
+        {
+          "name": "bash",
+          "arguments": {
+            "command": "cd /private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-three-goals-3t3nwetn/0-alias-hybrid/project && python -m unittest -v"
+          }
+        }
+      ],
+      "status": "ok",
+      "wall_seconds": 1.5738836666569114,
+      "action": "chat",
+      "timestamp": 1789773663.775511
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "d2e85fb985314b10af775b3d272a03a5",
+      "session_id": "01a0b6d2-b7ee-7607-8fb8-0f1aa3b07dce",
+      "parent_tool_call_id": null,
+      "stage_seconds": {},
+      "http_requests": [
+        {
+          "route": "/v1/chat/completions",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789773663.882812,
+          "http_status": 200,
+          "request_id": "chatcmpl-a736baee767edd43",
+          "input_tokens": 2562,
+          "generated_argument_tokens": 151,
+          "classification_control_records": 0,
+          "cached_input_tokens": null,
+          "seconds": 1.809946957975626
+        }
+      ],
+      "native_planner": true,
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 2562,
+        "known_generated_argument_tokens": 151,
+        "known_classification_control_records": 0
+      },
+      "request_id": "chatcmpl-a736baee767edd43",
+      "input_tokens": 2562,
+      "generated_argument_tokens": 151,
+      "classification_control_records": 0,
+      "status": "ok",
+      "wall_seconds": 1.8163450830616057,
+      "action": "chat",
+      "timestamp": 1789773665.7086039
+    }
+  ],
+  "malformed_event_lines": 0,
+  "usage_complete": true,
+  "case": "alias",
+  "repeat": 0,
+  "round": 1,
+  "order": [
+    "hybrid",
+    "native_multi",
+    "tair",
+    "native_single"
+  ],
+  "task_variant": "cold",
+  "test_integrity": true,
+  "protected_changes": [],
+  "multi_tool_responses": 2,
+  "tool_errors": 0
+}

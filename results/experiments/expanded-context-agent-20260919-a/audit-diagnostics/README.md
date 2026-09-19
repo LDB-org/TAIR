@@ -1,0 +1,3 @@
+The initial CLI-test audit is superseded. It mutated only script entrypoints and missed tests that invoke app.main directly; its child PATH also omitted the benchmark Python environment. The corrected audit wraps both main and script execution and restores the benchmark Python PATH. These are post-run audit corrections, not changes to Agent inputs, runtime, timings or raw task results.
+
+The initial report source and audit stdout are also retained. Final reporting represents inapplicable/unperformed requested-test reviews as null, instead of a default true. Basic pass counts, timing and all model traces are unchanged. Final source hashes were refreshed after postprocessing sources were finalized.
