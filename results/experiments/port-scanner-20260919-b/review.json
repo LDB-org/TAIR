@@ -1,0 +1,61 @@
+{
+  "summary": {
+    "native_multi": {
+      "tasks": 1,
+      "passed": 1,
+      "artifacts_passed": 1,
+      "seconds": 82.89972379105166,
+      "median_seconds": 82.89972379105166,
+      "timeouts": 0,
+      "usage_complete": true,
+      "tool_errors": 1,
+      "outer_requests": 15,
+      "edit_requests": 0,
+      "edit_bridge_seconds": 0,
+      "cache_hits": 0,
+      "bound_hits": 0,
+      "exact_hits": 0,
+      "inference_requests": 15,
+      "known_input_tokens": 141376,
+      "known_generated_argument_tokens": 8078,
+      "known_classification_control_records": 0,
+      "unknown_usage_requests": 0,
+      "agent_seconds": 80.72578066587448,
+      "oracle_seconds": 2.173943125177175,
+      "output_tokens_total": 8078
+    },
+    "hybrid": {
+      "tasks": 1,
+      "passed": 0,
+      "artifacts_passed": 0,
+      "seconds": 204.632387209218,
+      "median_seconds": 204.632387209218,
+      "timeouts": 0,
+      "usage_complete": false,
+      "tool_errors": 1,
+      "outer_requests": 12,
+      "edit_requests": 0,
+      "edit_bridge_seconds": 0,
+      "cache_hits": 0,
+      "bound_hits": 0,
+      "exact_hits": 0,
+      "inference_requests": 12,
+      "known_input_tokens": 94532,
+      "known_generated_argument_tokens": 6503,
+      "known_classification_control_records": 0,
+      "unknown_usage_requests": 0,
+      "agent_seconds": 204.2201855420135,
+      "oracle_seconds": 0.41220166720449924,
+      "output_tokens_total": 6503
+    }
+  },
+  "formal_attempts": 2,
+  "prior_aborted_attempt": "port-scanner-20260919-a",
+  "scope_review": {
+    "native_multi": "Generated tests connect to fixed loopback ports 1 and 80, not only owned temporary sockets. Basic functional oracle passed but full testing-scope compliance did not.",
+    "hybrid": "Agent attempted broad loopback scan and non-loopback scans against 10.255.255.1. Operator stopped active scan and Agent; final artifact also failed finite-timeout validation."
+  },
+  "timing": "agent_seconds is process startup through exit/operator stop, including planning/tools/self-tests. oracle_seconds is separate. Setup and SSH establishment excluded.",
+  "tokens": "Sum of all recorded completion/generated tokens plus classification controls. Both controls=0. TAIR run incomplete; its recorded count is not a completed-task total.",
+  "limitations": "One formal attempt per configuration after an aborted invalid-budget trial. Same existing patched backend, ordinary tools API for native; not a separate unpatched-vLLM server. Fresh codebooks, no hits, no compact edits. No speedup or token-saving claim because TAIR did not complete. Artifact correctness and Agent testing-scope compliance are separate."
+}

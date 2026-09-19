@@ -591,3 +591,7 @@ See [the persistent cold/warm experiment](../../docs/SAFE_CODEBOOK_LOOP.md).
 
 实测对照见 `docs/PLANNER_EFFICIENCY.md`；测试入口增加 `--planner-efficiency` 和
 `hybrid_unoptimized` 对照组，后者保持码表开启、仅关闭外层效率开关。
+
+原生规划器的单次生成上限可用 `PIJIT_PLANNER_MAX_TOKENS` 配置，默认 2048。
+从零生成长文件时需要留够输出预算，例如 8192；这不是总任务 token 上限。
+对照测试的原生跟踪器用 `TAIR_NATIVE_MAX_TOKENS` 设置相同预算。

@@ -54,3 +54,12 @@ def test_prefix_cache_is_workspace_scoped_and_opt_in():
     assert salts[-1]!=salts[-2]
     for _ in range(2):n.chat(payload,post,'model')
     assert salts[-1]!=salts[-2]
+
+
+def test_native_planner_honors_explicit_generation_budget():
+    def post(route, body):
+        assert body['max_tokens'] == 8192
+        return {'id':'r','usage':{'prompt_tokens':10,'completion_tokens':1},'choices':[{'finish_reason':'stop','message':{'content':'done'}}]}
+    n.chat({'context':{'messages':[],'tools':[]}},post,'model',max_tokens=8192)
+    for invalid in [0, -1, True, 1.5]:
+        with pytest.raises(ValueError):n.chat({},post,'model',max_tokens=invalid)
