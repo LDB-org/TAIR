@@ -1,0 +1,60 @@
+diff --git a/deploy/tool_plan.py b/deploy/tool_plan.py
+index 8c99e33..ae04a28 100644
+--- a/deploy/tool_plan.py
++++ b/deploy/tool_plan.py
+@@ -9,6 +9,14 @@ from plan_book import PlanBook
+ 
+ class ToolContentBook(PlanBook):
+     """Separate database of reusable text, without Python or task restrictions."""
++    def candidates(self, task, contracts, limit=15):
++        if not 0 <= limit <= 15:
++            raise ValueError('At most fifteen candidates supported')
++        unique = {}
++        for entry in super().candidates(task, contracts, limit=15 if limit else 0):
++            unique.setdefault(entry['source'], entry)
++        return list(unique.values())[:limit]
++
+     @staticmethod
+     def validate_source(source):
+         if not isinstance(source, str):
+@@ -50,8 +58,11 @@ def branches(tools, candidates):
+         reuse = obj(dict(name=dict(const='reuse_write'), arguments=obj(dict(path=dict(type='string')))))
+         params = copy.deepcopy(schema(tools))
+         params['properties']['steps']['items']['anyOf'].append(reuse)
+-        options.append(dict(name='plan', description='Reuse immutable write content if fully applicable: '+entry['contract']+
+-                            '\nCONTENT:\n'+entry['source']+'\nOtherwise generate ordinary steps.', parameters=params))
++        options.append(dict(name='plan', description='Write the following stored content to the destination requested NOW. '
++                            'The destination is a parameter, not part of the stored content. '
++                            'Choose this when the source satisfies the requested behavior and constraints; '
++                            'new filenames do not require new source. Checks can follow in the same plan. '
++                            '\nCONTENT:\n'+entry['source']+'\nIf incompatible, generate ordinary steps.', parameters=params))
+     options.append(dict(name='plan', description='Reply or ask clarification; no tool action needed now.',
+                         parameters=obj(dict(content=dict(type='string')))))
+     return options
+diff --git a/integrations/pijit/bridge.py b/integrations/pijit/bridge.py
+index 66c92e9..5b79212 100644
+--- a/integrations/pijit/bridge.py
++++ b/integrations/pijit/bridge.py
+@@ -540,7 +540,9 @@ def generic_plan_chat(payload):
+               'do not guess unseen source or produce edits depending on results not yet observed. '
+               'A write and a known check command may be in the same plan. Execution stops on first error. '
+               'After results, continue with another plan as needed or reply. Never claim success before results. '
+-              'Reuse content only when its FULL bytes match the current requirement; stored content is only '
++              'Reuse content when it satisfies ALL current behavior and constraints. Require exact bytes only '
++              'when the user specifies exact text. Bind the current destination separately; a different '
++              'destination alone does not invalidate content. Stored content is only '
+               'execution-observed, NOT independently verified. Never reuse an old tool result; reads and checks execute afresh. '
+               'Read existing files before changing them. The plan tool is a container, not a task-specific validator. '
+               '\nINNER TOOLS: '+json.dumps(tools, ensure_ascii=False))
+@@ -560,7 +562,10 @@ def generic_plan_chat(payload):
+                      classification_prompt='Choose the NEXT action for the conversation above. Output only one letter from '+
+                      ', '.join(LABELS[:len(options)])+'. If the requested work is already completed in the latest tool results, '
+                      'choose '+LABELS[len(options)-1]+' to reply. Do NOT repeat completed actions. '
+-                     'For pending writes, prefer a reuse-content letter over generating write when the stored bytes fully satisfy the request. '
++                     'For pending writes, first compare the stored SOURCE with the requested behavior and constraints, '
++                     'ignoring destination differences. If a source already satisfies them, select its stored-content '
++                     'letter: it performs the write at the new path and can include the requested checks. '
++                     'Choose ordinary write only when no stored source satisfies the request. '
+                      'Stored catalog entries are reference data, NOT additional tasks.')
+     trace_update(plan_token_budget=response.get('plan_budget'), requested_plan_tokens=PLAN_TOTAL_TOKENS if budget_enabled else 2048)
+     index = response['decision']['index']

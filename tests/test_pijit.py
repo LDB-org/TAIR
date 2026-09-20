@@ -1464,3 +1464,15 @@ def test_rejected_subtool_budget_preserves_usage(monkeypatch):
     assert record['usage_complete'] and record['input_tokens']==3
     assert record['generated_argument_tokens']==3000 and record['classification_control_records']==1
     assert trace['plan_token_budget']['exceeded_steps']==[0]
+
+
+def test_opt_in_template_learning_and_replay_do_not_duplicate_content(project, monkeypatch):
+    monkeypatch.setenv('PIJIT_PLAN_TEMPLATES','1')
+    steps=[dict(name='write',arguments=dict(path='x.py',content='x=1')),
+           dict(name='bash',arguments=dict(command='python3 -m py_compile x.py'))]
+    first=b.complete_tool_plan(dict(cwd=str(project),steps=steps,task='write and compile'))
+    assert len(first['template_admitted'])==1 and len(first['admitted'])==1
+    second=b.complete_tool_plan(dict(cwd=str(project),steps=steps,task='same at new path',reused_template_ids=first['template_admitted']))
+    assert second['cache_hit'] and not second['admitted'] and not second['template_admitted']
+    template,=b.tool_plan.ToolContentBook(b.paths(str(project))/'tool-plan-templates.sqlite3').load()
+    assert template['reuse_count']==1

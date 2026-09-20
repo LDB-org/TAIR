@@ -104,3 +104,28 @@ assert.equal(formatPlanStatus({generated:2106,controls:3,plans:2,executed:2,fail
 '''.replace('EXECUTOR',json.dumps((root/'plan_executor.mjs').as_uri())).replace('METRICS',json.dumps((root/'plan_metrics.mjs').as_uri())).replace('STATE',json.dumps(str(tmp_path)))
     actual=subprocess.run(['node','--input-type=module','-e',script],capture_output=True,text=True,timeout=10)
     assert actual.returncode==0,actual.stderr
+
+
+def test_content_candidates_collapse_path_variants_without_merging_different_bytes(tmp_path):
+    book = ToolContentBook(tmp_path/'content.sqlite3')
+    book.admit([('write UTF-8 file old_a.py', 'same source', 'execution'),
+                ('write UTF-8 file old_b.py', 'same source', 'execution'),
+                ('write UTF-8 file other.py', 'different source', 'execution')])
+    candidates = book.candidates('write UTF-8 file', {}, limit=7)
+    assert {e['source'] for e in candidates} == {'same source', 'different source'}
+    assert len(candidates) == 2 and book.count() == 3
+    assert book.candidates('write UTF-8 file', {}, limit=0) == []
+    options = branches(TOOLS, candidates)
+    assert all(e['contract'] in options[len(TOOLS)+i]['description'] for i,e in enumerate(candidates))
+
+
+def test_selected_content_can_fall_back_to_generation_for_changed_constraints(tmp_path):
+    book = ToolContentBook(tmp_path/'content.sqlite3')
+    book.admit([('write overwrite', 'old content', 'execution')])
+    candidates = book.candidates('write append', {})
+    options = branches(TOOLS, candidates)
+    result, reused = decode(response(len(TOOLS), dict(steps=[
+        dict(name='write', arguments=dict(path='new.py', content='new implementation'))])),
+        TOOLS, candidates, options)
+    assert not reused
+    assert result['arguments']['steps'][0]['arguments']['content'] == 'new implementation'

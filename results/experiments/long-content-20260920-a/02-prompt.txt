@@ -1,0 +1,103 @@
+Create a Python standard-library-only module at long-content-20260920-a/02_textio.py. Provide write_text(path, text) and read_text(path). Use pathlib and UTF-8. write_text overwrites the file, read_text returns the full string. Do not create parent directories. No top-level execution. Then run python3 -m py_compile long-content-20260920-a/02_textio.py using bash. Put the write and compilation check in one plan if possible. Do not modify other files. Report completion briefly.
+The module must contain exactly the following source, byte for byte:
+```python
+"""Small standard-library file utilities with explicit encoding and overwrite rules."""
+import csv
+import hashlib
+import json
+from pathlib import Path
+
+
+def read_text(path):
+    """Return the entire UTF-8 file, including its final newline."""
+    return Path(path).read_text(encoding="utf-8")
+
+
+def write_text(path, text):
+    """Overwrite a UTF-8 file; missing parent directories are errors."""
+    Path(path).write_text(text, encoding="utf-8")
+
+
+def append_text(path, text):
+    """Append text, creating the file when its parent already exists."""
+    with Path(path).open("a", encoding="utf-8") as stream:
+        stream.write(text)
+
+
+def read_lines(path):
+    """Read logical lines without their newline terminators."""
+    return read_text(path).splitlines()
+
+
+def write_lines(path, lines):
+    """Write one newline after each supplied line; an empty list is empty."""
+    write_text(path, "".join(str(line) + "\n" for line in lines))
+
+
+def load_json(path):
+    """Decode a UTF-8 JSON document."""
+    return json.loads(read_text(path))
+
+
+def save_json(path, data):
+    """Write indented JSON with literal Unicode and a final newline."""
+    write_text(path, json.dumps(data, ensure_ascii=False, indent=2) + "\n")
+
+
+def read_csv(path):
+    """Return string cells, including quoted delimiters and newlines."""
+    with Path(path).open("r", encoding="utf-8", newline="") as stream:
+        return list(csv.reader(stream))
+
+
+def write_csv(path, rows):
+    """Overwrite CSV using the standard dialect and correct newline handling."""
+    with Path(path).open("w", encoding="utf-8", newline="") as stream:
+        csv.writer(stream).writerows(rows)
+
+
+def sha256_file(path):
+    """Hash arbitrary binary files without loading the whole file."""
+    digest = hashlib.sha256()
+    with Path(path).open("rb") as stream:
+        for block in iter(lambda: stream.read(65536), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def copy_bytes(source, destination):
+    """Copy bytes to a different path, overwriting its contents."""
+    if Path(source).resolve() == Path(destination).resolve():
+        raise ValueError("source and destination must differ")
+    with Path(source).open("rb") as src, Path(destination).open("wb") as dst:
+        for block in iter(lambda: src.read(65536), b""):
+            dst.write(block)
+
+
+def file_size(path):
+    """Return file length in bytes."""
+    return Path(path).stat().st_size
+
+
+def nonempty_lines(path):
+    """Filter whitespace-only lines, preserving text in remaining lines."""
+    return [line for line in read_lines(path) if line.strip()]
+
+
+def ensure_parent(path):
+    """Explicitly create missing directories; ordinary writes never do so."""
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
+
+
+def read_or_default(path, default=""):
+    """Use the default only for a missing file, not decoding or permission errors."""
+    try:
+        return read_text(path)
+    except FileNotFoundError:
+        return default
+
+
+def count_lines(path):
+    """Count logical lines, including a last line without a terminator."""
+    return len(read_lines(path))
+```
