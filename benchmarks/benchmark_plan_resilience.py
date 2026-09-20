@@ -16,7 +16,7 @@ from benchmark_engine_adaptive import CONTRACTS, verify
 
 def run(args):
     out=args.out.resolve();out.mkdir(parents=True,exist_ok=False)
-    for source in [Path(__file__),ROOT/'deploy/adaptive_plan.py']:
+    for source in [Path(__file__),ROOT/'deploy/plan_book.py', ROOT/'deploy/adaptive_plan.py']:
         shutil.copyfile(source,out/source.name)
     raw=out/'requests';raw.mkdir()
     def transport(url,route,body):

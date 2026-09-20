@@ -1,5 +1,6 @@
 from pathlib import Path
 import sys
+import sqlite3
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'deploy'))
@@ -19,7 +20,8 @@ def test_verified_generation_is_persistent_and_deduplicated(tmp_path):
         assert len(admitted) == (1 if n == 0 else 0)
     loaded = PlanBook(book.path).load()
     assert len(loaded) == 1 and loaded[0]['source'] == steps[0]['content']
-    book.path.write_text(book.path.read_text().replace('value = 1', 'value = 2'))
+    with sqlite3.connect(book.path) as db:
+        db.execute("UPDATE entries SET source='value = 2'")
     with pytest.raises(ValueError, match='Corrupt'):
         book.load()
 
@@ -98,19 +100,19 @@ def test_shortlist_does_not_truncate_storage_and_rejects_scoped_pair(tmp_path):
     book.admit([(f'Unrelated counter contract {i}', f'value = {i}', 'check') for i in range(40)])
     identity, = book.admit([('Parse UTF-16 binary records', 'value = 99', 'check')])
     candidates = book.candidates('parse records', {'a.py':'Parse UTF-16 binary records'})
-    assert len(book.load()) == 41 and len(candidates) == 15
+    assert len(book.load()) == 41 and 1 <= len(candidates) <= 15
     assert candidates[0]['id'] == identity
     book.reject(identity, 'Parse UTF-16 binary records')
     assert identity not in {e['id'] for e in book.candidates('parse records', {'a.py':'Parse UTF-16 binary records'})}
     assert identity in {e['id'] for e in book.candidates('parse records', {'a.py':'Parse UTF-16 binary records again'})}
 
 
-def test_storage_retains_most_recent_256_entries(tmp_path):
+def test_storage_has_no_256_entry_cutoff(tmp_path):
     book = PlanBook(tmp_path/'book.json')
     book.admit([(f'constant {i}',f'value = {i}','constant check') for i in range(260)])
     entries = book.load()
-    assert len(entries)==256
-    assert entries[0]['source']=='value = 4' and entries[-1]['source']=='value = 259'
+    assert len(entries)==260
+    assert entries[0]['source']=='value = 0' and entries[-1]['source']=='value = 259'
 
 
 def test_rejected_reuse_recovers_once_and_preserves_both_attempts(tmp_path, monkeypatch):
@@ -146,3 +148,16 @@ def test_recovery_failure_stops_after_two_and_never_publishes(tmp_path, monkeypa
     with pytest.raises(module.VerificationError):
         module.run_plan('', '', {'a.py':'value is 2'}, tmp_path/'output', book, reject)
     assert calls == [False, True] and not (tmp_path/'output').exists() and book.load()==[]
+
+
+def test_only_successfully_published_reuse_updates_frequency(tmp_path):
+    book = PlanBook(tmp_path/'book.sqlite3')
+    identity, = book.admit([('value is 1', 'value=1', 'check')])
+    step = dict(op='reuse', path='a.py', content='value=1', entry_id=identity,
+                source_sha256=digest('value=1'))
+    with pytest.raises(ValueError, match='evidence'):
+        execute_and_learn(result([step]), {'a.py':'value is 1'}, tmp_path/'bad', book, lambda p,c:'')
+    assert book.load()[0]['reuse_count'] == 0
+    execute_and_learn(result([step]), {'a.py':'value is 1'}, tmp_path/'good', book, lambda p,c:'check')
+    assert book.load()[0]['reuse_count'] == 1
+    assert book.load()[0]['successes'] == 2

@@ -182,8 +182,8 @@ export default function(pi: any) {
       const directory = join(process.env.PIJIT_STATE_DIR!, 'workspaces', workspace);
       const file = join(directory, 'codebook.json');
       const count = existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')).length : 0;
-      const planFile = join(directory, 'plan-codebook.json');
-      const plans = existsSync(planFile) ? JSON.parse(readFileSync(planFile, 'utf8')).entries.length : 0;
+      const planStats = await bridge({ action: 'plan_stats', cwd: ctx.cwd });
+      const plans = planStats.entries;
       ctx.ui.notify(`pijit: ${count} source-bound entries; this session ${totals.hits}/${totals.edits} edit hits.\n`
         + `Verified plan entries ${plans}; this session ${totals.planHits}/${totals.plans} plan hits.\n`
         + `Generated tokens ${totals.generated}; classification controls ${totals.controls}.\n`

@@ -968,7 +968,7 @@ def adaptive(payload):
         normalized[relative] = contract
     contracts = normalized
     directory = paths(str(cwd))
-    book = adaptive_plan.PlanBook(directory / 'plan-codebook.json')
+    book = adaptive_plan.PlanBook(directory / 'plan-codebook.sqlite3')
     def verify(path, contract):
         result = subprocess.run(command + [str(path), contract, str(cwd)], cwd=cwd,
                                 capture_output=True, text=True, timeout=30)
@@ -997,7 +997,10 @@ def run(payload):
              'stage_seconds': {}, 'http_requests': []}
     token = TRACE.set(trace)
     try:
-        if payload['action'] == 'plan':
+        if payload['action'] == 'plan_stats':
+            book = adaptive_plan.PlanBook(paths(payload['cwd']) / 'plan-codebook.sqlite3')
+            result = dict(entries=book.count())
+        elif payload['action'] == 'plan':
             result = adaptive(payload)
         else:
             result = chat(payload) if payload['action'] == 'chat' else edit(payload)

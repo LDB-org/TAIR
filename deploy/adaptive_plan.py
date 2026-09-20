@@ -5,20 +5,13 @@ engine session. Execution and trusted verification remain outside the engine.
 """
 from concurrent.futures import ThreadPoolExecutor
 from functools import lru_cache
-import fcntl
-import hashlib
 import json
-import os
-import re
-import math
-from collections import Counter
 from pathlib import Path
 import tempfile
 import time
 import urllib.request
 
-def digest(text):
-    return hashlib.sha256(text.encode()).hexdigest()
+from plan_book import PlanBook, digest
 
 
 def obj(properties):
@@ -31,95 +24,6 @@ def plan_schema(paths, reuse=False):
     if reuse:
         choices.append(obj(dict(op=dict(const='reuse'), path=path)))
     return obj(dict(steps=dict(type='array', minItems=len(paths), maxItems=len(paths), items=dict(anyOf=choices))))
-
-
-class PlanBook:
-    """Atomic, bounded, process-locked publication of verified generated modules."""
-    def __init__(self, path):
-        self.path = Path(path)
-
-    def load(self):
-        if not self.path.exists():
-            return []
-        data = json.loads(self.path.read_text())
-        if data['version'] != 1:
-            raise ValueError('Unsupported book version')
-        entries = data['entries']
-        for entry in entries:
-            if entry['source_sha256'] != digest(entry['source']):
-                raise ValueError('Corrupt codebook source')
-            if entry['id'] != digest(entry['contract'] + '\0' + entry['source']):
-                raise ValueError('Corrupt codebook identity')
-        return entries
-
-    def admit(self, modules):
-        """Internal publication after execute_and_learn has verified the whole plan."""
-        self.path.parent.mkdir(parents=True, exist_ok=True)
-        with self.path.with_suffix(self.path.suffix + '.lock').open('a') as lock:
-            fcntl.flock(lock, fcntl.LOCK_EX)
-            entries = self.load()
-            known = {e['id'] for e in entries}
-            admitted = []
-            for contract, source, evidence in modules:
-                if not contract.strip() or not evidence.strip():
-                    raise ValueError('Contract and verification evidence required')
-                compile(source, '<admitted>', 'exec')
-                identity = digest(contract + '\0' + source)
-                if identity in known:
-                    continue
-                entries.append(dict(id=identity, contract=contract, source=source,
-                                    source_sha256=digest(source), verification=evidence))
-                known.add(identity)
-                admitted.append(identity)
-            # Storage capacity is independent of the 15-entry inference shortlist.
-            entries = entries[-256:]
-            fd, temporary = tempfile.mkstemp(dir=self.path.parent, prefix='.plan-book-')
-            try:
-                with os.fdopen(fd, 'w') as stream:
-                    json.dump(dict(version=1, entries=entries), stream, ensure_ascii=False, indent=2)
-                    stream.flush()
-                    os.fsync(stream.fileno())
-                os.replace(temporary, self.path)
-            finally:
-                if os.path.exists(temporary):
-                    os.unlink(temporary)
-            return admitted
-
-    def reject(self, entry_id, contract):
-        """Reject a reuse for this contract only, without poisoning unrelated uses."""
-        path = self.path.with_suffix('.rejected.json')
-        path.parent.mkdir(parents=True, exist_ok=True)
-        with path.with_suffix('.lock').open('a') as lock:
-            fcntl.flock(lock, fcntl.LOCK_EX)
-            rejected = json.loads(path.read_text()) if path.exists() else []
-            pair = [entry_id, digest(contract)]
-            rejected = [item for item in rejected if item != pair] + [pair]
-            fd, temporary = tempfile.mkstemp(dir=path.parent, prefix='.rejected-')
-            try:
-                with os.fdopen(fd, 'w') as stream:
-                    json.dump(rejected[-256:], stream)
-                    stream.flush()
-                    os.fsync(stream.fileno())
-                os.replace(temporary, path)
-            finally:
-                if os.path.exists(temporary):
-                    os.unlink(temporary)
-
-    def candidates(self, task, contracts, limit=15):
-        entries = self.load()
-        path = self.path.with_suffix('.rejected.json')
-        rejected = json.loads(path.read_text()) if path.exists() else []
-        blocked = {identity for identity, contract in rejected if contract in {digest(c) for c in contracts.values()}}
-        entries = [e for e in entries if e['id'] not in blocked]
-        # Lexical retrieval reduces context only. It never decides applicability.
-        words = lambda text: set(re.findall(r'\w+', text.casefold()))
-        query = words(task + ' ' + ' '.join(contracts.values()))
-        documents = [words(e['contract']) for e in entries]
-        frequency = Counter(word for doc in documents for word in doc)
-        scores = [sum(math.log1p(len(entries) / frequency[w]) for w in query & doc) /
-                  math.sqrt(max(len(doc), 1)) for doc in documents]
-        order = sorted(range(len(entries)), key=lambda i: (scores[i], i), reverse=True)
-        return [entries[i] for i in order[:limit]]
 
 
 def post(url, route, body):
@@ -268,7 +172,11 @@ def execute_and_learn(result, contracts, folder, book, verifier):
             path.parent.mkdir(parents=True, exist_ok=True)
             with path.open('x') as stream:
                 stream.write(step['content'])
-    return book.admit(modules) if modules else []
+    admitted = book.admit(modules) if modules else []
+    reused = [step['entry_id'] for step in steps if step['op'] == 'reuse']
+    if reused:
+        book.record_reuse(reused)
+    return admitted
 
 
 class VerificationError(ValueError):

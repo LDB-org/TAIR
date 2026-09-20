@@ -1301,3 +1301,12 @@ def test_legacy_bridge_import_does_not_require_optional_jsonschema():
     script='import importlib.util,sys; s=importlib.util.spec_from_file_location("bridge",'+repr(str(Path(__file__).resolve().parents[1]/'integrations/pijit/bridge.py'))+');m=importlib.util.module_from_spec(s);s.loader.exec_module(m);assert "jsonschema" not in sys.modules'
     completed=subprocess.run([sys.executable,'-S','-c',script],capture_output=True,text=True)
     assert completed.returncode==0,completed.stderr
+
+
+def test_plan_stats_reads_sqlite_book_without_inference(project, monkeypatch):
+    book = b.adaptive_plan.PlanBook(b.paths(str(project))/'plan-codebook.sqlite3')
+    book.admit([('constant', 'x=1', 'check')])
+    monkeypatch.setattr(b, 'post', lambda *args: pytest.fail('unexpected inference'))
+    actual = b.run(dict(action='plan_stats', cwd=str(project)))
+    assert actual['status'] == 'ok' and actual['entries'] == 1
+    assert actual['accounting']['inference_requests'] == 0

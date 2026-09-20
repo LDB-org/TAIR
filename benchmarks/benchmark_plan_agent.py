@@ -13,6 +13,7 @@ import tempfile
 from compare_pijit_presets import attempt, summarize
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT/'deploy'))
 VALIDATOR = ROOT/'benchmarks/plan_project_validator.py'
 CONTRACTS = {
     'rich': [
@@ -58,7 +59,7 @@ def run(args):
             del os.environ[key]
     (out/'manifest.json').write_text(json.dumps(dict(revisions=revisions, contracts=CONTRACTS,
         method='Real Pi 0.85.1, three pinned project dependency adapter tasks, cold/warm/new-contract, three arms interleaved. Both plan arms force the first outer tool call to plan; no-book forces inner generation and still validates/persists. This isolates reuse from the initial-tool policy. Same workspace reset each round, independent arm state, no retries. Native permits multiple tool calls; all outer planners use per-workspace prefix cache namespaces. Inner fused calls keep their own request KV. End-to-end includes outer reasoning/tools/final summary, inner model calls, trusted project validation and independent artifact oracle. Not complete upstream project tests or arbitrary repository maintenance.'),indent=2))
-    for relative in ['deploy/adaptive_plan.py','integrations/pijit/bridge.py','integrations/pijit/extension.ts','deploy/native_planner.py',
+    for relative in ['deploy/adaptive_plan.py','deploy/plan_book.py','integrations/pijit/bridge.py','integrations/pijit/extension.ts','deploy/native_planner.py',
                      'benchmarks/benchmark_plan_agent.py','benchmarks/plan_project_validator.py','benchmarks/compare_pijit_presets.py']:
         target=out/'sources'/relative; target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/relative,target)
     rows=[]
@@ -93,8 +94,10 @@ def run(args):
                     (folder/'inventory-before.json').write_text(json.dumps(before,indent=2))
                     (folder/'inventory-after.json').write_text(json.dumps(after,indent=2))
                     if (workspace/'adapter.py').exists():shutil.copyfile(workspace/'adapter.py',folder/'adapter.py')
-                    for book in state.glob('workspaces/*/plan-codebook*'):
-                        if book.suffix=='.json':shutil.copyfile(book,folder/book.name)
+                    from plan_book import PlanBook
+                    for book in state.glob('workspaces/*/plan-codebook.sqlite3'):
+                        (folder/'plan-codebook.json').write_text(json.dumps(
+                            dict(version=1, entries=PlanBook(book).load()), indent=2))
                     (folder/'final-result.json').write_text(json.dumps(row,indent=2));rows.append(row)
                     with (out/'rows.jsonl').open('a') as stream:stream.write(json.dumps(row)+'\n')
                     print(json.dumps(dict(case=name,round=round_,arm=arm,passed=row['passed'],seconds=row['validated_seconds'],

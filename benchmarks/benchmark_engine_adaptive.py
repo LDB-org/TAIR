@@ -65,7 +65,7 @@ def naive(url, task, contracts):
 def run(args):
     out = args.out.resolve()
     out.mkdir(parents=True, exist_ok=False)
-    for source in [Path(__file__), ROOT/'deploy/adaptive_plan.py', ROOT/'benchmarks/benchmark_adaptive_plan.py']:
+    for source in [Path(__file__), ROOT/'deploy/plan_book.py', ROOT/'deploy/adaptive_plan.py', ROOT/'benchmarks/benchmark_adaptive_plan.py']:
         shutil.copyfile(source, out/source.name)
     (out/'manifest.json').write_text(json.dumps(dict(repeats=args.repeats, jobs=JOBS, contracts=CONTRACTS,
         method='Two arms, sequential curriculum per independent empty book and repeat; randomized arm order per stage. No warmup or retries. C1. Same 2048 output budget. Engine directly selects one stored entry or GENERATE and continues in the same engine session. Empty book still classifies GENERATE. Entire plan must pass caller-supplied behavioral checks before automatic admission. Baseline also validates and saves generated artifacts but never receives a catalog.',
