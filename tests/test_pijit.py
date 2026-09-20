@@ -1370,6 +1370,46 @@ def test_plan_only_launcher_fails_before_ssh_without_validator():
     import subprocess
     env = {k:v for k,v in os.environ.items() if k != 'PIJIT_PLAN_VERIFY_ARGV'}
     script = Path(__file__).resolve().parents[1]/'integrations/pijit/launch.mjs'
-    actual = subprocess.run(['node', str(script), '--plan-only', '-p', 'test'],
+    actual = subprocess.run(['node', str(script), '--plan-only', '--verified-modules', '-p', 'test'],
                             env=env, capture_output=True, text=True, timeout=5)
     assert actual.returncode == 1 and 'requires PIJIT_PLAN_VERIFY_ARGV' in actual.stderr
+
+
+def test_generic_plan_uses_fused_engine_without_validator_or_outer_planner(project, monkeypatch):
+    monkeypatch.setenv('PIJIT_TOOL_PLAN','1')
+    monkeypatch.delenv('PIJIT_PLAN_VERIFY_ARGV',raising=False)
+    monkeypatch.setattr(b.native_planner,'chat',lambda *a,**k:pytest.fail('extra outer LLM request'))
+    tools=[dict(name='write',description='write file',parameters=dict(type='object',properties={
+        'path':dict(type='string'),'content':dict(type='string')},required=['path','content']))]
+    def infer(messages, options, **kwargs):
+        assert all(o['name']=='plan' for o in options)
+        assert 'reference data' in messages[0]['content']
+        assert 'already completed' in kwargs['classification_prompt']
+        return dict(decision=dict(index=0),same_engine_session=True,finish_reason='stop',classification_control_records=1,
+                    call=dict(name='plan',arguments=dict(first=dict(path='a.txt',content='hello'),rest=[])))
+    monkeypatch.setattr(b,'infer',infer)
+    actual=b.chat(dict(cwd=str(project),inner_tools=tools,context=dict(messages=[dict(role='user',content='Write hello')],tools=[{'name':'plan'}])))
+    assert actual['call']==dict(name='plan',arguments=dict(steps=[dict(name='write',arguments=dict(path='a.txt',content='hello'))]))
+    assert actual['generic_plan'] and not actual['cache_hit']
+
+
+def test_generic_completion_learns_text_and_reuse_does_not_duplicate(project):
+    steps=[dict(name='write',arguments=dict(path='a.md',content='# Heading\n'))]
+    first=b.complete_tool_plan(dict(cwd=str(project),steps=steps,task='create markdown'))
+    assert len(first['admitted'])==1
+    second=b.complete_tool_plan(dict(cwd=str(project),steps=steps,task='create same markdown elsewhere',reused_content_ids=first['admitted']))
+    assert second['admitted']==[] and second['cache_hit']
+    book=b.tool_plan.ToolContentBook(b.paths(str(project))/'tool-plan-codebook.sqlite3')
+    entry,=book.load()
+    assert entry['reuse_count']==1 and 'semantic_correctness_unverified' in entry['verification']
+
+
+def test_duplicate_guard_scoped_to_current_user_turn_and_success():
+    call=dict(name='plan',arguments=dict(steps=[dict(name='write',arguments=dict(path='a',content='ok'))]))
+    history=[dict(role='user'),dict(role='assistant',content=[dict(type='toolCall',id='x',**call)]),
+             dict(role='toolResult',toolCallId='x',isError=False)]
+    with pytest.raises(ValueError,match='Duplicate'):
+        b.reject_repeated_plan(call,history)
+    b.reject_repeated_plan(call,history+[dict(role='user')])
+    history[-1]['isError']=True
+    b.reject_repeated_plan(call,history)

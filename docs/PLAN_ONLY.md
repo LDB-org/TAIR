@@ -1,4 +1,6 @@
-# 严格 plan 模式
+# 严格 plan 模式（历史固定任务实验）
+
+后续已改为[通用 Pi 工具 plan](GENERIC_PLAN.md)。本文的固定验收模式现在必须显式添加 `--verified-modules`；不再是 `--plan-only` 默认行为。以下保留当时实验口径。
 
 `node integrations/pijit/launch.mjs --plan-only` 配合可信 `PIJIT_PLAN_VERIFY_ARGV` 启动。
 原版 read/write/edit/bash 及 compact_edit 等工具均不可执行。Pi 启动白名单、扩展

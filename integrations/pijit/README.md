@@ -1,5 +1,7 @@
 # pijit — local Pi with TAIR inference
 
+For the general single-plan interface, launch with `--plan-only`; see [generic plan](../../docs/GENERIC_PLAN.md).
+
 An independent launcher for Pi 0.85.1. The original `pi` installation and profile
 are unchanged. The custom provider uses engine-side tool classification and
 retained-KV argument generation. `reply_user` is selected in the engine and mapped
@@ -618,37 +620,44 @@ A trusted verification failure rejects an attempted reuse for that contract and 
 
 SQLite storage, migration, explicit retention maintenance and local scaling measurements: [indexed plan book](../../docs/PLAN_BOOK_STORAGE.md).
 
-### Strict plan-only testing
+### Generic single-plan mode
 
-Launch with `--plan-only` (or `PIJIT_PLAN_ONLY=1`) and a configured
-`PIJIT_PLAN_VERIFY_ARGV`. The launcher enables adaptive planning and reuse,
-passes Pi `--no-builtin-tools --tools plan`, and rejects a missing validator
-before starting the SSH tunnel. Only `plan` is exposed to the outer model.
-Extension execution hooks and the Python bridge independently reject ordinary
-tool calls. Local read/edit routing and compact-edit registration are disabled.
-The first inference after **each user message**, including later conversation
-turns, is constrained to `plan`; after a plan result, normal final-answer text is
-allowed. A failure cannot silently fall back to bash/write/edit.
+`--plan-only` now means **general Pi tools inside one public plan**, without a
+fixed task validator or Python-only restriction:
 
 ```sh
-PIJIT_PLAN_VERIFY_ARGV='["/absolute/python", "/absolute/trusted_validator.py"]' \
-  node /absolute/TAIR/integrations/pijit/launch.mjs --plan-only
+node /absolute/TAIR/integrations/pijit/launch.mjs --plan-only
 ```
 
-This mode still supports only new Python modules, at most four per plan. It is
-not an arbitrary file-editing Agent or an OS sandbox. The outer model constructs
-the plan request; the nested engine classifies a codebook entry or GENERATE and
-returns the complete materialized plan for local verification/publication.
-One plan is not a promise of one inference for the entire Agent turn.
+The existing fused engine classifies the first native operation, an applicable
+stored-content entry, or a final reply. It generates the remaining plan in the
+same request. Pi receives only `plan({steps:[{name,arguments}, ...]})` and executes
+native read/write/edit/bash/grep/find/ls implementations locally, sequentially,
+stopping at the first failure. Ordinary tools are not exposed as outer tool calls.
+No extra outer model request constructs a task description for an inner planner.
 
-`validate_utf8_demo.py` is an optional **fixed-task** validator for UTF-8
-`read_text(path)` / `write_text(path,text,*,append=False)`, str/Path support,
-overwrite/append, missing-read errors and no automatic parent-directory creation.
-Use it only when those are the actual original requirements. It does not validate
-arbitrary tasks or infer correctness from the model's contract. For a cold/warm
-test in the same workspace, ask for those functions in two different new files;
-do not overwrite an existing file or delete the codebook between rounds.
+Known operations can share one plan; a read/search whose results determine an
+edit needs another plan after those results return. A final reply is rendered as
+text, not another executable tool. At most eight steps fit in one plan, and the
+existing engine output budget is 2,048 tokens. This does not promise one request
+for a whole arbitrary task or an internal multi-decision engine state machine.
 
-`benchmarks/benchmark_plan_only.py --out NEW_DIRECTORY` runs this two-round live
-Pi test and asserts the tool allowlist, admission, second-round reuse, behavioral
-checks, identical reused source and persisted reuse counters.
+Successful complete plans admit their write content into a separate
+`tool-plan-codebook.sqlite3`. The model can select immutable content and bind a
+new destination, avoiding regeneration. Reads, shell commands and tests execute
+again; their old outputs are never replayed. Stored evidence explicitly says
+**execution succeeded; semantic correctness unverified**. Failed plans do not
+admit their partial writes; those already executed file changes are not rolled
+back. This content cache is separate from the trusted Python-module codebook.
+
+Only the outer plan emits Pi tool-call events. Nested operations use native Pi
+implementations, not separate outer events; compatibility with third-party
+per-tool permission/audit extensions is not established. This mode is not an OS
+sandbox. Image transport remains unsupported by the current text provider.
+
+The old task-specific research mode remains available explicitly as
+`--plan-only --verified-modules`, with `PIJIT_PLAN_VERIFY_ARGV` required. Its
+fixed UTF-8 demonstration is not the default and must not be used as a validator
+for arbitrary tasks.
+
+Real end-to-end cases, failed pilots and limits: [generic plan](../../docs/GENERIC_PLAN.md).

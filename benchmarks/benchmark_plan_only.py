@@ -22,7 +22,8 @@ def main(out):
     rows = []
     for relative in ['integrations/pijit/launch.mjs', 'integrations/pijit/extension.ts',
                      'integrations/pijit/bridge.py', 'integrations/pijit/validate_utf8_demo.py',
-                     'deploy/adaptive_plan.py', 'deploy/plan_book.py', 'deploy/native_planner.py',
+                     'deploy/adaptive_plan.py', 'deploy/plan_book.py', 'deploy/tool_plan.py', 'deploy/native_planner.py',
+                     'integrations/pijit/plan_executor.mjs',
                      'benchmarks/benchmark_plan_only.py', 'benchmarks/benchmark_adaptive_plan.py']:
         path = out/'sources'/relative
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -36,7 +37,7 @@ def main(out):
         for i, name in enumerate(['cold_io.py', 'warm_io.py']):
             prompt = 'Create ONLY '+name+'. '+CONTRACTS['utf8']+' No other files. Use plan; the trusted validator runs the checks.'
             start = time.perf_counter()
-            completed = subprocess.run(['node', str(ROOT/'integrations/pijit/launch.mjs'), '--plan-only', '-p', prompt],
+            completed = subprocess.run(['node', str(ROOT/'integrations/pijit/launch.mjs'), '--plan-only', '--verified-modules', '-p', prompt],
                                        cwd=workspace, env=env, capture_output=True, text=True, timeout=100)
             elapsed = time.perf_counter()-start
             (out/f'{i}-stdout.txt').write_text(completed.stdout)
