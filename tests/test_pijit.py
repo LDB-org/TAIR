@@ -1413,3 +1413,19 @@ def test_duplicate_guard_scoped_to_current_user_turn_and_success():
     b.reject_repeated_plan(call,history+[dict(role='user')])
     history[-1]['isError']=True
     b.reject_repeated_plan(call,history)
+
+
+def test_generic_logs_explain_empty_book_and_admission(project, monkeypatch):
+    monkeypatch.setenv('PIJIT_TOOL_PLAN','1')
+    monkeypatch.setenv('PIJIT_PLAN_ONLY','1')
+    tools=[dict(name='write',description='write',parameters=dict(type='object',properties={
+        'path':dict(type='string'),'content':dict(type='string')},required=['path','content']))]
+    monkeypatch.setattr(b,'infer',lambda *a,**k:dict(decision=dict(index=0),same_engine_session=True,
+        finish_reason='stop',classification_control_records=1,call=dict(name='plan',arguments=dict(first=dict(path='a',content='hi'),rest=[]))))
+    result=b.run(dict(action='chat',cwd=str(project),inner_tools=tools,context=dict(messages=[dict(role='user',content='write hi')],tools=[{'name':'plan'}])))
+    assert result['status']=='ok'
+    assert result['book_entries']==0 and result['candidate_count']==0
+    assert result['cache_outcome']=='empty_book' and result['selected_branch']=='tool:write'
+    complete=b.run(dict(action='tool_plan_complete',cwd=str(project),task='write hi',steps=result['call']['arguments']['steps']))
+    assert complete['admission_count']==1 and complete['book_entries_after']==1
+    assert complete['admission_reason']=='new_write_content'

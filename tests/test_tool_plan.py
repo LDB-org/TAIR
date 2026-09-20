@@ -73,3 +73,34 @@ const result=await executePlan('ok',[steps[0]],tools);assert.equal(result[0].nam
 '''.replace('MODULE',json.dumps(path))
     actual=subprocess.run(['node','--input-type=module','-e',script],capture_output=True,text=True,timeout=10)
     assert actual.returncode==0,actual.stderr
+
+
+def test_execution_logs_are_metadata_only_and_do_not_affect_tools(tmp_path):
+    if not shutil.which('node'):pytest.skip('Node.js required')
+    root=Path(__file__).resolve().parents[1]/'integrations/pijit'
+    script='''
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { join, resolve } from 'node:path';
+import { executePlan } from EXECUTOR;
+import { appendPlanEvent, formatPlanStatus } from METRICS;
+const state=STATE;const events=[];
+const tools=new Map([['write',{execute:async()=>({content:[{type:'text',text:'SECRET_OUTPUT'}]})}],
+ ['bash',{execute:async()=>{throw new Error('SECRET_ERROR');}}]]);
+const steps=[{name:'write',arguments:{content:'SECRET_SOURCE'}},{name:'bash',arguments:{}},{name:'write',arguments:{}}];
+await assert.rejects(executePlan('p',steps,tools,undefined,undefined,event=>{
+ events.push(event);appendPlanEvent(state,state,'s','p',event);
+}));
+assert.deepEqual(events.map(e=>e.event),['plan_start','step_start','step_success','step_start','step_failure','plan_failure']);
+assert.equal(events.at(-1).skipped_steps,1);assert.equal(events.at(-1).completed_steps,1);
+const hash=createHash('sha256').update(resolve(state)).digest('hex').slice(0,20);
+const raw=readFileSync(join(state,'workspaces',hash,'plan-events.jsonl'),'utf8');
+assert.ok(!raw.includes('SECRET'));assert.ok(raw.includes('"plan_id":"p"'));
+const result=await executePlan('q',[steps[0]],tools,undefined,undefined,()=>{throw new Error('logging failure');});
+assert.equal(result.length,1);
+assert.equal(formatPlanStatus({generated:2106,controls:3,plans:2,executed:2,failed:0,reusedSuccessful:0,admitted:1}),
+ 'pijit · gen 2106 · cls 3 · plans 2 · ok 2 · fail 0 · reuse 0 · learn 1');
+'''.replace('EXECUTOR',json.dumps((root/'plan_executor.mjs').as_uri())).replace('METRICS',json.dumps((root/'plan_metrics.mjs').as_uri())).replace('STATE',json.dumps(str(tmp_path)))
+    actual=subprocess.run(['node','--input-type=module','-e',script],capture_output=True,text=True,timeout=10)
+    assert actual.returncode==0,actual.stderr

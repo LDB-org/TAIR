@@ -59,7 +59,7 @@ def run(args):
             del os.environ[key]
     (out/'manifest.json').write_text(json.dumps(dict(revisions=revisions, contracts=CONTRACTS,
         method='Real Pi 0.85.1, three pinned project dependency adapter tasks, cold/warm/new-contract, three arms interleaved. Both plan arms force the first outer tool call to plan; no-book forces inner generation and still validates/persists. This isolates reuse from the initial-tool policy. Same workspace reset each round, independent arm state, no retries. Native permits multiple tool calls; all outer planners use per-workspace prefix cache namespaces. Inner fused calls keep their own request KV. End-to-end includes outer reasoning/tools/final summary, inner model calls, trusted project validation and independent artifact oracle. Not complete upstream project tests or arbitrary repository maintenance.'),indent=2))
-    for relative in ['deploy/adaptive_plan.py','deploy/plan_book.py','deploy/tool_plan.py','integrations/pijit/plan_executor.mjs','integrations/pijit/bridge.py','integrations/pijit/extension.ts','deploy/native_planner.py',
+    for relative in ['deploy/adaptive_plan.py','deploy/plan_book.py','deploy/tool_plan.py','integrations/pijit/plan_executor.mjs','integrations/pijit/plan_metrics.mjs','integrations/pijit/bridge.py','integrations/pijit/extension.ts','deploy/native_planner.py',
                      'benchmarks/benchmark_plan_agent.py','benchmarks/plan_project_validator.py','benchmarks/compare_pijit_presets.py']:
         target=out/'sources'/relative; target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/relative,target)
     rows=[]

@@ -23,7 +23,7 @@ def main(out):
     for relative in ['integrations/pijit/launch.mjs', 'integrations/pijit/extension.ts',
                      'integrations/pijit/bridge.py', 'integrations/pijit/validate_utf8_demo.py',
                      'deploy/adaptive_plan.py', 'deploy/plan_book.py', 'deploy/tool_plan.py', 'deploy/native_planner.py',
-                     'integrations/pijit/plan_executor.mjs',
+                     'integrations/pijit/plan_executor.mjs','integrations/pijit/plan_metrics.mjs',
                      'benchmarks/benchmark_plan_only.py', 'benchmarks/benchmark_adaptive_plan.py']:
         path = out/'sources'/relative
         path.parent.mkdir(parents=True, exist_ok=True)
