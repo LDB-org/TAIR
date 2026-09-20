@@ -483,17 +483,9 @@ def planner_efficiency_policy(payload):
             'and do not create unrelated project artifacts. Finish once the requested changes and checks are complete.')
 
 
-def plan_validator_command():
-    command = json.loads(os.environ.get('PIJIT_PLAN_VERIFY_ARGV', '[]'))
-    if not isinstance(command, list) or not command or not all(isinstance(arg, str) and arg.strip() for arg in command):
-        raise ValueError('A trusted PIJIT_PLAN_VERIFY_ARGV validator is required; no ordinary-tool fallback in plan-only mode')
-    return command
-
-
 def strict_plan_chat(payload):
     """Expose exactly one action; ordinary text remains available after its result."""
-    plan_validator_command()
-    if os.environ.get('PIJIT_ADAPTIVE_PLAN') != '1':
+    if os.environ.get('PIJIT_ADAPTIVE_PLAN') != '1' or not json.loads(os.environ.get('PIJIT_PLAN_VERIFY_ARGV', '[]')):
         raise ValueError('Plan-only mode requires adaptive plan and a trusted validator')
     context = dict(payload['context'])
     context['tools'] = [tool for tool in context.get('tools', []) if tool['name'] == 'plan']
@@ -987,7 +979,9 @@ def apply_edit(path, source, updated, cwd, directory):
 def adaptive(payload):
     if os.environ.get('PIJIT_ADAPTIVE_PLAN') != '1':
         raise ValueError('Adaptive plan is not enabled')
-    command = plan_validator_command()
+    command = json.loads(os.environ.get('PIJIT_PLAN_VERIFY_ARGV', '[]'))
+    if not command or not all(isinstance(arg, str) and arg for arg in command):
+        raise ValueError('A trusted PIJIT_PLAN_VERIFY_ARGV validator is required; use ordinary tools otherwise')
     cwd = Path(payload['cwd']).resolve()
     contracts = payload['contracts']
     if not isinstance(contracts, dict) or not contracts or not all(isinstance(c, str) and c.strip() for c in contracts.values()):
@@ -1013,7 +1007,7 @@ def adaptive(payload):
     def transport(_url, route, body):
         return post(route, body)
     result = adaptive_plan.run_plan(os.environ['PIJIT_URL'].rstrip('/'), payload['task'], contracts,
-                                    cwd, book, verify, transport, reuse=(os.environ.get('PIJIT_PLAN_ONLY') == '1' or os.environ.get('PIJIT_PLAN_DISABLE_REUSE') != '1'))
+                                    cwd, book, verify, transport, reuse=os.environ.get('PIJIT_PLAN_DISABLE_REUSE') != '1')
     attempts = result['attempts']
     trace_update(adaptive_plan=True, recovery=result['recovered'], reuse_steps=result['reuse_steps'],
                  admitted=result['admitted'], candidates=[a['candidate_ids'] for a in attempts],

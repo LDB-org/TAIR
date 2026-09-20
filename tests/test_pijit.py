@@ -1310,3 +1310,66 @@ def test_plan_stats_reads_sqlite_book_without_inference(project, monkeypatch):
     actual = b.run(dict(action='plan_stats', cwd=str(project)))
     assert actual['status'] == 'ok' and actual['entries'] == 1
     assert actual['accounting']['inference_requests'] == 0
+
+
+def test_strict_plan_filters_tools_and_forces_each_new_user_turn(project, monkeypatch):
+    monkeypatch.setenv('PIJIT_PLAN_ONLY', '1')
+    monkeypatch.setenv('PIJIT_ADAPTIVE_PLAN', '1')
+    monkeypatch.setenv('PIJIT_PLAN_VERIFY_ARGV', '["trusted-validator"]')
+    monkeypatch.setenv('PIJIT_LOCAL_ROUTING', '1')
+    monkeypatch.setattr(b, 'route_edit', lambda *a: pytest.fail('ordinary route reached'))
+    choices = []
+    def planner(payload, *args, **kwargs):
+        assert [t['name'] for t in payload['context']['tools']] == ['plan']
+        choices.append(kwargs['tool_choice'])
+        return {'call': {'name': 'plan', 'arguments': {}}}
+    monkeypatch.setattr(b.native_planner, 'chat', planner)
+    context = dict(tools=[{'name': 'plan'}, {'name': 'bash'}, {'name': 'write'}], messages=[{'role': 'user'}])
+    payload = dict(context=context, cwd=str(project))
+    b.chat(payload)
+    context['messages'] += [{'role': 'assistant'}, {'role': 'toolResult', 'toolName': 'plan'}]
+    b.chat(payload)
+    context['messages'] += [{'role': 'user'}]
+    b.chat(payload)
+    assert choices == ['plan', None, 'plan']
+    assert len(context['tools']) == 3  # Do not mutate history supplied by Pi.
+
+
+@pytest.mark.parametrize('call', ['bash', 'write', 'compact_edit', 'reply_user'])
+def test_strict_plan_rejects_bypass_model_response(project, monkeypatch, call):
+    monkeypatch.setenv('PIJIT_PLAN_ONLY', '1')
+    monkeypatch.setenv('PIJIT_ADAPTIVE_PLAN', '1')
+    monkeypatch.setenv('PIJIT_PLAN_VERIFY_ARGV', '["trusted-validator"]')
+    monkeypatch.setattr(b.native_planner, 'chat', lambda *a, **k: {'call': {'name': call}})
+    with pytest.raises(ValueError, match='outside the plan protocol'):
+        b.chat(dict(context=dict(tools=[{'name': 'plan'}], messages=[{'role':'user'}])))
+
+
+def test_strict_plan_blocks_execution_bridge_and_missing_config(project, monkeypatch):
+    monkeypatch.setenv('PIJIT_PLAN_ONLY', '1')
+    monkeypatch.delenv('PIJIT_PLAN_VERIFY_ARGV', raising=False)
+    actual = b.run(dict(action='edit', cwd=str(project)))
+    assert actual['status'] == 'error' and 'disables ordinary' in actual['error']
+    assert actual['accounting']['inference_requests'] == 0
+    with pytest.raises(ValueError, match='trusted.*validator'):
+        b.chat(dict(context=dict(tools=[{'name':'plan'}], messages=[])))
+
+
+@pytest.mark.parametrize('value', ['[]', '"command"', '[""]', '[1]'])
+def test_plan_validator_argv_must_be_nonempty_string_array(monkeypatch, value):
+    monkeypatch.setenv('PIJIT_PLAN_VERIFY_ARGV', value)
+    with pytest.raises(ValueError, match='trusted'):
+        b.plan_validator_command()
+
+
+def test_plan_only_launcher_fails_before_ssh_without_validator():
+    import shutil
+    if not shutil.which('node'):
+        pytest.skip('Pi launcher requires Node.js')
+    import os
+    import subprocess
+    env = {k:v for k,v in os.environ.items() if k != 'PIJIT_PLAN_VERIFY_ARGV'}
+    script = Path(__file__).resolve().parents[1]/'integrations/pijit/launch.mjs'
+    actual = subprocess.run(['node', str(script), '--plan-only', '-p', 'test'],
+                            env=env, capture_output=True, text=True, timeout=5)
+    assert actual.returncode == 1 and 'requires PIJIT_PLAN_VERIFY_ARGV' in actual.stderr

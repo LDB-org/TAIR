@@ -617,3 +617,38 @@ A trusted verification failure rejects an attempted reuse for that contract and 
 `PIJIT_PLAN_DISABLE_REUSE=1` is the ablation/control: same outer plan policy and validation, but inner inference always generates. It still persists validated code, allowing comparison of reuse with the outer policy held fixed. Model-generated contract descriptions can differ across calls; the current retrieval and rejection cache are bounded engineering mechanisms, not a universal intent or semantic equivalence solver.
 
 SQLite storage, migration, explicit retention maintenance and local scaling measurements: [indexed plan book](../../docs/PLAN_BOOK_STORAGE.md).
+
+### Strict plan-only testing
+
+Launch with `--plan-only` (or `PIJIT_PLAN_ONLY=1`) and a configured
+`PIJIT_PLAN_VERIFY_ARGV`. The launcher enables adaptive planning and reuse,
+passes Pi `--no-builtin-tools --tools plan`, and rejects a missing validator
+before starting the SSH tunnel. Only `plan` is exposed to the outer model.
+Extension execution hooks and the Python bridge independently reject ordinary
+tool calls. Local read/edit routing and compact-edit registration are disabled.
+The first inference after **each user message**, including later conversation
+turns, is constrained to `plan`; after a plan result, normal final-answer text is
+allowed. A failure cannot silently fall back to bash/write/edit.
+
+```sh
+PIJIT_PLAN_VERIFY_ARGV='["/absolute/python", "/absolute/trusted_validator.py"]' \
+  node /absolute/TAIR/integrations/pijit/launch.mjs --plan-only
+```
+
+This mode still supports only new Python modules, at most four per plan. It is
+not an arbitrary file-editing Agent or an OS sandbox. The outer model constructs
+the plan request; the nested engine classifies a codebook entry or GENERATE and
+returns the complete materialized plan for local verification/publication.
+One plan is not a promise of one inference for the entire Agent turn.
+
+`validate_utf8_demo.py` is an optional **fixed-task** validator for UTF-8
+`read_text(path)` / `write_text(path,text,*,append=False)`, str/Path support,
+overwrite/append, missing-read errors and no automatic parent-directory creation.
+Use it only when those are the actual original requirements. It does not validate
+arbitrary tasks or infer correctness from the model's contract. For a cold/warm
+test in the same workspace, ask for those functions in two different new files;
+do not overwrite an existing file or delete the codebook between rounds.
+
+`benchmarks/benchmark_plan_only.py --out NEW_DIRECTORY` runs this two-round live
+Pi test and asserts the tool allowlist, admission, second-round reuse, behavioral
+checks, identical reused source and persisted reuse counters.

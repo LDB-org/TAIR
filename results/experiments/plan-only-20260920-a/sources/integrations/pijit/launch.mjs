@@ -60,7 +60,7 @@ try {
     PIJIT_URL: url || 'http://127.0.0.1:8000', PI_OFFLINE: '1',
     ...(planOnly ? { PIJIT_PLAN_ONLY: '1', PIJIT_ADAPTIVE_PLAN: '1', PIJIT_NATIVE_PLANNER: '1', PIJIT_PLAN_DISABLE_REUSE: '0' } : {}) };
   const args = [cli, '--no-extensions', '-e', join(here, 'extension.ts'), '--provider', 'pijit',
-    '--model', 'deepseek-jit', '--thinking', 'off', ...cliArgs, ...(planOnly ? ['--no-builtin-tools', '--tools', 'plan'] : [])];
+    '--model', 'deepseek-jit', '--thinking', 'off', ...(planOnly ? ['--no-tools'] : []), ...cliArgs];
   child = spawn(process.execPath, args, { stdio: 'inherit', env });
   const stop = () => { child?.kill('SIGTERM'); tunnel?.kill('SIGTERM'); };
   process.on('SIGTERM', stop);

@@ -1,0 +1,15 @@
+[
+  {
+    "seq": 1,
+    "id": "417c964bbc81c9a5577200781ffade5735e04bd8f808f901b8ebeaa041c82043",
+    "contract": "Module: cold_io\n\nFunctions:\n- read_text(path) -> str\n  - Accepts str or pathlib.Path for path.\n  - Reads the entire file as UTF-8 text and returns it.\n  - Raises FileNotFoundError if the file does not exist.\n\n- write_text(path, text, *, append=False) -> None\n  - Accepts str or pathlib.Path for path, and str for text.\n  - Writes text as UTF-8.\n  - When append=False (default), overwrites the file contents.\n  - When append=True, appends text to the end of the file.\n  - Creates the file if it does not exist.\n  - Does NOT create parent directories (raises FileNotFoundError if parent directory is missing).\n\nImplementation notes:\n- Use pathlib.Path(path) to normalize str/Path inputs.\n- For read_text: use Path.read_text(encoding='utf-8').\n- For write_text: use Path.write_text(text, encoding='utf-8') for overwrite, and open(path, 'a', encoding='utf-8') for append.\n- Do not create parent directories.\n- No other files or modules should be created.",
+    "source": "from pathlib import Path\n\ndef read_text(path):\n    \"\"\"Read the entire file as UTF-8 text and return it.\"\"\"\n    return Path(path).read_text(encoding='utf-8')\n\ndef write_text(path, text, *, append=False):\n    \"\"\"Write text as UTF-8, overwriting or appending.\"\"\"\n    p = Path(path)\n    if append:\n        with open(p, 'a', encoding='utf-8') as f:\n            f.write(text)\n    else:\n        p.write_text(text, encoding='utf-8')\n",
+    "source_sha256": "2e26c3c1df3f3ba4cf130733a01083856c31fcb14f521da6a474a73f36b2740c",
+    "verification": "Configured validator passed: 93182ef4efb95721ece895df1b1a7dbda0fc587e53be3b4838b147683851a13c",
+    "entry_version": 1,
+    "successes": 2,
+    "reuse_count": 1,
+    "created_at": 1789873861.3209789,
+    "last_used": 1789873870.769176
+  }
+]
