@@ -15,7 +15,7 @@ ROOT=Path(__file__).resolve().parents[1]
 
 def main(out):
     out.mkdir(parents=True,exist_ok=False)
-    for relative in ['deploy/tool_plan.py','deploy/plan_book.py','integrations/pijit/bridge.py',
+    for relative in ['deploy/tool_plan.py','deploy/plan_book.py','deploy/vllm_direct_tools.py','integrations/pijit/bridge.py',
                      'integrations/pijit/extension.ts','integrations/pijit/plan_executor.mjs','integrations/pijit/plan_metrics.mjs',
                      'integrations/pijit/launch.mjs','benchmarks/benchmark_generic_plan.py']:
         target=out/'sources'/relative;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/relative,target)

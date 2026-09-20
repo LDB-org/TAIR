@@ -639,7 +639,7 @@ No extra outer model request constructs a task description for an inner planner.
 Known operations can share one plan; a read/search whose results determine an
 edit needs another plan after those results return. A final reply is rendered as
 text, not another executable tool. At most eight steps fit in one plan, and the
-existing engine output budget is 2,048 tokens. This does not promise one request
+per-subtool argument budget is 2,048 tokens. Updated servers allow 17,408 total plan tokens; older servers retain a clearly reported 2,048-total compatibility mode. See [budget and rollout status](../../docs/PLAN_TOKEN_BUDGET.md). This does not promise one request
 for a whole arbitrary task or an internal multi-decision engine state machine.
 
 Successful complete plans admit their write content into a separate

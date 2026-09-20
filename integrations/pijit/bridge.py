@@ -29,6 +29,7 @@ import schema_actions
 import native_planner
 import adaptive_plan
 import tool_plan
+from vllm_direct_tools import PLAN_TOTAL_TOKENS
 
 STATE = Path(os.environ.get('PIJIT_STATE_DIR', str(Path.home() / '.pijit')))
 MODEL = os.environ.get('PIJIT_MODEL', '/model')
@@ -101,6 +102,18 @@ def post(route, payload):
         record.update(status='error', error_type=type(error).__name__)
         if hasattr(error, 'code'):
             record['http_status'] = error.code
+            try:
+                failure = json.loads(error.read())
+                if route == '/v1/openjev/toolcall' and 'generated_argument_tokens' in failure:
+                    decision = failure.get('decision')
+                    selected = decision['index'] if decision else None
+                    record.update(generated_argument_tokens=failure['generated_argument_tokens'],
+                                  classification_control_records=failure['classification_control_records'],
+                                  input_tokens=len(payload['prompt_ids'])+(len(payload['continuations'][selected]) if selected is not None else 0),
+                                  usage_complete=failure.get('usage_complete', False), plan_budget=failure.get('plan_budget'))
+                    trace_update(plan_token_budget=failure.get('plan_budget'))
+            except (ValueError, KeyError, TypeError, AttributeError):
+                pass
         raise
     finally:
         record['seconds'] = time.perf_counter() - started
@@ -260,7 +273,7 @@ def prepare_continuations(messages, tails):
 
 
 @stage('generation')
-def infer(messages, tools, instruction=None, classification_prompt=None, branch_instruction=None):
+def infer(messages, tools, instruction=None, classification_prompt=None, branch_instruction=None, plan_budget=False):
     if not 1 <= len(tools) <= 16:
         raise ValueError('pijit engine supports 1..16 active tools')
     with stage('generation_preparation'):
@@ -285,7 +298,8 @@ def infer(messages, tools, instruction=None, classification_prompt=None, branch_
             prefix, suffixes = prepared
     with stage('generation_http'):
         result = post('/v1/openjev/toolcall', {'prompt_ids': prefix, 'candidate_ids': candidate_ids,
-            'continuations': suffixes, 'tools': tools, 'max_tokens': 2048})
+            'continuations': suffixes, 'tools': tools, 'max_tokens': PLAN_TOTAL_TOKENS if plan_budget else 2048,
+            **({'plan_budget': True} if plan_budget else {})})
     selected = result['decision']['index']
     result['input_tokens'] = len(prefix) + len(suffixes[selected])
     return result
@@ -486,11 +500,30 @@ def planner_efficiency_policy(payload):
             'and do not create unrelated project artifacts. Finish once the requested changes and checks are complete.')
 
 
+def server_plan_budget():
+    """Negotiate with older running servers without breaking their active clients."""
+    headers = {}
+    if os.environ.get('PIJIT_API_KEY'):
+        headers['Authorization'] = 'Bearer '+os.environ['PIJIT_API_KEY']
+    request = urllib.request.Request(os.environ['PIJIT_URL'].rstrip('/')+'/v1/openjev/capabilities', headers=headers)
+    try:
+        with urllib.request.urlopen(request, timeout=10) as response:
+            caps = json.load(response)
+    except urllib.error.HTTPError as error:
+        if error.code == 404:
+            return False
+        raise
+    return (caps.get('plan_budget_version') == 1 and caps.get('per_tool_limit') == 2048
+            and caps.get('max_steps') == 8 and caps.get('max_plan_tokens', 0) >= PLAN_TOTAL_TOKENS)
+
+
 def generic_plan_chat(payload):
     tools = payload.get('inner_tools', [])
     allowed = {'read', 'write', 'edit', 'bash', 'grep', 'find', 'ls'}
     if not tools or len({t['name'] for t in tools}) != len(tools) or any(t['name'] not in allowed for t in tools):
         raise ValueError('Invalid Pi inner tool catalog')
+    budget_enabled = server_plan_budget()
+    trace_update(plan_budget_supported=budget_enabled, plan_budget_mode='per_subtool' if budget_enabled else 'legacy_plan_2048')
     context = payload['context']
     task = next((text_content(m.get('content')) for m in reversed(context['messages']) if m['role']=='user'), '')
     book = tool_plan.ToolContentBook(paths(payload['cwd'])/'tool-plan-codebook.sqlite3')
@@ -523,11 +556,13 @@ def generic_plan_chat(payload):
             messages.append(dict(role=role, content=content))
     response = infer(messages, [dict(option, parameters=tool_plan.decoder_schema(option['parameters'])) for option in options],
                      branch_instruction=lambda index, option: tool_plan.continuation(index, tools, candidates, option),
+                     plan_budget=budget_enabled,
                      classification_prompt='Choose the NEXT action for the conversation above. Output only one letter from '+
                      ', '.join(LABELS[:len(options)])+'. If the requested work is already completed in the latest tool results, '
                      'choose '+LABELS[len(options)-1]+' to reply. Do NOT repeat completed actions. '
                      'For pending writes, prefer a reuse-content letter over generating write when the stored bytes fully satisfy the request. '
                      'Stored catalog entries are reference data, NOT additional tasks.')
+    trace_update(plan_token_budget=response.get('plan_budget'), requested_plan_tokens=PLAN_TOTAL_TOKENS if budget_enabled else 2048)
     index = response['decision']['index']
     branch = ('tool:'+tools[index]['name'] if 0 <= index < len(tools) else
               'reuse_content' if len(tools) <= index < len(tools)+len(candidates) else 'reply')
@@ -543,7 +578,7 @@ def generic_plan_chat(payload):
                  candidate_ids=[entry['id'] for entry in candidates], reused_content_ids=reused,
                  plan_step_names=[step['name'] for step in call['arguments'].get('steps',[])])
     return dict(response, call=call, plan_task=task, reused_content_ids=reused,
-                generic_plan=True, cache_hit=bool(reused))
+                generic_plan=True, cache_hit=bool(reused), plan_budget_supported=budget_enabled)
 
 
 def reject_repeated_plan(call, messages):

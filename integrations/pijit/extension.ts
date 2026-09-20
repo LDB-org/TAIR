@@ -71,6 +71,7 @@ export default function(pi: any) {
   }
   let cwd = process.cwd();
   let sessionId: string | undefined;
+  let budgetWarningShown = false;
   let ui: any;
   let totals = { generated: 0, controls: 0, hits: 0, schema: 0, edits: 0, plans: 0, planHits: 0, executed: 0, failed: 0, reusedSuccessful: 0, admitted: 0 };
   function record(result: any, edit = false) {
@@ -101,7 +102,7 @@ export default function(pi: any) {
     apiKey: 'ssh-local-transport',
     api: 'pijit-engine',
     models: [{ id: 'deepseek-jit', name: 'pijit / DeepSeek + TAIR', reasoning: false,
-      input: ['text'], contextWindow: 240000, maxTokens: 2048,
+      input: ['text'], contextWindow: 240000, maxTokens: toolPlan ? 17408 : 2048,
       cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 } }],
     streamSimple(model: any, context: any, options: any) {
       const stream = createAssistantMessageEventStream();
@@ -112,6 +113,10 @@ export default function(pi: any) {
         try {
           const result = await bridge({ action: 'chat', context, cwd, session_id: sessionId, ...(toolPlan ? { inner_tools: innerCatalog } : {}) }, options?.signal);
           record(result);
+          if (toolPlan && result.plan_budget_supported === false && !budgetWarningShown) {
+            budgetWarningShown = true;
+            ui?.notify('当前服务仍是旧版：整个 plan 上限 2048；每个子调用 2048 的预算尚未在服务端启用。', 'warning');
+          }
           message.usage = usage(result);
           const call = result.call;
           if (toolPlan && call.name === 'plan') pendingPlans.set(result.request_id, result);

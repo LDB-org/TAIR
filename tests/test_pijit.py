@@ -13,6 +13,7 @@ SOURCE = 'import argparse\ndef build_parser():\n    p = argparse.ArgumentParser(
 @pytest.fixture
 def project(tmp_path, monkeypatch):
     monkeypatch.setattr(b, 'STATE', tmp_path / 'state')
+    monkeypatch.setattr(b, 'server_plan_budget', lambda: True)
     monkeypatch.delenv('PIJIT_VERIFY_CMD', raising=False)
     monkeypatch.delenv('PIJIT_DISABLE_CODEBOOK', raising=False)
     cwd = tmp_path / 'project'
@@ -1429,3 +1430,37 @@ def test_generic_logs_explain_empty_book_and_admission(project, monkeypatch):
     complete=b.run(dict(action='tool_plan_complete',cwd=str(project),task='write hi',steps=result['call']['arguments']['steps']))
     assert complete['admission_count']==1 and complete['book_entries_after']==1
     assert complete['admission_reason']=='new_write_content'
+
+
+def test_plan_budget_capabilities_distinguish_old_server_and_transport_failure(monkeypatch):
+    import io
+    import urllib.error
+    monkeypatch.setenv('PIJIT_URL','http://unused')
+    monkeypatch.setattr(b.urllib.request,'urlopen',lambda *a,**k:io.BytesIO(json.dumps(dict(
+        plan_budget_version=1,per_tool_limit=2048,max_steps=8,max_plan_tokens=17408)).encode()))
+    assert b.server_plan_budget()
+    def missing(*a,**k):raise urllib.error.HTTPError('http://unused',404,'missing',{},io.BytesIO())
+    monkeypatch.setattr(b.urllib.request,'urlopen',missing)
+    assert not b.server_plan_budget()
+    def denied(*a,**k):raise urllib.error.HTTPError('http://unused',401,'denied',{},io.BytesIO())
+    monkeypatch.setattr(b.urllib.request,'urlopen',denied)
+    with pytest.raises(urllib.error.HTTPError):b.server_plan_budget()
+
+
+def test_rejected_subtool_budget_preserves_usage(monkeypatch):
+    import io
+    import urllib.error
+    monkeypatch.setenv('PIJIT_URL','http://unused')
+    data=dict(decision={'index':0},generated_argument_tokens=3000,classification_control_records=1,
+              plan_budget={'exceeded_steps':[0]},usage_complete=True)
+    def failed(*a,**k):raise urllib.error.HTTPError('http://unused',422,'budget',{},io.BytesIO(json.dumps(data).encode()))
+    monkeypatch.setattr(b.urllib.request,'urlopen',failed)
+    trace={'http_requests':[]};token=b.TRACE.set(trace)
+    try:
+        with pytest.raises(urllib.error.HTTPError):
+            b.post('/v1/openjev/toolcall',dict(prompt_ids=[1,2],continuations=[[3]]))
+    finally:b.TRACE.reset(token)
+    record,=trace['http_requests']
+    assert record['usage_complete'] and record['input_tokens']==3
+    assert record['generated_argument_tokens']==3000 and record['classification_control_records']==1
+    assert trace['plan_token_budget']['exceeded_steps']==[0]

@@ -97,4 +97,5 @@ def continuation(index, tools, candidates, option):
                        'If the selected content is incompatible, abandon reuse and emit ordinary steps instead. ')
     else:
         instruction = 'Reply to the user based on the actual execution results, or ask for missing information. '
+    instruction += 'Each individual subtool argument object has a budget of 2048 tokens; the whole plan may use up to eight such calls. '
     return instruction+'Return ONLY JSON matching this schema: '+json.dumps(option['parameters'],ensure_ascii=False)

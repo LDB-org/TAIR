@@ -12,6 +12,39 @@ import time
 import uuid
 
 
+PLAN_STEP_TOKENS = 2048
+PLAN_MAX_STEPS = 8
+PLAN_STRUCTURE_TOKENS = 1024
+PLAN_TOTAL_TOKENS = PLAN_STEP_TOKENS * PLAN_MAX_STEPS + PLAN_STRUCTURE_TOKENS
+
+
+class PlanBudgetExceeded(ValueError):
+    pass
+
+
+def measure_plan_arguments(arguments, encode):
+    """Count compact JSON argument tokens, before any cached-content expansion.
+
+    These independent per-call counts are NOT sampled output token attribution:
+    structural JSON, whitespace and BPE boundaries differ from the whole stream.
+    """
+    if set(arguments) == {'first', 'rest'}:
+        values = [arguments['first'], *[step['arguments'] for step in arguments['rest']]]
+    elif set(arguments) == {'steps'}:
+        values = [step['arguments'] for step in arguments['steps']]
+    elif set(arguments) == {'content'}:
+        values = [arguments]
+    else:
+        raise ValueError('Unsupported budgeted plan shape')
+    if not 1 <= len(values) <= PLAN_MAX_STEPS:
+        raise PlanBudgetExceeded('Plan must contain one to eight argument objects')
+    counts = [len(encode(json.dumps(value, ensure_ascii=False, separators=(',', ':')))) for value in values]
+    return dict(version=1, per_tool_limit=PLAN_STEP_TOKENS, max_steps=PLAN_MAX_STEPS,
+                total_generation_limit=PLAN_TOTAL_TOKENS, argument_tokens=counts,
+                exceeded_steps=[i for i, count in enumerate(counts) if count > PLAN_STEP_TOKENS],
+                counting='tokenized_compact_argument_json_before_reuse_expansion')
+
+
 def classification_timing(metrics):
     """Snapshot before streaming continuation can mutate the engine timestamps."""
     names = ('queued_ts', 'scheduled_ts', 'first_token_ts')
@@ -139,9 +172,15 @@ def attach_router(app):
         candidate_ids: list[int]
         continuations: list[list[int]]
         tools: list[dict]
-        max_tokens: int = Field(default=192, ge=1, le=2048)
+        max_tokens: int = Field(default=192, ge=1, le=PLAN_TOTAL_TOKENS)
+        plan_budget: bool = False
 
     router = APIRouter()
+
+    @router.get('/v1/openjev/capabilities')
+    async def capabilities():
+        return dict(plan_budget_version=1, per_tool_limit=PLAN_STEP_TOKENS, max_steps=PLAN_MAX_STEPS,
+                    max_plan_tokens=PLAN_TOTAL_TOKENS, legacy_max_tokens=2048)
 
     @router.post('/v1/openjev/toolcall')
     async def toolcall(body: ToolRequest, request: Request):
@@ -149,6 +188,10 @@ def attach_router(app):
         from vllm.inputs import tokens_input
         from vllm.sampling_params import SamplingParams, StructuredOutputsParams, RequestOutputKind
         engine = request.app.state.engine_client
+        if not body.plan_budget and body.max_tokens > 2048:
+            return JSONResponse({'error': 'Large output requires plan_budget=true'}, status_code=400)
+        if body.plan_budget and any(tool.get('name') != 'plan' for tool in body.tools):
+            return JSONResponse({'error': 'Per-tool budget requires plan branches'}, status_code=400)
         n = len(body.candidate_ids)
         if not body.prompt_ids or not 1 <= n <= 16 or len(body.tools) != n or len(body.continuations) != n:
             return JSONResponse({'error': 'Inconsistent candidate table'}, status_code=400)
@@ -173,6 +216,7 @@ def attach_router(app):
         text = ''
         argument_ids = []
         finish = None
+        budget = None
         try:
             async with asyncio.timeout(180):
                 async for result in engine.generate(inputs(), classify_params, request_id):
@@ -201,13 +245,22 @@ def attach_router(app):
             arguments = json.loads(text)
             from jsonschema import validate
             validate(arguments, body.tools[decision['index']]['parameters'])
+            if body.plan_budget:
+                tokenizer = engine.get_tokenizer()
+                budget = measure_plan_arguments(arguments, lambda value: tokenizer.encode(value, add_special_tokens=False))
+                if budget['exceeded_steps']:
+                    raise PlanBudgetExceeded('Subtool argument budget exceeded at steps '+str(budget['exceeded_steps']))
             return {'request_id': request_id, 'call': {'name': decision['name'], 'arguments': arguments},
                     'decision': decision, 'raw': text, 'argument_token_ids': argument_ids,
                     'generated_argument_tokens': len(argument_ids), 'classification_control_records': 1,
                     'same_engine_session': True, 'seconds': time.perf_counter()-begin,
-                    'finish_reason': finish}
+                    'finish_reason': finish, 'plan_budget': budget}
         except Exception as error:
             await engine.abort(request_id)
-            return JSONResponse({'request_id': request_id, 'error': str(error)}, status_code=500)
+            return JSONResponse({'request_id': request_id, 'error': str(error), 'decision': decision,
+                                 'generated_argument_tokens': len(argument_ids),
+                                 'classification_control_records': int(decision is not None),
+                                 'plan_budget': budget, 'finish_reason': finish, 'usage_complete': finish == 'stop'},
+                                status_code=422 if isinstance(error, PlanBudgetExceeded) else 500)
 
     app.include_router(router)
