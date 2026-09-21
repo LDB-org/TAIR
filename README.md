@@ -2,6 +2,8 @@
 
 Local interactive client: [pijit installation and usage](integrations/pijit/README.md).
 
+Research update (2026-09-21): [acceleration evidence, negative results, and community techniques (Chinese)](docs/ACCELERATION_RESEARCH_STATUS.md). The report below retains its original experiment scope; general end-to-end acceleration remains unproven.
+
 **A technical report on four engineering contributions: compact operations, engine-side typed decisions, retained-KV continuation, and a dynamic codebook with generative fallback.**
 
 [简体中文](README.zh-CN.md) · [Implementation](docs/ARCHITECTURE.md) · [Reproduction](docs/REPRODUCE.md) · [Experiment archive](docs/EXPERIMENTS.md)

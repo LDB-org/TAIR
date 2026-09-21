@@ -1,0 +1,285 @@
+{
+  "arm": "c4",
+  "value": 0,
+  "seconds": 150.20765929110348,
+  "timed_out": true,
+  "validated_seconds": 150.29280558181927,
+  "exit_code": 143,
+  "finished": false,
+  "validation": {
+    "passed": false,
+    "seconds": 0.08514629071578383,
+    "stderr": "Traceback (most recent call last):\n  File \"/Users/zacharyzcr/Projects/TAIR/results/experiments/first-tool-reuse-ablation-20260921-a/unique_repeat-tair/oracle.py\", line 5, in <module>\n    assert p.returncode==0,p.stderr\n           ^^^^^^^^^^^^^^^\nAssertionError: file:///private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-expanded-project-4ecjqrpc/workspace/[eval1]:1\nimport assert from 'node:assert/strict'; import {uniqueStrings} from './unique_repeat.mjs';\n                                                 ^^^^^^^^^^^^^\nSyntaxError: The requested module './unique_repeat.mjs' does not provide an export named 'uniqueStrings'\n    at ModuleJob._instantiate (node:internal/modules/esm/module_job:226:21)\n    at async ModuleJob.run (node:internal/modules/esm/module_job:335:5)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:282:26)\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:278:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)\n\nNode.js v22.23.2\n\n"
+  },
+  "passed": false,
+  "metrics": [
+    {
+      "metrics_version": 2,
+      "trace_id": "7d8701320755445bb64dbf959d26aba6",
+      "session_id": "01a0c00b-7fc1-70cb-ac73-1db3a0cca523",
+      "parent_tool_call_id": null,
+      "workspace_id": "d793698bf1072c1ad19f28beeec0ab0e835e9f6275594c277ce9fa16a2304262",
+      "stage_seconds": {
+        "capability_negotiation": 0.2113080001436174,
+        "generation_preparation": 0.14883558312430978,
+        "generation_http": 146.45473366696388,
+        "generation": 146.60360408388078
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "error",
+          "usage_complete": false,
+          "started_at": 1789928374.657384,
+          "error_type": "HTTPError",
+          "http_status": 500,
+          "generated_argument_tokens": 17408,
+          "classification_control_records": 1,
+          "input_tokens": 4339,
+          "plan_budget": null,
+          "seconds": 146.4538070000708
+        }
+      ],
+      "parallel_capabilities_enabled": false,
+      "capabilities_cache_enabled": false,
+      "capabilities_cache_hit": false,
+      "prefix_cache_supported": true,
+      "plan_budget_supported": true,
+      "plan_budget_mode": "per_subtool",
+      "repair_feedback_enabled": false,
+      "recovery_admission_enabled": false,
+      "recovery_scope": "whole_user_turn",
+      "historical_tool_failure": false,
+      "plan_reuse_enabled": true,
+      "candidate_retrieval_skipped": null,
+      "payload_mismatch_candidates": 0,
+      "template_entries": 0,
+      "generic_plan": true,
+      "book_entries": 4,
+      "candidate_count": 3,
+      "retrieval_seconds": 0.0045106252655386925,
+      "plan_success_reply_enabled": false,
+      "reuse_review_enabled": false,
+      "write_references_enabled": false,
+      "bash_argv_enabled": false,
+      "reply_branch_enabled": false,
+      "first_tool_classification_enabled": true,
+      "recovery_planning": false,
+      "reuse_routing": false,
+      "classification_branches": 11,
+      "execution_guidance_enabled": false,
+      "dedup_tool_descriptions": false,
+      "compact_catalog": false,
+      "candidate_limit": 7,
+      "label_cache_hit": true,
+      "local_tokenization": [
+        {
+          "seconds": 0.11061558406800032,
+          "token_count": 3002,
+          "verified": false
+        },
+        {
+          "seconds": 0.11399112455546856,
+          "token_count": 4361,
+          "verified": false
+        },
+        {
+          "seconds": 0.1171678751707077,
+          "token_count": 4474,
+          "verified": false
+        },
+        {
+          "seconds": 0.1203309171833098,
+          "token_count": 4339,
+          "verified": false
+        },
+        {
+          "seconds": 0.12343379203230143,
+          "token_count": 4333,
+          "verified": false
+        },
+        {
+          "seconds": 0.12663716590031981,
+          "token_count": 4479,
+          "verified": false
+        },
+        {
+          "seconds": 0.12975170882418752,
+          "token_count": 4382,
+          "verified": false
+        },
+        {
+          "seconds": 0.13285262510180473,
+          "token_count": 4333,
+          "verified": false
+        },
+        {
+          "seconds": 0.026492958888411522,
+          "token_count": 4695,
+          "verified": false
+        },
+        {
+          "seconds": 0.02628954080864787,
+          "token_count": 4695,
+          "verified": false
+        },
+        {
+          "seconds": 0.02625620784237981,
+          "token_count": 4691,
+          "verified": false
+        },
+        {
+          "seconds": 0.026040708180516958,
+          "token_count": 4343,
+          "verified": false
+        }
+      ],
+      "plan_token_budget": null,
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": false,
+        "unknown_usage_requests": 1,
+        "known_input_tokens": 4339,
+        "known_generated_argument_tokens": 17408,
+        "known_classification_control_records": 1
+      },
+      "status": "error",
+      "error": "HTTPError: HTTP Error 500: Internal Server Error",
+      "wall_seconds": 146.8218774581328,
+      "action": "chat",
+      "timestamp": 1789928521.112428
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "c717bad83c7f4284a3d54f42a0146c3a",
+      "session_id": "01a0c00b-7fc1-70cb-ac73-1db3a0cca523",
+      "parent_tool_call_id": null,
+      "workspace_id": "d793698bf1072c1ad19f28beeec0ab0e835e9f6275594c277ce9fa16a2304262",
+      "stage_seconds": {
+        "capability_negotiation": 0.19593941699713469,
+        "generation_preparation": 0.15543541684746742,
+        "generation_http": 0.5257822503335774,
+        "generation": 0.6812545000575483
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "error",
+          "usage_complete": false,
+          "started_at": 1789928523.629941,
+          "error_type": "CancelledError",
+          "seconds": 0.524774291086942
+        }
+      ],
+      "parallel_capabilities_enabled": false,
+      "capabilities_cache_enabled": false,
+      "capabilities_cache_hit": false,
+      "prefix_cache_supported": true,
+      "plan_budget_supported": true,
+      "plan_budget_mode": "per_subtool",
+      "repair_feedback_enabled": false,
+      "recovery_admission_enabled": false,
+      "recovery_scope": "whole_user_turn",
+      "historical_tool_failure": false,
+      "plan_reuse_enabled": true,
+      "candidate_retrieval_skipped": null,
+      "payload_mismatch_candidates": 0,
+      "template_entries": 0,
+      "generic_plan": true,
+      "book_entries": 4,
+      "candidate_count": 3,
+      "retrieval_seconds": 0.00812100013718009,
+      "plan_success_reply_enabled": false,
+      "reuse_review_enabled": false,
+      "write_references_enabled": false,
+      "bash_argv_enabled": false,
+      "reply_branch_enabled": false,
+      "first_tool_classification_enabled": true,
+      "recovery_planning": false,
+      "reuse_routing": false,
+      "classification_branches": 11,
+      "execution_guidance_enabled": false,
+      "dedup_tool_descriptions": false,
+      "compact_catalog": false,
+      "candidate_limit": 7,
+      "label_cache_hit": true,
+      "local_tokenization": [
+        {
+          "seconds": 0.1165934163145721,
+          "token_count": 3002,
+          "verified": false
+        },
+        {
+          "seconds": 0.11960866581648588,
+          "token_count": 4361,
+          "verified": false
+        },
+        {
+          "seconds": 0.12252170825377107,
+          "token_count": 4474,
+          "verified": false
+        },
+        {
+          "seconds": 0.12547191698104143,
+          "token_count": 4339,
+          "verified": false
+        },
+        {
+          "seconds": 0.12851545866578817,
+          "token_count": 4333,
+          "verified": false
+        },
+        {
+          "seconds": 0.1315212920308113,
+          "token_count": 4479,
+          "verified": false
+        },
+        {
+          "seconds": 0.13452337495982647,
+          "token_count": 4382,
+          "verified": false
+        },
+        {
+          "seconds": 0.13759379228577018,
+          "token_count": 4333,
+          "verified": false
+        },
+        {
+          "seconds": 0.025580416899174452,
+          "token_count": 4695,
+          "verified": false
+        },
+        {
+          "seconds": 0.02565583400428295,
+          "token_count": 4695,
+          "verified": false
+        },
+        {
+          "seconds": 0.025735917035490274,
+          "token_count": 4691,
+          "verified": false
+        },
+        {
+          "seconds": 0.025703541934490204,
+          "token_count": 4343,
+          "verified": false
+        }
+      ],
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": false,
+        "unknown_usage_requests": 1,
+        "known_input_tokens": 0,
+        "known_generated_argument_tokens": 0,
+        "known_classification_control_records": 0
+      },
+      "status": "cancelled",
+      "error": "CancelledError: pijit request cancelled; inspect tool state before retrying",
+      "wall_seconds": 0.888043874874711,
+      "action": "chat",
+      "timestamp": 1789928524.155756
+    }
+  ],
+  "malformed_event_lines": 0,
+  "usage_complete": false
+}

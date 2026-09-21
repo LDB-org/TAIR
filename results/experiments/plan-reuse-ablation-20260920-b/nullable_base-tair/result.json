@@ -1,0 +1,547 @@
+{
+  "arm": "c4",
+  "value": 0,
+  "seconds": 5.598868167027831,
+  "timed_out": false,
+  "validated_seconds": 5.621061958372593,
+  "exit_code": 0,
+  "finished": true,
+  "validation": {
+    "passed": false,
+    "seconds": 0.02219379134476185,
+    "stderr": "Traceback (most recent call last):\n  File \"/Users/zacharyzcr/Projects/TAIR/results/experiments/plan-reuse-ablation-20260920-b/nullable_base-tair/oracle.py\", line 7, in <module>\n    sql=Path('nullable_base.sql').read_text();assert c.execute(sql).fetchall()==[('a', 0), ('b', -2), ('c', 0), ('d', 0)]\n                                                     ^^^^^^^^^^^^^^\nsqlite3.OperationalError: no such table: events\n"
+  },
+  "passed": false,
+  "metrics": [
+    {
+      "metrics_version": 2,
+      "trace_id": "abd280a923814c62a5e7ed85528d5edd",
+      "session_id": "01a0bf12-a985-7290-b502-58b3d63cdf59",
+      "parent_tool_call_id": null,
+      "workspace_id": "2fd26858a470b4821319d1a01aa867cd77d1d984c30aaf706d6d62ae9cdcb395",
+      "stage_seconds": {
+        "generation_preparation": 0.17804066743701696,
+        "generation_http": 2.059138667304069,
+        "generation": 2.2375346668995917
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789912067.041127,
+          "http_status": 200,
+          "request_id": "openjev-190f9f7ae5894968ac900892a18d6e9f",
+          "input_tokens": 6782,
+          "generated_argument_tokens": 118,
+          "classification_control_records": 1,
+          "engine_seconds": 1.5639350777491927,
+          "classification_seconds": 0.3639784036204219,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6276427.49150153,
+              "scheduled_ts": 6276427.491541874,
+              "first_token_ts": 6276427.846279116
+            },
+            "initial_queue_seconds": 4.0343962609767914e-05,
+            "scheduled_to_first_output_seconds": 0.3547372426837683
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "session",
+          "seconds": 2.0576475830748677
+        }
+      ],
+      "prefix_cache_supported": true,
+      "plan_budget_supported": true,
+      "plan_budget_mode": "per_subtool",
+      "plan_reuse_enabled": true,
+      "payload_mismatch_candidates": 0,
+      "template_entries": 0,
+      "generic_plan": true,
+      "book_entries": 11,
+      "candidate_count": 7,
+      "retrieval_seconds": 0.003934958018362522,
+      "recovery_planning": false,
+      "reuse_routing": false,
+      "classification_branches": 15,
+      "compact_catalog": false,
+      "candidate_limit": 7,
+      "label_cache_hit": true,
+      "local_tokenization": [
+        {
+          "seconds": 0.09571779100224376,
+          "token_count": 5060,
+          "verified": false
+        },
+        {
+          "seconds": 0.10109041724354029,
+          "token_count": 6419,
+          "verified": false
+        },
+        {
+          "seconds": 0.10621808329597116,
+          "token_count": 6532,
+          "verified": false
+        },
+        {
+          "seconds": 0.11112654209136963,
+          "token_count": 6397,
+          "verified": false
+        },
+        {
+          "seconds": 0.11601349990814924,
+          "token_count": 6391,
+          "verified": false
+        },
+        {
+          "seconds": 0.12098666559904814,
+          "token_count": 6537,
+          "verified": false
+        },
+        {
+          "seconds": 0.12600950011983514,
+          "token_count": 6440,
+          "verified": false
+        },
+        {
+          "seconds": 0.131288249976933,
+          "token_count": 6391,
+          "verified": false
+        },
+        {
+          "seconds": 0.04205508390441537,
+          "token_count": 6782,
+          "verified": false
+        },
+        {
+          "seconds": 0.04227220779284835,
+          "token_count": 6775,
+          "verified": false
+        },
+        {
+          "seconds": 0.04258929193019867,
+          "token_count": 6772,
+          "verified": false
+        },
+        {
+          "seconds": 0.04299937514588237,
+          "token_count": 6771,
+          "verified": false
+        },
+        {
+          "seconds": 0.043354957830160856,
+          "token_count": 6776,
+          "verified": false
+        },
+        {
+          "seconds": 0.04374370910227299,
+          "token_count": 6768,
+          "verified": false
+        },
+        {
+          "seconds": 0.04424962494522333,
+          "token_count": 6762,
+          "verified": false
+        },
+        {
+          "seconds": 0.04396275011822581,
+          "token_count": 6401,
+          "verified": false
+        }
+      ],
+      "prefix_cache_requested": true,
+      "plan_token_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          7,
+          90
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "requested_plan_tokens": 17408,
+      "selected_branch": "reuse_content",
+      "selected_content_id": "8f5b8471cf10e870a50d5c43ead13c69d72dac35058c2bc74c44e5cb627ad905",
+      "cache_outcome": "reused",
+      "available_tools": [
+        "plan"
+      ],
+      "inner_tools": [
+        "read",
+        "edit",
+        "write",
+        "bash",
+        "grep",
+        "find",
+        "ls"
+      ],
+      "candidate_ids": [
+        "8f5b8471cf10e870a50d5c43ead13c69d72dac35058c2bc74c44e5cb627ad905",
+        "b8776884a7e115dca2dbaf87b2c21f452685ae6607bcbb8c36f118192e06d5b9",
+        "2f7ef51a0c0e65542365ca82b94f049bd3926505b1bfafab5a86469558893842",
+        "27013e4b31b00fd8ed1079ea0e71c9a9041ac975cac73766351c47945ed235b5",
+        "4b793b71bd56286d3fcc41ab61b987d577e45e850fcf3e85c80c3c145dac0523",
+        "7996ee0adc5801cb86ed2e026314ac6792f430db8a605d48e4111828474dc6eb",
+        "dc6ae1a851fb6b241e6b4abb3f13091a6f38ed390c7558aa94913623c088be5b"
+      ],
+      "reused_content_ids": [
+        "8f5b8471cf10e870a50d5c43ead13c69d72dac35058c2bc74c44e5cb627ad905"
+      ],
+      "reused_template_ids": [],
+      "plan_step_names": [
+        "write",
+        "bash"
+      ],
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 6782,
+        "known_generated_argument_tokens": 118,
+        "known_classification_control_records": 1
+      },
+      "request_id": "openjev-190f9f7ae5894968ac900892a18d6e9f",
+      "decision": {
+        "index": 7,
+        "name": "plan",
+        "control_id": 42,
+        "cached_prefix_tokens": 0,
+        "logprobs": [
+          -4.105216026306152,
+          -3.8552162647247314,
+          -1.8552162647247314,
+          -4.230216026306152,
+          -5.605216026306152,
+          -7.980216026306152,
+          -6.855216026306152,
+          -1.1052162647247314,
+          -2.3552162647247314,
+          -10.855216026306152,
+          -7.730216026306152,
+          -12.355216026306152,
+          -4.605216026306152,
+          -5.855216026306152,
+          -1.1052162647247314
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6276427.49150153,
+            "scheduled_ts": 6276427.491541874,
+            "first_token_ts": 6276427.846279116
+          },
+          "initial_queue_seconds": 4.0343962609767914e-05,
+          "scheduled_to_first_output_seconds": 0.3547372426837683
+        },
+        "classification_seconds": 0.3639784036204219
+      },
+      "generated_argument_tokens": 118,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 1.5639350777491927,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          7,
+          90
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "session",
+      "input_tokens": 6782,
+      "plan_task": "Create nullable_base.sql containing only one SQLite SELECT query, no Markdown. Table readings has columns station TEXT and value INTEGER (nullable). Return station and total, where total is SUM(value) with all-NULL sums converted to 0. Group by station and order by station ascending. Include all stations, even if all their values are NULL. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "cache_hit": true,
+      "status": "ok",
+      "wall_seconds": 2.640915208030492,
+      "action": "chat",
+      "timestamp": 1789912069.165507
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "6aa5c6cbb0ae43f2ab6942bb2ce47e2a",
+      "session_id": "01a0bf12-a985-7290-b502-58b3d63cdf59",
+      "parent_tool_call_id": "openjev-190f9f7ae5894968ac900892a18d6e9f",
+      "workspace_id": "2fd26858a470b4821319d1a01aa867cd77d1d984c30aaf706d6d62ae9cdcb395",
+      "stage_seconds": {},
+      "http_requests": [],
+      "template_admitted": [],
+      "reused_template_ids": [],
+      "generic_plan": true,
+      "plan_completed": true,
+      "executed_tools": [
+        "write",
+        "bash"
+      ],
+      "accounting": {
+        "inference_requests": 0,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 0,
+        "known_generated_argument_tokens": 0,
+        "known_classification_control_records": 0
+      },
+      "admitted": [],
+      "cache_hit": true,
+      "admission_count": 0,
+      "admission_reason": "deduplicated_or_reused",
+      "book_entries_after": 11,
+      "validation": "tool execution only; not semantic verification",
+      "status": "ok",
+      "wall_seconds": 0.0012355837970972061,
+      "action": "tool_plan_complete",
+      "timestamp": 1789912069.289696
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "04221f08dc314a6898bf17206d9e486d",
+      "session_id": "01a0bf12-a985-7290-b502-58b3d63cdf59",
+      "parent_tool_call_id": null,
+      "workspace_id": "2fd26858a470b4821319d1a01aa867cd77d1d984c30aaf706d6d62ae9cdcb395",
+      "stage_seconds": {
+        "generation_preparation": 0.2083011670038104,
+        "generation_http": 1.8845116249285638,
+        "generation": 2.0930051249451935
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789912069.816024,
+          "http_status": 200,
+          "request_id": "openjev-ae38420e6f6740178cfbcd2dde6b5b86",
+          "input_tokens": 6754,
+          "generated_argument_tokens": 121,
+          "classification_control_records": 1,
+          "engine_seconds": 1.394538352265954,
+          "classification_seconds": 0.16025158762931824,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6276430.28192646,
+              "scheduled_ts": 6276430.281943194,
+              "first_token_ts": 6276430.434060435
+            },
+            "initial_queue_seconds": 1.6734004020690918e-05,
+            "scheduled_to_first_output_seconds": 0.15211724117398262
+          },
+          "cached_prefix_tokens": 4864,
+          "prefix_cache_mode": "session",
+          "seconds": 1.8830845840275288
+        }
+      ],
+      "prefix_cache_supported": true,
+      "plan_budget_supported": true,
+      "plan_budget_mode": "per_subtool",
+      "plan_reuse_enabled": true,
+      "payload_mismatch_candidates": 0,
+      "template_entries": 0,
+      "generic_plan": true,
+      "book_entries": 11,
+      "candidate_count": 7,
+      "retrieval_seconds": 0.012523666024208069,
+      "recovery_planning": false,
+      "reuse_routing": false,
+      "classification_branches": 15,
+      "compact_catalog": false,
+      "candidate_limit": 7,
+      "label_cache_hit": true,
+      "local_tokenization": [
+        {
+          "seconds": 0.11301987525075674,
+          "token_count": 5394,
+          "verified": false
+        },
+        {
+          "seconds": 0.1191211249679327,
+          "token_count": 6772,
+          "verified": false
+        },
+        {
+          "seconds": 0.12501233257353306,
+          "token_count": 6885,
+          "verified": false
+        },
+        {
+          "seconds": 0.1307767080143094,
+          "token_count": 6750,
+          "verified": false
+        },
+        {
+          "seconds": 0.1365335420705378,
+          "token_count": 6744,
+          "verified": false
+        },
+        {
+          "seconds": 0.14254170889034867,
+          "token_count": 6890,
+          "verified": false
+        },
+        {
+          "seconds": 0.1487900000065565,
+          "token_count": 6793,
+          "verified": false
+        },
+        {
+          "seconds": 0.1546089588664472,
+          "token_count": 6744,
+          "verified": false
+        },
+        {
+          "seconds": 0.0487295831553638,
+          "token_count": 7135,
+          "verified": false
+        },
+        {
+          "seconds": 0.048282708041369915,
+          "token_count": 7128,
+          "verified": false
+        },
+        {
+          "seconds": 0.04877487476915121,
+          "token_count": 7125,
+          "verified": false
+        },
+        {
+          "seconds": 0.049820125102996826,
+          "token_count": 7124,
+          "verified": false
+        },
+        {
+          "seconds": 0.05042141675949097,
+          "token_count": 7129,
+          "verified": false
+        },
+        {
+          "seconds": 0.05028137471526861,
+          "token_count": 7121,
+          "verified": false
+        },
+        {
+          "seconds": 0.04996533412486315,
+          "token_count": 7115,
+          "verified": false
+        },
+        {
+          "seconds": 0.050144417211413383,
+          "token_count": 6754,
+          "verified": false
+        }
+      ],
+      "prefix_cache_requested": true,
+      "plan_token_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          119
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "requested_plan_tokens": 17408,
+      "selected_branch": "general",
+      "selected_content_id": null,
+      "cache_outcome": "reply",
+      "available_tools": [
+        "plan"
+      ],
+      "inner_tools": [
+        "read",
+        "edit",
+        "write",
+        "bash",
+        "grep",
+        "find",
+        "ls"
+      ],
+      "candidate_ids": [
+        "8f5b8471cf10e870a50d5c43ead13c69d72dac35058c2bc74c44e5cb627ad905",
+        "b8776884a7e115dca2dbaf87b2c21f452685ae6607bcbb8c36f118192e06d5b9",
+        "2f7ef51a0c0e65542365ca82b94f049bd3926505b1bfafab5a86469558893842",
+        "27013e4b31b00fd8ed1079ea0e71c9a9041ac975cac73766351c47945ed235b5",
+        "4b793b71bd56286d3fcc41ab61b987d577e45e850fcf3e85c80c3c145dac0523",
+        "7996ee0adc5801cb86ed2e026314ac6792f430db8a605d48e4111828474dc6eb",
+        "dc6ae1a851fb6b241e6b4abb3f13091a6f38ed390c7558aa94913623c088be5b"
+      ],
+      "reused_content_ids": [],
+      "reused_template_ids": [],
+      "plan_step_names": [],
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 6754,
+        "known_generated_argument_tokens": 121,
+        "known_classification_control_records": 1
+      },
+      "request_id": "openjev-ae38420e6f6740178cfbcd2dde6b5b86",
+      "decision": {
+        "index": 14,
+        "name": "plan",
+        "control_id": 49,
+        "cached_prefix_tokens": 4864,
+        "logprobs": [
+          -5.1042022705078125,
+          -4.7292022705078125,
+          -5.8542022705078125,
+          -6.3542022705078125,
+          -6.8542022705078125,
+          -7.9792022705078125,
+          -9.104202270507812,
+          -4.2292022705078125,
+          -1.9792025089263916,
+          -11.354202270507812,
+          -11.229202270507812,
+          -11.979202270507812,
+          -8.104202270507812,
+          -8.729202270507812,
+          -0.3542024791240692
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6276430.28192646,
+            "scheduled_ts": 6276430.281943194,
+            "first_token_ts": 6276430.434060435
+          },
+          "initial_queue_seconds": 1.6734004020690918e-05,
+          "scheduled_to_first_output_seconds": 0.15211724117398262
+        },
+        "classification_seconds": 0.16025158762931824
+      },
+      "generated_argument_tokens": 121,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 1.394538352265954,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          119
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "session",
+      "input_tokens": 6754,
+      "plan_task": "Create nullable_base.sql containing only one SQLite SELECT query, no Markdown. Table readings has columns station TEXT and value INTEGER (nullable). Return station and total, where total is SUM(value) with all-NULL sums converted to 0. Group by station and order by station ascending. Include all stations, even if all their values are NULL. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "cache_hit": false,
+      "status": "ok",
+      "wall_seconds": 2.3732205419801176,
+      "action": "chat",
+      "timestamp": 1789912071.731758
+    }
+  ],
+  "malformed_event_lines": 0,
+  "usage_complete": true
+}

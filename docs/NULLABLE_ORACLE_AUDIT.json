@@ -1,0 +1,513 @@
+{
+  "method": "Post-hoc positive-sum coverage audit of archived nullable artifacts; no original files changed; no new model inference",
+  "checks": {
+    "nullable_base": "import sqlite3\nfrom pathlib import Path\nc=sqlite3.connect(':memory:');c.execute('CREATE TABLE readings(station TEXT,value INTEGER)')\nc.executemany('INSERT INTO readings VALUES (?,?)',[('a',1),('a',-1),('b',-2),('b',None),('c',None),('d',0),('e',7),('e',None)])\nsql=Path('nullable_base.sql').read_text();assert c.execute(sql).fetchall()==[('a', 0), ('b', -2), ('c', 0), ('d', 0), ('e', 7)]\nc.execute('DELETE FROM readings');assert c.execute(sql).fetchall()==[]\n",
+    "nullable_changed": "import sqlite3\nfrom pathlib import Path\nc=sqlite3.connect(':memory:');c.execute('CREATE TABLE readings(station TEXT,value INTEGER)')\nc.executemany('INSERT INTO readings VALUES (?,?)',[('a',1),('a',-1),('b',-2),('b',None),('c',None),('d',0),('e',7),('e',None)])\nsql=Path('nullable_changed.sql').read_text();assert c.execute(sql).fetchall()==[('a', 0), ('b', -2), ('d', 0), ('e', 7)]\nc.execute('DELETE FROM readings');assert c.execute(sql).fetchall()==[]\n"
+  },
+  "cases": [
+    {
+      "experiment": "compact-catalog-paired-20260920-b",
+      "task": "nullable_base",
+      "arm": "native",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "compact-catalog-paired-20260920-b",
+      "task": "nullable_base",
+      "arm": "tair",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "compact-catalog-paired-20260920-b",
+      "task": "nullable_changed",
+      "arm": "tair",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "2a4263a71c1becf2ada9f57ad26264dcca3522a7288133adb016bdf68d014645",
+      "stderr": ""
+    },
+    {
+      "experiment": "compact-catalog-paired-20260920-b",
+      "task": "nullable_changed",
+      "arm": "native",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "2f4eebc81e38bae3e3f1dbc75d9dafdebe7923315c75ac9daebfbb76a1e30571",
+      "stderr": ""
+    },
+    {
+      "experiment": "native-protocol-recovery-20260920-b",
+      "task": "nullable_base",
+      "arm": "native",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "native-protocol-recovery-20260920-b",
+      "task": "nullable_base",
+      "arm": "tair",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "native-protocol-recovery-20260920-b",
+      "task": "nullable_changed",
+      "arm": "tair",
+      "original_artifact_passed": false,
+      "expanded_artifact_passed": false,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n    sql=Path('nullable_changed.sql').read_text();assert c.execute(sql).fetchall()==[('a', 0), ('b', -2), ('d', 0), ('e', 7)]\n                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    {
+      "experiment": "native-protocol-recovery-20260920-b",
+      "task": "nullable_changed",
+      "arm": "native",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "2a4263a71c1becf2ada9f57ad26264dcca3522a7288133adb016bdf68d014645",
+      "stderr": ""
+    },
+    {
+      "experiment": "local-tokenizer-paired-20260920-a",
+      "task": "nullable_base",
+      "arm": "native",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "local-tokenizer-paired-20260920-a",
+      "task": "nullable_base",
+      "arm": "tair",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "local-tokenizer-paired-20260920-a",
+      "task": "nullable_changed",
+      "arm": "tair",
+      "original_artifact_passed": false,
+      "expanded_artifact_passed": false,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n    sql=Path('nullable_changed.sql').read_text();assert c.execute(sql).fetchall()==[('a', 0), ('b', -2), ('d', 0), ('e', 7)]\n                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    {
+      "experiment": "local-tokenizer-paired-20260920-a",
+      "task": "nullable_changed",
+      "arm": "native",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "2a4263a71c1becf2ada9f57ad26264dcca3522a7288133adb016bdf68d014645",
+      "stderr": ""
+    },
+    {
+      "experiment": "reuse-review-ablation-20260920-a",
+      "task": "nullable_base",
+      "arm": "tair_review",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "reuse-review-ablation-20260920-a",
+      "task": "nullable_base",
+      "arm": "tair",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "reuse-review-ablation-20260920-a",
+      "task": "nullable_base",
+      "arm": "native",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "reuse-review-ablation-20260920-a",
+      "task": "nullable_changed",
+      "arm": "tair_review",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "2a4263a71c1becf2ada9f57ad26264dcca3522a7288133adb016bdf68d014645",
+      "stderr": ""
+    },
+    {
+      "experiment": "reuse-review-ablation-20260920-a",
+      "task": "nullable_changed",
+      "arm": "native",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "2a4263a71c1becf2ada9f57ad26264dcca3522a7288133adb016bdf68d014645",
+      "stderr": ""
+    },
+    {
+      "experiment": "reuse-review-ablation-20260920-a",
+      "task": "nullable_changed",
+      "arm": "tair",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "2a4263a71c1becf2ada9f57ad26264dcca3522a7288133adb016bdf68d014645",
+      "stderr": ""
+    },
+    {
+      "experiment": "session-prefix-paired-20260920-a",
+      "task": "nullable_base",
+      "arm": "native",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "session-prefix-paired-20260920-a",
+      "task": "nullable_base",
+      "arm": "tair",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "session-prefix-paired-20260920-a",
+      "task": "nullable_changed",
+      "arm": "tair",
+      "original_artifact_passed": false,
+      "expanded_artifact_passed": false,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n    sql=Path('nullable_changed.sql').read_text();assert c.execute(sql).fetchall()==[('a', 0), ('b', -2), ('d', 0), ('e', 7)]\n                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    {
+      "experiment": "session-prefix-paired-20260920-a",
+      "task": "nullable_changed",
+      "arm": "native",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "2a4263a71c1becf2ada9f57ad26264dcca3522a7288133adb016bdf68d014645",
+      "stderr": ""
+    },
+    {
+      "experiment": "reuse-routing-paired-20260920-a",
+      "task": "nullable_base",
+      "arm": "native",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "reuse-routing-paired-20260920-a",
+      "task": "nullable_base",
+      "arm": "tair",
+      "original_artifact_passed": false,
+      "expanded_artifact_passed": false,
+      "sha256": "206df25da079262a1c0c02751cf57c27a13e671c49cb41cf94b040908d77d00f",
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n    sql=Path('nullable_base.sql').read_text();assert c.execute(sql).fetchall()==[('a', 0), ('b', -2), ('c', 0), ('d', 0), ('e', 7)]\n                                                     ~~~~~~~~~^^^^^\nsqlite3.OperationalError: no such table: events\n"
+    },
+    {
+      "experiment": "reuse-routing-paired-20260920-a",
+      "task": "nullable_changed",
+      "arm": "tair",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "2f4eebc81e38bae3e3f1dbc75d9dafdebe7923315c75ac9daebfbb76a1e30571",
+      "stderr": ""
+    },
+    {
+      "experiment": "reuse-routing-paired-20260920-a",
+      "task": "nullable_changed",
+      "arm": "native",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "2a4263a71c1becf2ada9f57ad26264dcca3522a7288133adb016bdf68d014645",
+      "stderr": ""
+    },
+    {
+      "experiment": "local-tokenizer-shadow-20260920-a",
+      "task": "nullable_base",
+      "arm": "native",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "local-tokenizer-shadow-20260920-a",
+      "task": "nullable_base",
+      "arm": "tair",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "local-tokenizer-shadow-20260920-a",
+      "task": "nullable_changed",
+      "arm": "native",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "2a4263a71c1becf2ada9f57ad26264dcca3522a7288133adb016bdf68d014645",
+      "stderr": ""
+    },
+    {
+      "experiment": "local-tokenizer-shadow-20260920-a",
+      "task": "nullable_changed",
+      "arm": "tair",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "2a4263a71c1becf2ada9f57ad26264dcca3522a7288133adb016bdf68d014645",
+      "stderr": ""
+    },
+    {
+      "experiment": "execution-guidance-expanded-20260920-a",
+      "task": "nullable_base",
+      "arm": "native",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "execution-guidance-expanded-20260920-a",
+      "task": "nullable_base",
+      "arm": "tair",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "execution-guidance-expanded-20260920-a",
+      "task": "nullable_base",
+      "arm": "tair_guided",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "execution-guidance-expanded-20260920-a",
+      "task": "nullable_changed",
+      "arm": "native",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": false,
+      "sha256": "5b916668746b7385fa0e639054160e0c2cc9bc5e7b62ef7adafb29f855a9e055",
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n    sql=Path('nullable_changed.sql').read_text();assert c.execute(sql).fetchall()==[('a', 0), ('b', -2), ('d', 0), ('e', 7)]\n                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    {
+      "experiment": "execution-guidance-expanded-20260920-a",
+      "task": "nullable_changed",
+      "arm": "tair",
+      "original_artifact_passed": false,
+      "expanded_artifact_passed": false,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n    sql=Path('nullable_changed.sql').read_text();assert c.execute(sql).fetchall()==[('a', 0), ('b', -2), ('d', 0), ('e', 7)]\n                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    {
+      "experiment": "execution-guidance-expanded-20260920-a",
+      "task": "nullable_changed",
+      "arm": "tair_guided",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "2a4263a71c1becf2ada9f57ad26264dcca3522a7288133adb016bdf68d014645",
+      "stderr": ""
+    },
+    {
+      "experiment": "plan-reuse-ablation-20260920-b",
+      "task": "nullable_base",
+      "arm": "tair_no_reuse",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "9fb348c5757f2fc6e945d65f7e81feb130582218a1df46ec109ff40bd4760504",
+      "stderr": ""
+    },
+    {
+      "experiment": "plan-reuse-ablation-20260920-b",
+      "task": "nullable_base",
+      "arm": "tair",
+      "original_artifact_passed": false,
+      "expanded_artifact_passed": false,
+      "sha256": "206df25da079262a1c0c02751cf57c27a13e671c49cb41cf94b040908d77d00f",
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n    sql=Path('nullable_base.sql').read_text();assert c.execute(sql).fetchall()==[('a', 0), ('b', -2), ('c', 0), ('d', 0), ('e', 7)]\n                                                     ~~~~~~~~~^^^^^\nsqlite3.OperationalError: no such table: events\n"
+    },
+    {
+      "experiment": "plan-reuse-ablation-20260920-b",
+      "task": "nullable_base",
+      "arm": "native",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "plan-reuse-ablation-20260920-b",
+      "task": "nullable_changed",
+      "arm": "native",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "2a4263a71c1becf2ada9f57ad26264dcca3522a7288133adb016bdf68d014645",
+      "stderr": ""
+    },
+    {
+      "experiment": "plan-reuse-ablation-20260920-b",
+      "task": "nullable_changed",
+      "arm": "tair_no_reuse",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "2a4263a71c1becf2ada9f57ad26264dcca3522a7288133adb016bdf68d014645",
+      "stderr": ""
+    },
+    {
+      "experiment": "plan-reuse-ablation-20260920-b",
+      "task": "nullable_changed",
+      "arm": "tair",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "2f4eebc81e38bae3e3f1dbc75d9dafdebe7923315c75ac9daebfbb76a1e30571",
+      "stderr": ""
+    },
+    {
+      "experiment": "deferred-source-recovery-20260920-b",
+      "task": "nullable_base",
+      "arm": "native",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "deferred-source-recovery-20260920-b",
+      "task": "nullable_base",
+      "arm": "tair",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "deferred-source-recovery-20260920-b",
+      "task": "nullable_changed",
+      "arm": "tair",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "2a4263a71c1becf2ada9f57ad26264dcca3522a7288133adb016bdf68d014645",
+      "stderr": ""
+    },
+    {
+      "experiment": "deferred-source-recovery-20260920-b",
+      "task": "nullable_changed",
+      "arm": "native",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "2a4263a71c1becf2ada9f57ad26264dcca3522a7288133adb016bdf68d014645",
+      "stderr": ""
+    },
+    {
+      "experiment": "recovery-scope-ablation-20260920-a",
+      "task": "nullable_base",
+      "arm": "tair_no_reuse",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "recovery-scope-ablation-20260920-a",
+      "task": "nullable_base",
+      "arm": "tair_recovery",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "recovery-scope-ablation-20260920-a",
+      "task": "nullable_base",
+      "arm": "native",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "recovery-scope-ablation-20260920-a",
+      "task": "nullable_changed",
+      "arm": "native",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": false,
+      "sha256": "5b916668746b7385fa0e639054160e0c2cc9bc5e7b62ef7adafb29f855a9e055",
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n    sql=Path('nullable_changed.sql').read_text();assert c.execute(sql).fetchall()==[('a', 0), ('b', -2), ('d', 0), ('e', 7)]\n                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    {
+      "experiment": "recovery-scope-ablation-20260920-a",
+      "task": "nullable_changed",
+      "arm": "tair_no_reuse",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "2a4263a71c1becf2ada9f57ad26264dcca3522a7288133adb016bdf68d014645",
+      "stderr": ""
+    },
+    {
+      "experiment": "recovery-scope-ablation-20260920-a",
+      "task": "nullable_changed",
+      "arm": "tair_recovery",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "2a4263a71c1becf2ada9f57ad26264dcca3522a7288133adb016bdf68d014645",
+      "stderr": ""
+    },
+    {
+      "experiment": "deferred-source-recovery-20260920-c",
+      "task": "nullable_base",
+      "arm": "native",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "deferred-source-recovery-20260920-c",
+      "task": "nullable_base",
+      "arm": "tair",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "1125a052d18a000400cd1f91f88c0029d232ec58f66c8811247d26f5f25e6254",
+      "stderr": ""
+    },
+    {
+      "experiment": "deferred-source-recovery-20260920-c",
+      "task": "nullable_changed",
+      "arm": "tair",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "2a4263a71c1becf2ada9f57ad26264dcca3522a7288133adb016bdf68d014645",
+      "stderr": ""
+    },
+    {
+      "experiment": "deferred-source-recovery-20260920-c",
+      "task": "nullable_changed",
+      "arm": "native",
+      "original_artifact_passed": true,
+      "expanded_artifact_passed": true,
+      "sha256": "2a4263a71c1becf2ada9f57ad26264dcca3522a7288133adb016bdf68d014645",
+      "stderr": ""
+    }
+  ]
+}

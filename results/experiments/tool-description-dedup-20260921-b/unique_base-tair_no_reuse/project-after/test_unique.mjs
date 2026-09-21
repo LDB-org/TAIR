@@ -1,0 +1,11 @@
+import { uniqueStrings } from './unique_base.mjs';
+const assert = (a, b) => { if (JSON.stringify(a) !== JSON.stringify(b)) { console.error('FAIL', a, b); process.exit(1); } };
+assert(uniqueStrings(['a', 'b', 'a', 'c', 'b']), ['a', 'b', 'c']);
+assert(uniqueStrings(['A', 'a', 'A']), ['A', 'a']);
+assert(uniqueStrings([' x ', 'x', ' x ']), [' x ', 'x']);
+assert(uniqueStrings([]), []);
+const input = ['a', 'b', 'a'];
+const out = uniqueStrings(input);
+assert(input, ['a', 'b', 'a']);
+assert(out, ['a', 'b']);
+console.log('All checks passed');

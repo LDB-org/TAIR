@@ -1,0 +1,222 @@
+{
+  "scope": "Forced candidate component, not natural selection or complete Agent",
+  "cases": [
+    {
+      "task": "totals_base",
+      "review": false,
+      "passed": true,
+      "reused": true,
+      "request_seconds": 0.8711797497235239,
+      "expected_compatible": true,
+      "generated_tokens": 22,
+      "classification_controls": 1,
+      "logical_input_tokens": 1210,
+      "raw_arguments": {
+        "steps": [
+          {
+            "name": "reuse_write",
+            "arguments": {
+              "path": "totals_base.sql"
+            }
+          }
+        ]
+      },
+      "expanded_oracle_passed": true
+    },
+    {
+      "task": "totals_base",
+      "review": true,
+      "passed": true,
+      "reused": true,
+      "request_seconds": 1.3770446246489882,
+      "expected_compatible": true,
+      "generated_tokens": 72,
+      "classification_controls": 1,
+      "logical_input_tokens": 1426,
+      "raw_arguments": {
+        "steps": [
+          {
+            "name": "reuse_write",
+            "arguments": {
+              "requirement_check": "The stored content is a single SQLite SELECT statement that filters status='posted', groups by user_id, sums amount as total, and orders by user_id ascending, matching all current requirements.",
+              "use_cached_content": true,
+              "path": "totals_base.sql"
+            }
+          }
+        ]
+      },
+      "expanded_oracle_passed": true
+    },
+    {
+      "task": "totals_changed",
+      "review": true,
+      "passed": true,
+      "reused": false,
+      "request_seconds": 1.4952280833385885,
+      "expected_compatible": false,
+      "generated_tokens": 121,
+      "classification_controls": 1,
+      "logical_input_tokens": 1796,
+      "raw_arguments": {
+        "steps": [
+          {
+            "name": "reuse_write",
+            "arguments": {
+              "requirement_check": "The current request requires returning only groups whose total is strictly greater than zero, but the stored content includes all groups (no HAVING clause). The stored bytes do NOT implement the current requirement.",
+              "use_cached_content": false,
+              "path": "totals_changed.sql",
+              "content": "SELECT user_id, SUM(amount) AS total\nFROM events\nWHERE status = 'posted'\nGROUP BY user_id\nHAVING SUM(amount) > 0\nORDER BY user_id ASC;\n"
+            }
+          }
+        ]
+      },
+      "expanded_oracle_passed": true
+    },
+    {
+      "task": "totals_changed",
+      "review": false,
+      "passed": false,
+      "reused": true,
+      "request_seconds": 0.7014532922767103,
+      "expected_compatible": false,
+      "generated_tokens": 23,
+      "classification_controls": 1,
+      "logical_input_tokens": 1580,
+      "raw_arguments": {
+        "steps": [
+          {
+            "name": "reuse_write",
+            "arguments": {
+              "path": "totals_changed.sql"
+            }
+          }
+        ]
+      },
+      "expanded_oracle_passed": false
+    },
+    {
+      "task": "nullable_base",
+      "review": false,
+      "passed": true,
+      "reused": true,
+      "request_seconds": 0.6528881671838462,
+      "expected_compatible": true,
+      "generated_tokens": 21,
+      "classification_controls": 1,
+      "logical_input_tokens": 1168,
+      "raw_arguments": {
+        "steps": [
+          {
+            "name": "reuse_write",
+            "arguments": {
+              "path": "nullable_base.sql"
+            }
+          }
+        ]
+      },
+      "expanded_oracle_passed": true
+    },
+    {
+      "task": "nullable_base",
+      "review": true,
+      "passed": true,
+      "reused": true,
+      "request_seconds": 1.1721002920530736,
+      "expected_compatible": true,
+      "generated_tokens": 82,
+      "classification_controls": 1,
+      "logical_input_tokens": 1384,
+      "raw_arguments": {
+        "steps": [
+          {
+            "name": "reuse_write",
+            "arguments": {
+              "requirement_check": "The stored content implements a single SQLite SELECT query that returns station and total using COALESCE(SUM(value),0), groups by station, orders by station ascending, and includes all stations even with NULL values, matching the current request exactly.",
+              "use_cached_content": true,
+              "path": "nullable_base.sql"
+            }
+          }
+        ]
+      },
+      "expanded_oracle_passed": true
+    },
+    {
+      "task": "nullable_changed",
+      "review": true,
+      "passed": true,
+      "reused": false,
+      "request_seconds": 1.5560895828530192,
+      "expected_compatible": false,
+      "generated_tokens": 122,
+      "classification_controls": 1,
+      "logical_input_tokens": 1790,
+      "raw_arguments": {
+        "steps": [
+          {
+            "name": "reuse_write",
+            "arguments": {
+              "requirement_check": "The current request requires excluding groups with no non-NULL values, while the stored content includes all stations even if all values are NULL. The stored content does NOT implement the exclusion requirement, so it is incompatible.",
+              "use_cached_content": false,
+              "path": "nullable_changed.sql",
+              "content": "SELECT station, COALESCE(SUM(value), 0) AS total\nFROM readings\nWHERE value IS NOT NULL\nGROUP BY station\nHAVING SUM(value) <= 0\nORDER BY station ASC;"
+            }
+          }
+        ]
+      },
+      "expanded_oracle_passed": false
+    },
+    {
+      "task": "nullable_changed",
+      "review": false,
+      "passed": false,
+      "reused": true,
+      "request_seconds": 0.8046782081946731,
+      "expected_compatible": false,
+      "generated_tokens": 22,
+      "classification_controls": 1,
+      "logical_input_tokens": 1574,
+      "raw_arguments": {
+        "steps": [
+          {
+            "name": "reuse_write",
+            "arguments": {
+              "path": "nullable_changed.sql"
+            }
+          }
+        ]
+      },
+      "expanded_oracle_passed": false
+    }
+  ],
+  "independently_rechecked": 8,
+  "expanded_oracle_audit": [
+    {
+      "task": "nullable_base",
+      "review": false,
+      "original_passed": true,
+      "expanded_passed": true,
+      "stderr": ""
+    },
+    {
+      "task": "nullable_base",
+      "review": true,
+      "original_passed": true,
+      "expanded_passed": true,
+      "stderr": ""
+    },
+    {
+      "task": "nullable_changed",
+      "review": true,
+      "original_passed": true,
+      "expanded_passed": false,
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n    sql=Path('nullable_changed.sql').read_text();assert c.execute(sql).fetchall()==[('a', 0), ('b', -2), ('d', 0), ('e', 7)]\n                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    {
+      "task": "nullable_changed",
+      "review": false,
+      "original_passed": false,
+      "expanded_passed": false,
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n    sql=Path('nullable_changed.sql').read_text();assert c.execute(sql).fetchall()==[('a', 0), ('b', -2), ('d', 0), ('e', 7)]\n                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    }
+  ]
+}

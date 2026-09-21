@@ -1,0 +1,731 @@
+{
+  "arm": "c4",
+  "value": 0,
+  "seconds": 11.739935332909226,
+  "timed_out": false,
+  "validated_seconds": 11.758739290758967,
+  "exit_code": 0,
+  "finished": true,
+  "validation": {
+    "passed": true,
+    "seconds": 0.018803957849740982,
+    "stderr": ""
+  },
+  "passed": true,
+  "metrics": [
+    {
+      "metrics_version": 2,
+      "trace_id": "4d4bd207d59e4bb186a6c77e4c3b1011",
+      "session_id": "01a0bf7a-be66-731a-bb7d-4d23f7ab9144",
+      "parent_tool_call_id": null,
+      "workspace_id": "4aee60aa6f0158ef7259d21be8249207f95d4f0d730a5a046e2dd58879759674",
+      "stage_seconds": {
+        "capability_negotiation": 0.2104568751528859,
+        "generation_preparation": 0.13254870800301433,
+        "generation_http": 0.9134916253387928,
+        "generation": 1.046319458168,
+        "plan_decoding": 0.1988246669061482
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789918887.959185,
+          "http_status": 200,
+          "request_id": "openjev-debee7addadd4e08b86134beef1586c6",
+          "input_tokens": 3136,
+          "generated_argument_tokens": 19,
+          "classification_control_records": 1,
+          "engine_seconds": 0.5707410564646125,
+          "classification_seconds": 0.19363379944115877,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6283248.202139,
+              "scheduled_ts": 6283248.202178379,
+              "first_token_ts": 6283248.38990731
+            },
+            "initial_queue_seconds": 3.937818109989166e-05,
+            "scheduled_to_first_output_seconds": 0.18772893119603395
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "session",
+          "seconds": 0.912683708127588
+        }
+      ],
+      "capabilities_cache_enabled": false,
+      "capabilities_cache_hit": false,
+      "prefix_cache_supported": true,
+      "plan_budget_supported": true,
+      "plan_budget_mode": "per_subtool",
+      "recovery_scope": "latest_result",
+      "historical_tool_failure": false,
+      "plan_reuse_enabled": false,
+      "candidate_retrieval_skipped": null,
+      "payload_mismatch_candidates": 0,
+      "template_entries": 0,
+      "generic_plan": true,
+      "book_entries": 1,
+      "candidate_count": 0,
+      "retrieval_seconds": 0.0008573746308684349,
+      "plan_success_reply_enabled": false,
+      "reuse_review_enabled": false,
+      "recovery_planning": false,
+      "reuse_routing": false,
+      "classification_branches": 8,
+      "execution_guidance_enabled": false,
+      "compact_catalog": false,
+      "candidate_limit": 0,
+      "label_cache_hit": true,
+      "local_tokenization": [
+        {
+          "seconds": 0.11166779091581702,
+          "token_count": 1777,
+          "verified": false
+        },
+        {
+          "seconds": 0.11394162522628903,
+          "token_count": 3136,
+          "verified": false
+        },
+        {
+          "seconds": 0.11619179090484977,
+          "token_count": 3249,
+          "verified": false
+        },
+        {
+          "seconds": 0.11839025001972914,
+          "token_count": 3114,
+          "verified": false
+        },
+        {
+          "seconds": 0.12068925006315112,
+          "token_count": 3108,
+          "verified": false
+        },
+        {
+          "seconds": 0.12307991599664092,
+          "token_count": 3254,
+          "verified": false
+        },
+        {
+          "seconds": 0.12534612510353327,
+          "token_count": 3157,
+          "verified": false
+        },
+        {
+          "seconds": 0.1275139171630144,
+          "token_count": 3108,
+          "verified": false
+        },
+        {
+          "seconds": 0.019180333707481623,
+          "token_count": 3118,
+          "verified": false
+        }
+      ],
+      "prefix_cache_requested": true,
+      "plan_token_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          9
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "requested_plan_tokens": 17408,
+      "selected_branch": "tool:read",
+      "selected_content_id": null,
+      "completion_reply_normalized": false,
+      "cache_outcome": "no_candidates",
+      "available_tools": [
+        "plan"
+      ],
+      "inner_tools": [
+        "read",
+        "edit",
+        "write",
+        "bash",
+        "grep",
+        "find",
+        "ls"
+      ],
+      "candidate_ids": [],
+      "reused_content_ids": [],
+      "reused_template_ids": [],
+      "plan_step_names": [
+        "read"
+      ],
+      "plan_completion_decision": null,
+      "missing_completion_decision": false,
+      "expected_output_count": 0,
+      "planned_success_reply": false,
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 3136,
+        "known_generated_argument_tokens": 19,
+        "known_classification_control_records": 1
+      },
+      "request_id": "openjev-debee7addadd4e08b86134beef1586c6",
+      "decision": {
+        "index": 0,
+        "name": "plan",
+        "control_id": 35,
+        "cached_prefix_tokens": 0,
+        "logprobs": [
+          -0.7287648320198059,
+          -5.85376501083374,
+          -0.7287648320198059,
+          -4.85376501083374,
+          -8.478764533996582,
+          -10.103764533996582,
+          -5.47876501083374,
+          -3.978764772415161
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6283248.202139,
+            "scheduled_ts": 6283248.202178379,
+            "first_token_ts": 6283248.38990731
+          },
+          "initial_queue_seconds": 3.937818109989166e-05,
+          "scheduled_to_first_output_seconds": 0.18772893119603395
+        },
+        "classification_seconds": 0.19363379944115877
+      },
+      "generated_argument_tokens": 19,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 0.5707410564646125,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          9
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "session",
+      "input_tokens": 3136,
+      "plan_task": "Create csv_totals.py with totals(text). Parse CSV with header category,amount. Sum integer amounts per category and return a dict. Support quoted commas in category names, negative numbers and Unicode. Empty text or header-only input returns {}. An invalid amount raises ValueError. No import-time I/O. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "on_success_reply": null,
+      "expected_plan_outputs": [],
+      "cache_hit": false,
+      "status": "ok",
+      "wall_seconds": 1.4583914591930807,
+      "action": "chat",
+      "timestamp": 1789918889.0720482
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "19b520ba8c5142e794363809406f5680",
+      "session_id": "01a0bf7a-be66-731a-bb7d-4d23f7ab9144",
+      "parent_tool_call_id": "openjev-debee7addadd4e08b86134beef1586c6",
+      "workspace_id": "4aee60aa6f0158ef7259d21be8249207f95d4f0d730a5a046e2dd58879759674",
+      "stage_seconds": {},
+      "http_requests": [],
+      "final_content_observed": 0,
+      "final_content_skipped": [],
+      "template_admitted": [],
+      "reused_template_ids": [],
+      "generic_plan": true,
+      "plan_completed": true,
+      "executed_tools": [
+        "read"
+      ],
+      "accounting": {
+        "inference_requests": 0,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 0,
+        "known_generated_argument_tokens": 0,
+        "known_classification_control_records": 0
+      },
+      "admitted": [],
+      "cache_hit": false,
+      "admission_count": 0,
+      "admission_reason": "no_write_steps",
+      "book_entries_after": 1,
+      "validation": "tool execution only; not semantic verification",
+      "status": "ok",
+      "wall_seconds": 0.0003936248831450939,
+      "action": "tool_plan_complete",
+      "timestamp": 1789918889.148392
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "90130bf985b641099b53a1e57c636a2a",
+      "session_id": "01a0bf7a-be66-731a-bb7d-4d23f7ab9144",
+      "parent_tool_call_id": null,
+      "workspace_id": "4aee60aa6f0158ef7259d21be8249207f95d4f0d730a5a046e2dd58879759674",
+      "stage_seconds": {
+        "capability_negotiation": 0.2072758749127388,
+        "generation_preparation": 0.16118970792740583,
+        "generation_http": 6.111132625024766,
+        "generation": 6.2725702077150345,
+        "plan_decoding": 0.059979249723255634
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789918889.586814,
+          "http_status": 200,
+          "request_id": "openjev-5a019776158c45afbff52c1da29b128b",
+          "input_tokens": 3248,
+          "generated_argument_tokens": 649,
+          "classification_control_records": 1,
+          "engine_seconds": 5.799183877184987,
+          "classification_seconds": 0.15119993314146996,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6283249.829296323,
+              "scheduled_ts": 6283249.829338007,
+              "first_token_ts": 6283249.972932411
+            },
+            "initial_queue_seconds": 4.168413579463959e-05,
+            "scheduled_to_first_output_seconds": 0.14359440468251705
+          },
+          "cached_prefix_tokens": 1536,
+          "prefix_cache_mode": "session",
+          "seconds": 6.110270875040442
+        }
+      ],
+      "capabilities_cache_enabled": false,
+      "capabilities_cache_hit": false,
+      "prefix_cache_supported": true,
+      "plan_budget_supported": true,
+      "plan_budget_mode": "per_subtool",
+      "recovery_scope": "latest_result",
+      "historical_tool_failure": false,
+      "plan_reuse_enabled": false,
+      "candidate_retrieval_skipped": null,
+      "payload_mismatch_candidates": 0,
+      "template_entries": 0,
+      "generic_plan": true,
+      "book_entries": 1,
+      "candidate_count": 0,
+      "retrieval_seconds": 0.0017040418460965157,
+      "plan_success_reply_enabled": false,
+      "reuse_review_enabled": false,
+      "recovery_planning": false,
+      "reuse_routing": false,
+      "classification_branches": 8,
+      "execution_guidance_enabled": false,
+      "compact_catalog": false,
+      "candidate_limit": 0,
+      "label_cache_hit": true,
+      "local_tokenization": [
+        {
+          "seconds": 0.12163766613230109,
+          "token_count": 1892,
+          "verified": false
+        },
+        {
+          "seconds": 0.12416191585361958,
+          "token_count": 3270,
+          "verified": false
+        },
+        {
+          "seconds": 0.12691883323714137,
+          "token_count": 3383,
+          "verified": false
+        },
+        {
+          "seconds": 0.12908695824444294,
+          "token_count": 3248,
+          "verified": false
+        },
+        {
+          "seconds": 0.1313237906433642,
+          "token_count": 3242,
+          "verified": false
+        },
+        {
+          "seconds": 0.13386508403345942,
+          "token_count": 3388,
+          "verified": false
+        },
+        {
+          "seconds": 0.1361997090280056,
+          "token_count": 3291,
+          "verified": false
+        },
+        {
+          "seconds": 0.13869024999439716,
+          "token_count": 3242,
+          "verified": false
+        },
+        {
+          "seconds": 0.020865791011601686,
+          "token_count": 3252,
+          "verified": false
+        }
+      ],
+      "prefix_cache_requested": true,
+      "plan_token_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          310,
+          315
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "requested_plan_tokens": 17408,
+      "selected_branch": "tool:write",
+      "selected_content_id": null,
+      "completion_reply_normalized": false,
+      "cache_outcome": "no_candidates",
+      "available_tools": [
+        "plan"
+      ],
+      "inner_tools": [
+        "read",
+        "edit",
+        "write",
+        "bash",
+        "grep",
+        "find",
+        "ls"
+      ],
+      "candidate_ids": [],
+      "reused_content_ids": [],
+      "reused_template_ids": [],
+      "plan_step_names": [
+        "write",
+        "bash"
+      ],
+      "plan_completion_decision": null,
+      "missing_completion_decision": false,
+      "expected_output_count": 0,
+      "planned_success_reply": false,
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 3248,
+        "known_generated_argument_tokens": 649,
+        "known_classification_control_records": 1
+      },
+      "request_id": "openjev-5a019776158c45afbff52c1da29b128b",
+      "decision": {
+        "index": 2,
+        "name": "plan",
+        "control_id": 37,
+        "cached_prefix_tokens": 1536,
+        "logprobs": [
+          -5.461641788482666,
+          -3.086641550064087,
+          -0.08664166182279587,
+          -4.211641788482666,
+          -7.711641788482666,
+          -9.961641311645508,
+          -7.836641788482666,
+          -4.211641788482666
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6283249.829296323,
+            "scheduled_ts": 6283249.829338007,
+            "first_token_ts": 6283249.972932411
+          },
+          "initial_queue_seconds": 4.168413579463959e-05,
+          "scheduled_to_first_output_seconds": 0.14359440468251705
+        },
+        "classification_seconds": 0.15119993314146996
+      },
+      "generated_argument_tokens": 649,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 5.799183877184987,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          310,
+          315
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "session",
+      "input_tokens": 3248,
+      "plan_task": "Create csv_totals.py with totals(text). Parse CSV with header category,amount. Sum integer amounts per category and return a dict. Support quoted commas in category names, negative numbers and Unicode. Empty text or header-only input returns {}. An invalid amount raises ValueError. No import-time I/O. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "on_success_reply": null,
+      "expected_plan_outputs": [],
+      "cache_hit": false,
+      "status": "ok",
+      "wall_seconds": 6.543494666926563,
+      "action": "chat",
+      "timestamp": 1789918895.757844
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "d68902272f9d4aa28b2490239177b6fd",
+      "session_id": "01a0bf7a-be66-731a-bb7d-4d23f7ab9144",
+      "parent_tool_call_id": "openjev-5a019776158c45afbff52c1da29b128b",
+      "workspace_id": "4aee60aa6f0158ef7259d21be8249207f95d4f0d730a5a046e2dd58879759674",
+      "stage_seconds": {},
+      "http_requests": [],
+      "final_content_observed": 1,
+      "final_content_skipped": [],
+      "template_admitted": [],
+      "reused_template_ids": [],
+      "generic_plan": true,
+      "plan_completed": true,
+      "executed_tools": [
+        "write",
+        "bash"
+      ],
+      "accounting": {
+        "inference_requests": 0,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 0,
+        "known_generated_argument_tokens": 0,
+        "known_classification_control_records": 0
+      },
+      "admitted": [
+        "89a81a8492dbdf293a9478d4c43771d58e910ca0718c2aa881ef8e6b10e08ec4"
+      ],
+      "cache_hit": false,
+      "admission_count": 1,
+      "admission_reason": "new_write_content",
+      "book_entries_after": 2,
+      "validation": "tool execution only; not semantic verification",
+      "status": "ok",
+      "wall_seconds": 0.0016469997353851795,
+      "action": "tool_plan_complete",
+      "timestamp": 1789918895.887925
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "1b79021de2db49438ceb7438f0541772",
+      "session_id": "01a0bf7a-be66-731a-bb7d-4d23f7ab9144",
+      "parent_tool_call_id": null,
+      "workspace_id": "4aee60aa6f0158ef7259d21be8249207f95d4f0d730a5a046e2dd58879759674",
+      "stage_seconds": {
+        "capability_negotiation": 0.24882616708055139,
+        "generation_preparation": 0.16782695800065994,
+        "generation_http": 2.5734910001046956,
+        "generation": 2.7413938329555094,
+        "plan_decoding": 0.027581749949604273
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789918896.3749309,
+          "http_status": 200,
+          "request_id": "openjev-84f5ba04846d4751b95bc54e0ffe0573",
+          "input_tokens": 4036,
+          "generated_argument_tokens": 226,
+          "classification_control_records": 1,
+          "engine_seconds": 2.309533684514463,
+          "classification_seconds": 0.20686803106218576,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6283256.627705477,
+              "scheduled_ts": 6283256.627746916,
+              "first_token_ts": 6283256.82720464
+            },
+            "initial_queue_seconds": 4.1439197957515717e-05,
+            "scheduled_to_first_output_seconds": 0.19945772364735603
+          },
+          "cached_prefix_tokens": 1536,
+          "prefix_cache_mode": "session",
+          "seconds": 2.572692457586527
+        }
+      ],
+      "capabilities_cache_enabled": false,
+      "capabilities_cache_hit": false,
+      "prefix_cache_supported": true,
+      "plan_budget_supported": true,
+      "plan_budget_mode": "per_subtool",
+      "recovery_scope": "latest_result",
+      "historical_tool_failure": false,
+      "plan_reuse_enabled": false,
+      "candidate_retrieval_skipped": null,
+      "payload_mismatch_candidates": 0,
+      "template_entries": 0,
+      "generic_plan": true,
+      "book_entries": 2,
+      "candidate_count": 0,
+      "retrieval_seconds": 0.0008644168265163898,
+      "plan_success_reply_enabled": false,
+      "reuse_review_enabled": false,
+      "recovery_planning": false,
+      "reuse_routing": false,
+      "classification_branches": 8,
+      "execution_guidance_enabled": false,
+      "compact_catalog": false,
+      "candidate_limit": 0,
+      "label_cache_hit": true,
+      "local_tokenization": [
+        {
+          "seconds": 0.13923908257856965,
+          "token_count": 2676,
+          "verified": false
+        },
+        {
+          "seconds": 0.14291683305054903,
+          "token_count": 4054,
+          "verified": false
+        },
+        {
+          "seconds": 0.14613333297893405,
+          "token_count": 4167,
+          "verified": false
+        },
+        {
+          "seconds": 0.14929079124704003,
+          "token_count": 4032,
+          "verified": false
+        },
+        {
+          "seconds": 0.1525067496113479,
+          "token_count": 4026,
+          "verified": false
+        },
+        {
+          "seconds": 0.15582608385011554,
+          "token_count": 4172,
+          "verified": false
+        },
+        {
+          "seconds": 0.15896975016221404,
+          "token_count": 4075,
+          "verified": false
+        },
+        {
+          "seconds": 0.16186483390629292,
+          "token_count": 4026,
+          "verified": false
+        },
+        {
+          "seconds": 0.026712999679148197,
+          "token_count": 4036,
+          "verified": false
+        }
+      ],
+      "prefix_cache_requested": true,
+      "plan_token_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          224
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "requested_plan_tokens": 17408,
+      "selected_branch": "general",
+      "selected_content_id": null,
+      "completion_reply_normalized": false,
+      "cache_outcome": "reply",
+      "available_tools": [
+        "plan"
+      ],
+      "inner_tools": [
+        "read",
+        "edit",
+        "write",
+        "bash",
+        "grep",
+        "find",
+        "ls"
+      ],
+      "candidate_ids": [],
+      "reused_content_ids": [],
+      "reused_template_ids": [],
+      "plan_step_names": [],
+      "plan_completion_decision": null,
+      "missing_completion_decision": false,
+      "expected_output_count": 0,
+      "planned_success_reply": false,
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 4036,
+        "known_generated_argument_tokens": 226,
+        "known_classification_control_records": 1
+      },
+      "request_id": "openjev-84f5ba04846d4751b95bc54e0ffe0573",
+      "decision": {
+        "index": 7,
+        "name": "plan",
+        "control_id": 42,
+        "cached_prefix_tokens": 1536,
+        "logprobs": [
+          -10.250828742980957,
+          -10.625828742980957,
+          -9.625828742980957,
+          -9.875828742980957,
+          -13.000828742980957,
+          -12.750828742980957,
+          -9.875828742980957,
+          -0.0008291144040413201
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6283256.627705477,
+            "scheduled_ts": 6283256.627746916,
+            "first_token_ts": 6283256.82720464
+          },
+          "initial_queue_seconds": 4.1439197957515717e-05,
+          "scheduled_to_first_output_seconds": 0.19945772364735603
+        },
+        "classification_seconds": 0.20686803106218576
+      },
+      "generated_argument_tokens": 226,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 2.309533684514463,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          224
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "session",
+      "input_tokens": 4036,
+      "plan_task": "Create csv_totals.py with totals(text). Parse CSV with header category,amount. Sum integer amounts per category and return a dict. Support quoted commas in category names, negative numbers and Unicode. Empty text or header-only input returns {}. An invalid amount raises ValueError. No import-time I/O. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "on_success_reply": null,
+      "expected_plan_outputs": [],
+      "cache_hit": false,
+      "status": "ok",
+      "wall_seconds": 3.0200548749417067,
+      "action": "chat",
+      "timestamp": 1789918898.975456
+    }
+  ],
+  "malformed_event_lines": 0,
+  "usage_complete": true
+}

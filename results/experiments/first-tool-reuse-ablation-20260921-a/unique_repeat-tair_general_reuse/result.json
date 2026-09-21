@@ -1,0 +1,459 @@
+{
+  "arm": "c4",
+  "value": 0,
+  "seconds": 5.085435625165701,
+  "timed_out": false,
+  "validated_seconds": 5.147594500333071,
+  "exit_code": 0,
+  "finished": true,
+  "validation": {
+    "passed": true,
+    "seconds": 0.06215887516736984,
+    "stderr": ""
+  },
+  "passed": true,
+  "metrics": [
+    {
+      "metrics_version": 2,
+      "trace_id": "2d2d29cebfd14ef5a7b614f51dbdc4f4",
+      "session_id": "01a0c00b-6ba7-75d8-8f14-9d77d372074e",
+      "parent_tool_call_id": null,
+      "workspace_id": "d793698bf1072c1ad19f28beeec0ab0e835e9f6275594c277ce9fa16a2304262",
+      "stage_seconds": {
+        "capability_negotiation": 0.217291290871799,
+        "generation_preparation": 0.1322147911414504,
+        "generation_http": 2.0027626249939203,
+        "generation": 2.135095833335072,
+        "plan_decoding": 0.0730323325842619
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789928369.505054,
+          "http_status": 200,
+          "request_id": "openjev-8c2bcea579124ae299e905eff5e45cf1",
+          "input_tokens": 4298,
+          "generated_argument_tokens": 154,
+          "classification_control_records": 1,
+          "engine_seconds": 1.7461564084514976,
+          "classification_seconds": 0.24953509401530027,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6292729.74811581,
+              "scheduled_ts": 6292729.748159834,
+              "first_token_ts": 6292729.990485383
+            },
+            "initial_queue_seconds": 4.4024549424648285e-05,
+            "scheduled_to_first_output_seconds": 0.24232554901391268
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "request",
+          "seconds": 2.002266500145197
+        }
+      ],
+      "parallel_capabilities_enabled": false,
+      "capabilities_cache_enabled": false,
+      "capabilities_cache_hit": false,
+      "prefix_cache_supported": true,
+      "plan_budget_supported": true,
+      "plan_budget_mode": "per_subtool",
+      "repair_feedback_enabled": false,
+      "recovery_admission_enabled": false,
+      "recovery_scope": "whole_user_turn",
+      "historical_tool_failure": false,
+      "plan_reuse_enabled": true,
+      "candidate_retrieval_skipped": null,
+      "payload_mismatch_candidates": 0,
+      "template_entries": 0,
+      "generic_plan": true,
+      "book_entries": 3,
+      "candidate_count": 3,
+      "retrieval_seconds": 0.01033095782622695,
+      "plan_success_reply_enabled": false,
+      "reuse_review_enabled": false,
+      "write_references_enabled": false,
+      "bash_argv_enabled": false,
+      "reply_branch_enabled": false,
+      "first_tool_classification_enabled": false,
+      "recovery_planning": false,
+      "reuse_routing": false,
+      "classification_branches": 4,
+      "execution_guidance_enabled": false,
+      "dedup_tool_descriptions": false,
+      "compact_catalog": false,
+      "candidate_limit": 7,
+      "label_cache_hit": true,
+      "local_tokenization": [
+        {
+          "seconds": 0.11787591688334942,
+          "token_count": 2615,
+          "verified": false
+        },
+        {
+          "seconds": 0.11656862497329712,
+          "token_count": 4298,
+          "verified": false
+        },
+        {
+          "seconds": 0.11947137489914894,
+          "token_count": 4304,
+          "verified": false
+        },
+        {
+          "seconds": 0.12251345813274384,
+          "token_count": 4306,
+          "verified": false
+        },
+        {
+          "seconds": 0.12537075020372868,
+          "token_count": 3956,
+          "verified": false
+        }
+      ],
+      "plan_token_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          9,
+          125
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "requested_plan_tokens": 17408,
+      "selected_branch": "reuse_content",
+      "selected_content_id": "83b264612a5d57b5da1be282b7d1628d8c668e9f0b883f2052953112c58c8dba",
+      "bash_argv_steps": 0,
+      "completion_reply_normalized": false,
+      "cache_outcome": "reused",
+      "available_tools": [
+        "plan"
+      ],
+      "inner_tools": [
+        "read",
+        "edit",
+        "write",
+        "bash",
+        "grep",
+        "find",
+        "ls"
+      ],
+      "candidate_ids": [
+        "83b264612a5d57b5da1be282b7d1628d8c668e9f0b883f2052953112c58c8dba",
+        "1e8b7b19ee3725f43d8966c730686fdcb9c4b98d0b349643f6f9f37bd9265818",
+        "4186f0434a3500aec524b74cd02ba00f85a382b99cd4380077a09ee233e7f042"
+      ],
+      "reused_content_ids": [
+        "83b264612a5d57b5da1be282b7d1628d8c668e9f0b883f2052953112c58c8dba"
+      ],
+      "reused_template_ids": [],
+      "plan_step_names": [
+        "write",
+        "bash"
+      ],
+      "plan_completion_decision": null,
+      "missing_completion_decision": false,
+      "expected_output_count": 0,
+      "planned_success_reply": false,
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 4298,
+        "known_generated_argument_tokens": 154,
+        "known_classification_control_records": 1
+      },
+      "request_id": "openjev-8c2bcea579124ae299e905eff5e45cf1",
+      "decision": {
+        "index": 0,
+        "name": "plan",
+        "control_id": 35,
+        "cached_prefix_tokens": 0,
+        "logprobs": [
+          -0.033379703760147095,
+          -4.033379554748535,
+          -5.283379554748535,
+          -4.908379554748535
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6292729.74811581,
+            "scheduled_ts": 6292729.748159834,
+            "first_token_ts": 6292729.990485383
+          },
+          "initial_queue_seconds": 4.4024549424648285e-05,
+          "scheduled_to_first_output_seconds": 0.24232554901391268
+        },
+        "classification_seconds": 0.24953509401530027
+      },
+      "generated_argument_tokens": 154,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 1.7461564084514976,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          9,
+          125
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "request",
+      "input_tokens": 4298,
+      "plan_task": "Create unique_repeat.mjs exporting named function uniqueStrings(values). Input is an array of strings. Return a new array retaining the first occurrence of each distinct string in original order, without mutating the input. Keep original spelling in output. Do not trim whitespace. Deduplication is case-sensitive; upper and lower case remain distinct. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "on_success_reply": null,
+      "expected_plan_outputs": [],
+      "cache_hit": true,
+      "status": "ok",
+      "wall_seconds": 2.4379263748414814,
+      "action": "chat",
+      "timestamp": 1789928371.580684
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "b9517446715c4d7ea44fa6d6f95b7fa5",
+      "session_id": "01a0c00b-6ba7-75d8-8f14-9d77d372074e",
+      "parent_tool_call_id": "openjev-8c2bcea579124ae299e905eff5e45cf1",
+      "workspace_id": "d793698bf1072c1ad19f28beeec0ab0e835e9f6275594c277ce9fa16a2304262",
+      "stage_seconds": {},
+      "http_requests": [],
+      "final_content_observed": 1,
+      "final_content_skipped": [],
+      "template_admitted": [],
+      "reused_template_ids": [],
+      "generic_plan": true,
+      "plan_completed": true,
+      "executed_tools": [
+        "write",
+        "bash"
+      ],
+      "accounting": {
+        "inference_requests": 0,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 0,
+        "known_generated_argument_tokens": 0,
+        "known_classification_control_records": 0
+      },
+      "admitted": [],
+      "cache_hit": true,
+      "admission_count": 0,
+      "admission_reason": "deduplicated_or_reused",
+      "book_entries_after": 3,
+      "validation": "tool execution only; not semantic verification",
+      "status": "ok",
+      "wall_seconds": 0.0010430840775370598,
+      "action": "tool_plan_complete",
+      "timestamp": 1789928371.694255
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "b179c7f3e681446a9a200ed51639418b",
+      "session_id": "01a0c00b-6ba7-75d8-8f14-9d77d372074e",
+      "parent_tool_call_id": null,
+      "workspace_id": "d793698bf1072c1ad19f28beeec0ab0e835e9f6275594c277ce9fa16a2304262",
+      "stage_seconds": {
+        "capability_negotiation": 0.21629050001502037,
+        "generation_preparation": 0.11802466679364443,
+        "generation_http": 1.688242041040212,
+        "generation": 1.8063773750327528,
+        "plan_decoding": 0.06431433325633407
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789928372.092202,
+          "http_status": 200,
+          "request_id": "openjev-1bb73829eeaf418c966cfe3d326e0e8e",
+          "input_tokens": 4359,
+          "generated_argument_tokens": 117,
+          "classification_control_records": 1,
+          "engine_seconds": 1.428102827630937,
+          "classification_seconds": 0.24537761509418488,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6292732.338478199,
+              "scheduled_ts": 6292732.338522253,
+              "first_token_ts": 6292732.576508648
+            },
+            "initial_queue_seconds": 4.4053420424461365e-05,
+            "scheduled_to_first_output_seconds": 0.2379863951355219
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "request",
+          "seconds": 1.6877379170618951
+        }
+      ],
+      "parallel_capabilities_enabled": false,
+      "capabilities_cache_enabled": false,
+      "capabilities_cache_hit": false,
+      "prefix_cache_supported": true,
+      "plan_budget_supported": true,
+      "plan_budget_mode": "per_subtool",
+      "repair_feedback_enabled": false,
+      "recovery_admission_enabled": false,
+      "recovery_scope": "whole_user_turn",
+      "historical_tool_failure": false,
+      "plan_reuse_enabled": true,
+      "candidate_retrieval_skipped": null,
+      "payload_mismatch_candidates": 0,
+      "template_entries": 0,
+      "generic_plan": true,
+      "book_entries": 3,
+      "candidate_count": 3,
+      "retrieval_seconds": 0.005161082837730646,
+      "plan_success_reply_enabled": false,
+      "reuse_review_enabled": false,
+      "write_references_enabled": false,
+      "bash_argv_enabled": false,
+      "reply_branch_enabled": false,
+      "first_tool_classification_enabled": false,
+      "recovery_planning": false,
+      "reuse_routing": false,
+      "classification_branches": 4,
+      "execution_guidance_enabled": false,
+      "dedup_tool_descriptions": false,
+      "compact_catalog": false,
+      "candidate_limit": 7,
+      "label_cache_hit": true,
+      "local_tokenization": [
+        {
+          "seconds": 0.10355737525969744,
+          "token_count": 2999,
+          "verified": false
+        },
+        {
+          "seconds": 0.10686150006949902,
+          "token_count": 4701,
+          "verified": false
+        },
+        {
+          "seconds": 0.11009429208934307,
+          "token_count": 4707,
+          "verified": false
+        },
+        {
+          "seconds": 0.11328716622665524,
+          "token_count": 4709,
+          "verified": false
+        },
+        {
+          "seconds": 0.11633870797231793,
+          "token_count": 4359,
+          "verified": false
+        }
+      ],
+      "plan_token_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          116
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "requested_plan_tokens": 17408,
+      "selected_branch": "general",
+      "selected_content_id": null,
+      "bash_argv_steps": 0,
+      "completion_reply_normalized": false,
+      "cache_outcome": "reply",
+      "available_tools": [
+        "plan"
+      ],
+      "inner_tools": [
+        "read",
+        "edit",
+        "write",
+        "bash",
+        "grep",
+        "find",
+        "ls"
+      ],
+      "candidate_ids": [
+        "83b264612a5d57b5da1be282b7d1628d8c668e9f0b883f2052953112c58c8dba",
+        "1e8b7b19ee3725f43d8966c730686fdcb9c4b98d0b349643f6f9f37bd9265818",
+        "4186f0434a3500aec524b74cd02ba00f85a382b99cd4380077a09ee233e7f042"
+      ],
+      "reused_content_ids": [],
+      "reused_template_ids": [],
+      "plan_step_names": [],
+      "plan_completion_decision": null,
+      "missing_completion_decision": false,
+      "expected_output_count": 0,
+      "planned_success_reply": false,
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 4359,
+        "known_generated_argument_tokens": 117,
+        "known_classification_control_records": 1
+      },
+      "request_id": "openjev-1bb73829eeaf418c966cfe3d326e0e8e",
+      "decision": {
+        "index": 3,
+        "name": "plan",
+        "control_id": 38,
+        "cached_prefix_tokens": 0,
+        "logprobs": [
+          -10.625245094299316,
+          -10.500245094299316,
+          -10.000245094299316,
+          -0.00024470672360621393
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6292732.338478199,
+            "scheduled_ts": 6292732.338522253,
+            "first_token_ts": 6292732.576508648
+          },
+          "initial_queue_seconds": 4.4053420424461365e-05,
+          "scheduled_to_first_output_seconds": 0.2379863951355219
+        },
+        "classification_seconds": 0.24537761509418488
+      },
+      "generated_argument_tokens": 117,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 1.428102827630937,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          116
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "request",
+      "input_tokens": 4359,
+      "plan_task": "Create unique_repeat.mjs exporting named function uniqueStrings(values). Input is an array of strings. Return a new array retaining the first occurrence of each distinct string in original order, without mutating the input. Keep original spelling in output. Do not trim whitespace. Deduplication is case-sensitive; upper and lower case remain distinct. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "on_success_reply": null,
+      "expected_plan_outputs": [],
+      "cache_hit": false,
+      "status": "ok",
+      "wall_seconds": 2.093739833217114,
+      "action": "chat",
+      "timestamp": 1789928373.8445811
+    }
+  ],
+  "malformed_event_lines": 0,
+  "usage_complete": true
+}

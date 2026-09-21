@@ -1,0 +1,298 @@
+{
+  "experiment": "reply-diagnostics-20260920-a",
+  "manifest_sha256": "96427739cd048e7cd757b5bd210b5f222bb7d2d01c452287660f4299ad3cd292",
+  "arms": {
+    "native": {
+      "passed": 3,
+      "seconds": 31.258710333146155,
+      "known_generated_argument_tokens": 2892,
+      "known_input_tokens": 44827,
+      "known_classification_control_records": 0,
+      "inference_requests": 16,
+      "tool_errors": 1,
+      "tasks": 3,
+      "closed": 3,
+      "usage_complete": true,
+      "correct_reuse": 0,
+      "tokenize_http": null,
+      "local_tokenizations": 0,
+      "stages": null,
+      "pending_assistant_turns": 0,
+      "token_counts_are_lower_bounds": false,
+      "repeat_subset": {
+        "passed": 0,
+        "seconds": 0,
+        "known_generated_argument_tokens": 0
+      },
+      "closed_with_workflow_checks": 2
+    },
+    "tair_no_reuse": {
+      "passed": 3,
+      "seconds": 22.86864149849862,
+      "known_generated_argument_tokens": 1355,
+      "known_input_tokens": 27729,
+      "known_classification_control_records": 8,
+      "inference_requests": 8,
+      "tool_errors": 0,
+      "tasks": 3,
+      "closed": 3,
+      "usage_complete": true,
+      "correct_reuse": 0,
+      "tokenize_http": 0,
+      "local_tokenizations": 80,
+      "stages": {
+        "generation_preparation": 1.2354718735441566,
+        "generation_http": 16.893423958215863
+      },
+      "pending_assistant_turns": 0,
+      "token_counts_are_lower_bounds": false,
+      "repeat_subset": {
+        "passed": 0,
+        "seconds": 0,
+        "known_generated_argument_tokens": 0
+      },
+      "closed_with_workflow_checks": 2
+    },
+    "tair_reply": {
+      "passed": 1,
+      "seconds": 164.40690274862573,
+      "known_generated_argument_tokens": 8528,
+      "known_input_tokens": 623309,
+      "known_classification_control_records": 64,
+      "inference_requests": 65,
+      "tool_errors": 1,
+      "tasks": 3,
+      "closed": 1,
+      "usage_complete": false,
+      "correct_reuse": 0,
+      "tokenize_http": 0,
+      "local_tokenizations": 174,
+      "stages": {
+        "generation_preparation": 10.105071331374347,
+        "generation_http": 118.76600933633745
+      },
+      "pending_assistant_turns": 1,
+      "token_counts_are_lower_bounds": true,
+      "repeat_subset": {
+        "passed": 0,
+        "seconds": 0,
+        "known_generated_argument_tokens": 0
+      },
+      "closed_with_workflow_checks": 1
+    }
+  },
+  "cases": [
+    {
+      "task": "repair_failure",
+      "arm": "tair_no_reuse",
+      "phase": "new",
+      "passed": true,
+      "seconds": 7.223228790797293,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 329,
+      "known_input_tokens": 10402,
+      "inference_requests": 3,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true,
+      "explicit_workflow_passed": false
+    },
+    {
+      "task": "repair_failure",
+      "arm": "native",
+      "phase": "new",
+      "passed": true,
+      "seconds": 10.81845466606319,
+      "tool_errors": 1,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 995,
+      "known_input_tokens": 17334,
+      "inference_requests": 6,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true,
+      "explicit_workflow_passed": false
+    },
+    {
+      "task": "repair_failure",
+      "arm": "tair_reply",
+      "phase": "new",
+      "passed": false,
+      "seconds": 150.09020341699943,
+      "tool_errors": 1,
+      "reuse_executed": false,
+      "usage_complete": false,
+      "known_generated_argument_tokens": 7573,
+      "known_input_tokens": 607797,
+      "inference_requests": 61,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 1,
+      "closed": false,
+      "explicit_workflow_passed": true
+    },
+    {
+      "task": "csv_totals",
+      "arm": "tair_no_reuse",
+      "phase": "new",
+      "passed": true,
+      "seconds": 9.16033412469551,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 778,
+      "known_input_tokens": 6975,
+      "inference_requests": 2,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "csv_totals",
+      "arm": "native",
+      "phase": "new",
+      "passed": true,
+      "seconds": 10.171716042328626,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 967,
+      "known_input_tokens": 11072,
+      "inference_requests": 4,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "csv_totals",
+      "arm": "tair_reply",
+      "phase": "new",
+      "passed": true,
+      "seconds": 9.557101665996015,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 749,
+      "known_input_tokens": 7980,
+      "inference_requests": 2,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "edit_state_base",
+      "arm": "tair_reply",
+      "phase": "base",
+      "passed": false,
+      "seconds": 4.759597665630281,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 206,
+      "known_input_tokens": 7532,
+      "inference_requests": 2,
+      "artifact_passed": false,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": false
+    },
+    {
+      "task": "edit_state_base",
+      "arm": "tair_no_reuse",
+      "phase": "base",
+      "passed": true,
+      "seconds": 6.485078583005816,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 248,
+      "known_input_tokens": 10352,
+      "inference_requests": 3,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "edit_state_base",
+      "arm": "native",
+      "phase": "base",
+      "passed": true,
+      "seconds": 10.26853962475434,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 930,
+      "known_input_tokens": 16421,
+      "inference_requests": 6,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    }
+  ],
+  "artifact_reverification_agrees": 9,
+  "prefix_cache": {
+    "requests": 0,
+    "recorded": 0,
+    "nonzero_requests": 0,
+    "cached_tokens": 0,
+    "server_modes": []
+  },
+  "repair_process_audit": {
+    "native": {
+      "first_action": {
+        "name": "bash",
+        "arguments": {
+          "command": "cd /private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-expanded-project-5hvxyeom/workspace && ls -la && echo \"---\" && python3 check_calc.py"
+        }
+      },
+      "checker_unchanged": true,
+      "requested_check_was_first": false
+    },
+    "tair_no_reuse": {
+      "first_action": {
+        "name": "read",
+        "arguments": {
+          "path": "calc.py"
+        }
+      },
+      "checker_unchanged": true,
+      "requested_check_was_first": false
+    },
+    "tair_reply": {
+      "first_action": {
+        "name": "bash",
+        "arguments": {
+          "command": "python3 check_calc.py"
+        }
+      },
+      "checker_unchanged": true,
+      "requested_check_was_first": true
+    }
+  },
+  "reply_diagnostics": [
+    {
+      "event": "planned_reply_skip",
+      "reason": "missing_completion_metadata",
+      "count": 61
+    }
+  ]
+}

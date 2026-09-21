@@ -1,0 +1,91 @@
+{
+  "valid_probe": "repeated-recovery-probe-20260921-b",
+  "excluded_probe": "repeated-recovery-probe-20260921-a",
+  "exclusion_reason": "Incomplete rebinding of macOS path aliases left stale experiment paths in history.",
+  "candidate_retained": false,
+  "arms": {
+    "original": {
+      "requests": 2,
+      "recovery_check_completed": 0,
+      "all_steps_succeeded": 2,
+      "generated_tokens": 81,
+      "inference_wall_seconds": 3.134594041854143,
+      "input_tokens": 11191,
+      "classification_controls": 2,
+      "actions": [
+        {
+          "name": "plan",
+          "arguments": {
+            "steps": [
+              {
+                "name": "bash",
+                "arguments": {
+                  "command": "pwd && ls -la"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "name": "plan",
+          "arguments": {
+            "steps": [
+              {
+                "name": "find",
+                "arguments": {
+                  "pattern": "unique_changed.mjs"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "candidate": {
+      "requests": 2,
+      "recovery_check_completed": 0,
+      "all_steps_succeeded": 2,
+      "generated_tokens": 113,
+      "inference_wall_seconds": 3.059140167199075,
+      "input_tokens": 11341,
+      "classification_controls": 2,
+      "actions": [
+        {
+          "name": "plan",
+          "arguments": {
+            "steps": [
+              {
+                "name": "find",
+                "arguments": {
+                  "pattern": "unique_changed.mjs"
+                }
+              },
+              {
+                "name": "ls",
+                "arguments": {}
+              }
+            ]
+          }
+        },
+        {
+          "name": "plan",
+          "arguments": {
+            "steps": [
+              {
+                "name": "find",
+                "arguments": {
+                  "pattern": "unique_changed.mjs"
+                }
+              },
+              {
+                "name": "ls",
+                "arguments": {}
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "restored_latest_result_sha256": "2e69741bd8d459fc40f2b44832939385d1b9432c0363f58ff8b4efbd69146222"
+}

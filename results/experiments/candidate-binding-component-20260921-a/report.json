@@ -1,0 +1,1235 @@
+[
+  {
+    "task": "unique_repeat",
+    "candidate": 1,
+    "updated": false,
+    "forced_label": "C",
+    "response": {
+      "request_id": "openjev-ac9d8eaf12eb4abeb91b7b9af5ecedda",
+      "call": {
+        "name": "plan",
+        "arguments": {
+          "steps": [
+            {
+              "name": "reuse_write",
+              "arguments": {
+                "path": "unique_repeat.mjs"
+              }
+            }
+          ]
+        }
+      },
+      "decision": {
+        "index": 0,
+        "name": "plan",
+        "control_id": 37,
+        "cached_prefix_tokens": 0,
+        "logprobs": [
+          -2.7689626216888428
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6287499.691006849,
+            "scheduled_ts": 6287499.691047496,
+            "first_token_ts": 6287499.855622337
+          },
+          "initial_queue_seconds": 4.064757376909256e-05,
+          "scheduled_to_first_output_seconds": 0.16457484103739262
+        },
+        "classification_seconds": 0.17109824996441603
+      },
+      "raw": "{\"steps\":[{\"name\":\"reuse_write\",\"arguments\":{\"path\":\"unique_repeat.mjs\"}}]}",
+      "argument_token_ids": [
+        24313,
+        43943,
+        96893,
+        24313,
+        2852,
+        16562,
+        266,
+        3103,
+        98100,
+        10177,
+        83772,
+        80642,
+        9860,
+        16562,
+        38138,
+        18598,
+        29073,
+        3420,
+        10617,
+        4,
+        3831,
+        48663,
+        1
+      ],
+      "generated_argument_tokens": 23,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 0.5079407673329115,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          9
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "request",
+      "input_tokens": 1695
+    },
+    "call": {
+      "name": "plan",
+      "arguments": {
+        "steps": [
+          {
+            "name": "write",
+            "arguments": {
+              "path": "unique_repeat.mjs",
+              "content": "export function uniqueStrings(values) {\n  const seen = new Set();\n  const result = [];\n  for (const value of values) {\n    if (!seen.has(value)) {\n      seen.add(value);\n      result.push(value);\n    }\n  }\n  return result;\n}\n"
+            }
+          }
+        ]
+      }
+    },
+    "reused": true,
+    "request_seconds": 0.8370897499844432,
+    "passed": true,
+    "oracle_stderr": "",
+    "trace": {
+      "stage_seconds": {
+        "generation_preparation": 0.100746083073318,
+        "generation_http": 0.7126860418356955,
+        "generation": 0.8134597497992218
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789923139.496044,
+          "http_status": 200,
+          "request_id": "openjev-ac9d8eaf12eb4abeb91b7b9af5ecedda",
+          "input_tokens": 1695,
+          "generated_argument_tokens": 23,
+          "classification_control_records": 1,
+          "engine_seconds": 0.5079407673329115,
+          "classification_seconds": 0.17109824996441603,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6287499.691006849,
+              "scheduled_ts": 6287499.691047496,
+              "first_token_ts": 6287499.855622337
+            },
+            "initial_queue_seconds": 4.064757376909256e-05,
+            "scheduled_to_first_output_seconds": 0.16457484103739262
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "request",
+          "seconds": 0.7125517502427101
+        }
+      ],
+      "label_cache_hit": false,
+      "local_tokenization": [
+        {
+          "seconds": 0.09820758365094662,
+          "token_count": 946,
+          "verified": false
+        },
+        {
+          "seconds": 0.09957950003445148,
+          "token_count": 1695,
+          "verified": false
+        },
+        {
+          "seconds": 0.09952208260074258,
+          "token_count": 1,
+          "verified": false
+        }
+      ]
+    }
+  },
+  {
+    "task": "unique_repeat",
+    "candidate": 1,
+    "updated": true,
+    "forced_label": "C",
+    "response": {
+      "request_id": "openjev-2c70c8e7450e4712b04859906eb819bc",
+      "call": {
+        "name": "plan",
+        "arguments": {
+          "steps": [
+            {
+              "name": "reuse_write",
+              "arguments": {
+                "path": "unique_repeat.mjs"
+              }
+            }
+          ]
+        }
+      },
+      "decision": {
+        "index": 0,
+        "name": "plan",
+        "control_id": 37,
+        "cached_prefix_tokens": 0,
+        "logprobs": [
+          -5.252542972564697
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6287500.495904566,
+            "scheduled_ts": 6287500.495931562,
+            "first_token_ts": 6287500.634129835
+          },
+          "initial_queue_seconds": 2.6996247470378876e-05,
+          "scheduled_to_first_output_seconds": 0.1381982732564211
+        },
+        "classification_seconds": 0.14340342860668898
+      },
+      "raw": "{\"steps\":[{\"name\":\"reuse_write\",\"arguments\":{\"path\":\"unique_repeat.mjs\"}}]}",
+      "argument_token_ids": [
+        24313,
+        43943,
+        96893,
+        24313,
+        2852,
+        16562,
+        266,
+        3103,
+        98100,
+        10177,
+        83772,
+        80642,
+        9860,
+        16562,
+        38138,
+        18598,
+        29073,
+        3420,
+        10617,
+        4,
+        3831,
+        48663,
+        1
+      ],
+      "generated_argument_tokens": 23,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 0.4780896818265319,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          9
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "request",
+      "input_tokens": 1655
+    },
+    "call": {
+      "name": "plan",
+      "arguments": {
+        "steps": [
+          {
+            "name": "write",
+            "arguments": {
+              "path": "unique_repeat.mjs",
+              "content": "export function uniqueStrings(values) {\n  const seen = new Set();\n  const result = [];\n  for (const value of values) {\n    if (!seen.has(value)) {\n      seen.add(value);\n      result.push(value);\n    }\n  }\n  return result;\n}\n"
+            }
+          }
+        ]
+      }
+    },
+    "reused": true,
+    "request_seconds": 0.78178416704759,
+    "passed": true,
+    "oracle_stderr": "",
+    "trace": {
+      "stage_seconds": {
+        "generation_preparation": 0.0036802091635763645,
+        "generation_http": 0.7741835839115083,
+        "generation": 0.7778858332894742
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789923140.30096,
+          "http_status": 200,
+          "request_id": "openjev-2c70c8e7450e4712b04859906eb819bc",
+          "input_tokens": 1655,
+          "generated_argument_tokens": 23,
+          "classification_control_records": 1,
+          "engine_seconds": 0.4780896818265319,
+          "classification_seconds": 0.14340342860668898,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6287500.495904566,
+              "scheduled_ts": 6287500.495931562,
+              "first_token_ts": 6287500.634129835
+            },
+            "initial_queue_seconds": 2.6996247470378876e-05,
+            "scheduled_to_first_output_seconds": 0.1381982732564211
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "request",
+          "seconds": 0.774039541836828
+        }
+      ],
+      "local_tokenization": [
+        {
+          "seconds": 0.001471749972552061,
+          "token_count": 930,
+          "verified": false
+        },
+        {
+          "seconds": 0.0015729167498648167,
+          "token_count": 1655,
+          "verified": false
+        }
+      ],
+      "label_cache_hit": true
+    }
+  },
+  {
+    "task": "unique_repeat",
+    "candidate": 0,
+    "updated": true,
+    "forced_label": "B",
+    "response": {
+      "request_id": "openjev-8a359502acbe46c7af33f3115c3a37d5",
+      "call": {
+        "name": "plan",
+        "arguments": {
+          "steps": [
+            {
+              "name": "write",
+              "arguments": {
+                "path": "unique_repeat.mjs",
+                "content": "export function uniqueStrings(values) {\n  const seen = new Set();\n  const result = [];\n  for (const value of values) {\n    if (!seen.has(value)) {\n      seen.add(value);\n      result.push(value);\n    }\n  }\n  return result;\n}\n"
+              }
+            },
+            {
+              "name": "write",
+              "arguments": {
+                "path": "test_unique_repeat.mjs",
+                "content": "import { uniqueStrings } from './unique_repeat.mjs';\n\nconst input = ['a', 'b', 'a', 'c', 'B', 'b', '  a  ', 'a'];\nconst result = uniqueStrings(input);\nconsole.log(JSON.stringify(result));\nconsole.log(JSON.stringify(input));\n\nif (JSON.stringify(result) !== JSON.stringify(['a', 'b', 'c', 'B', '  a  '])) {\n  throw new Error('Unexpected result');\n}\nif (JSON.stringify(input) !== JSON.stringify(['a', 'b', 'a', 'c', 'B', 'b', '  a  ', 'a'])) {\n  throw new Error('Input was mutated');\n}\nconsole.log('All checks passed');\n"
+              }
+            },
+            {
+              "name": "write",
+              "arguments": {
+                "path": "run_check.sh",
+                "content": "node test_unique_repeat.mjs\n"
+              }
+            }
+          ]
+        }
+      },
+      "decision": {
+        "index": 0,
+        "name": "plan",
+        "control_id": 36,
+        "cached_prefix_tokens": 0,
+        "logprobs": [
+          -3.3775429725646973
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6287501.338741614,
+            "scheduled_ts": 6287501.338783195,
+            "first_token_ts": 6287501.479441007
+          },
+          "initial_queue_seconds": 4.1581690311431885e-05,
+          "scheduled_to_first_output_seconds": 0.14065781142562628
+        },
+        "classification_seconds": 0.14567344542592764
+      },
+      "raw": "{\"steps\":[{\"name\":\"write\",\"arguments\":{\"path\":\"unique_repeat.mjs\",\"content\":\"export function uniqueStrings(values) {\\n  const seen = new Set();\\n  const result = [];\\n  for (const value of values) {\\n    if (!seen.has(value)) {\\n      seen.add(value);\\n      result.push(value);\\n    }\\n  }\\n  return result;\\n}\\n\"}},{\"name\":\"write\",\"arguments\":{\"path\":\"test_unique_repeat.mjs\",\"content\":\"import { uniqueStrings } from './unique_repeat.mjs';\\n\\nconst input = ['a', 'b', 'a', 'c', 'B', 'b', '  a  ', 'a'];\\nconst result = uniqueStrings(input);\\nconsole.log(JSON.stringify(result));\\nconsole.log(JSON.stringify(input));\\n\\nif (JSON.stringify(result) !== JSON.stringify(['a', 'b', 'c', 'B', '  a  '])) {\\n  throw new Error('Unexpected result');\\n}\\nif (JSON.stringify(input) !== JSON.stringify(['a', 'b', 'a', 'c', 'B', 'b', '  a  ', 'a'])) {\\n  throw new Error('Input was mutated');\\n}\\nconsole.log('All checks passed');\\n\"}},{\"name\":\"write\",\"arguments\":{\"path\":\"run_check.sh\",\"content\":\"node test_unique_repeat.mjs\\n\"}}]}",
+      "argument_token_ids": [
+        24313,
+        43943,
+        96893,
+        24313,
+        2852,
+        16562,
+        25837,
+        10177,
+        83772,
+        80642,
+        9860,
+        16562,
+        38138,
+        18598,
+        29073,
+        3420,
+        10617,
+        10177,
+        9326,
+        16562,
+        7449,
+        2019,
+        5463,
+        79655,
+        88287,
+        11,
+        16236,
+        80,
+        223,
+        1600,
+        4326,
+        438,
+        1017,
+        8269,
+        12184,
+        62,
+        80,
+        223,
+        1600,
+        1529,
+        438,
+        764,
+        14573,
+        62,
+        80,
+        223,
+        362,
+        343,
+        3949,
+        1990,
+        294,
+        3785,
+        11,
+        16236,
+        80,
+        361,
+        855,
+        12325,
+        41089,
+        43506,
+        22070,
+        2542,
+        16236,
+        80,
+        1445,
+        4326,
+        8508,
+        22070,
+        3171,
+        62,
+        80,
+        1445,
+        1529,
+        13002,
+        22070,
+        3171,
+        62,
+        80,
+        361,
+        49881,
+        80,
+        223,
+        49881,
+        80,
+        223,
+        1354,
+        1529,
+        29424,
+        80,
+        1464,
+        80,
+        4,
+        55695,
+        24313,
+        2852,
+        16562,
+        25837,
+        10177,
+        83772,
+        80642,
+        9860,
+        16562,
+        7958,
+        122303,
+        18598,
+        29073,
+        3420,
+        10617,
+        10177,
+        9326,
+        16562,
+        1897,
+        680,
+        5463,
+        79655,
+        837,
+        538,
+        13960,
+        38138,
+        18598,
+        29073,
+        3420,
+        10617,
+        9,
+        29424,
+        80,
+        5809,
+        3949,
+        4346,
+        438,
+        13771,
+        67,
+        1780,
+        905,
+        68,
+        1780,
+        905,
+        67,
+        1780,
+        905,
+        69,
+        1780,
+        905,
+        36,
+        1780,
+        905,
+        68,
+        1780,
+        905,
+        223,
+        260,
+        223,
+        32721,
+        905,
+        67,
+        6713,
+        29424,
+        80,
+        3949,
+        1529,
+        438,
+        5463,
+        79655,
+        14867,
+        3171,
+        62,
+        80,
+        17362,
+        8202,
+        10,
+        34939,
+        72828,
+        24688,
+        29267,
+        62,
+        80,
+        17362,
+        8202,
+        10,
+        34939,
+        72828,
+        14867,
+        29267,
+        62,
+        80,
+        5809,
+        394,
+        343,
+        34939,
+        72828,
+        24688,
+        11,
+        34028,
+        26639,
+        72828,
+        36437,
+        67,
+        1780,
+        905,
+        68,
+        1780,
+        905,
+        69,
+        1780,
+        905,
+        36,
+        1780,
+        905,
+        223,
+        260,
+        223,
+        905,
+        48938,
+        16236,
+        80,
+        223,
+        7897,
+        1017,
+        20669,
+        2292,
+        55,
+        86060,
+        1529,
+        41062,
+        62,
+        80,
+        1464,
+        80,
+        394,
+        343,
+        34939,
+        72828,
+        14867,
+        11,
+        34028,
+        26639,
+        72828,
+        36437,
+        67,
+        1780,
+        905,
+        68,
+        1780,
+        905,
+        67,
+        1780,
+        905,
+        69,
+        1780,
+        905,
+        36,
+        1780,
+        905,
+        68,
+        1780,
+        905,
+        223,
+        260,
+        223,
+        32721,
+        905,
+        67,
+        98376,
+        16236,
+        80,
+        223,
+        7897,
+        1017,
+        20669,
+        2292,
+        10720,
+        515,
+        101488,
+        41062,
+        62,
+        80,
+        1464,
+        80,
+        17362,
+        8202,
+        2292,
+        5480,
+        21323,
+        8428,
+        41062,
+        62,
+        80,
+        4,
+        55695,
+        24313,
+        2852,
+        16562,
+        25837,
+        10177,
+        83772,
+        80642,
+        9860,
+        16562,
+        15721,
+        54788,
+        17145,
+        10177,
+        9326,
+        16562,
+        15717,
+        1950,
+        122303,
+        18598,
+        29073,
+        3420,
+        10617,
+        5809,
+        4,
+        3831,
+        48663,
+        1
+      ],
+      "generated_argument_tokens": 316,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 2.8897755034267902,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          83,
+          189,
+          18
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "request",
+      "input_tokens": 1663
+    },
+    "call": {
+      "name": "plan",
+      "arguments": {
+        "steps": [
+          {
+            "name": "write",
+            "arguments": {
+              "path": "unique_repeat.mjs",
+              "content": "export function uniqueStrings(values) {\n  const seen = new Set();\n  const result = [];\n  for (const value of values) {\n    if (!seen.has(value)) {\n      seen.add(value);\n      result.push(value);\n    }\n  }\n  return result;\n}\n"
+            }
+          },
+          {
+            "name": "write",
+            "arguments": {
+              "path": "test_unique_repeat.mjs",
+              "content": "import { uniqueStrings } from './unique_repeat.mjs';\n\nconst input = ['a', 'b', 'a', 'c', 'B', 'b', '  a  ', 'a'];\nconst result = uniqueStrings(input);\nconsole.log(JSON.stringify(result));\nconsole.log(JSON.stringify(input));\n\nif (JSON.stringify(result) !== JSON.stringify(['a', 'b', 'c', 'B', '  a  '])) {\n  throw new Error('Unexpected result');\n}\nif (JSON.stringify(input) !== JSON.stringify(['a', 'b', 'a', 'c', 'B', 'b', '  a  ', 'a'])) {\n  throw new Error('Input was mutated');\n}\nconsole.log('All checks passed');\n"
+            }
+          },
+          {
+            "name": "write",
+            "arguments": {
+              "path": "run_check.sh",
+              "content": "node test_unique_repeat.mjs\n"
+            }
+          }
+        ]
+      }
+    },
+    "reused": false,
+    "request_seconds": 3.1251353342086077,
+    "passed": false,
+    "trace": {
+      "stage_seconds": {
+        "generation_preparation": 0.0034298747777938843,
+        "generation_http": 3.1101159579120576,
+        "generation": 3.1135943331755698
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789923141.145212,
+          "http_status": 200,
+          "request_id": "openjev-8a359502acbe46c7af33f3115c3a37d5",
+          "input_tokens": 1663,
+          "generated_argument_tokens": 316,
+          "classification_control_records": 1,
+          "engine_seconds": 2.8897755034267902,
+          "classification_seconds": 0.14567344542592764,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6287501.338741614,
+              "scheduled_ts": 6287501.338783195,
+              "first_token_ts": 6287501.479441007
+            },
+            "initial_queue_seconds": 4.1581690311431885e-05,
+            "scheduled_to_first_output_seconds": 0.14065781142562628
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "request",
+          "seconds": 3.1099608750082552
+        }
+      ],
+      "local_tokenization": [
+        {
+          "seconds": 0.0011032498441636562,
+          "token_count": 930,
+          "verified": false
+        },
+        {
+          "seconds": 2.0374543964862823e-05,
+          "token_count": 1,
+          "verified": false
+        },
+        {
+          "seconds": 0.0014815828762948513,
+          "token_count": 1663,
+          "verified": false
+        }
+      ],
+      "label_cache_hit": false
+    }
+  },
+  {
+    "task": "unique_repeat",
+    "candidate": 0,
+    "updated": false,
+    "forced_label": "B",
+    "response": {
+      "request_id": "openjev-90da588ffecc485bb12c37466cd9cca4",
+      "call": {
+        "name": "plan",
+        "arguments": {
+          "steps": [
+            {
+              "name": "reuse_write",
+              "arguments": {
+                "path": "unique_repeat.mjs"
+              }
+            }
+          ]
+        }
+      },
+      "decision": {
+        "index": 0,
+        "name": "plan",
+        "control_id": 36,
+        "cached_prefix_tokens": 0,
+        "logprobs": [
+          -0.6439626216888428
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6287504.48851026,
+            "scheduled_ts": 6287504.488548056,
+            "first_token_ts": 6287504.627006909
+          },
+          "initial_queue_seconds": 3.7795864045619965e-05,
+          "scheduled_to_first_output_seconds": 0.13845885265618563
+        },
+        "classification_seconds": 0.14377580024302006
+      },
+      "raw": "{\"steps\":[{\"name\":\"reuse_write\",\"arguments\":{\"path\":\"unique_repeat.mjs\"}}]}",
+      "argument_token_ids": [
+        24313,
+        43943,
+        96893,
+        24313,
+        2852,
+        16562,
+        266,
+        3103,
+        98100,
+        10177,
+        83772,
+        80642,
+        9860,
+        16562,
+        38138,
+        18598,
+        29073,
+        3420,
+        10617,
+        4,
+        3831,
+        48663,
+        1
+      ],
+      "generated_argument_tokens": 23,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 0.47532771434634924,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          9
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "request",
+      "input_tokens": 1701
+    },
+    "call": {
+      "name": "plan",
+      "arguments": {
+        "steps": [
+          {
+            "name": "write",
+            "arguments": {
+              "path": "unique_repeat.mjs",
+              "content": "import json\n\n\ndef parse_jsonl(text):\n    \"\"\"Parse newline-delimited JSON text into a list of decoded values.\n\n    Each non-blank line is parsed as a JSON value. Whitespace-only lines are\n    skipped. A final line without a trailing newline is handled. Malformed\n    non-blank JSON lines raise ValueError.\n    \"\"\"\n    results = []\n    for line in text.splitlines():\n        if line.strip() == \"\":\n            continue\n        results.append(json.loads(line))\n    return results\n"
+            }
+          }
+        ]
+      }
+    },
+    "reused": true,
+    "request_seconds": 0.7211399166844785,
+    "passed": false,
+    "oracle_stderr": "Traceback (most recent call last):\n  File \"<string>\", line 3, in <module>\nAssertionError: file:///private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-binding-oracle-nn75ui5w/unique_repeat.mjs:4\ndef parse_jsonl(text):\n^^^\n\nSyntaxError: Unexpected identifier 'def'\n    at compileSourceTextModule (node:internal/modules/esm/utils:346:16)\n    at ModuleLoader.moduleStrategy (node:internal/modules/esm/translators:110:18)\n    at #translate (node:internal/modules/esm/loader:559:20)\n    at afterLoad (node:internal/modules/esm/loader:612:29)\n    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:617:12)\n    at #createModuleJob (node:internal/modules/esm/loader:640:36)\n    at #getJobFromResolveResult (node:internal/modules/esm/loader:353:34)\n    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:321:41)\n\nNode.js v22.23.2\n\n",
+    "trace": {
+      "stage_seconds": {
+        "generation_preparation": 0.0066565838642418385,
+        "generation_http": 0.7041533328592777,
+        "generation": 0.7108696666546166
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789923144.274593,
+          "http_status": 200,
+          "request_id": "openjev-90da588ffecc485bb12c37466cd9cca4",
+          "input_tokens": 1701,
+          "generated_argument_tokens": 23,
+          "classification_control_records": 1,
+          "engine_seconds": 0.47532771434634924,
+          "classification_seconds": 0.14377580024302006,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6287504.48851026,
+              "scheduled_ts": 6287504.488548056,
+              "first_token_ts": 6287504.627006909
+            },
+            "initial_queue_seconds": 3.7795864045619965e-05,
+            "scheduled_to_first_output_seconds": 0.13845885265618563
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "request",
+          "seconds": 0.703676207922399
+        }
+      ],
+      "local_tokenization": [
+        {
+          "seconds": 0.0023428751155734062,
+          "token_count": 946,
+          "verified": false
+        },
+        {
+          "seconds": 0.003397500142455101,
+          "token_count": 1701,
+          "verified": false
+        }
+      ],
+      "label_cache_hit": true
+    }
+  },
+  {
+    "task": "unique_changed",
+    "candidate": 1,
+    "updated": false,
+    "forced_label": "C",
+    "response": {
+      "request_id": "openjev-ab7f2ba0acae404dbff10df007fb26af",
+      "call": {
+        "name": "plan",
+        "arguments": {
+          "steps": [
+            {
+              "name": "reuse_write",
+              "arguments": {
+                "path": "unique_changed.mjs"
+              }
+            }
+          ]
+        }
+      },
+      "decision": {
+        "index": 0,
+        "name": "plan",
+        "control_id": 37,
+        "cached_prefix_tokens": 0,
+        "logprobs": [
+          -1.8992396593093872
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6287505.291059345,
+            "scheduled_ts": 6287505.291096298,
+            "first_token_ts": 6287505.429397376
+          },
+          "initial_queue_seconds": 3.6953017115592957e-05,
+          "scheduled_to_first_output_seconds": 0.1383010782301426
+        },
+        "classification_seconds": 0.1432772846892476
+      },
+      "raw": "{\"steps\":[{\"name\":\"reuse_write\",\"arguments\":{\"path\":\"unique_changed.mjs\"}}]}",
+      "argument_token_ids": [
+        24313,
+        43943,
+        96893,
+        24313,
+        2852,
+        16562,
+        266,
+        3103,
+        98100,
+        10177,
+        83772,
+        80642,
+        9860,
+        16562,
+        38138,
+        32663,
+        9007,
+        3420,
+        10617,
+        4,
+        3831,
+        48663,
+        1
+      ],
+      "generated_argument_tokens": 23,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 0.4750050473958254,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          9
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "request",
+      "input_tokens": 1703
+    },
+    "call": {
+      "name": "plan",
+      "arguments": {
+        "steps": [
+          {
+            "name": "write",
+            "arguments": {
+              "path": "unique_changed.mjs",
+              "content": "export function uniqueStrings(values) {\n  const seen = new Set();\n  const result = [];\n  for (const value of values) {\n    if (!seen.has(value)) {\n      seen.add(value);\n      result.push(value);\n    }\n  }\n  return result;\n}\n"
+            }
+          }
+        ]
+      }
+    },
+    "reused": true,
+    "request_seconds": 0.6984722497873008,
+    "passed": false,
+    "oracle_stderr": "Traceback (most recent call last):\n  File \"<string>\", line 3, in <module>\nAssertionError: node:internal/modules/run_main:123\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'A',\n+   'a',\n    ' B ',\n    'b',\n    '中文',\n    ''\n  ]\n\n    at file:///private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-binding-oracle-_1e6unpf/[eval1]:3:42\n    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:282:26)\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:278:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: [ 'A', 'a', ' B ', 'b', '中文', '' ],\n  expected: [ 'A', ' B ', 'b', '中文', '' ],\n  operator: 'deepStrictEqual',\n  diff: 'simple'\n}\n\nNode.js v22.23.2\n\n",
+    "trace": {
+      "stage_seconds": {
+        "generation_preparation": 0.003106915857642889,
+        "generation_http": 0.6845977921038866,
+        "generation": 0.6877540000714362
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789923145.096342,
+          "http_status": 200,
+          "request_id": "openjev-ab7f2ba0acae404dbff10df007fb26af",
+          "input_tokens": 1703,
+          "generated_argument_tokens": 23,
+          "classification_control_records": 1,
+          "engine_seconds": 0.4750050473958254,
+          "classification_seconds": 0.1432772846892476,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6287505.291059345,
+              "scheduled_ts": 6287505.291096298,
+              "first_token_ts": 6287505.429397376
+            },
+            "initial_queue_seconds": 3.6953017115592957e-05,
+            "scheduled_to_first_output_seconds": 0.1383010782301426
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "request",
+          "seconds": 0.6844464582391083
+        }
+      ],
+      "local_tokenization": [
+        {
+          "seconds": 0.0011305827647447586,
+          "token_count": 950,
+          "verified": false
+        },
+        {
+          "seconds": 0.001468542031943798,
+          "token_count": 1703,
+          "verified": false
+        }
+      ],
+      "label_cache_hit": true
+    }
+  },
+  {
+    "task": "unique_changed",
+    "candidate": 1,
+    "updated": true,
+    "forced_label": "C",
+    "response": {
+      "request_id": "openjev-ea280b003dc444c381fe9379259f945b",
+      "call": {
+        "name": "plan",
+        "arguments": {
+          "steps": [
+            {
+              "name": "reuse_write",
+              "arguments": {
+                "path": "unique_changed.mjs"
+              }
+            }
+          ]
+        }
+      },
+      "decision": {
+        "index": 0,
+        "name": "plan",
+        "control_id": 37,
+        "cached_prefix_tokens": 0,
+        "logprobs": [
+          -7.061888217926025
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6287506.084752711,
+            "scheduled_ts": 6287506.084789915,
+            "first_token_ts": 6287506.22382251
+          },
+          "initial_queue_seconds": 3.7204474210739136e-05,
+          "scheduled_to_first_output_seconds": 0.13903259485960007
+        },
+        "classification_seconds": 0.14261976350098848
+      },
+      "raw": "{\"steps\":[{\"name\":\"reuse_write\",\"arguments\":{\"path\":\"unique_changed.mjs\"}}]}",
+      "argument_token_ids": [
+        24313,
+        43943,
+        96893,
+        24313,
+        2852,
+        16562,
+        266,
+        3103,
+        98100,
+        10177,
+        83772,
+        80642,
+        9860,
+        16562,
+        38138,
+        32663,
+        9007,
+        3420,
+        10617,
+        4,
+        3831,
+        48663,
+        1
+      ],
+      "generated_argument_tokens": 23,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 0.47135656978935003,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          9
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "request",
+      "input_tokens": 1663
+    },
+    "call": {
+      "name": "plan",
+      "arguments": {
+        "steps": [
+          {
+            "name": "write",
+            "arguments": {
+              "path": "unique_changed.mjs",
+              "content": "export function uniqueStrings(values) {\n  const seen = new Set();\n  const result = [];\n  for (const value of values) {\n    if (!seen.has(value)) {\n      seen.add(value);\n      result.push(value);\n    }\n  }\n  return result;\n}\n"
+            }
+          }
+        ]
+      }
+    },
+    "reused": true,
+    "request_seconds": 0.6963333338499069,
+    "passed": false,
+    "oracle_stderr": "Traceback (most recent call last):\n  File \"<string>\", line 3, in <module>\nAssertionError: node:internal/modules/run_main:123\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'A',\n+   'a',\n    ' B ',\n    'b',\n    '中文',\n    ''\n  ]\n\n    at file:///private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-binding-oracle-l7oy5vra/[eval1]:3:42\n    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:282:26)\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:278:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: [ 'A', 'a', ' B ', 'b', '中文', '' ],\n  expected: [ 'A', ' B ', 'b', '中文', '' ],\n  operator: 'deepStrictEqual',\n  diff: 'simple'\n}\n\nNode.js v22.23.2\n\n",
+    "trace": {
+      "stage_seconds": {
+        "generation_preparation": 0.0030792499892413616,
+        "generation_http": 0.6787648326717317,
+        "generation": 0.6818909998983145
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789923145.891222,
+          "http_status": 200,
+          "request_id": "openjev-ea280b003dc444c381fe9379259f945b",
+          "input_tokens": 1663,
+          "generated_argument_tokens": 23,
+          "classification_control_records": 1,
+          "engine_seconds": 0.47135656978935003,
+          "classification_seconds": 0.14261976350098848,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6287506.084752711,
+              "scheduled_ts": 6287506.084789915,
+              "first_token_ts": 6287506.22382251
+            },
+            "initial_queue_seconds": 3.7204474210739136e-05,
+            "scheduled_to_first_output_seconds": 0.13903259485960007
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "request",
+          "seconds": 0.6786140827462077
+        }
+      ],
+      "local_tokenization": [
+        {
+          "seconds": 0.0010867500677704811,
+          "token_count": 934,
+          "verified": false
+        },
+        {
+          "seconds": 0.0014190836809575558,
+          "token_count": 1663,
+          "verified": false
+        }
+      ],
+      "label_cache_hit": true
+    }
+  }
+]

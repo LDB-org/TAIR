@@ -1,0 +1,171 @@
+{
+  "arm": "c4",
+  "value": 0,
+  "seconds": 5.1570324576459825,
+  "timed_out": false,
+  "validated_seconds": 5.173190999776125,
+  "exit_code": 0,
+  "finished": false,
+  "validation": {
+    "passed": false,
+    "seconds": 0.01615854213014245,
+    "stderr": "Traceback (most recent call last):\n  File \"/Users/zacharyzcr/Projects/TAIR/results/experiments/planned-reply-ablation-20260920-d/normalize_labels-tair_reply/oracle.py\", line 3, in <module>\n    from labels import unique_labels\nImportError: cannot import name 'unique_labels' from 'labels' (/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-expanded-project-8ew9icu5/workspace/labels.py)\n"
+  },
+  "passed": false,
+  "metrics": [
+    {
+      "metrics_version": 2,
+      "trace_id": "9978cdb03058409ab52a3575b296aa8f",
+      "session_id": "01a0bf23-4df6-71e6-a862-7c561e28b63f",
+      "parent_tool_call_id": null,
+      "workspace_id": "0e8e4d5c0ec6006769bd35e6e99487c0dd5ab573a2ec99da8d982d0f22d85112",
+      "stage_seconds": {
+        "generation_preparation": 0.15547266695648432,
+        "generation_http": 4.222422708757222,
+        "generation": 4.378219082951546
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789913157.678132,
+          "http_status": 200,
+          "request_id": "openjev-35f7001a594f4fbd88d856f9ad460616",
+          "input_tokens": 3434,
+          "generated_argument_tokens": 416,
+          "classification_control_records": 1,
+          "engine_seconds": 3.9212568318471313,
+          "classification_seconds": 0.20742285251617432,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6277517.952552985,
+              "scheduled_ts": 6277517.952598686,
+              "first_token_ts": 6277518.152514217
+            },
+            "initial_queue_seconds": 4.5700930058956146e-05,
+            "scheduled_to_first_output_seconds": 0.19991553109139204
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "session",
+          "seconds": 4.221554167103022
+        }
+      ],
+      "prefix_cache_supported": true,
+      "plan_budget_supported": true,
+      "plan_budget_mode": "per_subtool",
+      "plan_reuse_enabled": false,
+      "payload_mismatch_candidates": 0,
+      "template_entries": 0,
+      "generic_plan": true,
+      "book_entries": 1,
+      "candidate_count": 0,
+      "retrieval_seconds": 0.0009992499835789204,
+      "plan_success_reply_enabled": true,
+      "recovery_planning": false,
+      "reuse_routing": false,
+      "classification_branches": 8,
+      "compact_catalog": false,
+      "candidate_limit": 0,
+      "label_cache_hit": true,
+      "local_tokenization": [
+        {
+          "seconds": 0.13007012521848083,
+          "token_count": 1885,
+          "verified": false
+        },
+        {
+          "seconds": 0.13281279196962714,
+          "token_count": 3456,
+          "verified": false
+        },
+        {
+          "seconds": 0.13538920925930142,
+          "token_count": 3569,
+          "verified": false
+        },
+        {
+          "seconds": 0.13804466603323817,
+          "token_count": 3434,
+          "verified": false
+        },
+        {
+          "seconds": 0.14069758402183652,
+          "token_count": 3428,
+          "verified": false
+        },
+        {
+          "seconds": 0.14355604210868478,
+          "token_count": 3574,
+          "verified": false
+        },
+        {
+          "seconds": 0.14643537532538176,
+          "token_count": 3477,
+          "verified": false
+        },
+        {
+          "seconds": 0.1491950829513371,
+          "token_count": 3428,
+          "verified": false
+        },
+        {
+          "seconds": 0.023090625181794167,
+          "token_count": 3438,
+          "verified": false
+        }
+      ],
+      "prefix_cache_requested": true,
+      "plan_token_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          165,
+          237
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "requested_plan_tokens": 17408,
+      "selected_branch": "tool:write",
+      "selected_content_id": null,
+      "cache_outcome": "no_candidates",
+      "available_tools": [
+        "plan"
+      ],
+      "inner_tools": [
+        "read",
+        "edit",
+        "write",
+        "bash",
+        "grep",
+        "find",
+        "ls"
+      ],
+      "candidate_ids": [],
+      "reused_content_ids": [],
+      "reused_template_ids": [],
+      "plan_step_names": [
+        "write",
+        "bash"
+      ],
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 3434,
+        "known_generated_argument_tokens": 416,
+        "known_classification_control_records": 1
+      },
+      "status": "error",
+      "error": "ValueError: Missing completion decision; no plan executed",
+      "wall_seconds": 4.805908666923642,
+      "action": "chat",
+      "timestamp": 1789913162.001803
+    }
+  ],
+  "malformed_event_lines": 0,
+  "usage_complete": false
+}

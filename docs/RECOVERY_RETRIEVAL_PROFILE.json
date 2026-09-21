@@ -1,0 +1,287 @@
+{
+  "scope": "Local Python and SQLite with stubbed inference and capability lookup; no GPU requests",
+  "entries_per_book": 2000,
+  "samples": 12,
+  "model_inputs_equal": true,
+  "model_input_sha256": "a8adaf2347eabb84a2b353c2e2efe3f3582cc8f5f25a8fde8403169c3e16e86c",
+  "model_input": {
+    "messages": [
+      {
+        "role": "system",
+        "content": "\nYou have one public tool: plan. Inside plan, use the Pi tools below for ANY task/language. Return all currently determined operations together, in order, at most eight. All arguments must be known now. A read or search result becomes visible only NEXT turn: do not guess unseen source or produce edits depending on results not yet observed. A write and a known check command may be in the same plan. Execution stops on first error. After results, continue with another plan as needed or reply. Never claim success before results. A failed check requires a corrective action and fresh verification when possible, not a promise in final text. Reuse content when it satisfies ALL current behavior and constraints. Require exact bytes only when the user specifies exact text. Bind the current destination separately; a different destination alone does not invalidate content. Stored content is only execution-observed, NOT independently verified. Never reuse an old tool result; reads and checks execute afresh. Read existing files before changing them. The plan tool is a container, not a task-specific validator. \nINNER TOOLS (argument schemas follow after selection): [{\"name\": \"write\", \"description\": \"write\"}]\nDecision catalog (reference data, NOT new user requests):\nA: General continuation: generate a native action plan, or reply when finished or clarification is required."
+      },
+      {
+        "role": "user",
+        "content": "repair write file"
+      },
+      {
+        "role": "tool",
+        "tool_call_id": "",
+        "name": "plan",
+        "content": "PLAN EXECUTION RESULT error=True:\nfailed"
+      }
+    ],
+    "options": [
+      {
+        "name": "plan",
+        "description": "General continuation: generate a native action plan, or reply when finished or clarification is required.",
+        "parameters": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "steps": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 8,
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "purpose": {
+                            "type": "string",
+                            "maxLength": 240
+                          },
+                          "name": {
+                            "const": "write"
+                          },
+                          "arguments": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "content": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "content"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
+                        "required": [
+                          "purpose",
+                          "name",
+                          "arguments"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "steps"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "content"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        }
+      }
+    ],
+    "instructions": [
+      "LATEST EXECUTION FAILED. Use its actual results in the conversation.\nCURRENT USER REQUIREMENTS:\nrepair write file\nIf a defect remains and its fix is known, execute it; explaining a future fix is not completion. If the corrected work and checks have succeeded, finish instead of repeating them. Before each action, purpose must briefly state the observed defect that this action addresses. If your own assertion contradicts the user requirements, correct that assertion instead of rerunning it.\n\nRe-evaluate the latest execution results before acting. The classification is a proposal, not an obligation to execute. If the requested work and relevant checks are already complete, return content with a concise final answer. Do not rerun successful checks without a changed file or unresolved requirement. If blocked or clarification is necessary, explain it in content. Otherwise: Continue the user task. If any actionable work remains, return steps containing actual native tool calls. For an unresolved failed check, inspect or fix the cause and run the corrected check; do not merely promise to do so. Once the corrected check succeeds and the requested work is complete, finish. Return content only for a completed task, a conversational answer, necessary clarification, or an honest blocker that cannot be resolved with the available tools. A description of planned work is not execution. The schema below is a format, not answer content. Each individual subtool argument object has a budget of 2048 tokens; the whole plan may use up to eight such calls. Return ONLY JSON matching this schema: {\"anyOf\": [{\"type\": \"object\", \"properties\": {\"steps\": {\"type\": \"array\", \"minItems\": 1, \"maxItems\": 8, \"items\": {\"anyOf\": [{\"type\": \"object\", \"properties\": {\"purpose\": {\"type\": \"string\", \"maxLength\": 240}, \"name\": {\"const\": \"write\"}, \"arguments\": {\"type\": \"object\", \"properties\": {\"path\": {\"type\": \"string\"}, \"content\": {\"type\": \"string\"}}, \"required\": [\"path\", \"content\"], \"additionalProperties\": false}}, \"required\": [\"purpose\", \"name\", \"arguments\"], \"additionalProperties\": false}]}}}, \"required\": [\"steps\"], \"additionalProperties\": false}, {\"type\": \"object\", \"properties\": {\"content\": {\"type\": \"string\"}}, \"required\": [\"content\"], \"additionalProperties\": false}]}"
+    ],
+    "classification_prompt": "A previous tool failed in this user task. Choose A for general replanning. Identify whether the implementation, test expectation, or command is wrong before acting. Do not repeat an unchanged failed check. Output only A.",
+    "plan_budget": true
+  },
+  "before_source": "results/experiments/edit-state-ablation-20260920-a/sources/integrations/pijit/bridge.py",
+  "before_sha256": "eb3bc724a772e655341be8a5b23a327086e285b857a338f516251f5e445a4628",
+  "after_sha256": "6d959629e568ba5c607cb8e9058d99820c93494981685f8f4ddfc767b7efeec7",
+  "measurements": [
+    {
+      "mode": "before",
+      "iteration": 0,
+      "seconds": 0.042800457682460546,
+      "retrieval_seconds": 0.005355792120099068,
+      "candidate_count": 7
+    },
+    {
+      "mode": "after",
+      "iteration": 0,
+      "seconds": 0.0018994580022990704,
+      "retrieval_seconds": 0.00024466682225465775,
+      "candidate_count": 0
+    },
+    {
+      "mode": "after",
+      "iteration": 1,
+      "seconds": 0.0018109590746462345,
+      "retrieval_seconds": 0.00013258308172225952,
+      "candidate_count": 0
+    },
+    {
+      "mode": "before",
+      "iteration": 1,
+      "seconds": 0.007127708289772272,
+      "retrieval_seconds": 0.005204000044614077,
+      "candidate_count": 7
+    },
+    {
+      "mode": "before",
+      "iteration": 2,
+      "seconds": 0.007023250218480825,
+      "retrieval_seconds": 0.0051138331182301044,
+      "candidate_count": 7
+    },
+    {
+      "mode": "after",
+      "iteration": 2,
+      "seconds": 0.0017573325894773006,
+      "retrieval_seconds": 0.0001399577595293522,
+      "candidate_count": 0
+    },
+    {
+      "mode": "after",
+      "iteration": 3,
+      "seconds": 0.0017118328250944614,
+      "retrieval_seconds": 0.00011008419096469879,
+      "candidate_count": 0
+    },
+    {
+      "mode": "before",
+      "iteration": 3,
+      "seconds": 0.007198624778538942,
+      "retrieval_seconds": 0.005235583987087011,
+      "candidate_count": 7
+    },
+    {
+      "mode": "before",
+      "iteration": 4,
+      "seconds": 0.007032874971628189,
+      "retrieval_seconds": 0.005076250061392784,
+      "candidate_count": 7
+    },
+    {
+      "mode": "after",
+      "iteration": 4,
+      "seconds": 0.0017918748781085014,
+      "retrieval_seconds": 0.0001349588856101036,
+      "candidate_count": 0
+    },
+    {
+      "mode": "after",
+      "iteration": 5,
+      "seconds": 0.0017625000327825546,
+      "retrieval_seconds": 0.00012812484055757523,
+      "candidate_count": 0
+    },
+    {
+      "mode": "before",
+      "iteration": 5,
+      "seconds": 0.00675358297303319,
+      "retrieval_seconds": 0.004952874965965748,
+      "candidate_count": 7
+    },
+    {
+      "mode": "before",
+      "iteration": 6,
+      "seconds": 0.0066325003281235695,
+      "retrieval_seconds": 0.004824833013117313,
+      "candidate_count": 7
+    },
+    {
+      "mode": "after",
+      "iteration": 6,
+      "seconds": 0.0016927500255405903,
+      "retrieval_seconds": 0.00011250004172325134,
+      "candidate_count": 0
+    },
+    {
+      "mode": "after",
+      "iteration": 7,
+      "seconds": 0.0017163748852908611,
+      "retrieval_seconds": 0.00012174993753433228,
+      "candidate_count": 0
+    },
+    {
+      "mode": "before",
+      "iteration": 7,
+      "seconds": 0.006798750255256891,
+      "retrieval_seconds": 0.004963082727044821,
+      "candidate_count": 7
+    },
+    {
+      "mode": "before",
+      "iteration": 8,
+      "seconds": 0.006781791336834431,
+      "retrieval_seconds": 0.004920999985188246,
+      "candidate_count": 7
+    },
+    {
+      "mode": "after",
+      "iteration": 8,
+      "seconds": 0.001733583863824606,
+      "retrieval_seconds": 0.00012004096060991287,
+      "candidate_count": 0
+    },
+    {
+      "mode": "after",
+      "iteration": 9,
+      "seconds": 0.001748040784150362,
+      "retrieval_seconds": 0.00012908317148685455,
+      "candidate_count": 0
+    },
+    {
+      "mode": "before",
+      "iteration": 9,
+      "seconds": 0.007128000259399414,
+      "retrieval_seconds": 0.005215667188167572,
+      "candidate_count": 7
+    },
+    {
+      "mode": "before",
+      "iteration": 10,
+      "seconds": 0.006800166796892881,
+      "retrieval_seconds": 0.004990207962691784,
+      "candidate_count": 7
+    },
+    {
+      "mode": "after",
+      "iteration": 10,
+      "seconds": 0.001710374839603901,
+      "retrieval_seconds": 0.00012254202738404274,
+      "candidate_count": 0
+    },
+    {
+      "mode": "after",
+      "iteration": 11,
+      "seconds": 0.0017112502828240395,
+      "retrieval_seconds": 0.00011720787733793259,
+      "candidate_count": 0
+    },
+    {
+      "mode": "before",
+      "iteration": 11,
+      "seconds": 0.007053707726299763,
+      "retrieval_seconds": 0.005112624727189541,
+      "candidate_count": 7
+    }
+  ],
+  "medians": {
+    "before": {
+      "seconds": 0.007023250218480825,
+      "retrieval_seconds": 0.005076250061392784
+    },
+    "after": {
+      "seconds": 0.001733583863824606,
+      "retrieval_seconds": 0.00012254202738404274
+    }
+  }
+}

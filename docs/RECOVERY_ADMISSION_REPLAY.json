@@ -1,0 +1,66 @@
+{
+  "method": "Offline replay of actual saved tool results against copied final files. No inference, no new Agent task, no latency comparison. Candidate availability is not a hit.",
+  "archive": "write-references-ablation-20260920-b",
+  "manifest_sha256": "b7a54434ad1995f0acb63d16d7b57673e23ba2afcf0785c4e0e99b237f385d9f",
+  "source_sha256": {
+    "benchmarks/replay_recovery_admission.py": "22cd6d73fdfa095536f1ac28512afde9b4e9a427868d7c60cb95f443459d8c7a",
+    "integrations/pijit/bridge.py": "6d87122c44d0430605b9a478a1c5b90361c9bab62941abed92deaba73b800073"
+  },
+  "cases": [
+    {
+      "task": "unique_base",
+      "entries_before": 0,
+      "candidate_ids_before": [],
+      "learning": {
+        "admitted": [
+          "83b264612a5d57b5da1be282b7d1628d8c668e9f0b883f2052953112c58c8dba"
+        ],
+        "cache_hit": false,
+        "admission_count": 1,
+        "template_admitted": [],
+        "admission_reason": "new_write_content",
+        "book_entries_after": 1,
+        "validation": "tool execution only; not semantic verification",
+        "observed": 1,
+        "skipped": []
+      },
+      "entries_after": 1,
+      "local_admission_seconds": 0.0019262079149484634,
+      "independent_artifact_check": true
+    },
+    {
+      "task": "unique_repeat",
+      "entries_before": 1,
+      "candidate_ids_before": [
+        "83b264612a5d57b5da1be282b7d1628d8c668e9f0b883f2052953112c58c8dba"
+      ],
+      "learning": {
+        "admitted": [
+          "f4486ddb8ece61dc92a51c5e7d821a5596b4dfb61cef7b50af35fbf279e4e696"
+        ],
+        "cache_hit": false,
+        "admission_count": 1,
+        "template_admitted": [],
+        "admission_reason": "new_write_content",
+        "book_entries_after": 2,
+        "validation": "tool execution only; not semantic verification",
+        "observed": 1,
+        "skipped": []
+      },
+      "entries_after": 2,
+      "local_admission_seconds": 0.0009469999931752682,
+      "independent_artifact_check": true
+    },
+    {
+      "task": "nullable_changed",
+      "entries_before": 2,
+      "candidate_ids_before": [
+        "f4486ddb8ece61dc92a51c5e7d821a5596b4dfb61cef7b50af35fbf279e4e696"
+      ],
+      "learning": null,
+      "entries_after": 2,
+      "local_admission_seconds": 2.5541987270116806e-05,
+      "independent_artifact_check": true
+    }
+  ]
+}

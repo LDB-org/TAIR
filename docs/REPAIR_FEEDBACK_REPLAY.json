@@ -1,0 +1,60 @@
+{
+  "archive": "combined-reuse-ablation-20260921-a",
+  "method": "Offline replay; isolated copied files and books. No inference, new tool execution, or speed claim.",
+  "source_sha256": {
+    "benchmarks/replay_repair_feedback.py": "26468be3233a7ca13a0033f132a113cf6890fbc64c78ffdcf5ff0d0146f8a183",
+    "deploy/tool_plan.py": "6ab40d3da62845e32e63f69c12833b3cc605713f765c94c91f87353dd7037810",
+    "integrations/pijit/bridge.py": "f8f697f33aa0f9cf44efb27ecf7d6134d16bb41b47e4fb7fb4e7828e4658f4f4"
+  },
+  "cases": [
+    {
+      "task": "unique_changed",
+      "records": [
+        {
+          "path": "unique_changed.mjs",
+          "rejected_ids": [
+            "83b264612a5d57b5da1be282b7d1628d8c668e9f0b883f2052953112c58c8dba"
+          ],
+          "reason": "failed_check_then_replaced_content; semantic_correctness_unverified"
+        }
+      ],
+      "candidate_ids_before": [
+        "83b264612a5d57b5da1be282b7d1628d8c668e9f0b883f2052953112c58c8dba"
+      ],
+      "candidate_ids_after": [],
+      "original_task_still_eligible": true,
+      "independent_final_artifact_check": true,
+      "alias_ids_after": []
+    },
+    {
+      "task": "jsonl_repeat_2",
+      "records": [],
+      "candidate_ids_before": [
+        "bac5da70682ff631f7112aae1177c46cc23584a5667650c31066da1491d49b4d"
+      ],
+      "candidate_ids_after": [
+        "bac5da70682ff631f7112aae1177c46cc23584a5667650c31066da1491d49b4d"
+      ],
+      "original_task_still_eligible": true,
+      "independent_final_artifact_check": true,
+      "alias_ids_after": [
+        "e410462d954107d1b3006402ff54aff488f5bc93aadc3d2d982960ea1fb77abf"
+      ]
+    },
+    {
+      "task": "jsonl_changed",
+      "records": [],
+      "candidate_ids_before": [
+        "bac5da70682ff631f7112aae1177c46cc23584a5667650c31066da1491d49b4d"
+      ],
+      "candidate_ids_after": [
+        "bac5da70682ff631f7112aae1177c46cc23584a5667650c31066da1491d49b4d"
+      ],
+      "original_task_still_eligible": true,
+      "independent_final_artifact_check": true,
+      "alias_ids_after": [
+        "e410462d954107d1b3006402ff54aff488f5bc93aadc3d2d982960ea1fb77abf"
+      ]
+    }
+  ]
+}

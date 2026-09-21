@@ -259,6 +259,28 @@ def test_preparation_overlaps_labels_and_messages_without_changing_request(monke
     assert b.infer([{'role': 'user', 'content': 'test'}], tools)['input_tokens'] == 4
 
 
+def test_custom_inference_prompts_skip_discarded_defaults(monkeypatch):
+    class Tool(dict):
+        def get(self,key,*args):
+            if key=='description':pytest.fail('Unused default catalog was constructed')
+            return super().get(key,*args)
+    tools=[Tool(name='plan',parameters=dict(type='object'))]
+    messages=[dict(role='user',content='task')]
+    def prepare(actual,tails):
+        assert actual==messages+[dict(role='user',content='Pick A')]
+        assert tails==[[dict(role='assistant',content='A'),dict(role='user',content='custom schema')]]
+        return [1,2],[[3,4]]
+    monkeypatch.setattr(b,'prepare_continuations',prepare)
+    monkeypatch.setattr(b,'labels',lambda n:[5])
+    def post(route,payload):
+        assert payload==dict(prompt_ids=[1,2],candidate_ids=[5],continuations=[[3,4]],tools=tools,max_tokens=2048)
+        return dict(decision=dict(index=0))
+    monkeypatch.setattr(b,'post',post)
+    b.infer(messages,tools,classification_prompt='Pick A',
+            instruction=lambda _:pytest.fail('Unused default instruction was invoked'),
+            branch_instruction=lambda index,tool:'custom schema')
+
+
 @pytest.mark.parametrize('ids', [[[10], [10]], [[10, 11]], [[]]])
 def test_invalid_labels_rejected(ids):
     with pytest.raises(ValueError, match='distinct single tokens'):
@@ -852,6 +874,26 @@ def test_continuation_cache_requires_revision(project, monkeypatch):
     assert len(calls) == 4 and not (b.STATE / 'tokenizer-continuations').exists()
 
 
+def test_local_tokenizer_shadow_rejects_wrong_ids(project, monkeypatch):
+    monkeypatch.setenv('PIJIT_LOCAL_TOKENIZER', '/snapshot')
+    monkeypatch.setenv('PIJIT_LOCAL_TOKENIZER_VERIFY', '1')
+    monkeypatch.setattr(b.local_tokenizer, 'encode', lambda *args: [1, 2])
+    monkeypatch.setattr(b, 'post', lambda *args: {'tokens': [1, 3]})
+    with pytest.raises(ValueError, match='disagrees'):
+        b.tokenize([{'role': 'user', 'content': 'hello'}])
+
+
+def test_local_tokenizer_avoids_http_but_unsupported_payload_falls_back(project, monkeypatch):
+    monkeypatch.setenv('PIJIT_LOCAL_TOKENIZER', '/snapshot')
+    monkeypatch.delenv('PIJIT_LOCAL_TOKENIZER_VERIFY', raising=False)
+    monkeypatch.setattr(b.local_tokenizer, 'encode', lambda *args: [1, 2])
+    monkeypatch.setattr(b, 'post', lambda *args: pytest.fail('Local tokenization must avoid HTTP'))
+    assert b.tokenize_label('A') == [1, 2]
+    monkeypatch.setattr(b.local_tokenizer, 'encode', lambda *args: None)
+    monkeypatch.setattr(b, 'post', lambda *args: {'tokens': [9]})
+    assert b.tokenize_label('A') == [9]
+
+
 def test_directory_guard_returns_quoted_read_only_listing(project):
     import shlex
     directory = project / 'odd name; echo injected'
@@ -1376,7 +1418,11 @@ def test_plan_only_launcher_fails_before_ssh_without_validator():
     assert actual.returncode == 1 and 'requires PIJIT_PLAN_VERIFY_ARGV' in actual.stderr
 
 
-def test_generic_plan_uses_fused_engine_without_validator_or_outer_planner(project, monkeypatch):
+@pytest.mark.parametrize('compact', [False, True])
+@pytest.mark.parametrize('reuse_routing', [False, True])
+def test_generic_plan_uses_fused_engine_without_validator_or_outer_planner(project, monkeypatch, compact, reuse_routing):
+    monkeypatch.setenv('PIJIT_REUSE_ROUTING', '1' if reuse_routing else '0')
+    monkeypatch.setenv('PIJIT_COMPACT_CATALOG', '1' if compact else '0')
     monkeypatch.setenv('PIJIT_TOOL_PLAN','1')
     monkeypatch.delenv('PIJIT_PLAN_VERIFY_ARGV',raising=False)
     monkeypatch.setattr(b.native_planner,'chat',lambda *a,**k:pytest.fail('extra outer LLM request'))
@@ -1384,10 +1430,20 @@ def test_generic_plan_uses_fused_engine_without_validator_or_outer_planner(proje
         'path':dict(type='string'),'content':dict(type='string')},required=['path','content']))]
     def infer(messages, options, **kwargs):
         assert all(o['name']=='plan' for o in options)
-        assert 'reference data' in messages[0]['content']
+        if compact:
+            assert 'Decision catalog' not in messages[0]['content']
+            assert messages[1] == dict(role='user', content='Write hello')
+            assert 'reference data' in messages[-1]['content']
+        else:
+            assert 'reference data' in messages[0]['content']
         assert 'already completed' in kwargs['classification_prompt']
+        if reuse_routing:
+            assert len(options) == 1
+            assert 'CURRENT USER REQUIREMENTS' in kwargs['classification_prompt']
+        arguments = (dict(steps=[dict(name='write', arguments=dict(path='a.txt', content='hello'))])
+                     if reuse_routing else dict(first=dict(path='a.txt',content='hello'),rest=[]))
         return dict(decision=dict(index=0),same_engine_session=True,finish_reason='stop',classification_control_records=1,
-                    call=dict(name='plan',arguments=dict(first=dict(path='a.txt',content='hello'),rest=[])))
+                    call=dict(name='plan',arguments=arguments))
     monkeypatch.setattr(b,'infer',infer)
     actual=b.chat(dict(cwd=str(project),inner_tools=tools,context=dict(messages=[dict(role='user',content='Write hello')],tools=[{'name':'plan'}])))
     assert actual['call']==dict(name='plan',arguments=dict(steps=[dict(name='write',arguments=dict(path='a.txt',content='hello'))]))
@@ -1396,6 +1452,7 @@ def test_generic_plan_uses_fused_engine_without_validator_or_outer_planner(proje
 
 def test_generic_completion_learns_text_and_reuse_does_not_duplicate(project):
     steps=[dict(name='write',arguments=dict(path='a.md',content='# Heading\n'))]
+    (project/'a.md').write_text('# Heading\n')
     first=b.complete_tool_plan(dict(cwd=str(project),steps=steps,task='create markdown'))
     assert len(first['admitted'])==1
     second=b.complete_tool_plan(dict(cwd=str(project),steps=steps,task='create same markdown elsewhere',reused_content_ids=first['admitted']))
@@ -1403,6 +1460,85 @@ def test_generic_completion_learns_text_and_reuse_does_not_duplicate(project):
     book=b.tool_plan.ToolContentBook(b.paths(str(project))/'tool-plan-codebook.sqlite3')
     entry,=book.load()
     assert entry['reuse_count']==1 and 'semantic_correctness_unverified' in entry['verification']
+
+
+def test_completion_admits_final_bytes_and_does_not_reward_overwritten_reuse(project):
+    book=b.tool_plan.ToolContentBook(b.paths(str(project))/'tool-plan-codebook.sqlite3')
+    old=book.admit([('write text', 'old', 'execution')])
+    (project/'a.txt').write_bytes(b'final\r\n')
+    steps=[dict(name='write',arguments=dict(path='a.txt',content='old')),
+           dict(name='bash',arguments=dict(command='a later command rewrites a.txt'))]
+    result=b.complete_tool_plan(dict(cwd=str(project),steps=steps,task='write text',reused_content_ids=old))
+    entries={e['source']:e for e in book.load()}
+    assert not result['cache_hit'] and result['admission_count']==1
+    assert entries['old']['reuse_count']==0
+    assert 'final\r\n' in entries
+
+
+@pytest.mark.parametrize('kind', ['missing', 'directory', 'outside', 'binary', 'oversized'])
+def test_completion_skips_unavailable_final_content(project, kind):
+    target=project/'a.txt'
+    if kind=='directory': target.mkdir()
+    if kind=='outside':
+        outside=project.parent/'external.txt';outside.write_text('outside')
+        target.symlink_to(outside)
+    if kind=='binary': target.write_bytes(b'\xff')
+    if kind=='oversized': target.write_bytes(b'x'*(1024*1024+1))
+    result=b.complete_tool_plan(dict(cwd=str(project),task='write text',steps=[
+        dict(name='write',arguments=dict(path='a.txt',content='stale'))]))
+    assert result['admission_count']==0 and result['book_entries_after']==0
+
+
+def test_template_admission_requires_final_content_agreement(project, monkeypatch):
+    monkeypatch.setenv('PIJIT_PLAN_TEMPLATES','1')
+    (project/'a.py').write_text('new=2')
+    result=b.complete_tool_plan(dict(cwd=str(project),task='write and compile',steps=[
+        dict(name='write',arguments=dict(path='a.py',content='old=1')),
+        dict(name='bash',arguments=dict(command='python3 -m py_compile a.py'))]))
+    assert result['admission_count']==1 and result['template_admitted']==[]
+
+
+def test_native_edit_recovery_learns_final_content(project):
+    import shutil
+    import subprocess
+    cli=shutil.which('pi')
+    if not cli:
+        pytest.skip('Pi integration requires pinned Pi in PATH')
+    package=Path(cli).resolve().parents[2]
+    assert json.loads((package/'package.json').read_text())['version']=='0.85.1'
+    executor=(Path(__file__).resolve().parents[1]/'integrations/pijit/plan_executor.mjs').as_uri()
+    steps=[dict(name='edit',arguments=dict(path='result.txt',edits=[dict(oldText='broken',newText='fixed')])),
+           dict(name='bash',arguments=dict(command="test \"$(cat result.txt)\" = fixed"))]
+    script='''
+import assert from 'node:assert/strict';
+import {createWriteTool,createEditTool,createBashTool} from PI;
+import {executePlan} from EXECUTOR;
+const tools=new Map([createWriteTool,createEditTool,createBashTool].map(f=>{const t=f(CWD);return [t.name,t]}));
+await assert.rejects(executePlan('initial',[
+ {name:'write',arguments:{path:'result.txt',content:'broken'}},
+ {name:'bash',arguments:{command:'exit 1'}}],tools));
+await executePlan('repair',STEPS,tools);
+'''.replace('PI',json.dumps((package/'dist/index.js').as_uri())).replace('EXECUTOR',json.dumps(executor)).replace('CWD',json.dumps(str(project))).replace('STEPS',json.dumps(steps))
+    run=subprocess.run(['node','--input-type=module','-e',script],capture_output=True,text=True,timeout=20)
+    assert run.returncode==0,run.stderr
+    result=b.complete_tool_plan(dict(cwd=str(project),task='create a fixed result',steps=steps))
+    assert result['admission_count']==1 and result['admission_reason']=='new_edit_content'
+    book=b.tool_plan.ToolContentBook(b.paths(str(project))/'tool-plan-codebook.sqlite3')
+    entry,=book.load()
+    assert entry['source']=='fixed' and 'semantic_correctness_unverified' in entry['verification']
+
+
+def test_completion_does_not_learn_files_only_read(project):
+    result=b.complete_tool_plan(dict(cwd=str(project),task='read app.py',steps=[
+        dict(name='read',arguments=dict(path='app.py'))]))
+    assert result['admission_count']==0 and result['book_entries_after']==0
+
+
+def test_completion_edit_then_delete_does_not_learn_stale_patch(project):
+    result=b.complete_tool_plan(dict(cwd=str(project),task='edit and delete',steps=[
+        dict(name='edit',arguments=dict(path='deleted.txt',edits=[dict(oldText='old',newText='new')])),
+        dict(name='bash',arguments=dict(command='rm deleted.txt'))]))
+    assert result['admission_count']==0 and result['admission_reason']=='no_eligible_final_content'
 
 
 def test_duplicate_guard_scoped_to_current_user_turn_and_success():
@@ -1427,6 +1563,7 @@ def test_generic_logs_explain_empty_book_and_admission(project, monkeypatch):
     assert result['status']=='ok'
     assert result['book_entries']==0 and result['candidate_count']==0
     assert result['cache_outcome']=='empty_book' and result['selected_branch']=='tool:write'
+    (project/'a').write_text('hi')
     complete=b.run(dict(action='tool_plan_complete',cwd=str(project),task='write hi',steps=result['call']['arguments']['steps']))
     assert complete['admission_count']==1 and complete['book_entries_after']==1
     assert complete['admission_reason']=='new_write_content'
@@ -1445,6 +1582,26 @@ def test_plan_budget_capabilities_distinguish_old_server_and_transport_failure(m
     def denied(*a,**k):raise urllib.error.HTTPError('http://unused',401,'denied',{},io.BytesIO())
     monkeypatch.setattr(b.urllib.request,'urlopen',denied)
     with pytest.raises(urllib.error.HTTPError):b.server_plan_budget()
+
+
+def test_prefix_cache_requires_capability_and_isolates_sessions_and_workspaces(project, monkeypatch):
+    monkeypatch.setenv('PIJIT_PREFIX_CACHE','1')
+    monkeypatch.setenv('PIJIT_URL','http://test')
+    trace=dict(prefix_cache_supported=True,session_id='session-a',workspace_id='workspace-a')
+    token=b.TRACE.set(trace)
+    try:
+        first=b.session_cache_options()
+        assert first==b.session_cache_options() and len(first['cache_salt'])==64
+        trace['session_id']='session-b'
+        assert b.session_cache_options()!=first
+        trace['session_id']='session-a';trace['workspace_id']='workspace-b'
+        assert b.session_cache_options()!=first
+        trace['workspace_id']='workspace-a';trace['prefix_cache_supported']=False
+        assert b.session_cache_options()=={}
+        trace['prefix_cache_supported']=True;trace['session_id']=None
+        assert b.session_cache_options()=={}
+    finally:
+        b.TRACE.reset(token)
 
 
 def test_rejected_subtool_budget_preserves_usage(monkeypatch):
@@ -1470,9 +1627,704 @@ def test_opt_in_template_learning_and_replay_do_not_duplicate_content(project, m
     monkeypatch.setenv('PIJIT_PLAN_TEMPLATES','1')
     steps=[dict(name='write',arguments=dict(path='x.py',content='x=1')),
            dict(name='bash',arguments=dict(command='python3 -m py_compile x.py'))]
+    (project/'x.py').write_text('x=1')
     first=b.complete_tool_plan(dict(cwd=str(project),steps=steps,task='write and compile'))
     assert len(first['template_admitted'])==1 and len(first['admitted'])==1
     second=b.complete_tool_plan(dict(cwd=str(project),steps=steps,task='same at new path',reused_template_ids=first['template_admitted']))
     assert second['cache_hit'] and not second['admitted'] and not second['template_admitted']
     template,=b.tool_plan.ToolContentBook(b.paths(str(project))/'tool-plan-templates.sqlite3').load()
     assert template['reuse_count']==1
+
+
+@pytest.mark.parametrize('reply,override,expected', [(False,None,False),(True,None,True),(True,'0',False),(False,'1',True)])
+def test_completion_recovery_default_respects_explicit_override(project,monkeypatch,reply,override,expected):
+    monkeypatch.setenv('PIJIT_PLAN_SUCCESS_REPLY','1' if reply else '0')
+    monkeypatch.delenv('PIJIT_RECOVERY_LATEST',raising=False)
+    if override is not None:monkeypatch.setenv('PIJIT_RECOVERY_LATEST',override)
+    tools=[dict(name='bash',description='command',parameters=b.tool_plan.obj(dict(command=dict(type='string'))))]
+    captured=[]
+    def infer(messages,options,**kwargs):
+        captured.append(len(options))
+        return dict(decision=dict(index=len(options)-1),same_engine_session=True,finish_reason='stop',
+                    classification_control_records=1,call=dict(name='plan',arguments=dict(content='fixture')))
+    monkeypatch.setattr(b,'infer',infer)
+    b.generic_plan_chat(dict(cwd=str(project),inner_tools=tools,context=dict(messages=[
+        dict(role='user',content='repair'),dict(role='toolResult',isError=True,content='failed'),
+        dict(role='toolResult',isError=False,content='latest success')])))
+    assert captured==[2 if expected else 1]
+
+
+@pytest.mark.parametrize('latest', [False, True])
+def test_forced_recovery_skips_unused_candidate_retrieval(project, monkeypatch, latest):
+    monkeypatch.setenv('PIJIT_PLAN_TEMPLATES','1')
+    monkeypatch.setenv('PIJIT_PLAN_DISABLE_REUSE','0')
+    monkeypatch.setenv('PIJIT_RECOVERY_LATEST','1' if latest else '0')
+    queries=[]
+    monkeypatch.setattr(b.tool_plan.ToolContentBook,'candidates',lambda *a,**kw: queries.append(kw) or [])
+    tools=[dict(name='write',description='write',parameters=b.tool_plan.obj(dict(
+        path=dict(type='string'),content=dict(type='string'))))]
+    def infer(messages,options,**kwargs):
+        return dict(decision=dict(index=len(options)-1),same_engine_session=True,finish_reason='stop',
+                    classification_control_records=1,call=dict(name='plan',arguments=dict(content='fixture')))
+    monkeypatch.setattr(b,'infer',infer)
+    messages=[dict(role='user',content='repair'),dict(role='toolResult',content='failed',isError=True)]
+    payload=dict(cwd=str(project),inner_tools=tools,context=dict(messages=messages))
+    b.generic_plan_chat(payload)
+    assert not queries
+    messages.append(dict(role='toolResult',content='success',isError=False))
+    b.generic_plan_chat(payload)
+    assert len(queries)==(2 if latest else 0)
+    queries.clear()
+    messages.append(dict(role='user',content='new request'))
+    b.generic_plan_chat(payload)
+    assert len(queries)==2
+
+
+def test_generic_failure_replans_without_fixed_first_tool_and_resets_on_new_user(project, monkeypatch):
+    tools=[dict(name='bash',description='command',parameters=b.tool_plan.obj(dict(command=dict(type='string'))))]
+    captured=[]
+    def infer(messages, options, **kwargs):
+        captured.append((options, kwargs['branch_instruction'](0,options[0])))
+        return dict(decision=dict(index=len(options)-1), same_engine_session=True, finish_reason='stop',
+                    classification_control_records=1, call=dict(name='plan',arguments=dict(content='Need clarification.')))
+    monkeypatch.setattr(b,'infer',infer)
+    messages=[dict(role='user',content='Fix the failure'),dict(role='toolResult',content='AssertionError',isError=True),
+              dict(role='toolResult',content='Read completed',isError=False)]
+    payload=dict(cwd=str(project),inner_tools=tools,context=dict(messages=messages))
+    assert b.generic_plan_chat(payload)['call']['name']=='reply_user'
+    assert len(captured[-1][0])==1
+    assert 'Selected FIRST action' not in captured[-1][1]
+    assert 'actual native tool calls' in captured[-1][1]
+    messages.append(dict(role='user',content='A new task'))
+    b.generic_plan_chat(payload)
+    assert len(captured[-1][0])==2
+
+
+def test_latest_recovery_restores_classification_without_erasing_unresolved_failures(project, monkeypatch):
+    monkeypatch.setenv('PIJIT_RECOVERY_LATEST','1')
+    tools=[dict(name='bash',description='command',parameters=b.tool_plan.obj(dict(command=dict(type='string'))))]
+    captured=[]
+    def infer(messages, options, **kwargs):
+        captured.append((messages,options,kwargs['branch_instruction'](0,options[0])))
+        return dict(decision=dict(index=len(options)-1),same_engine_session=True,finish_reason='stop',
+                    classification_control_records=1,call=dict(name='plan',arguments=dict(content='fixture')))
+    monkeypatch.setattr(b,'infer',infer)
+    messages=[dict(role='user',content='Fix'),dict(role='toolResult',content='AssertionError',isError=True)]
+    payload=dict(cwd=str(project),inner_tools=tools,context=dict(messages=messages))
+    b.generic_plan_chat(payload)
+    assert len(captured[-1][1])==1
+    messages.append(dict(role='toolResult',content='Read completed',isError=False))
+    b.generic_plan_chat(payload)
+    history,options,instruction=captured[-1]
+    assert len(options)==2 and 'does not resolve a failed check' in instruction
+    assert 'AssertionError' in str(history)
+    messages.append(dict(role='toolResult',content='Another failure',isError=True))
+    b.generic_plan_chat(payload)
+    assert len(captured[-1][1])==1
+    messages.append(dict(role='user',content='New task'))
+    b.generic_plan_chat(payload)
+    assert len(captured[-1][1])==2 and 'An earlier operation failed' not in captured[-1][2]
+
+
+def test_validation_error_preserves_details_without_fake_provider_status(project, monkeypatch):
+    from jsonschema import validate
+    def invalid(_payload):
+        validate([],dict(type='array',minItems=1,description='Read up to 500 lines'))
+    monkeypatch.setattr(b,'chat',invalid)
+    result=b.run(dict(action='chat',cwd=str(project)))
+    assert result['status']=='error' and result['error']=='ValidationError: tool arguments failed minItems validation'
+    assert result['validation_error']==dict(rule='minItems',path=[],message='[] should be non-empty',instance=[])
+    assert '500' not in result['error']
+    import urllib.error
+    assert '500' in b.public_error(urllib.error.HTTPError('http://unused',500,'server error',{},None))
+
+
+def test_failed_plan_loop_is_bounded_without_blocking_one_retry_or_changed_actions():
+    call=dict(name='plan',arguments=dict(steps=[dict(name='bash',arguments=dict(command='python3 check.py'))]))
+    history=[dict(role='user',content='Check')]
+    def attempt(identity, arguments, error=True):
+        history.extend([dict(role='assistant',content=[dict(type='toolCall',name='plan',id=identity,arguments=arguments)]),
+                        dict(role='toolResult',toolCallId=identity,isError=error)])
+    attempt('1',call['arguments'])
+    b.reject_repeated_plan(call,history)
+    attempt('2',call['arguments'])
+    with pytest.raises(ValueError,match='task remains incomplete'):
+        b.reject_repeated_plan(call,history)
+    changed=dict(name='plan',arguments=dict(steps=[dict(name='bash',arguments=dict(command='python3 other.py'))]))
+    b.reject_repeated_plan(changed,history)
+    attempt('3',changed['arguments'],False)
+    b.reject_repeated_plan(call,history)
+    attempt('4',call['arguments']);attempt('5',call['arguments'])
+    b.reject_repeated_plan(call,history+[dict(role='user',content='Try again')])
+
+
+def test_latest_execution_error_is_readable_scoped_and_preserves_actual_output():
+    failed=dict(name='bash',arguments=dict(command='python3 check.py'))
+    error='line 3\nAssertionError: expected [1], got [1, 2]'
+    messages=[dict(role='user',content='Fix'),dict(role='assistant',content=[dict(type='toolCall',id='p',name='plan',arguments=dict(steps=[failed]))]),
+              dict(role='toolResult',toolCallId='p',isError=True,content=json.dumps(dict(failed_step=0,error=error)))]
+    state=b.latest_plan_result(messages)
+    assert error in state and 'python3 check.py' in state and 'remain applied' in state
+    assert b.latest_plan_result(messages+[dict(role='user',content='New')])==''
+    after_read=b.latest_plan_result(messages+[dict(role='toolResult',content='ok',isError=False)])
+    assert 'SUCCEEDED' in after_read and 'LATEST EXECUTION FAILED' not in after_read
+    assert error in b.plan_history(messages)[-1]['content'].replace('\\n','\n')
+    assert 'FAILED' in b.latest_plan_result([dict(role='toolResult',content='malformed',isError=True)])
+
+
+def test_tool_argument_schemas_are_deferred_without_losing_generation_constraints(project, monkeypatch):
+    tools=[dict(name='bash',description='Run a command',parameters=b.tool_plan.obj(dict(
+        command=dict(type='string',description='UNIQUE_ARGUMENT_DESCRIPTION'))))]
+    def infer(messages, options, **kwargs):
+        assert 'UNIQUE_ARGUMENT_DESCRIPTION' not in messages[0]['content']
+        assert 'Run a command' in messages[0]['content']
+        for index,option in enumerate(options):
+            assert 'UNIQUE_ARGUMENT_DESCRIPTION' in kwargs['branch_instruction'](index,option)
+        return dict(decision=dict(index=len(options)-1),same_engine_session=True,finish_reason='stop',
+                    classification_control_records=1,call=dict(name='plan',arguments=dict(content='Need input')))
+    monkeypatch.setattr(b,'infer',infer)
+    b.generic_plan_chat(dict(cwd=str(project),inner_tools=tools,context=dict(messages=[dict(role='user',content='Help')])) )
+
+
+def test_plan_history_preserves_native_tool_protocol_and_error_evidence():
+    messages=[dict(role='user',content='Read'),dict(role='assistant',content=[dict(type='text',text='Checking'),
+        dict(type='toolCall',id='p1',name='plan',arguments=dict(steps=[dict(name='read',arguments=dict(path='中文.txt'))]))]),
+        dict(role='toolResult',toolCallId='p1',toolName='plan',isError=True,content=[dict(type='text',text='missing file')])]
+    before=json.dumps(messages)
+    converted=b.plan_history(messages)
+    assert [m['role'] for m in converted]==['user','assistant','tool']
+    assert converted[1]['content']=='Checking'
+    call=converted[1]['tool_calls'][0]
+    assert call['id']=='p1' and call['function']['name']=='plan'
+    assert json.loads(call['function']['arguments'])==messages[1]['content'][1]['arguments']
+    assert converted[2]['tool_call_id']=='p1' and 'error=True' in converted[2]['content']
+    assert 'missing file' in converted[2]['content']
+    assert json.dumps(messages)==before
+
+
+def test_codebook_admission_metadata_does_not_masquerade_as_failed_task_validation():
+    nested=dict(content=[dict(type='text',text='{"learning": "actual file contents"}')])
+    payload=dict(results=[dict(name='read',result=nested)],learning=dict(validation='semantic_correctness_unverified',admitted=['id']))
+    message=dict(role='toolResult',toolCallId='p',toolName='plan',isError=False,content=json.dumps(payload))
+    converted=b.plan_history([message])[0]['content']
+    parsed=json.loads(converted.split('\n',1)[1])
+    assert parsed==dict(results=payload['results'])
+    assert json.loads(message['content'])==payload
+    assert 'semantic_correctness_unverified' not in converted
+    message['toolName']='read'
+    assert 'semantic_correctness_unverified' in b.plan_history([message])[0]['content']
+
+
+def test_reuse_routing_maps_wire_label_to_content_entry(project, monkeypatch):
+    monkeypatch.setenv('PIJIT_TOOL_PLAN', '1')
+    monkeypatch.setenv('PIJIT_REUSE_ROUTING', '1')
+    (project/'old.txt').write_text('hello')
+    b.complete_tool_plan(dict(cwd=str(project), task='create greeting',
+        steps=[dict(name='write', arguments=dict(path='old.txt', content='hello'))]))
+    tools=[dict(name='write', description='write file', parameters=dict(type='object',
+        properties={'path':dict(type='string'),'content':dict(type='string')},required=['path','content']))]
+    def infer(messages, options, **kwargs):
+        assert len(options) == 2
+        assert 'Selected Candidate 0; observed files: ["old.txt"]' in kwargs['branch_instruction'](0, options[0])
+        return dict(decision=dict(index=0), same_engine_session=True, finish_reason='stop',
+            classification_control_records=1, call=dict(name='plan', arguments=dict(steps=[
+                dict(name='reuse_write', arguments=dict(path='new.txt'))])))
+    monkeypatch.setattr(b, 'infer', infer)
+    result=b.generic_plan_chat(dict(cwd=str(project),inner_tools=tools,
+        context=dict(messages=[dict(role='user',content='create greeting')])) )
+    assert result['call']['arguments']['steps'] == [dict(name='write', arguments=dict(path='new.txt',content='hello'))]
+    assert result['cache_hit'] and len(result['reused_content_ids']) == 1
+    assert result['decision']['index'] == 0
+
+
+@pytest.mark.parametrize('template', [False, True])
+@pytest.mark.parametrize('matching', [False, True])
+def test_generic_payload_filter_refills_shortlist(project, monkeypatch, template, matching):
+    monkeypatch.setenv('PIJIT_PLAN_TEMPLATES', '1' if template else '0')
+    monkeypatch.setenv('PIJIT_PLAN_DISABLE_REUSE', '0')
+    monkeypatch.setenv('PIJIT_COMPACT_CATALOG', '1')
+    monkeypatch.setenv('PIJIT_REUSE_ROUTING', '0')
+    filename = 'tool-plan-templates.sqlite3' if template else 'tool-plan-codebook.sqlite3'
+    book = b.tool_plan.ToolContentBook(b.paths(str(project))/filename)
+    def stored(content):
+        return json.dumps(dict(version=1, content=content)) if template else content
+    rows = [('write file variant 000', stored('wanted\n'), 'execution')] if matching else []
+    rows += [(f'write file variant {i:03}', stored(f'wrong {i}\n'), 'execution') for i in range(1, 21)]
+    book.admit(rows)
+    tools = [dict(name='write', description='write', parameters=b.tool_plan.obj(dict(
+        path=dict(type='string'), content=dict(type='string')))),
+        dict(name='bash', description='command', parameters=b.tool_plan.obj(dict(command=dict(type='string'))))]
+    def infer(messages, options, **kwargs):
+        assert len(options) == len(tools)+1+int(matching)
+        if matching:
+            arguments = dict(steps=[dict(name='reuse_plan' if template else 'reuse_write',
+                                         arguments=dict(path='new.py'))])
+            index = len(tools)
+        else:
+            arguments, index = dict(content='No reusable literal'), len(options)-1
+        return dict(decision=dict(index=index), same_engine_session=True, finish_reason='stop',
+                    classification_control_records=1, call=dict(name='plan', arguments=arguments))
+    monkeypatch.setattr(b, 'infer', infer)
+    trace = {'stage_seconds': {}}; token = b.TRACE.set(trace)
+    try:
+        result = b.generic_plan_chat(dict(cwd=str(project), inner_tools=tools,
+            context=dict(messages=[dict(role='user', content='write file\n```text\nwanted\n```')])) )
+    finally:
+        b.TRACE.reset(token)
+    assert trace['payload_mismatch_candidates'] == 20
+    assert trace['candidate_count'] == int(matching)
+    if matching:
+        assert result['call']['arguments']['steps'][0]['arguments']['content'] == 'wanted\n'
+        assert result['cache_hit']
+    else:
+        assert result['call']['name'] == 'reply_user'
+
+
+def test_generic_reuse_disabled_keeps_learning_without_content_candidates(project, monkeypatch):
+    monkeypatch.setenv('PIJIT_PLAN_DISABLE_REUSE', '1')
+    monkeypatch.setenv('PIJIT_PLAN_TEMPLATES', '1')
+    monkeypatch.setattr(b, 'server_plan_budget', lambda: True)
+    (project/'old.txt').write_text('hello')
+    learned=b.complete_tool_plan(dict(cwd=str(project), task='create greeting',
+        steps=[dict(name='write', arguments=dict(path='old.txt',content='hello'))]))
+    assert learned['admission_count'] == 1
+    monkeypatch.setattr(b.tool_plan.ToolContentBook, 'candidates',
+        lambda self, task, contracts, limit: [] if limit==0 else pytest.fail('reuse retrieval enabled'))
+    tools=[dict(name='write', description='write file', parameters=dict(type='object',
+        properties={'path':dict(type='string'),'content':dict(type='string')},required=['path','content']))]
+    def infer(messages, options, **kwargs):
+        assert len(options)==2
+        assert 'HISTORICAL BEHAVIOR CONTRACT' not in messages[0]['content']
+        return dict(decision=dict(index=0),same_engine_session=True,finish_reason='stop',
+            classification_control_records=1,call=dict(name='plan',arguments=dict(
+                first=dict(path='new.txt',content='hello again'),rest=[])))
+    monkeypatch.setattr(b, 'infer', infer)
+    result=b.generic_plan_chat(dict(cwd=str(project),inner_tools=tools,
+        context=dict(messages=[dict(role='user',content='create greeting')])) )
+    assert not result['cache_hit'] and result['reused_content_ids']==[]
+    (project/'new.txt').write_text('hello again')
+    learned=b.complete_tool_plan(dict(cwd=str(project),task='create greeting again',
+        steps=result['call']['arguments']['steps']))
+    assert learned['admission_count']==1 and learned['book_entries_after']==2
+
+
+@pytest.mark.parametrize('reply', ['Created hello.txt.', '', None])
+def test_generic_success_reply_stays_outside_executable_plan(project, monkeypatch, reply):
+    monkeypatch.setenv('PIJIT_PLAN_SUCCESS_REPLY', '1')
+    monkeypatch.setenv('PIJIT_PLAN_DISABLE_REUSE', '1')
+    tools=[dict(name='write',description='write',parameters=b.tool_plan.obj(dict(
+        path=dict(type='string'),content=dict(type='string'))))]
+    def infer(messages, options, **kwargs):
+        assert 'withheld until execution succeeds' in messages[0]['content']
+        assert 'on_success_reply' in str(options[0]['parameters'])
+        rest=[] if reply is None else [dict(name='on_success_reply',arguments=dict(content=reply))]
+        return dict(decision=dict(index=0),same_engine_session=True,finish_reason='stop',
+            classification_control_records=1,call=dict(name='plan',arguments=dict(
+                first=dict(path='hello.txt',content='hello'),rest=rest)))
+    monkeypatch.setattr(b,'infer',infer)
+    payload=dict(cwd=str(project),inner_tools=tools,
+        context=dict(messages=[dict(role='user',content='Write hello.txt')]))
+    result=b.generic_plan_chat(payload)
+    assert result['on_success_reply']==reply
+    assert set(result['call']['arguments'])=={'steps'}
+
+
+@pytest.mark.parametrize('disabled', ['0', '1'])
+def test_plan_launcher_preserves_explicit_reuse_setting(tmp_path, disabled):
+    import os
+    import shutil
+    import subprocess
+    node=shutil.which('node')
+    if not node:
+        pytest.skip('Pi launcher requires Node.js')
+    package=tmp_path/'fake-pi'
+    cli=package/'dist/bundle/cli.mjs'
+    cli.parent.mkdir(parents=True)
+    cli.write_text('console.log(JSON.stringify({disabled:process.env.PIJIT_PLAN_DISABLE_REUSE,plan:process.env.PIJIT_TOOL_PLAN}));')
+    (package/'package.json').write_text('{"version":"0.85.1"}')
+    bindir=tmp_path/'bin';bindir.mkdir()
+    (bindir/'pi').symlink_to(cli)
+    cli.chmod(0o755)
+    env=dict(os.environ, PATH=str(bindir)+os.pathsep+os.environ['PATH'],
+             PIJIT_PLAN_DISABLE_REUSE=disabled, PIJIT_STATE_DIR=str(tmp_path/'state'),
+             PIJIT_URL='http://127.0.0.1:1')
+    script=Path(__file__).resolve().parents[1]/'integrations/pijit/launch.mjs'
+    result=subprocess.run([node,str(script),'--plan-only','--version'],env=env,
+                          capture_output=True,text=True,timeout=5)
+    assert result.returncode==0, result.stderr
+    assert json.loads(result.stdout)=={'disabled':disabled,'plan':'1'}
+
+
+def recovery_admission_history():
+    write=dict(name='write',arguments=dict(path='recovered.txt',content='stale initial bytes'))
+    check=dict(name='bash',arguments=dict(command='check'))
+    def pair(identity, steps, failed=False):
+        result=dict(completed=[dict(name='write')],failed_step=1) if failed else dict(results=[dict(name=s['name']) for s in steps])
+        return [dict(role='assistant',content=[dict(type='toolCall',name='plan',id=identity,arguments=dict(steps=steps))]),
+                dict(role='toolResult',toolName='plan',toolCallId=identity,isError=failed,
+                     content=[dict(type='text',text=json.dumps(result))])]
+    return [dict(role='user',content='create file'),*pair('failed',[write,check],True),*pair('recovered',[check])]
+
+
+def test_recovery_admission_reads_current_file_without_template_or_reuse_credit(project,monkeypatch):
+    monkeypatch.setenv('PIJIT_PLAN_TEMPLATES','1')
+    (project/'recovered.txt').write_text('actual final bytes')
+    result=b.admit_recovered_mutations(dict(cwd=str(project),context=dict(messages=recovery_admission_history())), 'create file')
+    assert result['admission_count']==1 and not result['cache_hit'] and result['template_admitted']==[]
+    entry,=b.tool_plan.ToolContentBook(b.paths(str(project))/'tool-plan-codebook.sqlite3').load()
+    assert entry['source']=='actual final bytes'
+    assert 'semantic_correctness_unverified' in entry['verification']
+
+
+@pytest.mark.parametrize('change',['new_user','still_failed','read_only','mismatched_results','unknown_call','missing_completion','unexecuted_write','pending_call'])
+def test_recovery_admission_rejects_unconfirmed_or_cross_task_mutations(change):
+    messages=recovery_admission_history()
+    if change=='new_user':messages.append(dict(role='user',content='another task'))
+    if change=='still_failed':messages=messages[:-2]
+    if change=='read_only':
+        messages[-2]['content'][0]['arguments']['steps']=[dict(name='read',arguments=dict(path='recovered.txt'))]
+        messages[-1]['content'][0]['text']=json.dumps(dict(results=[dict(name='read')]))
+    if change=='mismatched_results':messages[2]['content'][0]['text']=json.dumps(dict(completed=[dict(name='bash')],failed_step=1))
+    if change=='pending_call':messages.append(dict(role='assistant',content=[dict(type='toolCall',name='plan',id='pending',arguments=dict(steps=[dict(name='bash',arguments=dict(command='check'))]))]))
+    if change=='unknown_call':messages[-1]['toolCallId']='other'
+    if change=='missing_completion':messages[2]['content'][0]['text']='{}'
+    if change=='unexecuted_write':
+        messages[1]['content'][0]['arguments']['steps'].reverse()
+        messages[2]['content'][0]['text']=json.dumps(dict(completed=[],failed_step=0))
+    assert b.recovered_mutation_steps(messages)==[]
+
+
+def test_recovery_admission_excludes_paths_already_written_by_successful_repair():
+    messages=recovery_admission_history()
+    write=dict(name='write',arguments=dict(path='recovered.txt',content='fixed'))
+    messages[-2]['content'][0]['arguments']['steps'].insert(0,write)
+    messages[-1]['content'][0]['text']=json.dumps(dict(results=[dict(name='write'),dict(name='bash')]))
+    assert b.recovered_mutation_steps(messages)==[]
+
+
+@pytest.mark.parametrize('enabled',[False,True])
+def test_recovery_admission_runs_only_at_opt_in_final_reply_with_no_extra_inference(project,monkeypatch,enabled):
+    monkeypatch.setenv('PIJIT_RECOVERY_ADMISSION','1' if enabled else '0')
+    (project/'recovered.txt').write_text('final bytes')
+    calls=[]
+    def infer(messages,options,**kwargs):
+        calls.append(1)
+        return dict(decision=dict(index=len(options)-1),same_engine_session=True,finish_reason='stop',
+                    classification_control_records=1,call=dict(name='plan',arguments=dict(content='Done.')))
+    monkeypatch.setattr(b,'infer',infer)
+    tools=[dict(name='bash',description='command',parameters=b.tool_plan.obj(dict(command=dict(type='string'))))]
+    result=b.generic_plan_chat(dict(cwd=str(project),inner_tools=tools,context=dict(messages=recovery_admission_history())))
+    assert calls==[1] and result['call']['name']=='reply_user'
+    assert result.get('admission_count',0)==int(enabled)
+    assert b.tool_plan.ToolContentBook(b.paths(str(project))/'tool-plan-codebook.sqlite3').count()==int(enabled)
+
+
+def test_native_failed_plan_then_successful_check_can_be_admitted_at_close(project):
+    import shutil
+    import subprocess
+    cli=shutil.which('pi')
+    if not cli:pytest.skip('Pi integration requires pinned Pi in PATH')
+    package=Path(cli).resolve().parents[2]
+    assert json.loads((package/'package.json').read_text())['version']=='0.85.1'
+    executor=(Path(__file__).resolve().parents[1]/'integrations/pijit/plan_executor.mjs').as_uri()
+    script='''
+import assert from 'node:assert/strict';
+import {createWriteTool,createBashTool} from PI;
+import {executePlan} from EXECUTOR;
+const tools=new Map([createWriteTool,createBashTool].map(f=>{const t=f(CWD);return [t.name,t]}));
+const messages=[{role:'user',content:'create file and check'}];
+for(const [id,steps] of [
+ ['failed',[{name:'write',arguments:{path:'recovered.txt',content:'final bytes'}},{name:'bash',arguments:{command:'exit 1'}}]],
+ ['recovered',[{name:'bash',arguments:{command:'test "$(cat recovered.txt)" = "final bytes"'}}]]]) {
+ messages.push({role:'assistant',content:[{type:'toolCall',id,name:'plan',arguments:{steps}}]});
+ let result,isError=false;
+ try {result={results:await executePlan(id,steps,tools)}} catch(error){isError=true;result=JSON.parse(error.message)}
+ messages.push({role:'toolResult',toolName:'plan',toolCallId:id,isError,content:[{type:'text',text:JSON.stringify(result)}]});
+}
+assert.equal(messages[2].isError,true);assert.equal(messages[4].isError,false);
+process.stdout.write(JSON.stringify(messages));
+'''.replace('PI',json.dumps((package/'dist/index.js').as_uri())).replace('EXECUTOR',json.dumps(executor)).replace('CWD',json.dumps(str(project)))
+    run=subprocess.run(['node','--input-type=module','-e',script],capture_output=True,text=True,timeout=20)
+    assert run.returncode==0,run.stderr
+    result=b.admit_recovered_mutations(dict(cwd=str(project),context=dict(messages=json.loads(run.stdout))), 'create file and check')
+    assert result['admission_count']==1
+    entry,=b.tool_plan.ToolContentBook(b.paths(str(project))/'tool-plan-codebook.sqlite3').load()
+    assert entry['source']=='final bytes'
+
+
+def test_content_admission_keeps_implementation_and_helper_paths_separate(project):
+    files={'module.js':'export const x = 1;', 'test_module.js':"import {x} from './module.js';"}
+    for name,content in files.items():(project/name).write_text(content)
+    result=b.complete_tool_plan(dict(cwd=str(project),task='Implement x',steps=[
+        dict(name='write',arguments=dict(path=name,content=content)) for name,content in files.items()]))
+    assert result['admission_count']==2
+    entries=b.tool_plan.ToolContentBook(b.paths(str(project))/'tool-plan-codebook.sqlite3').load()
+    assert {e['source']:b.tool_plan.observed_paths(e) for e in entries}=={content:[name] for name,content in files.items()}
+    assert all(e['contract']=='Implement x' for e in entries)
+
+
+def test_identical_content_collects_paths_without_duplicate_admission(project):
+    for name in ['a.txt','b.txt']:(project/name).write_text('shared')
+    result=b.complete_tool_plan(dict(cwd=str(project),task='write files',steps=[
+        dict(name='write',arguments=dict(path=str(project/name),content='shared')) for name in ['a.txt','b.txt']]))
+    assert result['admission_count']==1
+    entry,=b.tool_plan.ToolContentBook(b.paths(str(project))/'tool-plan-codebook.sqlite3').load()
+    assert b.tool_plan.observed_paths(entry)==['a.txt','b.txt']
+
+
+def test_native_pi_bash_accepts_decoded_literal_arguments(project):
+    import shutil
+    import subprocess
+    import sys
+    cli=shutil.which('pi')
+    if not cli:pytest.skip('Pi integration requires pinned Pi in PATH')
+    package=Path(cli).resolve().parents[2]
+    assert json.loads((package/'package.json').read_text())['version']=='0.85.1'
+    tools=[dict(name='bash',description='shell',parameters=b.tool_plan.obj(dict(command=dict(type='string'))))]
+    literals=['a\'b"c','$(printf unintended)','', 'space value','line\nbreak']
+    argv=[sys.executable,'-c','import json,sys; print(json.dumps(sys.argv[1:]))',*literals]
+    response=dict(decision=dict(index=0),call=dict(name='plan',arguments=dict(first=dict(command=argv),rest=[])),
+                  same_engine_session=True,finish_reason='stop',classification_control_records=1)
+    call,_=b.tool_plan.decode(response,tools,[],b.tool_plan.branches(tools,[],bash_argv=True))
+    script='''
+import assert from 'node:assert/strict';
+import {createBashTool} from PI;
+const result=await createBashTool(CWD).execute('literal-check',ARGS);
+assert.deepEqual(JSON.parse(result.content[0].text),EXPECTED);
+'''.replace('PI',json.dumps((package/'dist/index.js').as_uri())).replace('CWD',json.dumps(str(project))).replace('ARGS',json.dumps(call['arguments']['steps'][0]['arguments'])).replace('EXPECTED',json.dumps(literals))
+    run=subprocess.run(['node','--input-type=module','-e',script],capture_output=True,text=True,timeout=20)
+    assert run.returncode==0,run.stderr
+
+
+@pytest.mark.parametrize('supported', [True, False])
+def test_capability_negotiation_overlaps_preparation_before_inference(monkeypatch, supported):
+    from threading import Event
+    preparing, negotiating = Event(), Event()
+    monkeypatch.delenv('PIJIT_SERIAL_PREPARATION', raising=False)
+    monkeypatch.delenv('PIJIT_PREFIX_CACHE', raising=False)
+    def prepare(messages, tails):
+        preparing.set()
+        assert negotiating.wait(3), 'Capability probe was serialized behind tokenization'
+        return [1], [[2]]
+    def negotiate():
+        negotiating.set()
+        assert preparing.wait(3), 'Tokenization was serialized behind capability probe'
+        b.trace_update(prefix_cache_supported=True)
+        return supported
+    sent=[]
+    def post(route,payload):
+        assert preparing.is_set() and negotiating.is_set()
+        sent.append(payload)
+        return dict(decision=dict(index=0))
+    monkeypatch.setattr(b,'prepare_continuations',prepare)
+    monkeypatch.setattr(b,'labels',lambda n:[3])
+    monkeypatch.setattr(b,'post',post)
+    trace=dict(stage_seconds={})
+    token=b.TRACE.set(trace)
+    try:
+        b.infer([dict(role='user',content='x')],[dict(name='plan',parameters={})],budget_resolver=negotiate)
+    finally:
+        b.TRACE.reset(token)
+    assert sent[0]['max_tokens']==(b.PLAN_TOTAL_TOKENS if supported else 2048)
+    assert sent[0].get('plan_budget',False)==supported
+    assert trace['prefix_cache_supported'] is True
+
+
+def test_parallel_capability_failure_never_sends_inference(monkeypatch):
+    monkeypatch.delenv('PIJIT_SERIAL_PREPARATION',raising=False)
+    monkeypatch.setattr(b,'prepare_continuations',lambda *a:([1],[[2]]))
+    monkeypatch.setattr(b,'labels',lambda n:[3])
+    def fail():raise OSError('capabilities unavailable')
+    def unexpected(*args):pytest.fail('Inference sent without capability result')
+    monkeypatch.setattr(b,'post',unexpected)
+    with pytest.raises(OSError,match='capabilities unavailable'):
+        b.infer([], [dict(name='plan',parameters={})],budget_resolver=fail)
+
+
+@pytest.mark.parametrize('routing',[False,True])
+@pytest.mark.parametrize('recovery',[False,True])
+def test_reply_branch_selection_maps_after_routing_and_preserves_recovery(project,monkeypatch,routing,recovery):
+    monkeypatch.setenv('PIJIT_REPLY_BRANCH','1')
+    monkeypatch.setenv('PIJIT_REUSE_ROUTING','1' if routing else '0')
+    monkeypatch.setenv('PIJIT_PLAN_DISABLE_REUSE','1')
+    tools=[dict(name='bash',description='shell',parameters=b.tool_plan.obj(dict(command=dict(type='string'))))]
+    captured=[]
+    def infer(messages,options,**kwargs):
+        index=0 if recovery else len(options)-2
+        captured.append(kwargs['branch_instruction'](index,options[index]))
+        if not recovery:
+            assert 'choose '+b.LABELS[index]+' to reply' in kwargs['classification_prompt']
+        return dict(decision=dict(index=index),same_engine_session=True,finish_reason='stop',
+                    classification_control_records=1,call=dict(name='plan',arguments=dict(content='fixture')))
+    monkeypatch.setattr(b,'infer',infer)
+    history=[dict(role='user',content='hello')]
+    if recovery:history.append(dict(role='toolResult',isError=True,content='failure'))
+    result=b.generic_plan_chat(dict(cwd=str(project),inner_tools=tools,context=dict(messages=history)))
+    assert result['call']['name']=='reply_user'
+    assert ('Selected reply.' in captured[0]) == (not recovery)
+
+
+def test_repair_feedback_rejects_replaced_bytes_only_for_same_task(project):
+    book=b.tool_plan.ToolContentBook(b.paths(str(project))/'tool-plan-codebook.sqlite3')
+    old='old implementation';new='corrected implementation';task='implement file'
+    identity,=book.admit([(task,old,'execution only')])
+    (project/'x.txt').write_text(new)
+    history=[dict(role='user',content=task)]
+    def result(identity,steps,failed=False):
+        count=len(steps)-1 if failed else len(steps)
+        output={('completed' if failed else 'results'):[dict(name=s['name']) for s in steps[:count]]}
+        if failed:output.update(failed_step=count,error='assertion failed')
+        history.extend([dict(role='assistant',content=[dict(type='toolCall',name='plan',id=identity,arguments=dict(steps=steps))]),
+                        dict(role='toolResult',toolName='plan',toolCallId=identity,isError=failed,content=json.dumps(output))])
+    write=dict(name='write',arguments=dict(path='x.txt',content=old))
+    check=dict(name='bash',arguments=dict(command='check'))
+    result('first',[write,check],True)
+    payload=dict(cwd=str(project),context=dict(messages=history))
+    assert b.record_repaired_content(payload,task)==[]
+    result('repair',[dict(name='edit',arguments=dict(path=str(project/'x.txt'))),check])
+    feedback=b.record_repaired_content(payload,task)
+    assert feedback[0]['rejected_ids']==[identity]
+    assert book.candidates(task,{},repair_feedback=True)==[]
+    assert book.candidates(task,{},repair_feedback=False)
+    assert book.candidates(task+' again',{},repair_feedback=True)
+    book.admit([(task+' duplicate',old,'execution only')])
+    assert book.candidates(task,{},repair_feedback=True)==[]
+    assert book.candidates(task+' again',{},repair_feedback=True)
+
+
+@pytest.mark.parametrize('change_content',[False,True])
+def test_repair_feedback_does_not_penalize_check_only_repair(project,change_content):
+    task='check content';old='existing content'
+    book=b.tool_plan.ToolContentBook(b.paths(str(project))/'tool-plan-codebook.sqlite3')
+    book.admit([(task,old,'execution only')])
+    (project/'x.txt').write_text('external change' if change_content else old)
+    history=[dict(role='user',content=task)]
+    for identity,steps,failed in [('a',[dict(name='write',arguments=dict(path='x.txt',content=old)),dict(name='bash',arguments=dict(command='bad check'))],True),('b',[dict(name='bash',arguments=dict(command='fixed check'))],False)]:
+        output=dict(completed=[dict(name='write')],failed_step=1,error='bad assertion') if failed else dict(results=[dict(name='bash')])
+        history.extend([dict(role='assistant',content=[dict(type='toolCall',name='plan',id=identity,arguments=dict(steps=steps))]),dict(role='toolResult',toolName='plan',toolCallId=identity,isError=failed,content=json.dumps(output))])
+    assert b.record_repaired_content(dict(cwd=str(project),context=dict(messages=history)),task)==[]
+    assert book.candidates(task,{},repair_feedback=True)
+
+
+@pytest.mark.parametrize('ending',['new_user','pending_call','read_only','malformed','failed_check'])
+def test_repair_feedback_requires_complete_current_turn(project,monkeypatch,ending):
+    (project/'x').write_text('new')
+    old_step=dict(name='write',arguments=dict(path='x',content='old'))
+    edit=dict(name='edit',arguments=dict(path='x'))
+    check=dict(name='bash',arguments=dict(command='check'))
+    def call(identity,steps):return dict(role='assistant',content=[dict(type='toolCall',name='plan',id=identity,arguments=dict(steps=steps))])
+    history=[dict(role='user',content='task'),call('a',[old_step,check]),
+        dict(role='toolResult',toolName='plan',toolCallId='a',isError=True,content=json.dumps(dict(completed=[dict(name='write')],failed_step=1,error='failed'))),
+        call('b',[edit,check]),dict(role='toolResult',toolName='plan',toolCallId='b',isError=False,content=json.dumps(dict(results=[dict(name='edit'),dict(name='bash')])))]
+    if ending=='new_user':history.append(dict(role='user',content='new task'))
+    elif ending=='pending_call':history.append(call('pending',[check]))
+    else:
+        history.append(call('last',[dict(name='read',arguments=dict(path='x'))] if ending=='read_only' else [check]))
+        content=json.dumps(dict(results=[dict(name='read')])) if ending=='read_only' else 'invalid result'
+        if ending=='failed_check':content=json.dumps(dict(completed=[],failed_step=0,error='failed again'))
+        history.append(dict(role='toolResult',toolName='plan',toolCallId='last',isError=ending=='failed_check',content=content))
+    def unexpected(*args):pytest.fail('Incomplete evidence must not write rejection records')
+    monkeypatch.setattr(b.tool_plan.ToolContentBook,'reject_content',unexpected)
+    assert b.record_repaired_content(dict(cwd=str(project),context=dict(messages=history)),'task')==[]
+
+
+@pytest.mark.parametrize('recovery',[False,True])
+@pytest.mark.parametrize('routing',[False,True])
+def test_dedup_tool_descriptions_preserves_catalog_mapping_and_schemas(project,monkeypatch,recovery,routing):
+    description='Unique fixture description for reading files.'
+    tools=[dict(name='read',description=description,parameters=b.tool_plan.obj(dict(path=dict(type='string'))))]
+    monkeypatch.setenv('PIJIT_REUSE_ROUTING','1' if routing else '0')
+    history=[dict(role='user',content='read a file')]
+    if recovery:history.append(dict(role='toolResult',isError=True,content='failed'))
+    captured=[]
+    def infer(messages,options,**kwargs):
+        captured.append((messages,options,[kwargs['branch_instruction'](i,o) for i,o in enumerate(options)],kwargs['classification_prompt']))
+        return dict(decision=dict(index=len(options)-1),same_engine_session=True,finish_reason='stop',
+                    classification_control_records=1,call=dict(name='plan',arguments=dict(content='fixture')))
+    monkeypatch.setattr(b,'infer',infer)
+    for flag in ['0','1']:
+        monkeypatch.setenv('PIJIT_DEDUP_TOOL_DESCRIPTIONS',flag)
+        b.generic_plan_chat(dict(cwd=str(project),inner_tools=tools,context=dict(messages=history)))
+    before,after=captured
+    assert before[1:]==after[1:]
+    assert before[0][0]['content'].count(description)==(1 if recovery or routing else 2)
+    assert after[0][0]['content'].count(description)==1
+    if not recovery and not routing:
+        assert 'A: First action read. See INNER TOOLS above.' in after[0][0]['content']
+    else:
+        assert before==after
+
+
+@pytest.mark.parametrize('candidate',[False,True])
+def test_disable_first_tool_classification_preserves_candidate_and_general_decode(project,monkeypatch,candidate):
+    monkeypatch.setenv('PIJIT_FIRST_TOOL_CLASSIFICATION','0')
+    monkeypatch.setenv('PIJIT_REUSE_ROUTING','0')
+    tools=[dict(name='write',description='write',parameters=b.tool_plan.obj(dict(path=dict(type='string'),content=dict(type='string'))))]
+    entries=[dict(id='fixture-id',source='hello',contract='Write hello',verification='execution only')] if candidate else []
+    monkeypatch.setattr(b.tool_plan.ToolContentBook,'candidates',lambda *a,**kw:entries)
+    def infer(messages,options,**kwargs):
+        assert len(options)==1+len(entries)
+        assert 'CURRENT USER REQUIREMENTS' not in kwargs['classification_prompt']
+        assert 'First action write:' not in messages[0]['content']
+        args=dict(steps=[dict(name='reuse_write',arguments=dict(path='a.txt'))]) if candidate else dict(steps=[dict(name='write',arguments=dict(path='a.txt',content='hello'))])
+        assert ('Selected Candidate 0' if candidate else 'Continue the user task') in kwargs['branch_instruction'](0,options[0])
+        return dict(decision=dict(index=0),same_engine_session=True,finish_reason='stop',classification_control_records=1,call=dict(name='plan',arguments=args))
+    monkeypatch.setattr(b,'infer',infer)
+    result=b.generic_plan_chat(dict(cwd=str(project),inner_tools=tools,context=dict(messages=[dict(role='user',content='Write hello')])))
+    assert result['call']==dict(name='plan',arguments=dict(steps=[dict(name='write',arguments=dict(path='a.txt',content='hello'))]))
+    assert result['cache_hit']==candidate
+
+
+def test_engine_length_failure_retains_decision_and_request_identity(monkeypatch):
+    import io
+    import urllib.error
+    monkeypatch.setenv('PIJIT_URL','http://unused')
+    failure=dict(request_id='openjev-test',decision=dict(index=1),finish_reason='length',
+                 generated_argument_tokens=17408,classification_control_records=1,usage_complete=False,
+                 generation_diagnostics=dict(characters=17408,json_document_complete=False))
+    def failed(*args,**kwargs):
+        raise urllib.error.HTTPError('http://unused',500,'incomplete',{},io.BytesIO(json.dumps(failure).encode()))
+    monkeypatch.setattr(b.urllib.request,'urlopen',failed)
+    trace=dict(http_requests=[]);token=b.TRACE.set(trace)
+    try:
+        with pytest.raises(b.GenerationLengthError):
+            b.post('/v1/openjev/toolcall',dict(prompt_ids=[1,2],continuations=[[3],[4,5]]))
+    finally:b.TRACE.reset(token)
+    record,=trace['http_requests']
+    assert record['engine_request_id']=='openjev-test' and record['engine_decision_index']==1
+    assert record['engine_finish_reason']=='length' and record['generated_argument_tokens']==17408
+    assert record['input_tokens']==4 and not record['usage_complete']
+    assert record['engine_generation_diagnostics']==failure['generation_diagnostics']
+
+
+def test_length_error_is_not_a_retryable_pi_provider_failure(project,monkeypatch):
+    import io
+    import shutil
+    import subprocess
+    import urllib.error
+    cli=shutil.which('pi')
+    if not cli:pytest.skip('Requires pinned Pi in PATH')
+    package=Path(cli).resolve().parents[2]
+    assert json.loads((package/'package.json').read_text())['version']=='0.85.1'
+    retry_module=package/'node_modules/@earendil-works/pi-ai/dist/utils/retry.js'
+    monkeypatch.setenv('PIJIT_URL','http://unused')
+    failure=dict(decision=dict(index=0),finish_reason='length',generated_argument_tokens=17408,
+                 classification_control_records=1,usage_complete=False)
+    calls=[]
+    def failed(*args,**kwargs):
+        calls.append(1)
+        raise urllib.error.HTTPError('http://unused',500,'incomplete',{},io.BytesIO(json.dumps(failure).encode()))
+    monkeypatch.setattr(b.urllib.request,'urlopen',failed)
+    monkeypatch.setattr(b,'chat',lambda payload:b.post('/v1/openjev/toolcall',dict(prompt_ids=[1],continuations=[[2]])))
+    result=b.run(dict(action='chat',cwd=str(project)))
+    assert result['status']=='error' and 'call' not in result and len(calls)==1
+    assert result['error'].startswith('GenerationLengthError:')
+    assert not result['accounting']['usage_complete']
+    assert result['accounting']['known_generated_argument_tokens']==17408
+    errors=[result['error'],b.public_error(urllib.error.HTTPError('http://unused',500,'server error',{},None)),
+            b.public_error(urllib.error.HTTPError('http://unused',503,'unavailable',{},None))]
+    script=('import {isRetryableAssistantError} from '+json.dumps(retry_module.as_uri())+'; '
+            'console.log(JSON.stringify(JSON.parse(process.argv[1]).map(errorMessage=>'
+            'isRetryableAssistantError({stopReason:"error",errorMessage}))));')
+    checked=subprocess.run(['node','--input-type=module','-e',script,json.dumps(errors)],capture_output=True,text=True,check=True,timeout=10)
+    assert json.loads(checked.stdout)==[False,True,True]

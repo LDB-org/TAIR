@@ -1,0 +1,1510 @@
+[
+  {
+    "task": "totals_base",
+    "review": false,
+    "expected_compatible": true,
+    "response": {
+      "request_id": "openjev-01feabf8fa2049fc9832f4365ccdf089",
+      "call": {
+        "name": "plan",
+        "arguments": {
+          "steps": [
+            {
+              "name": "reuse_write",
+              "arguments": {
+                "path": "totals_base.sql"
+              }
+            }
+          ]
+        }
+      },
+      "decision": {
+        "index": 0,
+        "name": "plan",
+        "control_id": 35,
+        "cached_prefix_tokens": 0,
+        "logprobs": [
+          -0.0005681092734448612
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6281816.278054011,
+            "scheduled_ts": 6281816.278097009,
+            "first_token_ts": 6281816.45368207
+          },
+          "initial_queue_seconds": 4.299823194742203e-05,
+          "scheduled_to_first_output_seconds": 0.17558506038039923
+        },
+        "classification_seconds": 0.18112148251384497
+      },
+      "raw": "{\"steps\":[{\"name\":\"reuse_write\",\"arguments\":{\"path\":\"totals_base.sql\"}}]}",
+      "argument_token_ids": [
+        24313,
+        43943,
+        96893,
+        24313,
+        2852,
+        16562,
+        266,
+        3103,
+        98100,
+        10177,
+        83772,
+        80642,
+        9860,
+        16562,
+        60737,
+        1290,
+        46567,
+        60179,
+        4,
+        3831,
+        48663,
+        1
+      ],
+      "generated_argument_tokens": 22,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 0.5171861341223121,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          8
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "request",
+      "input_tokens": 1210
+    },
+    "request_seconds": 0.8711797497235239,
+    "call": {
+      "name": "plan",
+      "arguments": {
+        "steps": [
+          {
+            "name": "write",
+            "arguments": {
+              "path": "totals_base.sql",
+              "content": "SELECT user_id, SUM(amount) AS total\nFROM events\nWHERE status = 'posted'\nGROUP BY user_id\nORDER BY user_id ASC;\n"
+            }
+          }
+        ]
+      }
+    },
+    "reused": true,
+    "passed": true,
+    "oracle_stderr": "",
+    "trace": {
+      "stage_seconds": {
+        "generation_preparation": 0.15247516706585884,
+        "generation_http": 0.7186238341964781,
+        "generation": 0.871136125177145
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789917456.09465,
+          "http_status": 200,
+          "request_id": "openjev-01feabf8fa2049fc9832f4365ccdf089",
+          "input_tokens": 1210,
+          "generated_argument_tokens": 22,
+          "classification_control_records": 1,
+          "engine_seconds": 0.5171861341223121,
+          "classification_seconds": 0.18112148251384497,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6281816.278054011,
+              "scheduled_ts": 6281816.278097009,
+              "first_token_ts": 6281816.45368207
+            },
+            "initial_queue_seconds": 4.299823194742203e-05,
+            "scheduled_to_first_output_seconds": 0.17558506038039923
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "request",
+          "seconds": 0.7184715420007706
+        }
+      ],
+      "label_cache_hit": false,
+      "local_tokenization": [
+        {
+          "seconds": 0.1497293752618134,
+          "token_count": 742,
+          "verified": false
+        },
+        {
+          "seconds": 0.1511180424131453,
+          "token_count": 1210,
+          "verified": false
+        },
+        {
+          "seconds": 0.15099866688251495,
+          "token_count": 1,
+          "verified": false
+        }
+      ]
+    }
+  },
+  {
+    "task": "totals_base",
+    "review": true,
+    "expected_compatible": true,
+    "response": {
+      "request_id": "openjev-f1341c3e12184a2c9fb58ef73c7dac1a",
+      "call": {
+        "name": "plan",
+        "arguments": {
+          "steps": [
+            {
+              "name": "reuse_write",
+              "arguments": {
+                "requirement_check": "The stored content is a single SQLite SELECT statement that filters status='posted', groups by user_id, sums amount as total, and orders by user_id ascending, matching all current requirements.",
+                "use_cached_content": true,
+                "path": "totals_base.sql"
+              }
+            }
+          ]
+        }
+      },
+      "decision": {
+        "index": 0,
+        "name": "plan",
+        "control_id": 35,
+        "cached_prefix_tokens": 0,
+        "logprobs": [
+          -0.0005681092734448612
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6281817.144656125,
+            "scheduled_ts": 6281817.144691289,
+            "first_token_ts": 6281817.282264863
+          },
+          "initial_queue_seconds": 3.516394644975662e-05,
+          "scheduled_to_first_output_seconds": 0.13757357373833656
+        },
+        "classification_seconds": 0.14332906063646078
+      },
+      "raw": "{\"steps\":[{\"name\":\"reuse_write\",\"arguments\":{\"requirement_check\":\"The stored content is a single SQLite SELECT statement that filters status='posted', groups by user_id, sums amount as total, and orders by user_id ascending, matching all current requirements.\",\"use_cached_content\":true,\"path\":\"totals_base.sql\"}}]}",
+      "argument_token_ids": [
+        24313,
+        43943,
+        96893,
+        24313,
+        2852,
+        16562,
+        266,
+        3103,
+        98100,
+        10177,
+        83772,
+        80642,
+        2837,
+        15681,
+        54788,
+        16562,
+        671,
+        12604,
+        3445,
+        344,
+        260,
+        4031,
+        19662,
+        845,
+        39546,
+        6809,
+        396,
+        25759,
+        6317,
+        6471,
+        105612,
+        1780,
+        4691,
+        513,
+        3967,
+        5165,
+        14,
+        34458,
+        3772,
+        412,
+        3452,
+        14,
+        305,
+        14653,
+        513,
+        3967,
+        5165,
+        46237,
+        14,
+        19626,
+        710,
+        2573,
+        7172,
+        16,
+        10177,
+        3103,
+        4941,
+        5246,
+        46238,
+        3362,
+        11476,
+        3184,
+        9860,
+        16562,
+        60737,
+        1290,
+        46567,
+        60179,
+        4,
+        3831,
+        48663,
+        1
+      ],
+      "generated_argument_tokens": 72,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 1.1762492060661316,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          58
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "request",
+      "input_tokens": 1426
+    },
+    "request_seconds": 1.3770446246489882,
+    "call": {
+      "name": "plan",
+      "arguments": {
+        "steps": [
+          {
+            "name": "write",
+            "arguments": {
+              "path": "totals_base.sql",
+              "content": "SELECT user_id, SUM(amount) AS total\nFROM events\nWHERE status = 'posted'\nGROUP BY user_id\nORDER BY user_id ASC;\n"
+            }
+          }
+        ]
+      }
+    },
+    "reused": true,
+    "passed": true,
+    "oracle_stderr": "",
+    "trace": {
+      "stage_seconds": {
+        "generation_preparation": 0.0034045418724417686,
+        "generation_http": 1.3735572909936309,
+        "generation": 1.3770033749751747
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789917456.959427,
+          "http_status": 200,
+          "request_id": "openjev-f1341c3e12184a2c9fb58ef73c7dac1a",
+          "input_tokens": 1426,
+          "generated_argument_tokens": 72,
+          "classification_control_records": 1,
+          "engine_seconds": 1.1762492060661316,
+          "classification_seconds": 0.14332906063646078,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6281817.144656125,
+              "scheduled_ts": 6281817.144691289,
+              "first_token_ts": 6281817.282264863
+            },
+            "initial_queue_seconds": 3.516394644975662e-05,
+            "scheduled_to_first_output_seconds": 0.13757357373833656
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "request",
+          "seconds": 1.3733912911266088
+        }
+      ],
+      "local_tokenization": [
+        {
+          "seconds": 0.0010898341424763203,
+          "token_count": 742,
+          "verified": false
+        },
+        {
+          "seconds": 0.0016639172099530697,
+          "token_count": 1426,
+          "verified": false
+        }
+      ],
+      "label_cache_hit": true
+    }
+  },
+  {
+    "task": "totals_changed",
+    "review": true,
+    "expected_compatible": false,
+    "response": {
+      "request_id": "openjev-23dadfb21e964a1484b49b337a730563",
+      "call": {
+        "name": "plan",
+        "arguments": {
+          "steps": [
+            {
+              "name": "reuse_write",
+              "arguments": {
+                "requirement_check": "The current request requires returning only groups whose total is strictly greater than zero, but the stored content includes all groups (no HAVING clause). The stored bytes do NOT implement the current requirement.",
+                "use_cached_content": false,
+                "path": "totals_changed.sql",
+                "content": "SELECT user_id, SUM(amount) AS total\nFROM events\nWHERE status = 'posted'\nGROUP BY user_id\nHAVING SUM(amount) > 0\nORDER BY user_id ASC;\n"
+              }
+            }
+          ]
+        }
+      },
+      "decision": {
+        "index": 0,
+        "name": "plan",
+        "control_id": 35,
+        "cached_prefix_tokens": 0,
+        "logprobs": [
+          -0.01817712001502514
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6281818.579377627,
+            "scheduled_ts": 6281818.579414034,
+            "first_token_ts": 6281818.719818503
+          },
+          "initial_queue_seconds": 3.6407262086868286e-05,
+          "scheduled_to_first_output_seconds": 0.1404044684022665
+        },
+        "classification_seconds": 0.1468853885307908
+      },
+      "raw": "{\"steps\":[{\"name\":\"reuse_write\",\"arguments\":{\"requirement_check\":\"The current request requires returning only groups whose total is strictly greater than zero, but the stored content includes all groups (no HAVING clause). The stored bytes do NOT implement the current requirement.\",\"use_cached_content\":false,\"path\":\"totals_changed.sql\",\"content\":\"SELECT user_id, SUM(amount) AS total\\nFROM events\\nWHERE status = 'posted'\\nGROUP BY user_id\\nHAVING SUM(amount) > 0\\nORDER BY user_id ASC;\\n\"}}]}",
+      "argument_token_ids": [
+        24313,
+        43943,
+        96893,
+        24313,
+        2852,
+        16562,
+        266,
+        3103,
+        98100,
+        10177,
+        83772,
+        80642,
+        2837,
+        15681,
+        54788,
+        16562,
+        671,
+        2573,
+        5118,
+        7391,
+        20465,
+        1353,
+        4691,
+        6501,
+        3452,
+        344,
+        29851,
+        5798,
+        1099,
+        8390,
+        14,
+        790,
+        270,
+        12604,
+        3445,
+        5260,
+        710,
+        4691,
+        343,
+        3567,
+        437,
+        12875,
+        4951,
+        23589,
+        797,
+        455,
+        12604,
+        20711,
+        696,
+        11388,
+        4678,
+        270,
+        2573,
+        16381,
+        16,
+        10177,
+        3103,
+        4941,
+        5246,
+        46238,
+        3362,
+        19836,
+        3184,
+        9860,
+        16562,
+        60737,
+        1290,
+        32663,
+        9007,
+        60179,
+        10177,
+        9326,
+        16562,
+        21039,
+        3967,
+        5165,
+        14,
+        84803,
+        10,
+        24533,
+        11,
+        8267,
+        3452,
+        5809,
+        40872,
+        5516,
+        5809,
+        48858,
+        6317,
+        438,
+        905,
+        105612,
+        58456,
+        80,
+        87270,
+        17511,
+        3967,
+        5165,
+        5809,
+        11013,
+        56,
+        4951,
+        84803,
+        10,
+        24533,
+        11,
+        1955,
+        223,
+        18,
+        5809,
+        54387,
+        17511,
+        3967,
+        5165,
+        40207,
+        29424,
+        80,
+        4,
+        3831,
+        48663,
+        1
+      ],
+      "generated_argument_tokens": 121,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 1.2901454232633114,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          107
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "request",
+      "input_tokens": 1796
+    },
+    "request_seconds": 1.4952280833385885,
+    "call": {
+      "name": "plan",
+      "arguments": {
+        "steps": [
+          {
+            "name": "write",
+            "arguments": {
+              "path": "totals_changed.sql",
+              "content": "SELECT user_id, SUM(amount) AS total\nFROM events\nWHERE status = 'posted'\nGROUP BY user_id\nHAVING SUM(amount) > 0\nORDER BY user_id ASC;\n"
+            }
+          }
+        ]
+      }
+    },
+    "reused": false,
+    "passed": true,
+    "oracle_stderr": "",
+    "trace": {
+      "stage_seconds": {
+        "generation_preparation": 0.004005958326160908,
+        "generation_http": 1.4911587503738701,
+        "generation": 1.4951888327486813
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789917458.388855,
+          "http_status": 200,
+          "request_id": "openjev-23dadfb21e964a1484b49b337a730563",
+          "input_tokens": 1796,
+          "generated_argument_tokens": 121,
+          "classification_control_records": 1,
+          "engine_seconds": 1.2901454232633114,
+          "classification_seconds": 0.1468853885307908,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6281818.579377627,
+              "scheduled_ts": 6281818.579414034,
+              "first_token_ts": 6281818.719818503
+            },
+            "initial_queue_seconds": 3.6407262086868286e-05,
+            "scheduled_to_first_output_seconds": 0.1404044684022665
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "request",
+          "seconds": 1.4909809581004083
+        }
+      ],
+      "local_tokenization": [
+        {
+          "seconds": 0.0012979581952095032,
+          "token_count": 839,
+          "verified": false
+        },
+        {
+          "seconds": 0.0020140409469604492,
+          "token_count": 1796,
+          "verified": false
+        }
+      ],
+      "label_cache_hit": true
+    }
+  },
+  {
+    "task": "totals_changed",
+    "review": false,
+    "expected_compatible": false,
+    "response": {
+      "request_id": "openjev-266435561592404f95a2505107a2ad01",
+      "call": {
+        "name": "plan",
+        "arguments": {
+          "steps": [
+            {
+              "name": "reuse_write",
+              "arguments": {
+                "path": "totals_changed.sql"
+              }
+            }
+          ]
+        }
+      },
+      "decision": {
+        "index": 0,
+        "name": "plan",
+        "control_id": 35,
+        "cached_prefix_tokens": 0,
+        "logprobs": [
+          -0.01817712001502514
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6281820.106926463,
+            "scheduled_ts": 6281820.106954509,
+            "first_token_ts": 6281820.244732421
+          },
+          "initial_queue_seconds": 2.8046779334545135e-05,
+          "scheduled_to_first_output_seconds": 0.13777791149914265
+        },
+        "classification_seconds": 0.14302111137658358
+      },
+      "raw": "{\"steps\":[{\"name\":\"reuse_write\",\"arguments\":{\"path\":\"totals_changed.sql\"}}]}",
+      "argument_token_ids": [
+        24313,
+        43943,
+        96893,
+        24313,
+        2852,
+        16562,
+        266,
+        3103,
+        98100,
+        10177,
+        83772,
+        80642,
+        9860,
+        16562,
+        60737,
+        1290,
+        32663,
+        9007,
+        60179,
+        4,
+        3831,
+        48663,
+        1
+      ],
+      "generated_argument_tokens": 23,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 0.47329216077923775,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          9
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "request",
+      "input_tokens": 1580
+    },
+    "request_seconds": 0.7014532922767103,
+    "call": {
+      "name": "plan",
+      "arguments": {
+        "steps": [
+          {
+            "name": "write",
+            "arguments": {
+              "path": "totals_changed.sql",
+              "content": "SELECT user_id, SUM(amount) AS total\nFROM events\nWHERE status = 'posted'\nGROUP BY user_id\nORDER BY user_id ASC;\n"
+            }
+          }
+        ]
+      }
+    },
+    "reused": true,
+    "passed": false,
+    "oracle_stderr": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\nAssertionError\n",
+    "trace": {
+      "stage_seconds": {
+        "generation_preparation": 0.002965332940220833,
+        "generation_http": 0.6983672077767551,
+        "generation": 0.7014099163934588
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789917459.9102888,
+          "http_status": 200,
+          "request_id": "openjev-266435561592404f95a2505107a2ad01",
+          "input_tokens": 1580,
+          "generated_argument_tokens": 23,
+          "classification_control_records": 1,
+          "engine_seconds": 0.47329216077923775,
+          "classification_seconds": 0.14302111137658358,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6281820.106926463,
+              "scheduled_ts": 6281820.106954509,
+              "first_token_ts": 6281820.244732421
+            },
+            "initial_queue_seconds": 2.8046779334545135e-05,
+            "scheduled_to_first_output_seconds": 0.13777791149914265
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "request",
+          "seconds": 0.6981811672449112
+        }
+      ],
+      "local_tokenization": [
+        {
+          "seconds": 0.000979333184659481,
+          "token_count": 839,
+          "verified": false
+        },
+        {
+          "seconds": 0.0014245412312448025,
+          "token_count": 1580,
+          "verified": false
+        }
+      ],
+      "label_cache_hit": true
+    }
+  },
+  {
+    "task": "nullable_base",
+    "review": false,
+    "expected_compatible": true,
+    "response": {
+      "request_id": "openjev-985864cbbe404381927f47ae190c0fb2",
+      "call": {
+        "name": "plan",
+        "arguments": {
+          "steps": [
+            {
+              "name": "reuse_write",
+              "arguments": {
+                "path": "nullable_base.sql"
+              }
+            }
+          ]
+        }
+      },
+      "decision": {
+        "index": 0,
+        "name": "plan",
+        "control_id": 35,
+        "cached_prefix_tokens": 0,
+        "logprobs": [
+          -9.738924563862383e-05
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6281820.849823398,
+            "scheduled_ts": 6281820.849861707,
+            "first_token_ts": 6281820.98730787
+          },
+          "initial_queue_seconds": 3.830902278423309e-05,
+          "scheduled_to_first_output_seconds": 0.13744616322219372
+        },
+        "classification_seconds": 0.14189626462757587
+      },
+      "raw": "{\"steps\":[{\"name\":\"reuse_write\",\"arguments\":{\"path\":\"nullable_base.sql\"}}]}",
+      "argument_token_ids": [
+        24313,
+        43943,
+        96893,
+        24313,
+        2852,
+        16562,
+        266,
+        3103,
+        98100,
+        10177,
+        83772,
+        80642,
+        9860,
+        16562,
+        54505,
+        46567,
+        60179,
+        4,
+        3831,
+        48663,
+        1
+      ],
+      "generated_argument_tokens": 21,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 0.4530105032026768,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          7
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "request",
+      "input_tokens": 1168
+    },
+    "request_seconds": 0.6528881671838462,
+    "call": {
+      "name": "plan",
+      "arguments": {
+        "steps": [
+          {
+            "name": "write",
+            "arguments": {
+              "path": "nullable_base.sql",
+              "content": "SELECT station, COALESCE(SUM(value), 0) AS total\nFROM readings\nGROUP BY station\nORDER BY station ASC;\n"
+            }
+          }
+        ]
+      }
+    },
+    "reused": true,
+    "passed": true,
+    "oracle_stderr": "",
+    "trace": {
+      "stage_seconds": {
+        "generation_preparation": 0.0032703327015042305,
+        "generation_http": 0.6495669581927359,
+        "generation": 0.6528540002182126
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789917460.6657422,
+          "http_status": 200,
+          "request_id": "openjev-985864cbbe404381927f47ae190c0fb2",
+          "input_tokens": 1168,
+          "generated_argument_tokens": 21,
+          "classification_control_records": 1,
+          "engine_seconds": 0.4530105032026768,
+          "classification_seconds": 0.14189626462757587,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6281820.849823398,
+              "scheduled_ts": 6281820.849861707,
+              "first_token_ts": 6281820.98730787
+            },
+            "initial_queue_seconds": 3.830902278423309e-05,
+            "scheduled_to_first_output_seconds": 0.13744616322219372
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "request",
+          "seconds": 0.649419458117336
+        }
+      ],
+      "local_tokenization": [
+        {
+          "seconds": 0.0012163342908024788,
+          "token_count": 700,
+          "verified": false
+        },
+        {
+          "seconds": 0.0014027501456439495,
+          "token_count": 1168,
+          "verified": false
+        }
+      ],
+      "label_cache_hit": true
+    }
+  },
+  {
+    "task": "nullable_base",
+    "review": true,
+    "expected_compatible": true,
+    "response": {
+      "request_id": "openjev-0c9fee33a26d4ea3a8522d57a36c33ef",
+      "call": {
+        "name": "plan",
+        "arguments": {
+          "steps": [
+            {
+              "name": "reuse_write",
+              "arguments": {
+                "requirement_check": "The stored content implements a single SQLite SELECT query that returns station and total using COALESCE(SUM(value),0), groups by station, orders by station ascending, and includes all stations even with NULL values, matching the current request exactly.",
+                "use_cached_content": true,
+                "path": "nullable_base.sql"
+              }
+            }
+          ]
+        }
+      },
+      "decision": {
+        "index": 0,
+        "name": "plan",
+        "control_id": 35,
+        "cached_prefix_tokens": 0,
+        "logprobs": [
+          -9.738924563862383e-05
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6281821.539412109,
+            "scheduled_ts": 6281821.539451318,
+            "first_token_ts": 6281821.674409044
+          },
+          "initial_queue_seconds": 3.9208680391311646e-05,
+          "scheduled_to_first_output_seconds": 0.1349577261134982
+        },
+        "classification_seconds": 0.1400681994855404
+      },
+      "raw": "{\"steps\":[{\"name\":\"reuse_write\",\"arguments\":{\"requirement_check\":\"The stored content implements a single SQLite SELECT query that returns station and total using COALESCE(SUM(value),0), groups by station, orders by station ascending, and includes all stations even with NULL values, matching the current request exactly.\",\"use_cached_content\":true,\"path\":\"nullable_base.sql\"}}]}",
+      "argument_token_ids": [
+        24313,
+        43943,
+        96893,
+        24313,
+        2852,
+        16562,
+        266,
+        3103,
+        98100,
+        10177,
+        83772,
+        80642,
+        2837,
+        15681,
+        54788,
+        16562,
+        671,
+        12604,
+        3445,
+        20685,
+        260,
+        4031,
+        19662,
+        845,
+        39546,
+        13607,
+        396,
+        10340,
+        9466,
+        305,
+        3452,
+        1812,
+        3960,
+        105950,
+        7042,
+        10,
+        75027,
+        22070,
+        754,
+        18,
+        754,
+        4691,
+        513,
+        9466,
+        14,
+        14653,
+        513,
+        9466,
+        46237,
+        14,
+        305,
+        5260,
+        710,
+        19612,
+        1749,
+        418,
+        8363,
+        3785,
+        14,
+        19626,
+        270,
+        2573,
+        5118,
+        9045,
+        16,
+        10177,
+        3103,
+        4941,
+        5246,
+        46238,
+        3362,
+        11476,
+        3184,
+        9860,
+        16562,
+        54505,
+        46567,
+        60179,
+        4,
+        3831,
+        48663,
+        1
+      ],
+      "generated_argument_tokens": 82,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 0.9630991443991661,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          68
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "request",
+      "input_tokens": 1384
+    },
+    "request_seconds": 1.1721002920530736,
+    "call": {
+      "name": "plan",
+      "arguments": {
+        "steps": [
+          {
+            "name": "write",
+            "arguments": {
+              "path": "nullable_base.sql",
+              "content": "SELECT station, COALESCE(SUM(value), 0) AS total\nFROM readings\nGROUP BY station\nORDER BY station ASC;\n"
+            }
+          }
+        ]
+      }
+    },
+    "reused": true,
+    "passed": true,
+    "oracle_stderr": "",
+    "trace": {
+      "stage_seconds": {
+        "generation_preparation": 0.0026461249217391014,
+        "generation_http": 1.169404833111912,
+        "generation": 1.1720690419897437
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789917461.344393,
+          "http_status": 200,
+          "request_id": "openjev-0c9fee33a26d4ea3a8522d57a36c33ef",
+          "input_tokens": 1384,
+          "generated_argument_tokens": 82,
+          "classification_control_records": 1,
+          "engine_seconds": 0.9630991443991661,
+          "classification_seconds": 0.1400681994855404,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6281821.539412109,
+              "scheduled_ts": 6281821.539451318,
+              "first_token_ts": 6281821.674409044
+            },
+            "initial_queue_seconds": 3.9208680391311646e-05,
+            "scheduled_to_first_output_seconds": 0.1349577261134982
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "request",
+          "seconds": 1.1692814170382917
+        }
+      ],
+      "local_tokenization": [
+        {
+          "seconds": 0.0008774157613515854,
+          "token_count": 700,
+          "verified": false
+        },
+        {
+          "seconds": 0.0012313751503825188,
+          "token_count": 1384,
+          "verified": false
+        }
+      ],
+      "label_cache_hit": true
+    }
+  },
+  {
+    "task": "nullable_changed",
+    "review": true,
+    "expected_compatible": false,
+    "response": {
+      "request_id": "openjev-576dffc0344443928b6ca9de5a43a302",
+      "call": {
+        "name": "plan",
+        "arguments": {
+          "steps": [
+            {
+              "name": "reuse_write",
+              "arguments": {
+                "requirement_check": "The current request requires excluding groups with no non-NULL values, while the stored content includes all stations even if all values are NULL. The stored content does NOT implement the exclusion requirement, so it is incompatible.",
+                "use_cached_content": false,
+                "path": "nullable_changed.sql",
+                "content": "SELECT station, COALESCE(SUM(value), 0) AS total\nFROM readings\nWHERE value IS NOT NULL\nGROUP BY station\nHAVING SUM(value) <= 0\nORDER BY station ASC;"
+              }
+            }
+          ]
+        }
+      },
+      "decision": {
+        "index": 0,
+        "name": "plan",
+        "control_id": 35,
+        "cached_prefix_tokens": 0,
+        "logprobs": [
+          -0.011203357949852943
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6281822.744275001,
+            "scheduled_ts": 6281822.744290595,
+            "first_token_ts": 6281822.880592318
+          },
+          "initial_queue_seconds": 1.5594065189361572e-05,
+          "scheduled_to_first_output_seconds": 0.13630172330886126
+        },
+        "classification_seconds": 0.14159822463989258
+      },
+      "raw": "{\"steps\":[{\"name\":\"reuse_write\",\"arguments\":{\"requirement_check\":\"The current request requires excluding groups with no non-NULL values, while the stored content includes all stations even if all values are NULL. The stored content does NOT implement the exclusion requirement, so it is incompatible.\",\"use_cached_content\":false,\"path\":\"nullable_changed.sql\",\"content\":\"SELECT station, COALESCE(SUM(value), 0) AS total\\nFROM readings\\nWHERE value IS NOT NULL\\nGROUP BY station\\nHAVING SUM(value) <= 0\\nORDER BY station ASC;\"}}]}",
+      "argument_token_ids": [
+        24313,
+        43943,
+        96893,
+        24313,
+        2852,
+        16562,
+        266,
+        3103,
+        98100,
+        10177,
+        83772,
+        80642,
+        2837,
+        15681,
+        54788,
+        16562,
+        671,
+        2573,
+        5118,
+        7391,
+        47157,
+        4691,
+        418,
+        1119,
+        2408,
+        10275,
+        6552,
+        3785,
+        14,
+        1901,
+        270,
+        12604,
+        3445,
+        5260,
+        710,
+        19612,
+        1749,
+        855,
+        710,
+        3785,
+        477,
+        8363,
+        16,
+        455,
+        12604,
+        3445,
+        1918,
+        11388,
+        4678,
+        270,
+        34463,
+        16381,
+        14,
+        832,
+        436,
+        344,
+        69739,
+        16,
+        10177,
+        3103,
+        4941,
+        5246,
+        46238,
+        3362,
+        19836,
+        3184,
+        9860,
+        16562,
+        54505,
+        32663,
+        9007,
+        60179,
+        10177,
+        9326,
+        16562,
+        21039,
+        9466,
+        14,
+        3960,
+        105950,
+        7042,
+        10,
+        75027,
+        22070,
+        754,
+        223,
+        18,
+        11,
+        8267,
+        3452,
+        5809,
+        40872,
+        35087,
+        5809,
+        48858,
+        1990,
+        4756,
+        11388,
+        8363,
+        5809,
+        87270,
+        17511,
+        9466,
+        5809,
+        11013,
+        56,
+        4951,
+        84803,
+        22070,
+        11,
+        8593,
+        223,
+        18,
+        5809,
+        54387,
+        17511,
+        9466,
+        40207,
+        53684,
+        3831,
+        48663,
+        1
+      ],
+      "generated_argument_tokens": 122,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 1.2945231720805168,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          109
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "request",
+      "input_tokens": 1790
+    },
+    "request_seconds": 1.5560895828530192,
+    "call": {
+      "name": "plan",
+      "arguments": {
+        "steps": [
+          {
+            "name": "write",
+            "arguments": {
+              "path": "nullable_changed.sql",
+              "content": "SELECT station, COALESCE(SUM(value), 0) AS total\nFROM readings\nWHERE value IS NOT NULL\nGROUP BY station\nHAVING SUM(value) <= 0\nORDER BY station ASC;"
+            }
+          }
+        ]
+      }
+    },
+    "reused": false,
+    "passed": true,
+    "oracle_stderr": "",
+    "trace": {
+      "stage_seconds": {
+        "generation_preparation": 0.003166000358760357,
+        "generation_http": 1.5528246252797544,
+        "generation": 1.556046790909022
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789917462.5422678,
+          "http_status": 200,
+          "request_id": "openjev-576dffc0344443928b6ca9de5a43a302",
+          "input_tokens": 1790,
+          "generated_argument_tokens": 122,
+          "classification_control_records": 1,
+          "engine_seconds": 1.2945231720805168,
+          "classification_seconds": 0.14159822463989258,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6281822.744275001,
+              "scheduled_ts": 6281822.744290595,
+              "first_token_ts": 6281822.880592318
+            },
+            "initial_queue_seconds": 1.5594065189361572e-05,
+            "scheduled_to_first_output_seconds": 0.13630172330886126
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "request",
+          "seconds": 1.5526604591868818
+        }
+      ],
+      "local_tokenization": [
+        {
+          "seconds": 0.0010743341408669949,
+          "token_count": 846,
+          "verified": false
+        },
+        {
+          "seconds": 0.001527958083897829,
+          "token_count": 1790,
+          "verified": false
+        }
+      ],
+      "label_cache_hit": true
+    }
+  },
+  {
+    "task": "nullable_changed",
+    "review": false,
+    "expected_compatible": false,
+    "response": {
+      "request_id": "openjev-c7e30e17fb0a419191636303e6f39bcf",
+      "call": {
+        "name": "plan",
+        "arguments": {
+          "steps": [
+            {
+              "name": "reuse_write",
+              "arguments": {
+                "path": "nullable_changed.sql"
+              }
+            }
+          ]
+        }
+      },
+      "decision": {
+        "index": 0,
+        "name": "plan",
+        "control_id": 35,
+        "cached_prefix_tokens": 0,
+        "logprobs": [
+          -0.011203357949852943
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6281824.379043968,
+            "scheduled_ts": 6281824.379081099,
+            "first_token_ts": 6281824.518832757
+          },
+          "initial_queue_seconds": 3.713089972734451e-05,
+          "scheduled_to_first_output_seconds": 0.13975165784358978
+        },
+        "classification_seconds": 0.14625374972820282
+      },
+      "raw": "{\"steps\":[{\"name\":\"reuse_write\",\"arguments\":{\"path\":\"nullable_changed.sql\"}}]}",
+      "argument_token_ids": [
+        24313,
+        43943,
+        96893,
+        24313,
+        2852,
+        16562,
+        266,
+        3103,
+        98100,
+        10177,
+        83772,
+        80642,
+        9860,
+        16562,
+        54505,
+        32663,
+        9007,
+        60179,
+        4,
+        3831,
+        48663,
+        1
+      ],
+      "generated_argument_tokens": 22,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 0.4690859895199537,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          8
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "request",
+      "input_tokens": 1574
+    },
+    "request_seconds": 0.8046782081946731,
+    "call": {
+      "name": "plan",
+      "arguments": {
+        "steps": [
+          {
+            "name": "write",
+            "arguments": {
+              "path": "nullable_changed.sql",
+              "content": "SELECT station, COALESCE(SUM(value), 0) AS total\nFROM readings\nGROUP BY station\nORDER BY station ASC;\n"
+            }
+          }
+        ]
+      }
+    },
+    "reused": true,
+    "passed": false,
+    "oracle_stderr": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\nAssertionError\n",
+    "trace": {
+      "stage_seconds": {
+        "generation_preparation": 0.0033702501095831394,
+        "generation_http": 0.8012267500162125,
+        "generation": 0.8046411657705903
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789917464.148279,
+          "http_status": 200,
+          "request_id": "openjev-c7e30e17fb0a419191636303e6f39bcf",
+          "input_tokens": 1574,
+          "generated_argument_tokens": 22,
+          "classification_control_records": 1,
+          "engine_seconds": 0.4690859895199537,
+          "classification_seconds": 0.14625374972820282,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6281824.379043968,
+              "scheduled_ts": 6281824.379081099,
+              "first_token_ts": 6281824.518832757
+            },
+            "initial_queue_seconds": 3.713089972734451e-05,
+            "scheduled_to_first_output_seconds": 0.13975165784358978
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "request",
+          "seconds": 0.8009744579903781
+        }
+      ],
+      "local_tokenization": [
+        {
+          "seconds": 0.0011169998906552792,
+          "token_count": 846,
+          "verified": false
+        },
+        {
+          "seconds": 0.001602250151336193,
+          "token_count": 1574,
+          "verified": false
+        }
+      ],
+      "label_cache_hit": true
+    }
+  }
+]

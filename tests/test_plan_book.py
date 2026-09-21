@@ -96,3 +96,28 @@ def test_concurrent_process_first_use_migrates_once_and_merges(tmp_path):
 def admit_process(args):
     path, i = args
     PlanBook(path).admit([(f'process {i}', f'x={i}', 'check')])
+
+
+def test_lazy_source_read_survives_concurrent_prune(tmp_path, monkeypatch):
+    from contextlib import contextmanager
+    import sqlite3
+    book=PlanBook(tmp_path/'snapshot.sqlite3')
+    identity=book.admit([('read file','value=1','verified')])[0]
+    with book.connection() as db:
+        db.execute('PRAGMA journal_mode=WAL')
+    original=book.connection
+    pruned=[]
+    def prune_between_queries(sql):
+        if not pruned and sql.startswith('SELECT * FROM entries WHERE seq IN'):
+            with sqlite3.connect(book.path) as writer:
+                writer.execute('DELETE FROM entries')
+            pruned.append(True)
+    @contextmanager
+    def connection():
+        with original() as db:
+            db.set_trace_callback(prune_between_queries)
+            yield db
+    monkeypatch.setattr(book,'connection',connection)
+    result=book.candidates('read file',{},limit=1)
+    assert pruned and [entry['id'] for entry in result]==[identity]
+    assert result[0]['source']=='value=1' and book.count()==0

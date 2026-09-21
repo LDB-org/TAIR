@@ -1,5 +1,7 @@
 # Action codebooks and Agent replay: research update
 
+For the 2026-09-21 experiments and the Code Mode / retrieval-based speculative decoding review, see [the current research overview](ACCELERATION_RESEARCH_STATUS.md). This document retains the earlier research snapshot.
+
 Checked 2026-09-18. This extends the [schema/field prior-art review](SCHEMA_TOOLCALL_RELATED_WORK.md)
 to action reuse and whole-Agent overhead. Papers, official repositories and selected
 implementation files were inspected; none of these external systems was installed

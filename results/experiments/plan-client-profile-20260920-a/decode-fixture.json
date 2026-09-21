@@ -1,0 +1,25 @@
+{
+  "decision": {
+    "index": 2
+  },
+  "same_engine_session": true,
+  "finish_reason": "stop",
+  "classification_control_records": 1,
+  "call": {
+    "name": "plan",
+    "arguments": {
+      "first": {
+        "path": "jsonl_base.py",
+        "content": "import json\n\n\ndef parse_jsonl(text):\n    \"\"\"Parse newline-delimited JSON text into a list of decoded values.\n\n    Whitespace-only lines are skipped. Each nonblank line must contain a\n    single valid JSON value; otherwise ValueError is raised. Handles Unicode,\n    CRLF line endings, and a final line without a trailing newline.\n    \"\"\"\n    results = []\n    for line in text.splitlines():\n        if line.strip() == \"\":\n            continue\n        results.append(json.loads(line))\n    return results\n"
+      },
+      "rest": [
+        {
+          "name": "bash",
+          "arguments": {
+            "command": "cd /private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-expanded-project-bmht2o5j/workspace && python3 - <<'EOF'\nimport json\nfrom jsonl_base import parse_jsonl\n\n# Basic values in order\nassert parse_jsonl('1\\n2\\n3') == [1, 2, 3]\n\n# Whitespace-only lines skipped\nassert parse_jsonl('1\\n\\n   \\n2\\n') == [1, 2]\n\n# Unicode\nassert parse_jsonl('\"h\u00e9llo\"\\n\"\u4e16\u754c\"') == [\"h\u00e9llo\", \"\u4e16\u754c\"]\n\n# CRLF\nassert parse_jsonl('1\\r\\n2\\r\\n3') == [1, 2, 3]\n\n# Final line without newline\nassert parse_jsonl('1\\n2') == [1, 2]\n\n# Objects / arrays\nassert parse_jsonl('{\"a\": 1}\\n[1, 2]') == [{\"a\": 1}, [1, 2]]\n\n# Duplicate keys: last wins\nassert parse_jsonl('{\"a\": 1, \"a\": 2}') == [{\"a\": 2}]\n\n# Malformed nonblank line raises ValueError\nfor bad in ['1\\nnot json\\n2', '{\"a\":}', '\\n\\n  bad  \\n']:\n    try:\n        parse_jsonl(bad)\n        raise AssertionError(f\"expected ValueError for {bad!r}\")\n    except ValueError:\n        pass\n\nprint(\"all checks passed\")\nEOF"
+          }
+        }
+      ]
+    }
+  }
+}

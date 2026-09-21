@@ -1,0 +1,186 @@
+{
+  "experiment": "reuse-adaptation-component-20260920-a",
+  "scope": "Forced candidate component; no complete Agent timing",
+  "independent_rechecks": 8,
+  "cases": [
+    {
+      "task": "totals_base",
+      "review": false,
+      "passed": true,
+      "reused": true,
+      "request_seconds": 0.8550258330069482,
+      "generated_tokens": 22,
+      "logical_input_tokens": 1210,
+      "classification_controls": 1,
+      "adapted": false,
+      "raw_arguments": {
+        "steps": [
+          {
+            "name": "reuse_write",
+            "arguments": {
+              "path": "totals_base.sql"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task": "totals_base",
+      "review": true,
+      "passed": true,
+      "reused": true,
+      "request_seconds": 1.1849525826983154,
+      "generated_tokens": 71,
+      "logical_input_tokens": 1629,
+      "classification_controls": 1,
+      "adapted": false,
+      "raw_arguments": {
+        "steps": [
+          {
+            "name": "reuse_write",
+            "arguments": {
+              "requirement_check": "The stored SQL selects user_id and SUM(amount) AS total from events where status='posted', grouped by user_id and ordered by user_id ascending, matching the current request exactly.",
+              "use_cached_content": true,
+              "path": "totals_base.sql"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task": "totals_changed",
+      "review": true,
+      "passed": true,
+      "reused": false,
+      "request_seconds": 1.6108878329396248,
+      "generated_tokens": 121,
+      "logical_input_tokens": 1999,
+      "classification_controls": 1,
+      "adapted": false,
+      "raw_arguments": {
+        "steps": [
+          {
+            "name": "reuse_write",
+            "arguments": {
+              "requirement_check": "The current request requires returning only groups whose total is strictly greater than zero, but the stored content includes all groups (no HAVING clause). The stored bytes do not implement this changed requirement.",
+              "use_cached_content": false,
+              "path": "totals_changed.sql",
+              "content": "SELECT user_id, SUM(amount) AS total\nFROM events\nWHERE status = 'posted'\nGROUP BY user_id\nHAVING SUM(amount) > 0\nORDER BY user_id ASC;\n"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task": "totals_changed",
+      "review": false,
+      "passed": false,
+      "reused": true,
+      "request_seconds": 0.7883627498522401,
+      "generated_tokens": 23,
+      "logical_input_tokens": 1580,
+      "classification_controls": 1,
+      "adapted": false,
+      "raw_arguments": {
+        "steps": [
+          {
+            "name": "reuse_write",
+            "arguments": {
+              "path": "totals_changed.sql"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task": "nullable_base",
+      "review": false,
+      "passed": true,
+      "reused": true,
+      "request_seconds": 0.7161792502738535,
+      "generated_tokens": 21,
+      "logical_input_tokens": 1168,
+      "classification_controls": 1,
+      "adapted": false,
+      "raw_arguments": {
+        "steps": [
+          {
+            "name": "reuse_write",
+            "arguments": {
+              "path": "nullable_base.sql"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task": "nullable_base",
+      "review": true,
+      "passed": true,
+      "reused": true,
+      "request_seconds": 1.3971227500587702,
+      "generated_tokens": 89,
+      "logical_input_tokens": 1587,
+      "classification_controls": 1,
+      "adapted": false,
+      "raw_arguments": {
+        "steps": [
+          {
+            "name": "reuse_write",
+            "arguments": {
+              "requirement_check": "The stored content implements the required SQLite SELECT query: it selects station and COALESCE(SUM(value), 0) AS total from readings, groups by station, orders by station ascending, and converts all-NULL sums to 0. This matches the current request exactly.",
+              "use_cached_content": true,
+              "path": "nullable_base.sql"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task": "nullable_changed",
+      "review": true,
+      "passed": false,
+      "reused": false,
+      "request_seconds": 1.7410495840013027,
+      "generated_tokens": 135,
+      "logical_input_tokens": 1993,
+      "classification_controls": 1,
+      "adapted": false,
+      "raw_arguments": {
+        "steps": [
+          {
+            "name": "reuse_write",
+            "arguments": {
+              "requirement_check": "The stored content uses COALESCE(SUM(value),0) which converts all-NULL sums to 0, but the current request requires EXCLUDING groups with no non-NULL values. The stored query does not implement this exclusion, so it is incompatible.",
+              "use_cached_content": false,
+              "path": "nullable_changed.sql",
+              "content": "SELECT station, COALESCE(SUM(value), 0) AS total\nFROM readings\nWHERE value IS NOT NULL\nGROUP BY station\nHAVING SUM(value) <= 0\nORDER BY station ASC;\n"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task": "nullable_changed",
+      "review": false,
+      "passed": false,
+      "reused": true,
+      "request_seconds": 0.8356686667539179,
+      "generated_tokens": 22,
+      "logical_input_tokens": 1574,
+      "classification_controls": 1,
+      "adapted": false,
+      "raw_arguments": {
+        "steps": [
+          {
+            "name": "reuse_write",
+            "arguments": {
+              "path": "nullable_changed.sql"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "runtime_retained": false
+}

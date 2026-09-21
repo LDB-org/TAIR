@@ -1,0 +1,547 @@
+{
+  "arm": "c4",
+  "value": 0,
+  "seconds": 5.068818625062704,
+  "timed_out": false,
+  "validated_seconds": 5.135853375308216,
+  "exit_code": 0,
+  "finished": true,
+  "validation": {
+    "passed": false,
+    "seconds": 0.06703475024551153,
+    "stderr": "Traceback (most recent call last):\n  File \"/Users/zacharyzcr/Projects/TAIR/results/experiments/artifact-context-ablation-20260921-a/unique_changed-tair_refs/oracle.py\", line 5, in <module>\n    assert p.returncode==0,p.stderr\n           ^^^^^^^^^^^^^^^\nAssertionError: node:internal/modules/run_main:123\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'A',\n+   'a',\n    ' B ',\n    'b',\n    '\u4e2d\u6587',\n    ''\n  ]\n\n    at file:///private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-expanded-project-2jdh9skq/workspace/[eval1]:3:42\n    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:282:26)\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:278:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: [ 'A', 'a', ' B ', 'b', '\u4e2d\u6587', '' ],\n  expected: [ 'A', ' B ', 'b', '\u4e2d\u6587', '' ],\n  operator: 'deepStrictEqual',\n  diff: 'simple'\n}\n\nNode.js v22.23.2\n\n"
+  },
+  "passed": false,
+  "metrics": [
+    {
+      "metrics_version": 2,
+      "trace_id": "00f4d516847b40d59d10763eb7e5cc59",
+      "session_id": "01a0bfae-bfef-72c1-8c35-7792b229b807",
+      "parent_tool_call_id": null,
+      "workspace_id": "cc5b0d2fc7617da164c6f70019e070881c348a505fb8e6c90153978e2772426a",
+      "stage_seconds": {
+        "capability_negotiation": 0.2168749589473009,
+        "generation_preparation": 0.16353454208001494,
+        "generation_http": 1.5982492500916123,
+        "generation": 1.7628489169292152,
+        "plan_decoding": 0.07946958299726248
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789922296.26293,
+          "http_status": 200,
+          "request_id": "openjev-ec6a7d35ceec422cae0906c09c622b3f",
+          "input_tokens": 5466,
+          "generated_argument_tokens": 90,
+          "classification_control_records": 1,
+          "engine_seconds": 1.2644009543582797,
+          "classification_seconds": 0.29911431577056646,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6286656.585883973,
+              "scheduled_ts": 6286656.585899681,
+              "first_token_ts": 6286656.87472759
+            },
+            "initial_queue_seconds": 1.570768654346466e-05,
+            "scheduled_to_first_output_seconds": 0.2888279091566801
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "session",
+          "seconds": 1.5970548330806196
+        }
+      ],
+      "capabilities_cache_enabled": false,
+      "capabilities_cache_hit": false,
+      "prefix_cache_supported": true,
+      "plan_budget_supported": true,
+      "plan_budget_mode": "per_subtool",
+      "recovery_admission_enabled": true,
+      "recovery_scope": "whole_user_turn",
+      "historical_tool_failure": false,
+      "plan_reuse_enabled": true,
+      "candidate_retrieval_skipped": null,
+      "payload_mismatch_candidates": 0,
+      "template_entries": 0,
+      "generic_plan": true,
+      "book_entries": 5,
+      "candidate_count": 4,
+      "retrieval_seconds": 0.007494541350752115,
+      "plan_success_reply_enabled": false,
+      "reuse_review_enabled": false,
+      "write_references_enabled": true,
+      "recovery_planning": false,
+      "reuse_routing": false,
+      "classification_branches": 12,
+      "execution_guidance_enabled": false,
+      "compact_catalog": false,
+      "candidate_limit": 7,
+      "label_cache_hit": true,
+      "local_tokenization": [
+        {
+          "seconds": 0.11433783313259482,
+          "token_count": 3702,
+          "verified": false
+        },
+        {
+          "seconds": 0.11792729189619422,
+          "token_count": 5114,
+          "verified": false
+        },
+        {
+          "seconds": 0.1215352090075612,
+          "token_count": 5227,
+          "verified": false
+        },
+        {
+          "seconds": 0.12507012486457825,
+          "token_count": 5145,
+          "verified": false
+        },
+        {
+          "seconds": 0.12845900002866983,
+          "token_count": 5086,
+          "verified": false
+        },
+        {
+          "seconds": 0.13193179201334715,
+          "token_count": 5232,
+          "verified": false
+        },
+        {
+          "seconds": 0.13544408278539777,
+          "token_count": 5135,
+          "verified": false
+        },
+        {
+          "seconds": 0.13893012516200542,
+          "token_count": 5086,
+          "verified": false
+        },
+        {
+          "seconds": 0.029564875178039074,
+          "token_count": 5466,
+          "verified": false
+        },
+        {
+          "seconds": 0.02952495776116848,
+          "token_count": 5463,
+          "verified": false
+        },
+        {
+          "seconds": 0.029512958601117134,
+          "token_count": 5471,
+          "verified": false
+        },
+        {
+          "seconds": 0.030106959398835897,
+          "token_count": 5471,
+          "verified": false
+        },
+        {
+          "seconds": 0.030666875187307596,
+          "token_count": 5096,
+          "verified": false
+        }
+      ],
+      "prefix_cache_requested": true,
+      "plan_token_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          9,
+          61
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "requested_plan_tokens": 17408,
+      "selected_branch": "reuse_content",
+      "selected_content_id": "83b264612a5d57b5da1be282b7d1628d8c668e9f0b883f2052953112c58c8dba",
+      "completion_reply_normalized": false,
+      "cache_outcome": "reused",
+      "available_tools": [
+        "plan"
+      ],
+      "inner_tools": [
+        "read",
+        "edit",
+        "write",
+        "bash",
+        "grep",
+        "find",
+        "ls"
+      ],
+      "candidate_ids": [
+        "83b264612a5d57b5da1be282b7d1628d8c668e9f0b883f2052953112c58c8dba",
+        "f8c4aee354a0dd3c04cf07b8cdfb89258d7feae70174761cdf1579bf06fdd766",
+        "c8b8288f9e5d2e4803597c195a3652e05e28a5f13952d3f898155f6e5526e272",
+        "4a9360bc97a284e63287890b3a1193a7a2ef5334f15d69aea79adbce75393b53"
+      ],
+      "reused_content_ids": [
+        "83b264612a5d57b5da1be282b7d1628d8c668e9f0b883f2052953112c58c8dba"
+      ],
+      "reused_template_ids": [],
+      "plan_step_names": [
+        "write",
+        "bash"
+      ],
+      "plan_completion_decision": null,
+      "missing_completion_decision": false,
+      "expected_output_count": 0,
+      "planned_success_reply": false,
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 5466,
+        "known_generated_argument_tokens": 90,
+        "known_classification_control_records": 1
+      },
+      "request_id": "openjev-ec6a7d35ceec422cae0906c09c622b3f",
+      "decision": {
+        "index": 7,
+        "name": "plan",
+        "control_id": 42,
+        "cached_prefix_tokens": 0,
+        "logprobs": [
+          -3.2856273651123047,
+          -4.535627365112305,
+          -1.9106274843215942,
+          -5.410627365112305,
+          -8.535627365112305,
+          -10.410627365112305,
+          -10.660627365112305,
+          -0.6606274843215942,
+          -1.6606274843215942,
+          -8.660627365112305,
+          -7.035627365112305,
+          -2.9106273651123047
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6286656.585883973,
+            "scheduled_ts": 6286656.585899681,
+            "first_token_ts": 6286656.87472759
+          },
+          "initial_queue_seconds": 1.570768654346466e-05,
+          "scheduled_to_first_output_seconds": 0.2888279091566801
+        },
+        "classification_seconds": 0.29911431577056646
+      },
+      "generated_argument_tokens": 90,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 1.2644009543582797,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          9,
+          61
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "session",
+      "input_tokens": 5466,
+      "plan_task": "Create unique_changed.mjs exporting named function uniqueStrings(values). Input is an array of strings. Return a new array retaining the first occurrence of each distinct string in original order, without mutating the input. Keep original spelling in output. Do not trim whitespace. Deduplicate using s.toLowerCase() as the key; ASCII case differences must be ignored. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "on_success_reply": null,
+      "expected_plan_outputs": [],
+      "cache_hit": true,
+      "status": "ok",
+      "wall_seconds": 2.069721874780953,
+      "action": "chat",
+      "timestamp": 1789922297.940854
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "2cb2a742360a4f3299b850a3c8c48ebd",
+      "session_id": "01a0bfae-bfef-72c1-8c35-7792b229b807",
+      "parent_tool_call_id": "openjev-ec6a7d35ceec422cae0906c09c622b3f",
+      "workspace_id": "cc5b0d2fc7617da164c6f70019e070881c348a505fb8e6c90153978e2772426a",
+      "stage_seconds": {},
+      "http_requests": [],
+      "final_content_observed": 1,
+      "final_content_skipped": [],
+      "template_admitted": [],
+      "reused_template_ids": [],
+      "generic_plan": true,
+      "plan_completed": true,
+      "executed_tools": [
+        "write",
+        "bash"
+      ],
+      "accounting": {
+        "inference_requests": 0,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 0,
+        "known_generated_argument_tokens": 0,
+        "known_classification_control_records": 0
+      },
+      "admitted": [],
+      "cache_hit": true,
+      "admission_count": 0,
+      "admission_reason": "deduplicated_or_reused",
+      "book_entries_after": 5,
+      "validation": "tool execution only; not semantic verification",
+      "status": "ok",
+      "wall_seconds": 0.0010158750228583813,
+      "action": "tool_plan_complete",
+      "timestamp": 1789922298.058335
+    },
+    {
+      "metrics_version": 2,
+      "trace_id": "af91fa0bdf4c48d580ddd3b7fe672987",
+      "session_id": "01a0bfae-bfef-72c1-8c35-7792b229b807",
+      "parent_tool_call_id": null,
+      "workspace_id": "cc5b0d2fc7617da164c6f70019e070881c348a505fb8e6c90153978e2772426a",
+      "stage_seconds": {
+        "capability_negotiation": 0.21566441701725125,
+        "generation_preparation": 0.16058508306741714,
+        "generation_http": 1.9386092917993665,
+        "generation": 2.099566000048071,
+        "plan_decoding": 0.061894583981484175,
+        "recovery_admission": 1.7917249351739883e-05
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789922298.509362,
+          "http_status": 200,
+          "request_id": "openjev-371fb5ea0843405c9bec25c336b3ac43",
+          "input_tokens": 5440,
+          "generated_argument_tokens": 132,
+          "classification_control_records": 1,
+          "engine_seconds": 1.6052076639607549,
+          "classification_seconds": 0.2948986226692796,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6286658.830204438,
+              "scheduled_ts": 6286658.830221408,
+              "first_token_ts": 6286659.116585063
+            },
+            "initial_queue_seconds": 1.6969628632068634e-05,
+            "scheduled_to_first_output_seconds": 0.28636365476995707
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "session",
+          "seconds": 1.9374114591628313
+        }
+      ],
+      "capabilities_cache_enabled": false,
+      "capabilities_cache_hit": false,
+      "prefix_cache_supported": true,
+      "plan_budget_supported": true,
+      "plan_budget_mode": "per_subtool",
+      "recovery_admission_enabled": true,
+      "recovery_scope": "whole_user_turn",
+      "historical_tool_failure": false,
+      "plan_reuse_enabled": true,
+      "candidate_retrieval_skipped": null,
+      "payload_mismatch_candidates": 0,
+      "template_entries": 0,
+      "generic_plan": true,
+      "book_entries": 5,
+      "candidate_count": 4,
+      "retrieval_seconds": 0.010256459005177021,
+      "plan_success_reply_enabled": false,
+      "reuse_review_enabled": false,
+      "write_references_enabled": true,
+      "recovery_planning": false,
+      "reuse_routing": false,
+      "classification_branches": 12,
+      "execution_guidance_enabled": false,
+      "compact_catalog": false,
+      "candidate_limit": 7,
+      "label_cache_hit": true,
+      "local_tokenization": [
+        {
+          "seconds": 0.10910883313044906,
+          "token_count": 4027,
+          "verified": false
+        },
+        {
+          "seconds": 0.1129569998010993,
+          "token_count": 5458,
+          "verified": false
+        },
+        {
+          "seconds": 0.11670237500220537,
+          "token_count": 5571,
+          "verified": false
+        },
+        {
+          "seconds": 0.12023012526333332,
+          "token_count": 5489,
+          "verified": false
+        },
+        {
+          "seconds": 0.12386383302509785,
+          "token_count": 5430,
+          "verified": false
+        },
+        {
+          "seconds": 0.12760837469249964,
+          "token_count": 5576,
+          "verified": false
+        },
+        {
+          "seconds": 0.1314468332566321,
+          "token_count": 5479,
+          "verified": false
+        },
+        {
+          "seconds": 0.1352713331580162,
+          "token_count": 5430,
+          "verified": false
+        },
+        {
+          "seconds": 0.03175912471488118,
+          "token_count": 5810,
+          "verified": false
+        },
+        {
+          "seconds": 0.03164054127410054,
+          "token_count": 5807,
+          "verified": false
+        },
+        {
+          "seconds": 0.031713500153273344,
+          "token_count": 5815,
+          "verified": false
+        },
+        {
+          "seconds": 0.03176600020378828,
+          "token_count": 5815,
+          "verified": false
+        },
+        {
+          "seconds": 0.03163987537845969,
+          "token_count": 5440,
+          "verified": false
+        }
+      ],
+      "prefix_cache_requested": true,
+      "plan_token_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          130
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "requested_plan_tokens": 17408,
+      "selected_branch": "general",
+      "selected_content_id": null,
+      "completion_reply_normalized": false,
+      "cache_outcome": "reply",
+      "available_tools": [
+        "plan"
+      ],
+      "inner_tools": [
+        "read",
+        "edit",
+        "write",
+        "bash",
+        "grep",
+        "find",
+        "ls"
+      ],
+      "candidate_ids": [
+        "83b264612a5d57b5da1be282b7d1628d8c668e9f0b883f2052953112c58c8dba",
+        "f8c4aee354a0dd3c04cf07b8cdfb89258d7feae70174761cdf1579bf06fdd766",
+        "c8b8288f9e5d2e4803597c195a3652e05e28a5f13952d3f898155f6e5526e272",
+        "4a9360bc97a284e63287890b3a1193a7a2ef5334f15d69aea79adbce75393b53"
+      ],
+      "reused_content_ids": [],
+      "reused_template_ids": [],
+      "plan_step_names": [],
+      "plan_completion_decision": null,
+      "missing_completion_decision": false,
+      "expected_output_count": 0,
+      "planned_success_reply": false,
+      "recovery_admission": null,
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 5440,
+        "known_generated_argument_tokens": 132,
+        "known_classification_control_records": 1
+      },
+      "request_id": "openjev-371fb5ea0843405c9bec25c336b3ac43",
+      "decision": {
+        "index": 11,
+        "name": "plan",
+        "control_id": 46,
+        "cached_prefix_tokens": 0,
+        "logprobs": [
+          -5.120630264282227,
+          -5.370630264282227,
+          -6.370630264282227,
+          -6.995630264282227,
+          -6.245630264282227,
+          -10.120630264282227,
+          -9.870630264282227,
+          -5.370630264282227,
+          -1.7456303834915161,
+          -8.245630264282227,
+          -8.870630264282227,
+          -0.7456303834915161
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6286658.830204438,
+            "scheduled_ts": 6286658.830221408,
+            "first_token_ts": 6286659.116585063
+          },
+          "initial_queue_seconds": 1.6969628632068634e-05,
+          "scheduled_to_first_output_seconds": 0.28636365476995707
+        },
+        "classification_seconds": 0.2948986226692796
+      },
+      "generated_argument_tokens": 132,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 1.6052076639607549,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          130
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "session",
+      "input_tokens": 5440,
+      "plan_task": "Create unique_changed.mjs exporting named function uniqueStrings(values). Input is an array of strings. Return a new array retaining the first occurrence of each distinct string in original order, without mutating the input. Keep original spelling in output. Do not trim whitespace. Deduplicate using s.toLowerCase() as the key; ASCII case differences must be ignored. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "on_success_reply": null,
+      "expected_plan_outputs": [],
+      "cache_hit": false,
+      "status": "ok",
+      "wall_seconds": 2.394426165614277,
+      "action": "chat",
+      "timestamp": 1789922300.509336
+    }
+  ],
+  "malformed_event_lines": 0,
+  "usage_complete": true
+}

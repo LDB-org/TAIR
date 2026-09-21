@@ -1,0 +1,21 @@
+{
+  "experiment": "single-branch-open-content-20260921-a",
+  "arms": {
+    "fused": {
+      "passed": 4,
+      "trials": 4,
+      "seconds": 5.892432916909456,
+      "generated_tokens": 450
+    },
+    "direct": {
+      "passed": 2,
+      "trials": 4,
+      "seconds": 6.54350262414664,
+      "generated_tokens": 604
+    }
+  },
+  "failure": "Direct JSONL implementation uses native Python hash/equality for scalar canonical keys, merging true and 1. Both direct repetitions fail.",
+  "decision": "Do not promote singleton bypass; fixed-output latency does not establish equal-quality free generation.",
+  "oracle_controls": "Known-good IO and JSONL implementations passed; empty/no-op implementations failed.",
+  "limitations": "Two tasks, two repeats each, one write step constrained; standard completion is proxy, not new streaming-route acceptance; excludes program validation time and repair."
+}

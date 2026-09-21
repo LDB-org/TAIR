@@ -1,0 +1,372 @@
+{
+  "experiment": "recovery-admission-ablation-20260920-a",
+  "manifest_sha256": "32427c6625944ae311fcfeb68ecaafdae2ca76fe741df056813798e9297ff826",
+  "arms": {
+    "native": {
+      "passed": 3,
+      "seconds": 41.16628029150888,
+      "known_generated_argument_tokens": 3817,
+      "known_input_tokens": 58930,
+      "known_classification_control_records": 0,
+      "inference_requests": 19,
+      "tool_errors": 3,
+      "tasks": 3,
+      "closed": 3,
+      "usage_complete": true,
+      "correct_reuse": 0,
+      "tokenize_http": null,
+      "local_tokenizations": 0,
+      "stages": null,
+      "pending_assistant_turns": 0,
+      "token_counts_are_lower_bounds": false,
+      "repeat_subset": {
+        "passed": 1,
+        "seconds": 10.10668187495321,
+        "known_generated_argument_tokens": 895
+      },
+      "closed_with_workflow_checks": 3
+    },
+    "tair_refs": {
+      "passed": 3,
+      "seconds": 24.345071624498814,
+      "known_generated_argument_tokens": 1356,
+      "known_input_tokens": 32081,
+      "known_classification_control_records": 9,
+      "inference_requests": 9,
+      "tool_errors": 3,
+      "tasks": 3,
+      "closed": 3,
+      "usage_complete": true,
+      "correct_reuse": 0,
+      "tokenize_http": 0,
+      "local_tokenizations": 48,
+      "stages": {
+        "generation_preparation": 1.2301722504198551,
+        "generation_http": 18.173500208184123
+      },
+      "pending_assistant_turns": 0,
+      "token_counts_are_lower_bounds": false,
+      "repeat_subset": {
+        "passed": 1,
+        "seconds": 7.630535416770726,
+        "known_generated_argument_tokens": 391
+      },
+      "closed_with_workflow_checks": 3
+    },
+    "tair_recovered": {
+      "passed": 3,
+      "seconds": 23.30380304157734,
+      "known_generated_argument_tokens": 1177,
+      "known_input_tokens": 33458,
+      "known_classification_control_records": 9,
+      "inference_requests": 9,
+      "tool_errors": 3,
+      "tasks": 3,
+      "closed": 3,
+      "usage_complete": true,
+      "correct_reuse": 0,
+      "tokenize_http": 0,
+      "local_tokenizations": 59,
+      "stages": {
+        "generation_preparation": 1.28506845748052,
+        "generation_http": 16.886125250253826
+      },
+      "pending_assistant_turns": 0,
+      "token_counts_are_lower_bounds": false,
+      "repeat_subset": {
+        "passed": 1,
+        "seconds": 6.481168166734278,
+        "known_generated_argument_tokens": 247
+      },
+      "closed_with_workflow_checks": 3
+    }
+  },
+  "cases": [
+    {
+      "task": "recovery_jsonl_base",
+      "arm": "tair_refs",
+      "phase": "base",
+      "passed": true,
+      "seconds": 8.17732658283785,
+      "tool_errors": 1,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 441,
+      "known_input_tokens": 10641,
+      "inference_requests": 3,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "recovery_jsonl_base",
+      "arm": "native",
+      "phase": "base",
+      "passed": true,
+      "seconds": 14.242895166389644,
+      "tool_errors": 1,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 1324,
+      "known_input_tokens": 21880,
+      "inference_requests": 7,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "recovery_jsonl_base",
+      "arm": "tair_recovered",
+      "phase": "base",
+      "passed": true,
+      "seconds": 8.245597874745727,
+      "tool_errors": 1,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 431,
+      "known_input_tokens": 10641,
+      "inference_requests": 3,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "recovery_jsonl_repeat",
+      "arm": "tair_refs",
+      "phase": "repeat",
+      "passed": true,
+      "seconds": 7.630535416770726,
+      "tool_errors": 1,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 391,
+      "known_input_tokens": 10606,
+      "inference_requests": 3,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "recovery_jsonl_repeat",
+      "arm": "native",
+      "phase": "repeat",
+      "passed": true,
+      "seconds": 10.10668187495321,
+      "tool_errors": 1,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 895,
+      "known_input_tokens": 14146,
+      "inference_requests": 5,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "recovery_jsonl_repeat",
+      "arm": "tair_recovered",
+      "phase": "repeat",
+      "passed": true,
+      "seconds": 6.481168166734278,
+      "tool_errors": 1,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 247,
+      "known_input_tokens": 11324,
+      "inference_requests": 3,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "recovery_jsonl_changed",
+      "arm": "tair_recovered",
+      "phase": "changed",
+      "passed": true,
+      "seconds": 8.577037000097334,
+      "tool_errors": 1,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 499,
+      "known_input_tokens": 11493,
+      "inference_requests": 3,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "recovery_jsonl_changed",
+      "arm": "tair_refs",
+      "phase": "changed",
+      "passed": true,
+      "seconds": 8.537209624890238,
+      "tool_errors": 1,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 524,
+      "known_input_tokens": 10834,
+      "inference_requests": 3,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "recovery_jsonl_changed",
+      "arm": "native",
+      "phase": "changed",
+      "passed": true,
+      "seconds": 16.81670325016603,
+      "tool_errors": 1,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 1598,
+      "known_input_tokens": 22904,
+      "inference_requests": 7,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    }
+  ],
+  "artifact_reverification_agrees": 9,
+  "prefix_cache": {
+    "requests": 0,
+    "recorded": 0,
+    "nonzero_requests": 0,
+    "cached_tokens": 0,
+    "server_modes": []
+  },
+  "repair_process_audit": {},
+  "recovery_path_audit": [
+    {
+      "task": "recovery_jsonl_base",
+      "arm": "tair_refs",
+      "first_action_generated_tokens": 181,
+      "first_action_cache_outcome": "empty_book",
+      "reference_writes": [],
+      "recovery_admissions": [],
+      "local_recovery_admission_seconds": 0
+    },
+    {
+      "task": "recovery_jsonl_base",
+      "arm": "tair_recovered",
+      "first_action_generated_tokens": 181,
+      "first_action_cache_outcome": "empty_book",
+      "reference_writes": [],
+      "recovery_admissions": [
+        {
+          "admitted": [
+            "082b497c680793e59982593ffaf95f36d25537ce1781c3160f4054ed983fc2f1"
+          ],
+          "cache_hit": false,
+          "admission_count": 1,
+          "template_admitted": [],
+          "admission_reason": "new_write_content",
+          "book_entries_after": 1,
+          "validation": "tool execution only; not semantic verification",
+          "observed": 1,
+          "skipped": []
+        }
+      ],
+      "local_recovery_admission_seconds": 0.002932750154286623
+    },
+    {
+      "task": "recovery_jsonl_repeat",
+      "arm": "tair_refs",
+      "first_action_generated_tokens": 160,
+      "first_action_cache_outcome": "empty_book",
+      "reference_writes": [],
+      "recovery_admissions": [],
+      "local_recovery_admission_seconds": 0
+    },
+    {
+      "task": "recovery_jsonl_repeat",
+      "arm": "tair_recovered",
+      "first_action_generated_tokens": 49,
+      "first_action_cache_outcome": "reused",
+      "reference_writes": [
+        {
+          "request_id": "openjev-3a63032d914d4fb0a2fd3d8e851e5193",
+          "ids": [
+            "082b497c680793e59982593ffaf95f36d25537ce1781c3160f4054ed983fc2f1"
+          ],
+          "selected_branch": "tool:write",
+          "write_completed": true,
+          "following_check_deliberately_failed": true
+        }
+      ],
+      "recovery_admissions": [
+        {
+          "admitted": [
+            "d2f6786f211ae6df1934c7ae77e41eecc450e4393e2123307d1645fb461fdaaf"
+          ],
+          "cache_hit": false,
+          "admission_count": 1,
+          "template_admitted": [],
+          "admission_reason": "new_write_content",
+          "book_entries_after": 2,
+          "validation": "tool execution only; not semantic verification",
+          "observed": 1,
+          "skipped": []
+        }
+      ],
+      "local_recovery_admission_seconds": 0.0017820000648498535
+    },
+    {
+      "task": "recovery_jsonl_changed",
+      "arm": "tair_recovered",
+      "first_action_generated_tokens": 246,
+      "first_action_cache_outcome": "generated_with_candidates",
+      "reference_writes": [],
+      "recovery_admissions": [
+        {
+          "admitted": [
+            "0492793dfe53bbecf932c46ad2de513ea4a9450c6a7d3f407d066acae2f3c022"
+          ],
+          "cache_hit": false,
+          "admission_count": 1,
+          "template_admitted": [],
+          "admission_reason": "new_write_content",
+          "book_entries_after": 3,
+          "validation": "tool execution only; not semantic verification",
+          "observed": 1,
+          "skipped": []
+        }
+      ],
+      "local_recovery_admission_seconds": 0.0022588749416172504
+    },
+    {
+      "task": "recovery_jsonl_changed",
+      "arm": "tair_refs",
+      "first_action_generated_tokens": 284,
+      "first_action_cache_outcome": "empty_book",
+      "reference_writes": [],
+      "recovery_admissions": [],
+      "local_recovery_admission_seconds": 0
+    }
+  ],
+  "repeat_content_matches_first": true,
+  "repeated_source_sha256": "0539bc94c8ca598eb711b063cf297cb501cc7ced01c6734d87e5a580566cc596",
+  "final_book_entries": {
+    "tair_refs": 0,
+    "tair_recovered": 3
+  },
+  "counter_scope_note": "Complete-plan reuse remains zero because each reused write is followed by the deliberately failed checker. reference_writes verifies successful individual writes separately; no reuse counter reward was added."
+}

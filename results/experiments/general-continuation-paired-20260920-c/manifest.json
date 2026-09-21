@@ -1,0 +1,460 @@
+{
+  "cases": [
+    {
+      "id": "jsonl_base",
+      "group": "jsonl",
+      "phase": "base",
+      "primary_file": "jsonl_base.py",
+      "files": {
+        "jsonl_base.py": ""
+      },
+      "prompt": "Create jsonl_base.py providing parse_jsonl(text). Return a list of decoded JSON values, in line order. Skip whitespace-only lines. Handle Unicode, CRLF and a final line without a newline. Malformed nonblank JSON lines must raise ValueError. No import-time I/O. Duplicate object keys follow standard json.loads behavior: the last value wins. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "check": "from jsonl_base import parse_jsonl\nassert parse_jsonl('  \\r\\n{\"x\":\"\u4e2d\u6587\"}\\r\\n[1,null]\\ntrue')==[{'x':'\u4e2d\u6587'},[1,None],True]\nassert parse_jsonl('')==[]\ntry:parse_jsonl('{bad}')\nexcept ValueError:pass\nelse:raise AssertionError('malformed JSON accepted')\nassert parse_jsonl('{\"x\":1,\"x\":2}')==[{\"x\":2}]\n"
+    },
+    {
+      "id": "jsonl_repeat",
+      "group": "jsonl",
+      "phase": "repeat",
+      "primary_file": "jsonl_repeat.py",
+      "files": {
+        "jsonl_repeat.py": ""
+      },
+      "prompt": "Create jsonl_repeat.py providing parse_jsonl(text). Return a list of decoded JSON values, in line order. Skip whitespace-only lines. Handle Unicode, CRLF and a final line without a newline. Malformed nonblank JSON lines must raise ValueError. No import-time I/O. Duplicate object keys follow standard json.loads behavior: the last value wins. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "check": "from jsonl_repeat import parse_jsonl\nassert parse_jsonl('  \\r\\n{\"x\":\"\u4e2d\u6587\"}\\r\\n[1,null]\\ntrue')==[{'x':'\u4e2d\u6587'},[1,None],True]\nassert parse_jsonl('')==[]\ntry:parse_jsonl('{bad}')\nexcept ValueError:pass\nelse:raise AssertionError('malformed JSON accepted')\nassert parse_jsonl('{\"x\":1,\"x\":2}')==[{\"x\":2}]\n"
+    },
+    {
+      "id": "jsonl_changed",
+      "group": "jsonl",
+      "phase": "changed",
+      "primary_file": "jsonl_changed.py",
+      "files": {
+        "jsonl_changed.py": ""
+      },
+      "prompt": "Create jsonl_changed.py providing parse_jsonl(text). Return a list of decoded JSON values, in line order. Skip whitespace-only lines. Handle Unicode, CRLF and a final line without a newline. Malformed nonblank JSON lines must raise ValueError. No import-time I/O. Reject duplicate object keys at any nesting depth with ValueError. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "check": "from jsonl_changed import parse_jsonl\nassert parse_jsonl('  \\r\\n{\"x\":\"\u4e2d\u6587\"}\\r\\n[1,null]\\ntrue')==[{'x':'\u4e2d\u6587'},[1,None],True]\nassert parse_jsonl('')==[]\ntry:parse_jsonl('{bad}')\nexcept ValueError:pass\nelse:raise AssertionError('malformed JSON accepted')\nfor text in ['{\"x\":1,\"x\":2}', '{\"outer\":{\"x\":1,\"x\":2}}']:\n try:parse_jsonl(text)\n except ValueError:pass\n else:raise AssertionError('duplicate keys accepted')\n"
+    },
+    {
+      "id": "unique_base",
+      "group": "unique",
+      "phase": "base",
+      "primary_file": "unique_base.mjs",
+      "files": {
+        "unique_base.mjs": ""
+      },
+      "prompt": "Create unique_base.mjs exporting named function uniqueStrings(values). Input is an array of strings. Return a new array retaining the first occurrence of each distinct string in original order, without mutating the input. Keep original spelling in output. Do not trim whitespace. Deduplication is case-sensitive; upper and lower case remain distinct. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "check": "import subprocess\np=subprocess.run([\"node\",\"--input-type=module\",\"-e\",'import assert from \\'node:assert/strict\\'; import {uniqueStrings} from \\'./unique_base.mjs\\';\\nconst input=[\\'A\\',\\'a\\',\\'A\\',\\' B \\',\\'b\\',\\'\u4e2d\u6587\\',\\'\u4e2d\u6587\\',\\'\\',\\'\\']; const copy=[...input];\\nconst result=uniqueStrings(input);assert.deepEqual(result,[\"A\", \"a\", \" B \", \"b\", \"\u4e2d\u6587\", \"\"]);\\nassert.deepEqual(input,copy);assert.notEqual(result,input);assert.deepEqual(uniqueStrings([]),[]);'],capture_output=True,text=True,timeout=5)\nassert p.returncode==0,p.stderr\n"
+    },
+    {
+      "id": "unique_repeat",
+      "group": "unique",
+      "phase": "repeat",
+      "primary_file": "unique_repeat.mjs",
+      "files": {
+        "unique_repeat.mjs": ""
+      },
+      "prompt": "Create unique_repeat.mjs exporting named function uniqueStrings(values). Input is an array of strings. Return a new array retaining the first occurrence of each distinct string in original order, without mutating the input. Keep original spelling in output. Do not trim whitespace. Deduplication is case-sensitive; upper and lower case remain distinct. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "check": "import subprocess\np=subprocess.run([\"node\",\"--input-type=module\",\"-e\",'import assert from \\'node:assert/strict\\'; import {uniqueStrings} from \\'./unique_repeat.mjs\\';\\nconst input=[\\'A\\',\\'a\\',\\'A\\',\\' B \\',\\'b\\',\\'\u4e2d\u6587\\',\\'\u4e2d\u6587\\',\\'\\',\\'\\']; const copy=[...input];\\nconst result=uniqueStrings(input);assert.deepEqual(result,[\"A\", \"a\", \" B \", \"b\", \"\u4e2d\u6587\", \"\"]);\\nassert.deepEqual(input,copy);assert.notEqual(result,input);assert.deepEqual(uniqueStrings([]),[]);'],capture_output=True,text=True,timeout=5)\nassert p.returncode==0,p.stderr\n"
+    },
+    {
+      "id": "unique_changed",
+      "group": "unique",
+      "phase": "changed",
+      "primary_file": "unique_changed.mjs",
+      "files": {
+        "unique_changed.mjs": ""
+      },
+      "prompt": "Create unique_changed.mjs exporting named function uniqueStrings(values). Input is an array of strings. Return a new array retaining the first occurrence of each distinct string in original order, without mutating the input. Keep original spelling in output. Do not trim whitespace. Deduplicate using s.toLowerCase() as the key; ASCII case differences must be ignored. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "check": "import subprocess\np=subprocess.run([\"node\",\"--input-type=module\",\"-e\",'import assert from \\'node:assert/strict\\'; import {uniqueStrings} from \\'./unique_changed.mjs\\';\\nconst input=[\\'A\\',\\'a\\',\\'A\\',\\' B \\',\\'b\\',\\'\u4e2d\u6587\\',\\'\u4e2d\u6587\\',\\'\\',\\'\\']; const copy=[...input];\\nconst result=uniqueStrings(input);assert.deepEqual(result,[\"A\", \" B \", \"b\", \"\u4e2d\u6587\", \"\"]);\\nassert.deepEqual(input,copy);assert.notEqual(result,input);assert.deepEqual(uniqueStrings([]),[]);'],capture_output=True,text=True,timeout=5)\nassert p.returncode==0,p.stderr\n"
+    },
+    {
+      "id": "totals_base",
+      "group": "totals",
+      "phase": "base",
+      "primary_file": "totals_base.sql",
+      "files": {
+        "totals_base.sql": ""
+      },
+      "prompt": "Write totals_base.sql containing a single SQLite SELECT statement, without Markdown or schema changes. Table events(user_id TEXT NOT NULL, amount INTEGER NOT NULL, status TEXT NOT NULL). Return user_id and SUM(amount) AS total, considering only status='posted', grouped by user_id and ordered by user_id ascending. Amounts can be negative or zero. Include groups whose total is zero or negative. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "check": "import sqlite3\nfrom pathlib import Path\nc=sqlite3.connect(':memory:');c.execute('CREATE TABLE events(user_id TEXT NOT NULL,amount INTEGER NOT NULL,status TEXT NOT NULL)')\nc.executemany('INSERT INTO events VALUES (?,?,?)',[('b',0,'posted'),('a',5,'posted'),('a',-2,'posted'),('a',100,'pending'),('c',-2,'posted'),('d',90,'void')])\nquery=Path('totals_base.sql').read_text(); assert c.execute(query).fetchall()==[('a', 3), ('b', 0), ('c', -2)]\nc.execute('DELETE FROM events');assert c.execute(query).fetchall()==[]\n"
+    },
+    {
+      "id": "totals_repeat",
+      "group": "totals",
+      "phase": "repeat",
+      "primary_file": "totals_repeat.sql",
+      "files": {
+        "totals_repeat.sql": ""
+      },
+      "prompt": "Write totals_repeat.sql containing a single SQLite SELECT statement, without Markdown or schema changes. Table events(user_id TEXT NOT NULL, amount INTEGER NOT NULL, status TEXT NOT NULL). Return user_id and SUM(amount) AS total, considering only status='posted', grouped by user_id and ordered by user_id ascending. Amounts can be negative or zero. Include groups whose total is zero or negative. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "check": "import sqlite3\nfrom pathlib import Path\nc=sqlite3.connect(':memory:');c.execute('CREATE TABLE events(user_id TEXT NOT NULL,amount INTEGER NOT NULL,status TEXT NOT NULL)')\nc.executemany('INSERT INTO events VALUES (?,?,?)',[('b',0,'posted'),('a',5,'posted'),('a',-2,'posted'),('a',100,'pending'),('c',-2,'posted'),('d',90,'void')])\nquery=Path('totals_repeat.sql').read_text(); assert c.execute(query).fetchall()==[('a', 3), ('b', 0), ('c', -2)]\nc.execute('DELETE FROM events');assert c.execute(query).fetchall()==[]\n"
+    },
+    {
+      "id": "totals_changed",
+      "group": "totals",
+      "phase": "changed",
+      "primary_file": "totals_changed.sql",
+      "files": {
+        "totals_changed.sql": ""
+      },
+      "prompt": "Write totals_changed.sql containing a single SQLite SELECT statement, without Markdown or schema changes. Table events(user_id TEXT NOT NULL, amount INTEGER NOT NULL, status TEXT NOT NULL). Return user_id and SUM(amount) AS total, considering only status='posted', grouped by user_id and ordered by user_id ascending. Amounts can be negative or zero. Return only groups whose total is strictly greater than zero. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "check": "import sqlite3\nfrom pathlib import Path\nc=sqlite3.connect(':memory:');c.execute('CREATE TABLE events(user_id TEXT NOT NULL,amount INTEGER NOT NULL,status TEXT NOT NULL)')\nc.executemany('INSERT INTO events VALUES (?,?,?)',[('b',0,'posted'),('a',5,'posted'),('a',-2,'posted'),('a',100,'pending'),('c',-2,'posted'),('d',90,'void')])\nquery=Path('totals_changed.sql').read_text(); assert c.execute(query).fetchall()==[('a', 3)]\nc.execute('DELETE FROM events');assert c.execute(query).fetchall()==[]\n"
+    },
+    {
+      "id": "intervals_base",
+      "group": "intervals",
+      "phase": "base",
+      "primary_file": "intervals_base.py",
+      "files": {
+        "intervals_base.py": ""
+      },
+      "prompt": "Create intervals_base.py with merge_intervals(items). Input is a list of two-element lists [start,end] with integers and start<=end. Return a sorted list of merged two-element lists. Do not mutate any input list and do not share mutable sublists with it. Empty input returns []. Merge overlapping intervals and intervals whose endpoints touch. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "check": "from intervals_base import merge_intervals\nitems=[[8,9],[3,5],[1,3]];original=[x[:] for x in items]\nresult=merge_intervals(items);assert result==[[1, 5], [8, 9]],result\nassert items==original;result[0][0]=999;assert items==original\nassert merge_intervals([])==[]\nassert merge_intervals([[2,6],[1,4]])==[[1,6]]\nassert merge_intervals([[3,3]])==[[3,3]]\n"
+    },
+    {
+      "id": "intervals_repeat",
+      "group": "intervals",
+      "phase": "repeat",
+      "primary_file": "intervals_repeat.py",
+      "files": {
+        "intervals_repeat.py": ""
+      },
+      "prompt": "Create intervals_repeat.py with merge_intervals(items). Input is a list of two-element lists [start,end] with integers and start<=end. Return a sorted list of merged two-element lists. Do not mutate any input list and do not share mutable sublists with it. Empty input returns []. Merge overlapping intervals and intervals whose endpoints touch. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "check": "from intervals_repeat import merge_intervals\nitems=[[8,9],[3,5],[1,3]];original=[x[:] for x in items]\nresult=merge_intervals(items);assert result==[[1, 5], [8, 9]],result\nassert items==original;result[0][0]=999;assert items==original\nassert merge_intervals([])==[]\nassert merge_intervals([[2,6],[1,4]])==[[1,6]]\nassert merge_intervals([[3,3]])==[[3,3]]\n"
+    },
+    {
+      "id": "intervals_changed",
+      "group": "intervals",
+      "phase": "changed",
+      "primary_file": "intervals_changed.py",
+      "files": {
+        "intervals_changed.py": ""
+      },
+      "prompt": "Create intervals_changed.py with merge_intervals(items). Input is a list of two-element lists [start,end] with integers and start<=end. Return a sorted list of merged two-element lists. Do not mutate any input list and do not share mutable sublists with it. Empty input returns []. Merge only strictly overlapping intervals; endpoints that merely touch must remain separate. Zero-length intervals are allowed. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "check": "from intervals_changed import merge_intervals\nitems=[[8,9],[3,5],[1,3]];original=[x[:] for x in items]\nresult=merge_intervals(items);assert result==[[1, 3], [3, 5], [8, 9]],result\nassert items==original;result[0][0]=999;assert items==original\nassert merge_intervals([])==[]\nassert merge_intervals([[2,6],[1,4]])==[[1,6]]\nassert merge_intervals([[3,3]])==[[3,3]]\n"
+    },
+    {
+      "id": "config_1",
+      "group": "config",
+      "phase": "edit",
+      "primary_file": "service.json",
+      "files": {
+        "service.json": "{\"service\": {\"port\": 8080, \"label\": \"\u4fdd\u7559\", \"features\": [\"a\", \"b\"]}, \"other\": {\"port\": 9000}, \"enabled\": true}"
+      },
+      "prompt": "Read service.json and change ONLY service.port to 8443. Preserve every other value, including other.port, Unicode label, arrays and booleans. Do not create other deliverable files. Validate the resulting JSON. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "check": "from pathlib import Path\nimport json\nassert json.loads(Path(\"service.json\").read_text())=={'service': {'port': 8443, 'label': '\u4fdd\u7559', 'features': ['a', 'b']}, 'other': {'port': 9000}, 'enabled': True}\n"
+    },
+    {
+      "id": "config_2",
+      "group": "config",
+      "phase": "edit",
+      "primary_file": "service.json",
+      "files": {
+        "service.json": "{\"service\": {\"port\": 8080, \"label\": \"\u4fdd\u7559\", \"features\": [\"a\", \"b\"]}, \"other\": {\"port\": 9000}, \"enabled\": true}"
+      },
+      "prompt": "Read service.json and change ONLY service.port to 9443. Preserve every other value, including other.port, Unicode label, arrays and booleans. Do not create other deliverable files. Validate the resulting JSON. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "check": "from pathlib import Path\nimport json\nassert json.loads(Path(\"service.json\").read_text())=={'service': {'port': 9443, 'label': '\u4fdd\u7559', 'features': ['a', 'b']}, 'other': {'port': 9000}, 'enabled': True}\n"
+    },
+    {
+      "id": "repair_failure",
+      "group": "repair",
+      "phase": "new",
+      "primary_file": "calc.py",
+      "files": {
+        "calc.py": "def mean(values):\n    return sum(values) // len(values)\n",
+        "check_calc.py": "from calc import mean\nassert mean([1, 2]) == 1.5\nassert mean([]) is None\nassert mean([-2, 1]) == -0.5\n"
+      },
+      "prompt": "Run python3 check_calc.py first. Fix calc.py so mean returns the arithmetic mean as a float for nonempty input and None for empty input. Preserve the input. Do not modify check_calc.py. Run the check again after fixing. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "check": "from calc import mean\na=[1,2]\nassert mean(a)==1.5 and a==[1,2]\nassert mean([]) is None\nassert mean([-2,1])==-0.5\nassert isinstance(mean([2]),float)\n"
+    },
+    {
+      "id": "csv_totals",
+      "group": "csv",
+      "phase": "new",
+      "primary_file": "csv_totals.py",
+      "files": {
+        "csv_totals.py": ""
+      },
+      "prompt": "Create csv_totals.py with totals(text). Parse CSV with header category,amount. Sum integer amounts per category and return a dict. Support quoted commas in category names, negative numbers and Unicode. Empty text or header-only input returns {}. An invalid amount raises ValueError. No import-time I/O. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "check": "from csv_totals import totals\nassert totals('category,amount\\n\"a,b\",2\\n\u4e2d\u6587,4\\n\"a,b\",-3\\n')=={\"a,b\":-1,\"\u4e2d\u6587\":4}\nassert totals(\"\")=={}\nassert totals(\"category,amount\\n\")=={}\ntry: totals(\"category,amount\\nx,no\\n\")\nexcept ValueError: pass\nelse: raise AssertionError(\"invalid amount\")\n"
+    },
+    {
+      "id": "normalize_labels",
+      "group": "unicode",
+      "phase": "new",
+      "primary_file": "labels.py",
+      "files": {
+        "labels.py": ""
+      },
+      "prompt": "Create labels.py with unique_labels(values). Input is a list of strings. Deduplicate using Unicode casefold, after stripping leading and trailing whitespace; discard empty normalized keys. Return the original unmodified string for the first occurrence of each key, preserving order. Do not mutate input. No import-time I/O. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "check": "from labels import unique_labels\na=[\" Stra\u00dfe \",\"STRASSE\",\" \",\" A\",\"a \",\"\u4e2d\u6587\",\"\u4e2d\u6587\"]\nassert unique_labels(a)==[\" Stra\u00dfe \",\" A\",\"\u4e2d\u6587\"]\nassert a==[\" Stra\u00dfe \",\"STRASSE\",\" \",\" A\",\"a \",\"\u4e2d\u6587\",\"\u4e2d\u6587\"]\nassert unique_labels([])==[]\n"
+    }
+  ],
+  "schedule": [
+    [
+      "jsonl_base",
+      "tair"
+    ],
+    [
+      "jsonl_base",
+      "native"
+    ],
+    [
+      "jsonl_repeat",
+      "tair"
+    ],
+    [
+      "jsonl_repeat",
+      "native"
+    ],
+    [
+      "jsonl_changed",
+      "tair"
+    ],
+    [
+      "jsonl_changed",
+      "native"
+    ],
+    [
+      "unique_base",
+      "native"
+    ],
+    [
+      "unique_base",
+      "tair"
+    ],
+    [
+      "unique_repeat",
+      "native"
+    ],
+    [
+      "unique_repeat",
+      "tair"
+    ],
+    [
+      "unique_changed",
+      "tair"
+    ],
+    [
+      "unique_changed",
+      "native"
+    ],
+    [
+      "totals_base",
+      "native"
+    ],
+    [
+      "totals_base",
+      "tair"
+    ],
+    [
+      "totals_repeat",
+      "native"
+    ],
+    [
+      "totals_repeat",
+      "tair"
+    ],
+    [
+      "totals_changed",
+      "native"
+    ],
+    [
+      "totals_changed",
+      "tair"
+    ],
+    [
+      "intervals_base",
+      "native"
+    ],
+    [
+      "intervals_base",
+      "tair"
+    ],
+    [
+      "intervals_repeat",
+      "tair"
+    ],
+    [
+      "intervals_repeat",
+      "native"
+    ],
+    [
+      "intervals_changed",
+      "native"
+    ],
+    [
+      "intervals_changed",
+      "tair"
+    ],
+    [
+      "config_1",
+      "tair"
+    ],
+    [
+      "config_1",
+      "native"
+    ],
+    [
+      "config_2",
+      "native"
+    ],
+    [
+      "config_2",
+      "tair"
+    ],
+    [
+      "repair_failure",
+      "tair"
+    ],
+    [
+      "repair_failure",
+      "native"
+    ],
+    [
+      "csv_totals",
+      "native"
+    ],
+    [
+      "csv_totals",
+      "tair"
+    ],
+    [
+      "normalize_labels",
+      "native"
+    ],
+    [
+      "normalize_labels",
+      "tair"
+    ]
+  ],
+  "source_sha256": {
+    "deploy/toolcall_service.py": "aa1775672745208c07fdf00cd05a809f31418f7f44f53163722db8b37e6d10b3",
+    "deploy/logit_toolcall.py": "29b5ac57dfcf7b1d322f5b7f25a9e966308136cbbfa85aa075f896571eb1cbb5",
+    "deploy/tool_plan.py": "784370f50190b2813f50ac76b37d20f0d13ef586ee32b673c59b62a0b9f7e729",
+    "deploy/pi_engine_protocol.py": "0c04821490858d4187457df981ce9af5fd5f70d3a1b782089a3aa141a14023d5",
+    "deploy/direct_structural_protocol.py": "5e0b9c469fddab63ef8624761472e99610c395a9f354eea1bc47f1405a07030f",
+    "deploy/compact_structural_protocol.py": "15a7e1be3c0c8cc1a628813705714998dafbb4c13c2a7084eda4e1ca4c7b7820",
+    "deploy/schema_actions.py": "715c869c03a03edcfd0669166376d96ff33e6c3f179deba48195c69850b01bba",
+    "deploy/plan_book.py": "08a837c3195c226adf03dd01a97bed06162d1e1733fa50556341157acbfc517c",
+    "deploy/native_planner.py": "9d88245114d3e4c86aa9be46c735c2e2b637c983fb6fe2b2a142d7cc195419f7",
+    "deploy/applicable_structural_protocol.py": "2ccc524050bd137725f12c2067e6ee6385c2447d6e12e89fb261e0db1718a1e4",
+    "deploy/install_vllm_direct_tools.py": "59600450b448f4fe9ec64b5ee0fcfecacf8f9699592d915f47b462e1c63a5ed2",
+    "deploy/jit_codebook.py": "82df3aade94a56166fa1b324ec6c5a48c8c2cf35f20884590a10a20a9331c6e5",
+    "deploy/plan_template.py": "dab03444efd34d1403a11a88678217f6fb9cb4fc3043f43b69e673c103d2cfa4",
+    "deploy/vllm_direct_tools.py": "05b4c947ee34824f0d6a3e9faa7c9486a153a932231a3e4583873829ddef668c",
+    "deploy/preset_edits.py": "ec32c5ff29c008a69fccdfa7e83046d533cd0a5c60cf765f0d7e9f9a698cbd17",
+    "deploy/adaptive_plan.py": "c0076141cca28b09aec2716942ce0ddc442cc7139742d495f40c2a4ccc6abd74",
+    "deploy/region_edit_protocol.py": "5e7de9384a4e89ada981ed86f49c00b2f8fdd57274fa0e80af4d84945e938d1f",
+    "deploy/structural_edit_protocol.py": "7495c0da0706fa4b83e833c75ef81134f6fe88eb54dd02836286b54763168a2e",
+    "integrations/pijit/plan_metrics.mjs": "192187bbe28043b97a3597e4cf5ad278d690b37617dd85e2f8a1437495df2f67",
+    "integrations/pijit/extension.ts": "f5bde0bf270de6ac539008612041eab82cb4a89ca138032d06e0c0ee329c68bd",
+    "integrations/pijit/bridge.py": "5a20e2ffff276dc66981b691f98c25e85f30533a3902a5dd75ac937aa06ba1eb",
+    "integrations/pijit/launch.mjs": "d7e3f4dab99598089f9111dc698014629a2dbcf23479064aa82dd9a56d4adb2a",
+    "integrations/pijit/plan_executor.mjs": "6a0419f700cf799c5e2d10d17efea7d6920bc5fb96ddf065a9d62bc5b3dafc56",
+    "integrations/pijit/validate_utf8_demo.py": "ab9af984d4e0fd4d4d83a9e1d5993fffe35cf34fcf4acd57c997675e66a1848a",
+    "benchmarks/summarize_pi_comparison.py": "935876fc903c6b1c68046e111a4ab6a7703da42ee460a5ef6ed43aed4790cab6",
+    "benchmarks/continuation_cases.py": "8453e20b14090b96a19125a514013e697e558efe399f2464c9a10b7d747fd38b",
+    "benchmarks/build_protocol_sft_v2_data.py": "d2c62adf8611f8959d53b29ecfe18cb6ae9b57eecb0a552b50b5ecb0430dfc82",
+    "benchmarks/run_pi_parallel.py": "6b3849e80cc7848eb8e5a20bca376aa3ce3e383d1643f1c88b35501e44df312a",
+    "benchmarks/repository_scenarios.py": "91f493a0f3a404b6e40bec8f18005e2b268699af1892b1e91bef20a4c265877c",
+    "benchmarks/verify_direct_structural.py": "182a66204bc7657ac97d5d20a90bf9b2143b7c799f62ca31f929f444548b05f3",
+    "benchmarks/benchmark_plan_only.py": "0f723c4fd5dadb9df78ffe5c06e4adcf94d1651db854db924cdba58dd24edafd",
+    "benchmarks/benchmark_file_io.py": "b03aaabca4a0fa11caa2733ed2083a06aebff296befcef9cd9845f9ea321fe6b",
+    "benchmarks/summarize_jit_codebook.py": "6be1d281bf06ad01592e9462ec11329dda8ac5370e5e7a4a113dff56767de6c8",
+    "benchmarks/benchmark_codebook_guards.py": "4eb2cd1e46f19c4b95bc92bd9cce0c1c77ce6b8bccf2f9936ef56e0c67e6654e",
+    "benchmarks/schema_toolcall_vllm.py": "33f2c3461350b4765324b0192766da0a20bc171ca3147c5c17973ff1f51da5f0",
+    "benchmarks/benchmark_schema_jit_edits.py": "6f12b88b422d874a8da60b6f836a4d0ebdc8e73492fa8ca8ddecb823629e60d0",
+    "benchmarks/expanded_reuse_cases.py": "99c7c97141511b21d60f7b327611bf6c1bbbadb295a22e2f4608b4528d25c742",
+    "benchmarks/evaluate_applicable_edits.py": "49045381be32d731f850d4039696229edbc95dcf6a2d7dea704c5ad32901e7ad",
+    "benchmarks/check_remote_toolcall_safety.py": "d6be5d872e8a4cddda408547d2f31862707f1ca8c05689bfa32e18e43b824b72",
+    "benchmarks/benchmark_three_goals.py": "5cacb1e8e13824acc0011417ad88a01d58eebd6beab8ad0378a73d776af28c24",
+    "benchmarks/benchmark_schema_jit_agent.py": "36559d825405ae5a4903b6a064ecfe61f772caa602b9f432ccfa7be86360c14e",
+    "benchmarks/benchmark_plan_agent.py": "6523d61247144bb4ef0008259fdbac1cfda44d08d695a9210d291496df1a3534",
+    "benchmarks/benchmark_request_packing.py": "f125c835b625febc4d6bb0323488d45535c8cc687f2c8e4492d082980f2f2878",
+    "benchmarks/verify_expanded_scenarios.py": "57617f195db75a810c582db906f3f9f78099f85e68d389dc723c2980ee88f04a",
+    "benchmarks/benchmark_codebook_expanded.py": "f279f3dedf410f95a7b28904baa004d04893b9656a832e5cd367450ee961d2dc",
+    "benchmarks/test_direct_pi_logits.py": "a77e054d6d0df5419ec0580043caebf81967e19798d7f73365c545afb1abc59d",
+    "benchmarks/benchmark_native_codebook.py": "0d539853322aa5fb72755a2010bb9a529d46bb031d1906d88992bff0d6d29cce",
+    "benchmarks/benchmark_bound_plan.py": "71d11187dbf75ce9c776b451b3cd5623f286f38cbd167c2322a812aaaf6c9faa",
+    "benchmarks/verify_deepseek_direct_engine.py": "ad0349fbc1c9835f8a65471da9832209196583fdb2c948bdf8a06879d310b790",
+    "benchmarks/profile_fused_stream.py": "e2052ece6a7d05e4aa258d0ef5b5e83c3c7010cfa79486381f5e8cbf69dd0e77",
+    "benchmarks/replay_pi_failure.py": "52d17188523f54b624d3166af244dbf900120986caac5003d554e90e6f997c17",
+    "benchmarks/report_bound_expanded.py": "3593594b118adf9775a753a27585858d928c24ec696589fdfd2e91c56500b30d",
+    "benchmarks/benchmark_generic_plan.py": "c06c69a9561533be37f24c24e9eb9ce6a258c57d8b60fd064328c7693166b2cc",
+    "benchmarks/build_protocol_sft_data.py": "b670c8a09a98a33989b8ddfd38262698c5ad67dfc536b6727120332cc4bfee10",
+    "benchmarks/benchmark_expanded_reuse.py": "cdb38286cb37a562a967ad336a09dffe04887da321143dc4dc0038b1b308ee2d",
+    "benchmarks/repair_region_edits.py": "35b8fcd2df689f6e3cb2d4ac530229ea16815f7d7a1628f70676f95428386eb0",
+    "benchmarks/verify_jit_codebook.py": "97cd456ffc39097ca06bd100a2ffbc82b110d3aeeea3ecdc751417f3e9c63f9d",
+    "benchmarks/benchmark_port_scanner.py": "3c8dffaf89a4691097e68b62c227f0feec7bcc6a8027c6128357e507b993afb4",
+    "benchmarks/compare_protocol_sft.py": "8a3cd3dd07341e1af37eb5c865b7c13b5b968b11e9bdae1db37c1d14f6ff6f0c",
+    "benchmarks/summarize_deepseek_long.py": "2ae23de90a15ee1a42dabc82d5a16ee38161b4c981a4f857d118096f63e5e0db",
+    "benchmarks/accept_pi_scanner.py": "90e8a1662c58fa3768e6a6feeae41c2d924db2229c8af9095ea37ce0a8a2a1ed",
+    "benchmarks/test_remote_toolcall.py": "4680d032f5de5ca04791a6e1230fd02242eda2cd86d14948926d29d35620d332",
+    "benchmarks/compare_pijit_c4.py": "a834e8b1676d883642056157fd0f00b7e974cb8fdc9030d845fe170abea8981f",
+    "benchmarks/benchmark_engine_adaptive.py": "920a22f8034dcf6bbdb553f65634630de9c3a5ad01a12b9f5f7e1bd17ac63a12",
+    "benchmarks/summarize_applicable_edits.py": "ec99ac8d42fa84e06ff772b2b3616d36cf2a075f8b46cb271b6cc47724263a28",
+    "benchmarks/benchmark_plan_resilience.py": "5fb30af92814748b44bf7943272a9e590e11c12c9110c78cb3487bc653f6f5ed",
+    "benchmarks/plan_project_validator.py": "493a18d0d9219380c0b7d50f70158a25a89e19fc654b1392625b3f3153d973cf",
+    "benchmarks/benchmark_pijit_scheduler.py": "f4e52e7d32efa86a83ed1803e4679195e33b3ec1d315fec1f147e2078658ba04",
+    "benchmarks/benchmark_schema_actions.py": "e0d4cf57bf27f724bdc8f2151d5a721b66adf555873a09390286c8f518788e2b",
+    "benchmarks/schema_toolcall.py": "7e6fe2ebc6db0c2c25890c7fa264e3e9c07d8109001eb7cb749a778858a8d2a3",
+    "benchmarks/report_mechanism_ablation.py": "6c46faa104ea8e83d2b7f9ad30352272b7f6ea7d60fa8c4c04ae9d61c6bca16b",
+    "benchmarks/summarize_direct_pi_logits.py": "6a2ce063fb19bc035758d94a81541b5b65437778bbb18e5efd5d8b4538186e3f",
+    "benchmarks/probe_json_string_grammar.py": "4bb01b123d16a1e9b22f0ebf5e417061abdba0f92f1acfa2fdc4b6af883aa9a3",
+    "benchmarks/benchmark_mechanism_ablation.py": "9f0e1460b69c18801e302ffe8a67439c09b35bcc83394fc211a3be0412fa9be4",
+    "benchmarks/region_edit_same_content.py": "4c36c74458b207f3190b5ee1d3ebcf07867e14ccb5f7adc8a275235c1e5be99c",
+    "benchmarks/benchmark_bound_expanded.py": "09874514e651f78316238e80e2bad563d26cb5f91fbc746e7e1b68c91a5b3728",
+    "benchmarks/check_fused_toolcall_safety.py": "641c6b449b4a71a37c0b3ba4b321bc78fc71c8f9f331a3e0890c3f88cdea1ed7",
+    "benchmarks/report_plan_agent.py": "570f087b3d0ca0865640ab27cb9ffcd7df3875248d8f0730750e70211beba435",
+    "benchmarks/benchmark_plan_budget.py": "1df941b635a127e0a45dd9db52dce233b97dbd970a9ff7588a25b0efe8d42e52",
+    "benchmarks/benchmark_pi_concurrency.py": "399a7378f60b107e8d23fbfb9ac3c3ae1fb1c75068c37f2d7d663aa0452587ac",
+    "benchmarks/repository_transfer_scenarios.py": "f4214564897193fe9d02e07722ca15170ea566e3883e25e062647855654d93cb",
+    "benchmarks/reencode_pi_calls.py": "33a2f5c2a8c444ede970a1c1c241c5c10615ed0cc4b37d640b73f8922c866a3a",
+    "benchmarks/summarize_pi_named.py": "d90ffc802c23ddf640a66461a00270bd36e66bcfe350de930d3020fee3d76814",
+    "benchmarks/probe_operation_prompt.py": "31e246898eb4660c7f225ed7584d27049546fa9381ba403516e3b4e4305ccd43",
+    "benchmarks/benchmark_bound_action_task.py": "9618bcb45753bcc464459d7aeda5571b08b0962137655e37c2397e556022db97",
+    "benchmarks/rich_repository_scenarios.py": "2f40fda212be6cfc40540a7bc690816f951a1df519b0c9bbb633c26fc0c1398f",
+    "benchmarks/verify_archive.py": "4d91111473635165845429f41510a6a84260035f5ebe2dde7cec190ea0fa31fc",
+    "benchmarks/accept_deepseek_direct_engine.py": "d1924e8a02d96857fecd40ed0471c77737d940dbfd64448008919c0ddd5948c9",
+    "benchmarks/summarize_engine_metrics.py": "1184d29d660111730cdc6c12ab88793ab102b391bebebb46ac856234a87a94af",
+    "benchmarks/report_expanded_agent.py": "c67846feeafcfb409564c9dbddbd3676e77292f3e2b2c83374d1425cce17a907",
+    "benchmarks/probe_jit_codebook.py": "e54dec50bd53c73feea8e4c4d72a6a2ba190645a1c0d7cc8f987433cc2caf379",
+    "benchmarks/native_pi_trace.ts": "95484524416162975f402476da372d5f3ab38fc217ca3a42d92a16c456521def",
+    "benchmarks/benchmark_ideal_classification.py": "873b9176a464796319bbcd8a7b4d80fc41fc896bbebb6e2f8b1af1cc0cfc4fc0",
+    "benchmarks/probe_all_classification.py": "a835c762f7b7fc899cb39399a439e422e6579f3b88cab4e85d2579fa201d852d",
+    "benchmarks/render_paper_figures.py": "0c96c02f8415f8e9d9ed4481de58a5e3586d7752326dbd676dfd433f7891fe89",
+    "benchmarks/analyze_agent_search.py": "b2030468cb585aecd4cfd089ab46012aa073bd5a78fbb1e330caf4073231479f",
+    "benchmarks/compare_pijit_presets.py": "5d0852fe3d4360c5835e257b9569f4c1994ff689723579bdcf67fa0c50c8dc47",
+    "benchmarks/benchmark_engine_plan.py": "48d0afb8979353e7174aa547df4eabbf584b4446daea763cc7996296dd57ae23",
+    "benchmarks/test_deepseek_direct_engine.py": "d4776a4a871620a99cba5b631d6a1f95ddfcf478d0ddb42ffc2d10b22fb6d61b",
+    "benchmarks/evaluate_pi_named.py": "547af7e89caaaecddfa42f9acd302194492e0cdfe9aab82bc56faa7f7d9376d0",
+    "benchmarks/report_safe_codebook.py": "2cd4420e58889ef2957739438046f1fb9e54cac8ce48215ec59be563ffcd1c63",
+    "benchmarks/compare_region_edits.py": "ecad90fa39f34feeb4bb0ebe704d8020b669dd3fc14f1d1efe1246352c760fa0",
+    "benchmarks/benchmark_adaptive_plan.py": "f3488399be8c5ca1d376d3ba5971ed38f9f46718feef2cfc566c8c466d386ca8",
+    "benchmarks/audit_protocol_categories.py": "ae06c2dacb38777b6db0d0956a97e8bddb857cc0254777f0e07a17ea0f4f8931",
+    "benchmarks/benchmark_plan_book.py": "468e6871da1d7e738ba59b718da0cf4d7487337cd8bb7f389ba761b9719aa2bc",
+    "benchmarks/accept_pi_all_tools.py": "2c386a256ed940b2860fece351d942a15f25eb48d23754585158d470ddccd20f",
+    "benchmarks/audit_engine_adaptive.py": "f9fe3966045374f62b9c28acfd3768578543271d6ba439522b275535c24f7375",
+    "benchmarks/benchmark_codebook_reuse.py": "081424da40ad012e26bf0ffb8b4d29d6f57253745f6f51bea45d5063a27448da",
+    "benchmarks/benchmark_codebook_agent.py": "e342abb8ce6f9cb58c08ff7d03ad70deb87d9f97825162a81f4ee4146907aae2",
+    "benchmarks/benchmark_bound_edits.py": "df68b90c293f35325dbc2b8d91dcc29c0b69b5fecb08f4057b36b5424fb4aebd",
+    "benchmarks/build_deepseek_long_cases.py": "e75de41797ba4a83188dda17c6b4eaa7c47cc37b4bcb5b86c03623789f464381",
+    "benchmarks/report_safe_codebook_agent.py": "4ffe165e108a3639f4304bda2e3692d3b1953a09a85abc4c828995e7305201f9",
+    "benchmarks/compare_pijit_preparation.py": "9096f389dd859f1ab0a25fcb2e46bd8b34a3e75dafcb45ae7022d2cfa34beca6",
+    "benchmarks/analyze_planner_efficiency.py": "3a595ed8d7fc08465c575db661b47aa8559990ec89e20f5116b6513cb916fe92",
+    "benchmarks/reproduce_schema_escape.py": "665d3edbaf2ae5703fcbfca9a3fde445d9d4a62b21ab00901d5cabe32d65f3bf",
+    "benchmarks/summarize_direct_structural.py": "45d08d5bfa2ed5e50357e55a2697354012f33b46ac90368d3058d63d96c33b2c",
+    "benchmarks/expanded_agent_scenarios.py": "2167abef86202e30892264d29e1402d6d3a8f2a706fef51be7f2a0d6b995ddbd",
+    "benchmarks/report_safe_codebook_expanded.py": "30900c87a05290844a6ce7bf664aaefea9bde9f29cd7a075b5639de8eafd005b",
+    "benchmarks/evaluate_region_holdout.py": "b723a6300e892e090e05d6e6178d21f250649ede4372d73c4aa737aaa90cacdc",
+    "benchmarks/summarize_region_holdout.py": "993907ca5311c9ee48c323691539b3b0e1da385d3994bd64134d21cbcbef5a68",
+    "benchmarks/evaluate_direct_structural.py": "711965938e794f3d232b00bf7264f98e53011ea31a50c91240e372f4f8dd47ff",
+    "benchmarks/benchmark_general_pijit.py": "4ea1d30f8fdf4b154d9bf9e9718418752a82ef5bd6c067d4852a82b302041bb4",
+    "benchmarks/test_deepseek_candidate_scores.py": "9bf3fd4b00ab8a71d4842eb7734528f3530253cf570d0aa46e55eeac11034e2d",
+    "benchmarks/benchmark_safe_codebook.py": "2e9d4b4ba2efb6df29872dfd7c6d24c1e43439a9397aa101151c68d03ff04e71",
+    "benchmarks/summarize_pi_concurrency.py": "62eaf4ad154391882814c1b351826e3fa9ca866f41a4eb5fe959c63f47f8caf0",
+    "benchmarks/train_toolcall_protocol.py": "e364c080d347ce532396ea17790ec31e665f4abc31c7b10e88035af8e2dc443b"
+  },
+  "task_timeout": 150,
+  "method": "New authored cases frozen before inference; sequential shuffled arm order per case, related-task order preserved. Same backend/workspace fixtures, separate state. TAIR seeded from a SQLite snapshot, never cleared between tasks; templates off. Native multi-tool enabled, all seven tools, max_tokens 17408 both arms. TAIR additionally enforces 2048 per child. Shared tunnel setup excluded. Agent time includes launch, all inference, recovery, tool execution and final reply; independent oracle separate. No harness retries or prompt/runtime changes after freeze. This is not an external held-out benchmark."
+}

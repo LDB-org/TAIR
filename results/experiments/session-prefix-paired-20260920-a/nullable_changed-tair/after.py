@@ -1,0 +1,4 @@
+SELECT station, COALESCE(SUM(value), 0) AS total
+FROM readings
+GROUP BY station
+ORDER BY station ASC;

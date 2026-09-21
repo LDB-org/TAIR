@@ -1,0 +1,481 @@
+{
+  "experiment": "edit-state-ablation-20260920-a",
+  "manifest_sha256": "f261de1fb932e7bee78638b19c95fc817d42d9cd3477ee1566a584f0fb922626",
+  "arms": {
+    "native": {
+      "passed": 3,
+      "seconds": 31.090032916516066,
+      "known_generated_argument_tokens": 2764,
+      "known_input_tokens": 48693,
+      "known_classification_control_records": 0,
+      "inference_requests": 18,
+      "tool_errors": 0,
+      "tasks": 3,
+      "closed": 3,
+      "usage_complete": true,
+      "correct_reuse": 0,
+      "tokenize_http": null,
+      "local_tokenizations": 0,
+      "stages": null,
+      "pending_assistant_turns": 0,
+      "token_counts_are_lower_bounds": false,
+      "repeat_subset": {
+        "passed": 1,
+        "seconds": 10.598186375107616,
+        "known_generated_argument_tokens": 984
+      },
+      "closed_with_workflow_checks": 3,
+      "median_seconds": 10.598186375107616
+    },
+    "tair_no_reuse": {
+      "passed": 3,
+      "seconds": 20.22347299894318,
+      "known_generated_argument_tokens": 776,
+      "known_input_tokens": 31133,
+      "known_classification_control_records": 9,
+      "inference_requests": 9,
+      "tool_errors": 0,
+      "tasks": 3,
+      "closed": 3,
+      "usage_complete": true,
+      "correct_reuse": 0,
+      "tokenize_http": 0,
+      "local_tokenizations": 89,
+      "stages": {
+        "generation_preparation": 1.4834932098165154,
+        "generation_http": 13.684152040630579
+      },
+      "pending_assistant_turns": 0,
+      "token_counts_are_lower_bounds": false,
+      "repeat_subset": {
+        "passed": 1,
+        "seconds": 6.506871999707073,
+        "known_generated_argument_tokens": 250
+      },
+      "closed_with_workflow_checks": 3,
+      "median_seconds": 6.506871999707073,
+      "reply_requests": 3,
+      "reply_http_seconds": 4.7834902931936085,
+      "reply_generated_tokens": 306,
+      "admissions": 2,
+      "runtime_reuse_config_verified": 9
+    },
+    "tair": {
+      "passed": 3,
+      "seconds": 20.26624024985358,
+      "known_generated_argument_tokens": 729,
+      "known_input_tokens": 33001,
+      "known_classification_control_records": 9,
+      "inference_requests": 9,
+      "tool_errors": 0,
+      "tasks": 3,
+      "closed": 3,
+      "usage_complete": true,
+      "correct_reuse": 0,
+      "tokenize_http": 0,
+      "local_tokenizations": 116,
+      "stages": {
+        "generation_preparation": 1.5552790826186538,
+        "generation_http": 13.46615220978856
+      },
+      "pending_assistant_turns": 0,
+      "token_counts_are_lower_bounds": false,
+      "repeat_subset": {
+        "passed": 1,
+        "seconds": 6.602536499965936,
+        "known_generated_argument_tokens": 246
+      },
+      "closed_with_workflow_checks": 3,
+      "median_seconds": 6.603896582964808,
+      "reply_requests": 3,
+      "reply_http_seconds": 4.673824999947101,
+      "reply_generated_tokens": 273,
+      "admissions": 2,
+      "runtime_reuse_config_verified": 9
+    }
+  },
+  "cases": [
+    {
+      "task": "edit_state_base",
+      "arm": "tair_no_reuse",
+      "phase": "base",
+      "passed": true,
+      "seconds": 7.2912555411458015,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 263,
+      "known_input_tokens": 10349,
+      "inference_requests": 3,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "edit_state_base",
+      "arm": "native",
+      "phase": "base",
+      "passed": true,
+      "seconds": 9.507020500022918,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 777,
+      "known_input_tokens": 15703,
+      "inference_requests": 6,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "edit_state_base",
+      "arm": "tair",
+      "phase": "base",
+      "passed": true,
+      "seconds": 7.0598071669228375,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 220,
+      "known_input_tokens": 10599,
+      "inference_requests": 3,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "edit_state_repeat",
+      "arm": "tair_no_reuse",
+      "phase": "repeat",
+      "passed": true,
+      "seconds": 6.506871999707073,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 250,
+      "known_input_tokens": 10349,
+      "inference_requests": 3,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "edit_state_repeat",
+      "arm": "native",
+      "phase": "repeat",
+      "passed": true,
+      "seconds": 10.598186375107616,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 984,
+      "known_input_tokens": 16371,
+      "inference_requests": 6,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "edit_state_repeat",
+      "arm": "tair",
+      "phase": "repeat",
+      "passed": true,
+      "seconds": 6.602536499965936,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 246,
+      "known_input_tokens": 10968,
+      "inference_requests": 3,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "edit_state_changed",
+      "arm": "tair",
+      "phase": "changed",
+      "passed": true,
+      "seconds": 6.603896582964808,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 263,
+      "known_input_tokens": 11434,
+      "inference_requests": 3,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "edit_state_changed",
+      "arm": "tair_no_reuse",
+      "phase": "changed",
+      "passed": true,
+      "seconds": 6.425345458090305,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 263,
+      "known_input_tokens": 10435,
+      "inference_requests": 3,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "edit_state_changed",
+      "arm": "native",
+      "phase": "changed",
+      "passed": true,
+      "seconds": 10.984826041385531,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 1003,
+      "known_input_tokens": 16619,
+      "inference_requests": 6,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    }
+  ],
+  "artifact_reverification_agrees": 9,
+  "prefix_cache": {
+    "requests": 9,
+    "recorded": 9,
+    "nonzero_requests": 4,
+    "cached_tokens": 6912,
+    "server_modes": [
+      "session"
+    ]
+  },
+  "repair_process_audit": {},
+  "phase_groups": {
+    "base": {
+      "native": {
+        "passed": 1,
+        "seconds": 9.507020500022918,
+        "known_generated_argument_tokens": 777,
+        "inference_requests": 6,
+        "tool_errors": 0,
+        "tasks": 1
+      },
+      "tair_no_reuse": {
+        "passed": 1,
+        "seconds": 7.2912555411458015,
+        "known_generated_argument_tokens": 263,
+        "inference_requests": 3,
+        "tool_errors": 0,
+        "tasks": 1
+      },
+      "tair": {
+        "passed": 1,
+        "seconds": 7.0598071669228375,
+        "known_generated_argument_tokens": 220,
+        "inference_requests": 3,
+        "tool_errors": 0,
+        "tasks": 1
+      }
+    },
+    "changed": {
+      "native": {
+        "passed": 1,
+        "seconds": 10.984826041385531,
+        "known_generated_argument_tokens": 1003,
+        "inference_requests": 6,
+        "tool_errors": 0,
+        "tasks": 1
+      },
+      "tair_no_reuse": {
+        "passed": 1,
+        "seconds": 6.425345458090305,
+        "known_generated_argument_tokens": 263,
+        "inference_requests": 3,
+        "tool_errors": 0,
+        "tasks": 1
+      },
+      "tair": {
+        "passed": 1,
+        "seconds": 6.603896582964808,
+        "known_generated_argument_tokens": 263,
+        "inference_requests": 3,
+        "tool_errors": 0,
+        "tasks": 1
+      }
+    },
+    "repeat": {
+      "native": {
+        "passed": 1,
+        "seconds": 10.598186375107616,
+        "known_generated_argument_tokens": 984,
+        "inference_requests": 6,
+        "tool_errors": 0,
+        "tasks": 1
+      },
+      "tair_no_reuse": {
+        "passed": 1,
+        "seconds": 6.506871999707073,
+        "known_generated_argument_tokens": 250,
+        "inference_requests": 3,
+        "tool_errors": 0,
+        "tasks": 1
+      },
+      "tair": {
+        "passed": 1,
+        "seconds": 6.602536499965936,
+        "known_generated_argument_tokens": 246,
+        "inference_requests": 3,
+        "tool_errors": 0,
+        "tasks": 1
+      }
+    }
+  },
+  "paired_differences": {
+    "native -> tair_no_reuse": {
+      "pairs": 3,
+      "faster_tasks": 3,
+      "median_seconds_saved": 4.091314375400543,
+      "median_relative_seconds_saved": 0.38603910429523836,
+      "quality_matched_all": true
+    },
+    "tair_no_reuse -> tair": {
+      "pairs": 3,
+      "faster_tasks": 1,
+      "median_seconds_saved": -0.09566450025886297,
+      "median_relative_seconds_saved": -0.01470207194227413,
+      "quality_matched_all": true
+    }
+  },
+  "posthoc_longest_native_task_sensitivity": {
+    "excluded_task": "edit_state_changed",
+    "note": "Main totals retain every task; this post-hoc view only quantifies outlier influence.",
+    "native_seconds": 20.105206875130534,
+    "plan_no_reuse_seconds": 13.798127540852875
+  },
+  "execution_order_audit": [
+    {
+      "task": "edit_state_base",
+      "arm": "tair_no_reuse",
+      "tools": [
+        "read",
+        "edit",
+        "bash"
+      ],
+      "read_before_native_edit": true,
+      "first_tool_is_read": true
+    },
+    {
+      "task": "edit_state_base",
+      "arm": "native",
+      "tools": [
+        "read",
+        "ls",
+        "bash",
+        "bash",
+        "read"
+      ],
+      "read_before_native_edit": null,
+      "first_tool_is_read": true
+    },
+    {
+      "task": "edit_state_base",
+      "arm": "tair",
+      "tools": [
+        "read",
+        "edit",
+        "bash"
+      ],
+      "read_before_native_edit": true,
+      "first_tool_is_read": true
+    },
+    {
+      "task": "edit_state_repeat",
+      "arm": "tair_no_reuse",
+      "tools": [
+        "read",
+        "edit",
+        "bash"
+      ],
+      "read_before_native_edit": true,
+      "first_tool_is_read": true
+    },
+    {
+      "task": "edit_state_repeat",
+      "arm": "native",
+      "tools": [
+        "read",
+        "ls",
+        "bash",
+        "bash",
+        "read"
+      ],
+      "read_before_native_edit": null,
+      "first_tool_is_read": true
+    },
+    {
+      "task": "edit_state_repeat",
+      "arm": "tair",
+      "tools": [
+        "read",
+        "edit",
+        "bash"
+      ],
+      "read_before_native_edit": true,
+      "first_tool_is_read": true
+    },
+    {
+      "task": "edit_state_changed",
+      "arm": "tair",
+      "tools": [
+        "read",
+        "edit",
+        "bash"
+      ],
+      "read_before_native_edit": true,
+      "first_tool_is_read": true
+    },
+    {
+      "task": "edit_state_changed",
+      "arm": "tair_no_reuse",
+      "tools": [
+        "read",
+        "edit",
+        "bash"
+      ],
+      "read_before_native_edit": true,
+      "first_tool_is_read": true
+    },
+    {
+      "task": "edit_state_changed",
+      "arm": "native",
+      "tools": [
+        "read",
+        "bash",
+        "bash",
+        "bash",
+        "bash"
+      ],
+      "read_before_native_edit": null,
+      "first_tool_is_read": true
+    }
+  ]
+}

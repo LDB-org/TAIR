@@ -1,0 +1,1055 @@
+[
+  {
+    "cut": 3,
+    "updated": false,
+    "inference_seconds": 1.6118594999425113,
+    "response": {
+      "request_id": "openjev-e066460d3e43496c815a36fddb2e8c53",
+      "call": {
+        "name": "plan",
+        "arguments": {
+          "steps": [
+            {
+              "name": "bash",
+              "arguments": {
+                "command": "pwd && ls -la"
+              }
+            }
+          ]
+        }
+      },
+      "decision": {
+        "index": 0,
+        "name": "plan",
+        "control_id": 35,
+        "cached_prefix_tokens": 0,
+        "logprobs": [
+          -0.000390215078368783
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6288892.256248007,
+            "scheduled_ts": 6288892.256266815,
+            "first_token_ts": 6288892.553225492
+          },
+          "initial_queue_seconds": 1.880805939435959e-05,
+          "scheduled_to_first_output_seconds": 0.29695867747068405
+        },
+        "classification_seconds": 0.30158822145313025
+      },
+      "raw": "{\"steps\":[{\"purpose\":\"Locate the workspace directory containing unique_changed.mjs\",\"name\":\"bash\",\"arguments\":{\"command\":\"pwd && ls -la\"}}]}",
+      "argument_token_ids": [
+        24313,
+        43943,
+        96893,
+        24313,
+        82,
+        31419,
+        16562,
+        26751,
+        434,
+        270,
+        72895,
+        20289,
+        10027,
+        5463,
+        32663,
+        9007,
+        3420,
+        10617,
+        10177,
+        2852,
+        16562,
+        61159,
+        10177,
+        83772,
+        80642,
+        28381,
+        16562,
+        82,
+        25913,
+        6546,
+        52592,
+        565,
+        4558,
+        4,
+        3831,
+        48663,
+        1
+      ],
+      "generated_argument_tokens": 37,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 0.8863101210445166,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          10
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "request",
+      "input_tokens": 5207,
+      "plan_task": "Create unique_changed.mjs exporting named function uniqueStrings(values). Input is an array of strings. Return a new array retaining the first occurrence of each distinct string in original order, without mutating the input. Keep original spelling in output. Do not trim whitespace. Deduplicate using s.toLowerCase() as the key; ASCII case differences must be ignored. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "on_success_reply": null,
+      "expected_plan_outputs": [],
+      "reused_content_ids": [],
+      "reused_template_ids": [],
+      "generic_plan": true,
+      "cache_hit": false,
+      "plan_budget_supported": true
+    },
+    "trace": {
+      "stage_seconds": {
+        "capability_negotiation": 0.2010775413364172,
+        "generation_preparation": 0.12179324962198734,
+        "generation_http": 1.2156996252015233,
+        "generation": 1.3376493752002716,
+        "plan_decoding": 0.07079470809549093
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789924532.011399,
+          "http_status": 200,
+          "request_id": "openjev-e066460d3e43496c815a36fddb2e8c53",
+          "input_tokens": 5207,
+          "generated_argument_tokens": 37,
+          "classification_control_records": 1,
+          "engine_seconds": 0.8863101210445166,
+          "classification_seconds": 0.30158822145313025,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6288892.256248007,
+              "scheduled_ts": 6288892.256266815,
+              "first_token_ts": 6288892.553225492
+            },
+            "initial_queue_seconds": 1.880805939435959e-05,
+            "scheduled_to_first_output_seconds": 0.29695867747068405
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "request",
+          "seconds": 1.2153811673633754
+        }
+      ],
+      "parallel_capabilities_enabled": false,
+      "capabilities_cache_enabled": false,
+      "capabilities_cache_hit": false,
+      "prefix_cache_supported": true,
+      "plan_budget_supported": true,
+      "plan_budget_mode": "per_subtool",
+      "recovery_admission_enabled": false,
+      "recovery_scope": "whole_user_turn",
+      "historical_tool_failure": true,
+      "plan_reuse_enabled": false,
+      "candidate_retrieval_skipped": "recovery",
+      "payload_mismatch_candidates": 0,
+      "template_entries": 0,
+      "generic_plan": true,
+      "book_entries": 0,
+      "candidate_count": 0,
+      "retrieval_seconds": 8.566677570343018e-05,
+      "plan_success_reply_enabled": false,
+      "reuse_review_enabled": false,
+      "write_references_enabled": false,
+      "bash_argv_enabled": false,
+      "recovery_planning": true,
+      "reuse_routing": false,
+      "classification_branches": 1,
+      "execution_guidance_enabled": false,
+      "compact_catalog": false,
+      "candidate_limit": 0,
+      "label_cache_hit": false,
+      "local_tokenization": [
+        {
+          "seconds": 0.11496270773932338,
+          "token_count": 2798,
+          "verified": false
+        },
+        {
+          "seconds": 0.11826920881867409,
+          "token_count": 5207,
+          "verified": false
+        },
+        {
+          "seconds": 0.1181622501462698,
+          "token_count": 1,
+          "verified": false
+        }
+      ],
+      "plan_token_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          10
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "requested_plan_tokens": 17408,
+      "selected_branch": "recovery",
+      "selected_content_id": null,
+      "recovery_action_purposes": [
+        "Locate the workspace directory containing unique_changed.mjs"
+      ],
+      "bash_argv_steps": 0,
+      "completion_reply_normalized": false,
+      "cache_outcome": "empty_book",
+      "available_tools": [
+        "plan"
+      ],
+      "inner_tools": [
+        "read",
+        "edit",
+        "write",
+        "bash",
+        "grep",
+        "find",
+        "ls"
+      ],
+      "candidate_ids": [],
+      "reused_content_ids": [],
+      "reused_template_ids": [],
+      "plan_step_names": [
+        "bash"
+      ],
+      "plan_completion_decision": null,
+      "missing_completion_decision": false,
+      "expected_output_count": 0,
+      "planned_success_reply": false
+    },
+    "execution": [
+      {
+        "name": "bash",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-recovery-replay-8iifnc1o/workspace\ntotal 8\ndrwxr-xr-x@ 3 zacharyzcr  staff   96 Sep 21 01:15 .\ndrwx------@ 5 zacharyzcr  staff  160 Sep 21 01:15 ..\n-rw-r--r--@ 1 zacharyzcr  staff  258 Sep 21 01:15 unique_changed.mjs\n"
+            }
+          ]
+        }
+      }
+    ],
+    "execution_stderr": "",
+    "all_steps_succeeded": true,
+    "expected_checks_observed": false,
+    "passed": false
+  },
+  {
+    "cut": 3,
+    "updated": true,
+    "inference_seconds": 1.4533462501130998,
+    "response": {
+      "request_id": "openjev-e1145dc1e3e244e1bd957be619fe3b45",
+      "call": {
+        "name": "plan",
+        "arguments": {
+          "steps": [
+            {
+              "name": "find",
+              "arguments": {
+                "pattern": "unique_changed.mjs"
+              }
+            },
+            {
+              "name": "ls",
+              "arguments": {}
+            }
+          ]
+        }
+      },
+      "decision": {
+        "index": 0,
+        "name": "plan",
+        "control_id": 35,
+        "cached_prefix_tokens": 0,
+        "logprobs": [
+          -0.00032181330607272685
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6288894.148534343,
+            "scheduled_ts": 6288894.148557614,
+            "first_token_ts": 6288894.385545346
+          },
+          "initial_queue_seconds": 2.327095717191696e-05,
+          "scheduled_to_first_output_seconds": 0.23698773235082626
+        },
+        "classification_seconds": 0.24525076150894165
+      },
+      "raw": "{\"steps\":[{\"purpose\":\"Locate the workspace directory containing unique_changed.mjs\",\"name\":\"find\",\"arguments\":{\"pattern\":\"unique_changed.mjs\"}},{\"purpose\":\"List current directory to confirm workspace location\",\"name\":\"ls\",\"arguments\":{}}]}",
+      "argument_token_ids": [
+        24313,
+        43943,
+        96893,
+        24313,
+        82,
+        31419,
+        16562,
+        26751,
+        434,
+        270,
+        72895,
+        20289,
+        10027,
+        5463,
+        32663,
+        9007,
+        3420,
+        10617,
+        10177,
+        2852,
+        16562,
+        17782,
+        10177,
+        83772,
+        80642,
+        43693,
+        16562,
+        38138,
+        32663,
+        9007,
+        3420,
+        10617,
+        4,
+        55695,
+        24313,
+        82,
+        31419,
+        16562,
+        3536,
+        2573,
+        20289,
+        304,
+        13742,
+        72895,
+        6830,
+        10177,
+        2852,
+        16562,
+        10975,
+        10177,
+        83772,
+        3362,
+        93,
+        3831,
+        48663,
+        1
+      ],
+      "generated_argument_tokens": 56,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 0.9755472978577018,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          9,
+          1
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "request",
+      "input_tokens": 5282,
+      "plan_task": "Create unique_changed.mjs exporting named function uniqueStrings(values). Input is an array of strings. Return a new array retaining the first occurrence of each distinct string in original order, without mutating the input. Keep original spelling in output. Do not trim whitespace. Deduplicate using s.toLowerCase() as the key; ASCII case differences must be ignored. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "on_success_reply": null,
+      "expected_plan_outputs": [],
+      "reused_content_ids": [],
+      "reused_template_ids": [],
+      "generic_plan": true,
+      "cache_hit": false,
+      "plan_budget_supported": true
+    },
+    "trace": {
+      "stage_seconds": {
+        "capability_negotiation": 0.19997508311644197,
+        "generation_preparation": 0.017992916982620955,
+        "generation_http": 1.2188513749279082,
+        "generation": 1.2368855001404881,
+        "plan_decoding": 0.015343832783401012
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789924533.9156291,
+          "http_status": 200,
+          "request_id": "openjev-e1145dc1e3e244e1bd957be619fe3b45",
+          "input_tokens": 5282,
+          "generated_argument_tokens": 56,
+          "classification_control_records": 1,
+          "engine_seconds": 0.9755472978577018,
+          "classification_seconds": 0.24525076150894165,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6288894.148534343,
+              "scheduled_ts": 6288894.148557614,
+              "first_token_ts": 6288894.385545346
+            },
+            "initial_queue_seconds": 2.327095717191696e-05,
+            "scheduled_to_first_output_seconds": 0.23698773235082626
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "request",
+          "seconds": 1.2182947089895606
+        }
+      ],
+      "parallel_capabilities_enabled": false,
+      "capabilities_cache_enabled": false,
+      "capabilities_cache_hit": false,
+      "prefix_cache_supported": true,
+      "plan_budget_supported": true,
+      "plan_budget_mode": "per_subtool",
+      "recovery_admission_enabled": false,
+      "recovery_scope": "whole_user_turn",
+      "historical_tool_failure": true,
+      "plan_reuse_enabled": false,
+      "candidate_retrieval_skipped": "recovery",
+      "payload_mismatch_candidates": 0,
+      "template_entries": 0,
+      "generic_plan": true,
+      "book_entries": 0,
+      "candidate_count": 0,
+      "retrieval_seconds": 4.1958410292863846e-05,
+      "plan_success_reply_enabled": false,
+      "reuse_review_enabled": false,
+      "write_references_enabled": false,
+      "bash_argv_enabled": false,
+      "recovery_planning": true,
+      "reuse_routing": false,
+      "classification_branches": 1,
+      "execution_guidance_enabled": false,
+      "compact_catalog": false,
+      "candidate_limit": 0,
+      "local_tokenization": [
+        {
+          "seconds": 0.007324666250497103,
+          "token_count": 2798,
+          "verified": false
+        },
+        {
+          "seconds": 0.009301708079874516,
+          "token_count": 5282,
+          "verified": false
+        }
+      ],
+      "label_cache_hit": true,
+      "plan_token_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          9,
+          1
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "requested_plan_tokens": 17408,
+      "selected_branch": "recovery",
+      "selected_content_id": null,
+      "recovery_action_purposes": [
+        "Locate the workspace directory containing unique_changed.mjs",
+        "List current directory to confirm workspace location"
+      ],
+      "bash_argv_steps": 0,
+      "completion_reply_normalized": false,
+      "cache_outcome": "empty_book",
+      "available_tools": [
+        "plan"
+      ],
+      "inner_tools": [
+        "read",
+        "edit",
+        "write",
+        "bash",
+        "grep",
+        "find",
+        "ls"
+      ],
+      "candidate_ids": [],
+      "reused_content_ids": [],
+      "reused_template_ids": [],
+      "plan_step_names": [
+        "find",
+        "ls"
+      ],
+      "plan_completion_decision": null,
+      "missing_completion_decision": false,
+      "expected_output_count": 0,
+      "planned_success_reply": false
+    },
+    "execution": [
+      {
+        "name": "find",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "unique_changed.mjs"
+            }
+          ]
+        }
+      },
+      {
+        "name": "ls",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "unique_changed.mjs"
+            }
+          ]
+        }
+      }
+    ],
+    "execution_stderr": "",
+    "all_steps_succeeded": true,
+    "expected_checks_observed": false,
+    "passed": false
+  },
+  {
+    "cut": 4,
+    "updated": true,
+    "inference_seconds": 1.6057939170859754,
+    "response": {
+      "request_id": "openjev-04548d6db09940d1a1bd9a847a3a444b",
+      "call": {
+        "name": "plan",
+        "arguments": {
+          "steps": [
+            {
+              "name": "find",
+              "arguments": {
+                "pattern": "unique_changed.mjs"
+              }
+            },
+            {
+              "name": "ls",
+              "arguments": {}
+            }
+          ]
+        }
+      },
+      "decision": {
+        "index": 0,
+        "name": "plan",
+        "control_id": 35,
+        "cached_prefix_tokens": 0,
+        "logprobs": [
+          -0.0008381668012589216
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6288896.02921582,
+            "scheduled_ts": 6288896.02924254,
+            "first_token_ts": 6288896.313442204
+          },
+          "initial_queue_seconds": 2.671964466571808e-05,
+          "scheduled_to_first_output_seconds": 0.2841996643692255
+        },
+        "classification_seconds": 0.29408235009759665
+      },
+      "raw": "{\"steps\":[{\"purpose\":\"Locate the actual workspace directory containing unique_changed.mjs\",\"name\":\"find\",\"arguments\":{\"pattern\":\"unique_changed.mjs\"}},{\"purpose\":\"List current directory to confirm workspace location\",\"name\":\"ls\",\"arguments\":{}}]}",
+      "argument_token_ids": [
+        24313,
+        43943,
+        96893,
+        24313,
+        82,
+        31419,
+        16562,
+        26751,
+        434,
+        270,
+        7717,
+        72895,
+        20289,
+        10027,
+        5463,
+        32663,
+        9007,
+        3420,
+        10617,
+        10177,
+        2852,
+        16562,
+        17782,
+        10177,
+        83772,
+        80642,
+        43693,
+        16562,
+        38138,
+        32663,
+        9007,
+        3420,
+        10617,
+        4,
+        55695,
+        24313,
+        82,
+        31419,
+        16562,
+        3536,
+        2573,
+        20289,
+        304,
+        13742,
+        72895,
+        6830,
+        10177,
+        2852,
+        16562,
+        10975,
+        10177,
+        83772,
+        3362,
+        93,
+        3831,
+        48663,
+        1
+      ],
+      "generated_argument_tokens": 57,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 1.0302438149228692,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          9,
+          1
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "request",
+      "input_tokens": 6059,
+      "plan_task": "Create unique_changed.mjs exporting named function uniqueStrings(values). Input is an array of strings. Return a new array retaining the first occurrence of each distinct string in original order, without mutating the input. Keep original spelling in output. Do not trim whitespace. Deduplicate using s.toLowerCase() as the key; ASCII case differences must be ignored. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "on_success_reply": null,
+      "expected_plan_outputs": [],
+      "reused_content_ids": [],
+      "reused_template_ids": [],
+      "generic_plan": true,
+      "cache_hit": false,
+      "plan_budget_supported": true
+    },
+    "trace": {
+      "stage_seconds": {
+        "capability_negotiation": 0.20717270812019706,
+        "generation_preparation": 0.034381499979645014,
+        "generation_http": 1.324791416991502,
+        "generation": 1.3592761671170592,
+        "plan_decoding": 0.03477074997499585
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789924535.790039,
+          "http_status": 200,
+          "request_id": "openjev-04548d6db09940d1a1bd9a847a3a444b",
+          "input_tokens": 6059,
+          "generated_argument_tokens": 57,
+          "classification_control_records": 1,
+          "engine_seconds": 1.0302438149228692,
+          "classification_seconds": 0.29408235009759665,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6288896.02921582,
+              "scheduled_ts": 6288896.02924254,
+              "first_token_ts": 6288896.313442204
+            },
+            "initial_queue_seconds": 2.671964466571808e-05,
+            "scheduled_to_first_output_seconds": 0.2841996643692255
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "request",
+          "seconds": 1.3241325840353966
+        }
+      ],
+      "parallel_capabilities_enabled": false,
+      "capabilities_cache_enabled": false,
+      "capabilities_cache_hit": false,
+      "prefix_cache_supported": true,
+      "plan_budget_supported": true,
+      "plan_budget_mode": "per_subtool",
+      "recovery_admission_enabled": false,
+      "recovery_scope": "whole_user_turn",
+      "historical_tool_failure": true,
+      "plan_reuse_enabled": false,
+      "candidate_retrieval_skipped": "recovery",
+      "payload_mismatch_candidates": 0,
+      "template_entries": 0,
+      "generic_plan": true,
+      "book_entries": 0,
+      "candidate_count": 0,
+      "retrieval_seconds": 4.783365875482559e-05,
+      "plan_success_reply_enabled": false,
+      "reuse_review_enabled": false,
+      "write_references_enabled": false,
+      "bash_argv_enabled": false,
+      "recovery_planning": true,
+      "reuse_routing": false,
+      "classification_branches": 1,
+      "execution_guidance_enabled": false,
+      "compact_catalog": false,
+      "candidate_limit": 0,
+      "label_cache_hit": true,
+      "local_tokenization": [
+        {
+          "seconds": 0.01735024992376566,
+          "token_count": 3575,
+          "verified": false
+        },
+        {
+          "seconds": 0.011265958193689585,
+          "token_count": 6059,
+          "verified": false
+        }
+      ],
+      "plan_token_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          9,
+          1
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "requested_plan_tokens": 17408,
+      "selected_branch": "recovery",
+      "selected_content_id": null,
+      "recovery_action_purposes": [
+        "Locate the actual workspace directory containing unique_changed.mjs",
+        "List current directory to confirm workspace location"
+      ],
+      "bash_argv_steps": 0,
+      "completion_reply_normalized": false,
+      "cache_outcome": "empty_book",
+      "available_tools": [
+        "plan"
+      ],
+      "inner_tools": [
+        "read",
+        "edit",
+        "write",
+        "bash",
+        "grep",
+        "find",
+        "ls"
+      ],
+      "candidate_ids": [],
+      "reused_content_ids": [],
+      "reused_template_ids": [],
+      "plan_step_names": [
+        "find",
+        "ls"
+      ],
+      "plan_completion_decision": null,
+      "missing_completion_decision": false,
+      "expected_output_count": 0,
+      "planned_success_reply": false
+    },
+    "execution": [
+      {
+        "name": "find",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "unique_changed.mjs"
+            }
+          ]
+        }
+      },
+      {
+        "name": "ls",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "unique_changed.mjs"
+            }
+          ]
+        }
+      }
+    ],
+    "execution_stderr": "",
+    "all_steps_succeeded": true,
+    "expected_checks_observed": false,
+    "passed": false
+  },
+  {
+    "cut": 4,
+    "updated": false,
+    "inference_seconds": 1.5227345419116318,
+    "response": {
+      "request_id": "openjev-433a5510ac654172a8b652d253b3a685",
+      "call": {
+        "name": "plan",
+        "arguments": {
+          "steps": [
+            {
+              "name": "find",
+              "arguments": {
+                "pattern": "unique_changed.mjs"
+              }
+            }
+          ]
+        }
+      },
+      "decision": {
+        "index": 0,
+        "name": "plan",
+        "control_id": 35,
+        "cached_prefix_tokens": 0,
+        "logprobs": [
+          -0.0003815161471720785
+        ],
+        "timing": {
+          "engine_monotonic_timestamps": {
+            "queued_ts": 6288898.077531581,
+            "scheduled_ts": 6288898.077564272,
+            "first_token_ts": 6288898.36632982
+          },
+          "initial_queue_seconds": 3.269128501415253e-05,
+          "scheduled_to_first_output_seconds": 0.28876554779708385
+        },
+        "classification_seconds": 0.2993578352034092
+      },
+      "raw": "{\"steps\":[{\"purpose\":\"Locate the workspace directory containing unique_changed.mjs to fix the import path in the test\",\"name\":\"find\",\"arguments\":{\"pattern\":\"unique_changed.mjs\"}}]}",
+      "argument_token_ids": [
+        24313,
+        43943,
+        96893,
+        24313,
+        82,
+        31419,
+        16562,
+        26751,
+        434,
+        270,
+        72895,
+        20289,
+        10027,
+        5463,
+        32663,
+        9007,
+        3420,
+        10617,
+        304,
+        11284,
+        270,
+        1662,
+        3618,
+        295,
+        270,
+        1950,
+        10177,
+        2852,
+        16562,
+        17782,
+        10177,
+        83772,
+        80642,
+        43693,
+        16562,
+        38138,
+        32663,
+        9007,
+        3420,
+        10617,
+        4,
+        3831,
+        48663,
+        1
+      ],
+      "generated_argument_tokens": 44,
+      "classification_control_records": 1,
+      "same_engine_session": true,
+      "seconds": 0.9351632986217737,
+      "finish_reason": "stop",
+      "plan_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          9
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "prefix_cache_mode": "request",
+      "input_tokens": 5984,
+      "plan_task": "Create unique_changed.mjs exporting named function uniqueStrings(values). Input is an array of strings. Return a new array retaining the first occurrence of each distinct string in original order, without mutating the input. Keep original spelling in output. Do not trim whitespace. Deduplicate using s.toLowerCase() as the key; ASCII case differences must be ignored. Use only the standard library / built-in modules. Run small relevant checks before finishing. Do not install packages, use the network, or access files outside this workspace except your own temporary test files. Do not inspect external benchmark files. Finish with a short summary.",
+      "on_success_reply": null,
+      "expected_plan_outputs": [],
+      "reused_content_ids": [],
+      "reused_template_ids": [],
+      "generic_plan": true,
+      "cache_hit": false,
+      "plan_budget_supported": true
+    },
+    "trace": {
+      "stage_seconds": {
+        "capability_negotiation": 0.20371920801699162,
+        "generation_preparation": 0.02368950005620718,
+        "generation_http": 1.2585612083785236,
+        "generation": 1.2823762078769505,
+        "plan_decoding": 0.034612415824085474
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789924537.766515,
+          "http_status": 200,
+          "request_id": "openjev-433a5510ac654172a8b652d253b3a685",
+          "input_tokens": 5984,
+          "generated_argument_tokens": 44,
+          "classification_control_records": 1,
+          "engine_seconds": 0.9351632986217737,
+          "classification_seconds": 0.2993578352034092,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6288898.077531581,
+              "scheduled_ts": 6288898.077564272,
+              "first_token_ts": 6288898.36632982
+            },
+            "initial_queue_seconds": 3.269128501415253e-05,
+            "scheduled_to_first_output_seconds": 0.28876554779708385
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "request",
+          "seconds": 1.257923458237201
+        }
+      ],
+      "parallel_capabilities_enabled": false,
+      "capabilities_cache_enabled": false,
+      "capabilities_cache_hit": false,
+      "prefix_cache_supported": true,
+      "plan_budget_supported": true,
+      "plan_budget_mode": "per_subtool",
+      "recovery_admission_enabled": false,
+      "recovery_scope": "whole_user_turn",
+      "historical_tool_failure": true,
+      "plan_reuse_enabled": false,
+      "candidate_retrieval_skipped": "recovery",
+      "payload_mismatch_candidates": 0,
+      "template_entries": 0,
+      "generic_plan": true,
+      "book_entries": 0,
+      "candidate_count": 0,
+      "retrieval_seconds": 4.77498397231102e-05,
+      "plan_success_reply_enabled": false,
+      "reuse_review_enabled": false,
+      "write_references_enabled": false,
+      "bash_argv_enabled": false,
+      "recovery_planning": true,
+      "reuse_routing": false,
+      "classification_branches": 1,
+      "execution_guidance_enabled": false,
+      "compact_catalog": false,
+      "candidate_limit": 0,
+      "local_tokenization": [
+        {
+          "seconds": 0.011159917339682579,
+          "token_count": 3575,
+          "verified": false
+        },
+        {
+          "seconds": 0.011119999922811985,
+          "token_count": 5984,
+          "verified": false
+        }
+      ],
+      "label_cache_hit": true,
+      "plan_token_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          9
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "requested_plan_tokens": 17408,
+      "selected_branch": "recovery",
+      "selected_content_id": null,
+      "recovery_action_purposes": [
+        "Locate the workspace directory containing unique_changed.mjs to fix the import path in the test"
+      ],
+      "bash_argv_steps": 0,
+      "completion_reply_normalized": false,
+      "cache_outcome": "empty_book",
+      "available_tools": [
+        "plan"
+      ],
+      "inner_tools": [
+        "read",
+        "edit",
+        "write",
+        "bash",
+        "grep",
+        "find",
+        "ls"
+      ],
+      "candidate_ids": [],
+      "reused_content_ids": [],
+      "reused_template_ids": [],
+      "plan_step_names": [
+        "find"
+      ],
+      "plan_completion_decision": null,
+      "missing_completion_decision": false,
+      "expected_output_count": 0,
+      "planned_success_reply": false
+    },
+    "execution": [
+      {
+        "name": "find",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "unique_changed.mjs"
+            }
+          ]
+        }
+      }
+    ],
+    "execution_stderr": "",
+    "all_steps_succeeded": true,
+    "expected_checks_observed": false,
+    "passed": false
+  }
+]

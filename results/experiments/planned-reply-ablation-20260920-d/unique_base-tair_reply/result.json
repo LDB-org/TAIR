@@ -1,0 +1,171 @@
+{
+  "arm": "c4",
+  "value": 0,
+  "seconds": 3.8099779579788446,
+  "timed_out": false,
+  "validated_seconds": 3.8844170831143856,
+  "exit_code": 0,
+  "finished": false,
+  "validation": {
+    "passed": false,
+    "seconds": 0.07443912513554096,
+    "stderr": "Traceback (most recent call last):\n  File \"/Users/zacharyzcr/Projects/TAIR/results/experiments/planned-reply-ablation-20260920-d/unique_base-tair_reply/oracle.py\", line 5, in <module>\n    assert p.returncode==0,p.stderr\n           ^^^^^^^^^^^^^^^\nAssertionError: file:///private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-expanded-project-8ew9icu5/workspace/[eval1]:1\nimport assert from 'node:assert/strict'; import {uniqueStrings} from './unique_base.mjs';\n                                                 ^^^^^^^^^^^^^\nSyntaxError: The requested module './unique_base.mjs' does not provide an export named 'uniqueStrings'\n    at ModuleJob._instantiate (node:internal/modules/esm/module_job:226:21)\n    at async ModuleJob.run (node:internal/modules/esm/module_job:335:5)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:282:26)\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:278:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)\n\nNode.js v22.23.2\n\n"
+  },
+  "passed": false,
+  "metrics": [
+    {
+      "metrics_version": 2,
+      "trace_id": "45b112cdeaf54b11839ad3941a7e4410",
+      "session_id": "01a0bf22-30af-72b8-bdb8-b67773a84b72",
+      "parent_tool_call_id": null,
+      "workspace_id": "0e8e4d5c0ec6006769bd35e6e99487c0dd5ab573a2ec99da8d982d0f22d85112",
+      "stage_seconds": {
+        "generation_preparation": 0.15338804200291634,
+        "generation_http": 2.847113249823451,
+        "generation": 3.0006729159504175
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789913084.5872,
+          "http_status": 200,
+          "request_id": "openjev-e1c9bd77e22f4ca4a5edc4bf5b72b646",
+          "input_tokens": 3441,
+          "generated_argument_tokens": 246,
+          "classification_control_records": 1,
+          "engine_seconds": 2.4635890163481236,
+          "classification_seconds": 0.1997729642316699,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6277444.860991318,
+              "scheduled_ts": 6277444.861031528,
+              "first_token_ts": 6277445.054668827
+            },
+            "initial_queue_seconds": 4.0209852159023285e-05,
+            "scheduled_to_first_output_seconds": 0.19363729935139418
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "session",
+          "seconds": 2.8462872500531375
+        }
+      ],
+      "prefix_cache_supported": true,
+      "plan_budget_supported": true,
+      "plan_budget_mode": "per_subtool",
+      "plan_reuse_enabled": false,
+      "payload_mismatch_candidates": 0,
+      "template_entries": 0,
+      "generic_plan": true,
+      "book_entries": 1,
+      "candidate_count": 0,
+      "retrieval_seconds": 0.024059124756604433,
+      "plan_success_reply_enabled": true,
+      "recovery_planning": false,
+      "reuse_routing": false,
+      "classification_branches": 8,
+      "compact_catalog": false,
+      "candidate_limit": 0,
+      "label_cache_hit": true,
+      "local_tokenization": [
+        {
+          "seconds": 0.12111125001683831,
+          "token_count": 1888,
+          "verified": false
+        },
+        {
+          "seconds": 0.12374033313244581,
+          "token_count": 3459,
+          "verified": false
+        },
+        {
+          "seconds": 0.12605970771983266,
+          "token_count": 3572,
+          "verified": false
+        },
+        {
+          "seconds": 0.11966545786708593,
+          "token_count": 3437,
+          "verified": false
+        },
+        {
+          "seconds": 0.12219929182901978,
+          "token_count": 3431,
+          "verified": false
+        },
+        {
+          "seconds": 0.1248060422949493,
+          "token_count": 3577,
+          "verified": false
+        },
+        {
+          "seconds": 0.12752795778214931,
+          "token_count": 3480,
+          "verified": false
+        },
+        {
+          "seconds": 0.13021783344447613,
+          "token_count": 3431,
+          "verified": false
+        },
+        {
+          "seconds": 0.02253400022163987,
+          "token_count": 3441,
+          "verified": false
+        }
+      ],
+      "prefix_cache_requested": true,
+      "plan_token_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          82,
+          145
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "requested_plan_tokens": 17408,
+      "selected_branch": "general",
+      "selected_content_id": null,
+      "cache_outcome": "no_candidates",
+      "available_tools": [
+        "plan"
+      ],
+      "inner_tools": [
+        "read",
+        "edit",
+        "write",
+        "bash",
+        "grep",
+        "find",
+        "ls"
+      ],
+      "candidate_ids": [],
+      "reused_content_ids": [],
+      "reused_template_ids": [],
+      "plan_step_names": [
+        "write",
+        "bash"
+      ],
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 3441,
+        "known_generated_argument_tokens": 246,
+        "known_classification_control_records": 1
+      },
+      "status": "error",
+      "error": "ValueError: Missing completion decision; no plan executed",
+      "wall_seconds": 3.374168416019529,
+      "action": "chat",
+      "timestamp": 1789913087.537874
+    }
+  ],
+  "malformed_event_lines": 0,
+  "usage_complete": false
+}

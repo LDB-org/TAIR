@@ -1,0 +1,173 @@
+{
+  "arm": "c4",
+  "value": 0,
+  "seconds": 1.9740121667273343,
+  "timed_out": false,
+  "validated_seconds": 1.9911788748577237,
+  "exit_code": 0,
+  "finished": false,
+  "validation": {
+    "passed": false,
+    "seconds": 0.017166708130389452,
+    "stderr": "Traceback (most recent call last):\n  File \"/Users/zacharyzcr/Projects/TAIR/results/experiments/planned-reply-ablation-20260920-d/repair_failure-tair_reply/oracle.py\", line 5, in <module>\n    assert mean(a)==1.5 and a==[1,2]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  },
+  "passed": false,
+  "metrics": [
+    {
+      "metrics_version": 2,
+      "trace_id": "cc9747b2ceaa4950abd01955a5d1a599",
+      "session_id": "01a0bf23-050a-701f-a7f0-c30ae2d9ad67",
+      "parent_tool_call_id": null,
+      "workspace_id": "0e8e4d5c0ec6006769bd35e6e99487c0dd5ab573a2ec99da8d982d0f22d85112",
+      "stage_seconds": {
+        "generation_preparation": 0.13975950004532933,
+        "generation_http": 1.1170085002668202,
+        "generation": 1.2570117502473295
+      },
+      "http_requests": [
+        {
+          "route": "/v1/openjev/toolcall",
+          "status": "ok",
+          "usage_complete": true,
+          "started_at": 1789913138.9065611,
+          "http_status": 200,
+          "request_id": "openjev-729693b7524c4a3693a5a33f9f40afa6",
+          "input_tokens": 3415,
+          "generated_argument_tokens": 45,
+          "classification_control_records": 1,
+          "engine_seconds": 0.7965087834745646,
+          "classification_seconds": 0.19804476760327816,
+          "classification_timing": {
+            "engine_monotonic_timestamps": {
+              "queued_ts": 6277499.182072954,
+              "scheduled_ts": 6277499.182111402,
+              "first_token_ts": 6277499.373150068
+            },
+            "initial_queue_seconds": 3.84477898478508e-05,
+            "scheduled_to_first_output_seconds": 0.19103866629302502
+          },
+          "cached_prefix_tokens": 0,
+          "prefix_cache_mode": "session",
+          "seconds": 1.1161661660298705
+        }
+      ],
+      "prefix_cache_supported": true,
+      "plan_budget_supported": true,
+      "plan_budget_mode": "per_subtool",
+      "plan_reuse_enabled": false,
+      "payload_mismatch_candidates": 0,
+      "template_entries": 0,
+      "generic_plan": true,
+      "book_entries": 1,
+      "candidate_count": 0,
+      "retrieval_seconds": 0.006597666069865227,
+      "plan_success_reply_enabled": true,
+      "recovery_planning": false,
+      "reuse_routing": false,
+      "classification_branches": 8,
+      "compact_catalog": false,
+      "candidate_limit": 0,
+      "label_cache_hit": true,
+      "local_tokenization": [
+        {
+          "seconds": 0.11120733385905623,
+          "token_count": 1872,
+          "verified": false
+        },
+        {
+          "seconds": 0.11380274966359138,
+          "token_count": 3443,
+          "verified": false
+        },
+        {
+          "seconds": 0.11640970828011632,
+          "token_count": 3556,
+          "verified": false
+        },
+        {
+          "seconds": 0.11893204180523753,
+          "token_count": 3421,
+          "verified": false
+        },
+        {
+          "seconds": 0.12140870792791247,
+          "token_count": 3415,
+          "verified": false
+        },
+        {
+          "seconds": 0.12384174996986985,
+          "token_count": 3561,
+          "verified": false
+        },
+        {
+          "seconds": 0.12631049985066056,
+          "token_count": 3464,
+          "verified": false
+        },
+        {
+          "seconds": 0.12879633391276002,
+          "token_count": 3415,
+          "verified": false
+        },
+        {
+          "seconds": 0.02155849989503622,
+          "token_count": 3425,
+          "verified": false
+        }
+      ],
+      "prefix_cache_requested": true,
+      "plan_token_budget": {
+        "version": 1,
+        "per_tool_limit": 2048,
+        "max_steps": 8,
+        "total_generation_limit": 17408,
+        "argument_tokens": [
+          10,
+          6,
+          8
+        ],
+        "exceeded_steps": [],
+        "counting": "tokenized_compact_argument_json_before_reuse_expansion"
+      },
+      "requested_plan_tokens": 17408,
+      "selected_branch": "tool:bash",
+      "selected_content_id": null,
+      "cache_outcome": "no_candidates",
+      "available_tools": [
+        "plan"
+      ],
+      "inner_tools": [
+        "read",
+        "edit",
+        "write",
+        "bash",
+        "grep",
+        "find",
+        "ls"
+      ],
+      "candidate_ids": [],
+      "reused_content_ids": [],
+      "reused_template_ids": [],
+      "plan_step_names": [
+        "bash",
+        "read",
+        "read"
+      ],
+      "accounting": {
+        "inference_requests": 1,
+        "usage_complete": true,
+        "unknown_usage_requests": 0,
+        "known_input_tokens": 3415,
+        "known_generated_argument_tokens": 45,
+        "known_classification_control_records": 1
+      },
+      "status": "error",
+      "error": "ValueError: Missing completion decision; no plan executed",
+      "wall_seconds": 1.6063272077590227,
+      "action": "chat",
+      "timestamp": 1789913140.135067
+    }
+  ],
+  "malformed_event_lines": 0,
+  "usage_complete": false
+}

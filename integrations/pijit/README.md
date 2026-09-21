@@ -51,6 +51,53 @@ per-project codebooks, metrics and source backups are under
 `~/.pijit/workspaces/<path-hash>/`. Normal Pi tool permissions still apply; this
 is not a sandbox. Source and conversation context are sent to the configured engine.
 
+## Optional local preparation for a pinned DeepSeek V4 deployment
+
+`pip install -e '.[tokenizer-client]'` installs only the optional CPU tokenizer dependency.
+`PIJIT_LOCAL_TOKENIZER=/trusted/snapshot` enables local text tokenization;
+`PIJIT_TOKENIZER_REVISION` must be the SHA-256 of that snapshot's `manifest.json`.
+The manifest format is `tair-deepseek-v4-text-v1`, with `client_tokenizers_version`
+and `files` mapping `tokenizer.json` and `encoding.py` to SHA-256 digests.
+Copy these files from the actual deployment (the latter is vLLM's
+`tokenizers/deepseek_v4_encoding.py`), retaining its license notice. The snapshot
+contains trusted executable renderer code: do not use an untrusted snapshot.
+Keep model files and tokenizer snapshots outside this repository.
+
+The client checks manifest/file digests and its tokenizer library version on load.
+Set `PIJIT_LOCAL_TOKENIZER_VERIFY=1` to compare every locally prepared token sequence
+with the deployment's `/tokenize` result before inference; a mismatch stops the
+request. Disable this shadow check only after validating the deployment snapshot.
+The snapshot is deployment-specific, not a live server identity check: revalidate
+it whenever the deployed tokenizer, renderer or engine preprocessing changes.
+
+This opt-in adapter handles the existing non-thinking text messages and labels.
+Unsupported payloads use the original remote tokenizer. Other models retain the
+original path; no model weights are loaded on the client. `local_tokenization`
+records CPU time, token counts and shadow equality separately from HTTP calls.
+Neither prompts, candidate contents, generated schemas nor engine KV-cache
+settings are changed by local preparation. The default engine cache salt remains per-request; local preparation alone does
+not change it. Session-level prefix caching is a separate opt-in below.
+
+## Session-level prefix caching
+
+`PIJIT_PREFIX_CACHE=1` lets the generic plan path request a stable KV-cache salt
+within one Pi session and workspace, after negotiating `prefix_cache_version=1`
+with the engine. State directory, backend URL and model also participate in the
+namespace. The request ID remains unique. Missing session/workspace identity or
+an older server keeps the original per-request isolation, with a trace reason.
+No cross-session sharing or user codebook clearing is performed.
+
+The engine endpoint accepts an optional `cache_salt` of 1–128 characters; omitted
+means the original per-request salt. `decision.cached_prefix_tokens` reports the
+engine's cached-token count at the initial classification output, separately from
+logical input tokens and request timing. `prefix_cache_mode` confirms the actual
+server mode. This is vLLM KV reuse, independent of dynamic content-codebook hits.
+Candidate changes and altered prompt prefixes can still prevent reuse.
+
+See [the session-cache experiment](../../docs/SESSION_PREFIX_CACHE_EVALUATION.md)
+for the exact deployment, fixed-input controls and Agent quality results. This
+option does not enable speculative decoding or train a model.
+
 ## Compact edits and the dynamic codebook
 
 `compact_edit(path, task)` reads a Python source snapshot, constructs source-bound
@@ -661,3 +708,289 @@ fixed UTF-8 demonstration is not the default and must not be used as a validator
 for arbitrary tasks.
 
 Real end-to-end cases, failed pilots and limits: [generic plan](../../docs/GENERIC_PLAN.md).
+
+Two opt-in research variants are **not production recommendations**:
+
+- `PIJIT_COMPACT_CATALOG=1`: retrieve at most two entries and place the decision
+  catalog after conversation history. The 21-task paired run passed both arms,
+  but TAIR took 270.32 s versus native 213.85 s. Leave this off; see
+  [the negative result](../../docs/COMPACT_CATALOG_EVALUATION.md).
+- `PIJIT_REUSE_ROUTING=1`: classify at most two stored-content entries or general
+  generation, then produce the complete plan without first-tool classification.
+  All seven inner tools remain available. This changes model behavior and is
+  not a semantics-preserving transport optimization; see
+  [evaluation and limitations](../../docs/REUSE_ROUTING_EVALUATION.md).
+
+Neither flag changes user defaults or proves that a retrieved entry satisfies
+new constraints. Classification scores are not calibrated correctness scores.
+
+For a matched **generic-plan ablation**, `PIJIT_PLAN_DISABLE_REUSE=1` suppresses
+both content and template candidates while keeping successful-write admission
+active. The launcher preserves this explicit setting; it no longer overwrites
+it with `0` in plan-only mode. This does not clear any stored entries or disable
+plan execution. The default remains reuse enabled.
+
+`benchmark_expanded_reuse.py --ablation --empty-book` runs native multi-tool,
+generic plan without reuse, and the same plan with reuse from separate empty
+experimental states. It checks the effective setting in runtime traces and
+waits for backend idleness after a timed-out task before starting the next arm.
+See [the three-arm evaluation](../../docs/PLAN_REUSE_ABLATION.md).
+
+### Experimental conditional final reply
+
+`PIJIT_PLAN_SUCCESS_REPLY=1` lets the model append an `on_success_reply`
+item to the generated plan. It is decoded into reply metadata, never executed as
+an extra native tool. The original generation accounts for its tokens. After all
+steps succeed, Pi may deliver that text without another inference request.
+
+Delivery requires the exact originating conversation and tool call, the same
+session, no cancellation, and no intervening user message. Read/search results
+always return to the model. Bash output returns to the model unless it is empty
+or exactly matches a predeclared receipt in `expected_outputs` (zero-based executed
+step index and exact combined-output text, including newlines). Truncated output,
+mismatched receipts, and invalid indices cannot bypass the model. Write/edit
+receipts are allowed. A failure follows the
+existing recovery loop. These checks do not prove task completeness or semantic
+correctness, so this remains opt-in and requires independent task validation.
+The conditional reply occupies one of the existing plan slots and does not
+change the deployed server's argument envelope or per-step token budget.
+
+`benchmark_expanded_reuse.py --success-reply-ablation --empty-book` compares
+native tools, ordinary generic plan without reuse, and that same plan with the
+conditional reply enabled. Both plan groups keep learning in separate test
+books; user state is untouched. Execution logs record `planned_reply_offer`
+and `planned_reply_delivered` separately from model calls.
+
+The experimental prompt asks for an explicit completion decision on each plan: an
+empty reply means continue, a nonempty reply requests conditional completion. If
+the model omits this metadata, execution continues normally and the trace records
+`missing_completion_decision`; omission never authorizes skipping another turn.
+A strict-rejection experiment failed and is retained only in archived evidence.
+
+`PIJIT_RECOVERY_LATEST=1` experimentally limits forced recovery classification to
+an immediately preceding failed tool result. Successful subsequent operations
+restore the full decision catalog; all earlier failure details remain in history,
+and the continuation warns that a successful read does not resolve a failed check.
+The benchmark's `--recovery-latest` applies this equally to its plan arms and
+verifies the actual trace setting. Ordinary plan retains the previous routing.
+When `PIJIT_PLAN_SUCCESS_REPLY=1` and no recovery override is set, latest-result
+recovery is selected to avoid retaining forced recovery after successful repair.
+Explicit `PIJIT_RECOVERY_LATEST=0` preserves whole-turn recovery for controlled
+comparisons. Both experimental features remain disabled by default. This does
+not establish general acceleration or guarantee completion; see the
+[latest-result completion evaluation](../../docs/REPLY_LATEST_RECOVERY_EVALUATION.md).
+
+A completion-only plan with a nonempty reply and no unbound output expectations
+is normalized to a normal final reply. Empty continuations remain invalid.
+Validation failures expose a compact message to Pi, while the failing instance,
+path, and rule stay in local metrics; schema descriptions must not accidentally
+trigger Pi's provider-error retry heuristic.
+See [completion and recovery evaluation](../../docs/PLAN_COMPLETION_RECOVERY_EVALUATION.md).
+
+`benchmark_expanded_reuse.py --recovery-ablation --empty-book` isolates recovery
+routing with native, ordinary plan, and latest-result recovery plan arms. Reuse
+and conditional replies are off in both plan arms. The 21-task comparison did
+not establish an additional speed benefit from the new routing, so it remains
+opt-in. See [the expanded evaluation](../../docs/RECOVERY_SCOPE_ABLATION.md).
+
+Generic chat traces now separate `capability_negotiation` and `plan_decoding`.
+`benchmarks/profile_plan_client.py` measures capability GETs and archived-plan
+validation without inference or tool execution; these microbenchmarks do not
+replace end-to-end measurements.
+
+### Experimental capability negotiation cache
+
+`PIJIT_CAPABILITIES_CACHE=1` reuses capability negotiation within a Pi session for
+up to 30 seconds from the original lookup. Hits do not renew the TTL. The cache
+is memory-only, scoped to endpoint/model/credentials/session, and cleared on a
+new session or chat error. The bridge validates snapshot age and scope again.
+It stores only server metadata; normal generation, tool execution and codebook
+learning continue. A server change within the TTL can still produce an error,
+which invalidates the cache; no automatic generation replay is added.
+
+`--capabilities-ablation` compares native, ordinary plan and capability-cached
+plan, with content reuse and conditional replies disabled. Real tests confirmed
+nine avoided GETs in fifteen chats, but not a net task-time improvement in the
+first six-task sample. The cache remains opt-in. See the
+[capability cache evaluation](../../docs/CAPABILITIES_CACHE_EVALUATION.md).
+
+
+### Experimental write content references
+
+`PIJIT_WRITE_REFERENCES=1` permits ordinary write arguments to use
+`content: {"stored": N}` in place of the full content string. N identifies a
+non-template candidate in the current request catalog, not a persistent database
+index. First actions, later actions, and general plans can all use references.
+The bridge validates the wire schema, expands the selected bytes, then validates
+the resulting ordinary Pi tool calls. Unknown indices and extra reference fields
+are rejected. Full string generation remains available; default behavior is unchanged.
+
+This closes a protocol restriction where selecting the native write branch made
+reuse unavailable for that plan. It adds no model request and retains the existing
+classification kernel, but the content reference itself is generated by the model,
+not chosen by an additional classifier. Reference validity does not prove semantic
+applicability. Current requirements and fresh checks remain necessary; templates
+are excluded. Reuse accounting and final-content admission use the existing path.
+
+`benchmark_expanded_reuse.py --write-references-ablation --empty-book` compares
+native tools, ordinary plan with reuse, and plan with write references. Plan arms
+learn independently from empty books; all other experimental switches are disabled.
+
+See the [two-run evaluation](../../docs/WRITE_REFERENCES_EVALUATION.md) for actual
+reference adoption, unchanged-query rejection, and the limits of timing attribution.
+
+### Experimental recovery admission
+
+`PIJIT_RECOVERY_ADMISSION=1` recovers successful write/edit steps from failed plans
+when the current user task reaches a model-generated final reply after a successful
+plan containing bash. It uses matching tool-call/result history and reads current
+file contents, not stale generated arguments. New user tasks, unexecuted calls,
+failed final results and read-only recovery do not authorize this path. Successful
+mutation plans retain their normal admission. Recovered contents remain execution
+observations, not semantically verified entries; no template or reuse credit is
+created. The operation runs locally inside the existing bridge invocation and
+adds no model request. It remains off by default. See the
+[recovery admission replay](../../docs/RECOVERY_ADMISSION.md) for evidence and limits.
+
+`benchmark_expanded_reuse.py --recovery-admission-ablation --empty-book` adds
+controlled `recovery_jsonl_base`, `recovery_jsonl_repeat`, and
+`recovery_jsonl_changed` tasks. The checker deliberately fails once, then verifies
+the generated module; its contents and two attempts are independently checked.
+Native tools are compared with two plan arms that both allow write references;
+only `tair_recovered` enables recovered-content admission. These are targeted
+recovery experiments, not representative general speed benchmarks. Complete-plan
+reuse counters do not count a reused write followed by an intentionally failed
+check; inspect step results separately before attributing reuse in this fixture.
+
+`--warm-reuse-ablation --repeat-count N` compares native tools with two plan arms
+that both enable write references and recovery admission. Only content reuse is
+disabled in `tair_no_reuse`; it still learns. `repeat-count` duplicates selected
+repeat-phase tasks with exactly the same prompt, initial files and oracle; only
+the result-directory ID changes. Each task starts with reset workspace files,
+while each arm retains its own codebook. This measures repeated-task behavior,
+not reuse of existing output files or a shared cross-arm cache.
+
+Content admission now records workspace-relative `observed_paths` alongside its
+execution-only evidence, grouping paths when the same bytes were written to more
+than one file in that admission. Existing SQLite columns and entry identities are
+unchanged; old evidence strings remain readable with unknown paths. The catalog
+labels `contract` as the historical whole user task, not a proven specification
+for each saved file, and shows the observed paths as context. A helper or test
+file is not automatically the requested implementation. Paths do not constrain
+a new destination or certify semantic compatibility; the model still has to
+inspect the actual content, exports and dependencies. No new inference call is
+used to produce this metadata.
+
+
+An extension of reuse review to ordinary write references was evaluated and
+removed after contradictory reviews still authorized incorrect content. Existing
+specialized reuse review remains unchanged; see the
+[reference review evaluation](../../docs/REFERENCE_REVIEW_EVALUATION.md).
+
+Candidate descriptions and selected-branch continuations now share the same
+request-local candidate number and observed paths. Persistent hash IDs remain
+internal; `reuse_write` still expands only the selected candidate. This improves
+referencing, not semantic authorization. The
+[candidate binding probe](../../docs/CANDIDATE_BINDING_EVALUATION.md) separates
+forced selection, generation fallback, and full protocol compliance.
+
+`PIJIT_BASH_ARGV=1` optionally allows `bash.command` to be an array of literal
+argument strings inside a plan, for example `["node", "-e", "console.log('ok')"]`.
+The bridge quotes each argument and passes an ordinary command string to Pi's
+existing bash tool. Arrays do not expand variables, globs, pipes or redirections;
+use the original string form for shell syntax. This option is off by default and
+adds no model request. It prevents a layer of shell quoting mistakes, but cannot
+validate the generated program or its tests. `--argv-ablation` compares native
+Pi, ordinary plan, and this option with reuse disabled in both plan arms.
+
+`PIJIT_PARALLEL_CAPABILITIES=1` overlaps fresh server capability negotiation with
+input tokenization and label preparation. Inference waits for all three; a failed
+capability query still prevents inference, and legacy budgets remain supported.
+This is independent of capability caching and off by default. When enabled,
+`generation_preparation` includes waiting for capability negotiation, so that
+stage overlaps `capability_negotiation` and their durations must not be added.
+`--parallel-capabilities-ablation` isolates scheduling with reuse disabled.
+
+`PIJIT_REPLY_BRANCH=1` adds an internal reply-only classification branch before
+existing general continuation. The public tool remains `plan`. Selecting reply
+uses only the content schema instead of the full inner-tool schema. Native tool
+and content candidate indices remain stable, and the general execution fallback
+remains available. During recovery the existing general replanning branch is
+used. This option is off by default: early completion mistakes and changed
+classification behavior need broader evaluation. `--reply-branch-ablation`
+isolates this choice with content reuse disabled in both plan arms. See the
+[initial evaluation](../../docs/REPLY_BRANCH_EVALUATION.md).
+
+`--combined-reuse-ablation` evaluates four arms: native Pi, ordinary plan without
+reuse, combined plan without reuse, and the same combined plan with reuse.
+Combined arms enable bash argv, the dedicated reply branch, write references,
+and recovery admission; only their reuse switch differs. Learning stays enabled
+in both. `--repeat-count` controls repeated fixtures while preserving each arm's
+isolated book. The [combined evaluation](../../docs/COMBINED_REUSE_EVALUATION.md)
+distinguishes correct initial content reuse, failed following checks, and final
+artifact correctness. This harness option does not change production defaults.
+
+`PIJIT_REPAIR_FEEDBACK=1` records task-specific negative feedback at final reply:
+a stored byte sequence was written before a failed bash step, the same workspace
+file was explicitly modified by a later successful plan, a final bash-containing
+plan succeeded, and the observed final bytes differ. The old bytes are excluded
+from future candidate lists for the exact same user request. Other requests can
+still retrieve them. Duplicate entry IDs with the same source cannot bypass the
+filter. Check-only repairs do not reject content. This reuses the existing SQLite
+rejections table, with no migration or extra inference request. The option is off
+by default; disabling it also disables its retrieval filter. This is observed
+replacement feedback, not proof of semantic incompatibility or correctness.
+See the [offline validation](../../docs/REPAIR_FEEDBACK.md).
+
+`--repair-feedback-ablation` compares native Pi, the combined configuration with
+reuse, and that same configuration plus repair feedback. It adds repeat fixtures
+for the changed JSONL and JavaScript requests; their prompt, filename and oracle
+remain identical to the first changed request. `--repeat-count` repeats those
+fixtures while each arm retains its own book. The
+[live evaluation](../../docs/REPAIR_FEEDBACK_EVALUATION.md) confirms persisted
+feedback and candidate exclusion, but does not establish a net speed benefit.
+
+`PIJIT_DEDUP_TOOL_DESCRIPTIONS=1` shortens native-action labels in the decision
+catalog to the tool name and a reference to `INNER TOOLS`, where each complete
+description remains. Candidate contents and descriptions, tool schemas, branch
+indices and generation continuations are unchanged. Recovery and reuse-only
+routing already lack native action labels and are unchanged. The option is off
+by default. `--dedup-descriptions-ablation` isolates it with reuse disabled;
+see the [token profile and live evaluation](../../docs/TOOL_DESCRIPTION_DEDUP_EVALUATION.md).
+
+The [two-run replication](../../docs/TOOL_DESCRIPTION_DEDUP_REPLICATION.md)
+found check-first workflow violations in both plan variants, despite correct
+final artifacts. Dedup remains off. The expanded benchmark now checks explicit
+fixture workflow metadata before reporting each result: `artifact_passed`
+records output correctness, `workflow_validation` records declared workflow
+checks, and `passed` requires both. Historical frozen results are unchanged;
+their separate audits must be consulted when comparing quality and speed.
+
+The classifier omits historical-code reuse instructions when no candidates
+are offered (including disabled reuse). Warm-candidate and recovery prompts
+are unchanged. The fixed-input profile saves 79 prefix tokens; the live smoke
+run does not establish a latency benefit. See the
+[empty-candidate prompt evaluation](../../docs/EMPTY_CANDIDATE_PROMPT.md).
+
+`PIJIT_FIRST_TOOL_CLASSIFICATION=0` experimentally removes native first-action
+choices while preserving codebook candidates, their limit and general plan
+generation. Recovery is unchanged. Unlike `PIJIT_REUSE_ROUTING`, it does not
+also repeat the current request or cap candidates at two. The default remains
+enabled. `--first-tool-ablation` compares this change with reuse disabled;
+[two-run results](../../docs/FIRST_TOOL_CLASSIFICATION_EVALUATION.md) show lower
+observed time but a remaining explicit-order failure, so do not establish
+native-equivalent reliability or general acceleration.
+
+`--first-tool-reuse-ablation` compares native, ordinary plan with reuse,
+general plan without reuse, and general plan with reuse using isolated books.
+The [warm-book evaluation](../../docs/FIRST_TOOL_REUSE_EVALUATION.md) verifies
+four correct repeated-content hits but also a wrong hit after a requirement
+change. Engine HTTP errors now retain request ID, decision index and finish
+reason for diagnosing long generations; incomplete usage remains marked as such.
+
+A structured engine HTTP 500 that explicitly reports `finish_reason=length`
+now becomes `GenerationLengthError`. Pi stops instead of blindly retrying the
+unchanged request; ordinary transient HTTP failures keep their retry behavior.
+Raw status and consumed-token accounting remain in metrics. This does not
+repair the unfinished task or stop its first overlong generation earlier.
+See [length-error retry handling](../../docs/GENERATION_LENGTH_RETRY.md).

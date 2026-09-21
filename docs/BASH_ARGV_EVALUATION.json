@@ -1,0 +1,550 @@
+{
+  "experiment": "bash-argv-ablation-20260921-a",
+  "manifest_sha256": "40d80c18cd96ff8d798fee48a4017c5f14dd76a647f541e51660e47a0c81e2fd",
+  "arms": {
+    "native": {
+      "passed": 6,
+      "seconds": 53.83738849963993,
+      "known_generated_argument_tokens": 5456,
+      "known_input_tokens": 50417,
+      "known_classification_control_records": 0,
+      "inference_requests": 19,
+      "tool_errors": 0,
+      "tasks": 6,
+      "closed": 6,
+      "usage_complete": true,
+      "correct_reuse": 0,
+      "tokenize_http": null,
+      "local_tokenizations": 0,
+      "stages": null,
+      "pending_assistant_turns": 0,
+      "token_counts_are_lower_bounds": false,
+      "repeat_subset": {
+        "passed": 2,
+        "seconds": 16.914341167081147,
+        "known_generated_argument_tokens": 1671
+      },
+      "closed_with_workflow_checks": 6
+    },
+    "tair_no_reuse": {
+      "passed": 6,
+      "seconds": 53.54110837634653,
+      "known_generated_argument_tokens": 4111,
+      "known_input_tokens": 49222,
+      "known_classification_control_records": 14,
+      "inference_requests": 14,
+      "tool_errors": 2,
+      "tasks": 6,
+      "closed": 6,
+      "usage_complete": true,
+      "correct_reuse": 0,
+      "tokenize_http": 0,
+      "local_tokenizations": 107,
+      "stages": {
+        "generation_preparation": 1.8765344587154686,
+        "generation_http": 44.46391495550051
+      },
+      "pending_assistant_turns": 0,
+      "token_counts_are_lower_bounds": false,
+      "repeat_subset": {
+        "passed": 2,
+        "seconds": 19.0098606669344,
+        "known_generated_argument_tokens": 1440
+      },
+      "closed_with_workflow_checks": 6
+    },
+    "tair_argv": {
+      "passed": 6,
+      "seconds": 50.777644583489746,
+      "known_generated_argument_tokens": 3589,
+      "known_input_tokens": 51621,
+      "known_classification_control_records": 14,
+      "inference_requests": 14,
+      "tool_errors": 1,
+      "tasks": 6,
+      "closed": 6,
+      "usage_complete": true,
+      "correct_reuse": 0,
+      "tokenize_http": 0,
+      "local_tokenizations": 121,
+      "stages": {
+        "generation_preparation": 1.8302545817568898,
+        "generation_http": 41.37816820573062
+      },
+      "pending_assistant_turns": 0,
+      "token_counts_are_lower_bounds": false,
+      "repeat_subset": {
+        "passed": 2,
+        "seconds": 17.371056999079883,
+        "known_generated_argument_tokens": 1249
+      },
+      "closed_with_workflow_checks": 6
+    }
+  },
+  "cases": [
+    {
+      "task": "jsonl_base",
+      "arm": "tair_no_reuse",
+      "phase": "base",
+      "passed": true,
+      "seconds": 8.740062708035111,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 709,
+      "known_input_tokens": 6980,
+      "inference_requests": 2,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "jsonl_base",
+      "arm": "native",
+      "phase": "base",
+      "passed": true,
+      "seconds": 9.392074791248888,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 953,
+      "known_input_tokens": 7950,
+      "inference_requests": 3,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "jsonl_base",
+      "arm": "tair_argv",
+      "phase": "base",
+      "passed": true,
+      "seconds": 9.509232624899596,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 664,
+      "known_input_tokens": 7258,
+      "inference_requests": 2,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "jsonl_repeat",
+      "arm": "tair_no_reuse",
+      "phase": "repeat",
+      "passed": true,
+      "seconds": 9.338309917133301,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 761,
+      "known_input_tokens": 7005,
+      "inference_requests": 2,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "jsonl_repeat",
+      "arm": "native",
+      "phase": "repeat",
+      "passed": true,
+      "seconds": 9.734509542118758,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 971,
+      "known_input_tokens": 10972,
+      "inference_requests": 4,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "jsonl_repeat",
+      "arm": "tair_argv",
+      "phase": "repeat",
+      "passed": true,
+      "seconds": 10.677168541122228,
+      "tool_errors": 1,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 788,
+      "known_input_tokens": 12155,
+      "inference_requests": 3,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "jsonl_changed",
+      "arm": "tair_argv",
+      "phase": "changed",
+      "passed": true,
+      "seconds": 11.673352500423789,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 896,
+      "known_input_tokens": 11012,
+      "inference_requests": 3,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "jsonl_changed",
+      "arm": "tair_no_reuse",
+      "phase": "changed",
+      "passed": true,
+      "seconds": 10.406087709125131,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 917,
+      "known_input_tokens": 7153,
+      "inference_requests": 2,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "jsonl_changed",
+      "arm": "native",
+      "phase": "changed",
+      "passed": true,
+      "seconds": 10.52951274998486,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 1107,
+      "known_input_tokens": 8163,
+      "inference_requests": 3,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "unique_base",
+      "arm": "tair_argv",
+      "phase": "base",
+      "passed": true,
+      "seconds": 6.214746166951954,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 396,
+      "known_input_tokens": 7008,
+      "inference_requests": 2,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "unique_base",
+      "arm": "native",
+      "phase": "base",
+      "passed": true,
+      "seconds": 8.686359958723187,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 889,
+      "known_input_tokens": 7827,
+      "inference_requests": 3,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "unique_base",
+      "arm": "tair_no_reuse",
+      "phase": "base",
+      "passed": true,
+      "seconds": 5.907018375117332,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 376,
+      "known_input_tokens": 6769,
+      "inference_requests": 2,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "unique_repeat",
+      "arm": "native",
+      "phase": "repeat",
+      "passed": true,
+      "seconds": 7.1798316249623895,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 700,
+      "known_input_tokens": 7678,
+      "inference_requests": 3,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "unique_repeat",
+      "arm": "tair_no_reuse",
+      "phase": "repeat",
+      "passed": true,
+      "seconds": 9.6715507498011,
+      "tool_errors": 1,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 679,
+      "known_input_tokens": 10661,
+      "inference_requests": 3,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "unique_repeat",
+      "arm": "tair_argv",
+      "phase": "repeat",
+      "passed": true,
+      "seconds": 6.693888457957655,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 461,
+      "known_input_tokens": 7144,
+      "inference_requests": 2,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "unique_changed",
+      "arm": "native",
+      "phase": "changed",
+      "passed": true,
+      "seconds": 8.315099832601845,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 836,
+      "known_input_tokens": 7827,
+      "inference_requests": 3,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "unique_changed",
+      "arm": "tair_no_reuse",
+      "phase": "changed",
+      "passed": true,
+      "seconds": 9.478078917134553,
+      "tool_errors": 1,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 669,
+      "known_input_tokens": 10654,
+      "inference_requests": 3,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "unique_changed",
+      "arm": "tair_argv",
+      "phase": "changed",
+      "passed": true,
+      "seconds": 6.009256292134523,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 384,
+      "known_input_tokens": 7044,
+      "inference_requests": 2,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    }
+  ],
+  "artifact_reverification_agrees": 18,
+  "prefix_cache": {
+    "requests": 0,
+    "recorded": 0,
+    "nonzero_requests": 0,
+    "cached_tokens": 0,
+    "server_modes": []
+  },
+  "repair_process_audit": {},
+  "command_representation_audit": [
+    {
+      "task": "jsonl_base",
+      "arm": "tair_no_reuse",
+      "argv_steps": 0,
+      "errors": []
+    },
+    {
+      "task": "jsonl_base",
+      "arm": "native",
+      "argv_steps": 0,
+      "errors": []
+    },
+    {
+      "task": "jsonl_base",
+      "arm": "tair_argv",
+      "argv_steps": 1,
+      "errors": []
+    },
+    {
+      "task": "jsonl_repeat",
+      "arm": "tair_no_reuse",
+      "argv_steps": 0,
+      "errors": []
+    },
+    {
+      "task": "jsonl_repeat",
+      "arm": "native",
+      "argv_steps": 0,
+      "errors": []
+    },
+    {
+      "task": "jsonl_repeat",
+      "arm": "tair_argv",
+      "argv_steps": 4,
+      "errors": [
+        [
+          {
+            "type": "text",
+            "text": "{\"completed\":[{\"name\":\"write\",\"result\":{\"content\":[{\"type\":\"text\",\"text\":\"Successfully wrote to jsonl_repeat.py\"}]}},{\"name\":\"bash\",\"result\":{\"content\":[{\"type\":\"text\",\"text\":\"[{'a': 1}, {'a': 2, 'b': 3}, [1, 2, 3]]\\n\"}]}},{\"name\":\"bash\",\"result\":{\"content\":[{\"type\":\"text\",\"text\":\"[{'a': 1}, {'a': 2}]\\n\"}]}}],\"failed_step\":3,\"tool\":\"bash\",\"error\":\"Traceback (most recent call last):\\n  File \\\"<string>\\\", line 1, in <module>\\n    import jsonl_repeat; print(jsonl_repeat.parse_jsonl('{\\\"a\\\":1}\\\\nnot json') )\\n                               ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/private/var/folders/yw/fbsfvfm95956m4m6yfd49z_c0000gn/T/tair-expanded-project-vy2v94nu/workspace/jsonl_repeat.py\\\", line 15, in parse_jsonl\\n    results.append(json.loads(line))\\n                   ~~~~~~~~~~^^^^^^\\n  File \\\"/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py\\\", line 352, in loads\\n    return _default_decoder.decode(s)\\n           ~~~~~~~~~~~~~~~~~~~~~~~^^^\\n  File \\\"/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py\\\", line 345, in decode\\n    obj, end = self.raw_decode(s, idx=_w(s, 0).end())\\n               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py\\\", line 363, in raw_decode\\n    raise JSONDecodeError(\\\"Expecting value\\\", s, err.value) from None\\njson.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)\\n\\n\\nCommand exited with code 1\",\"remaining_steps_skipped\":0}"
+          }
+        ]
+      ]
+    },
+    {
+      "task": "jsonl_changed",
+      "arm": "tair_argv",
+      "argv_steps": 1,
+      "errors": []
+    },
+    {
+      "task": "jsonl_changed",
+      "arm": "tair_no_reuse",
+      "argv_steps": 0,
+      "errors": []
+    },
+    {
+      "task": "jsonl_changed",
+      "arm": "native",
+      "argv_steps": 0,
+      "errors": []
+    },
+    {
+      "task": "unique_base",
+      "arm": "tair_argv",
+      "argv_steps": 1,
+      "errors": []
+    },
+    {
+      "task": "unique_base",
+      "arm": "native",
+      "argv_steps": 0,
+      "errors": []
+    },
+    {
+      "task": "unique_base",
+      "arm": "tair_no_reuse",
+      "argv_steps": 0,
+      "errors": []
+    },
+    {
+      "task": "unique_repeat",
+      "arm": "native",
+      "argv_steps": 0,
+      "errors": []
+    },
+    {
+      "task": "unique_repeat",
+      "arm": "tair_no_reuse",
+      "argv_steps": 0,
+      "errors": [
+        [
+          {
+            "type": "text",
+            "text": "{\"completed\":[{\"name\":\"write\",\"result\":{\"content\":[{\"type\":\"text\",\"text\":\"Successfully wrote to unique_repeat.mjs\"}]}}],\"failed_step\":1,\"tool\":\"bash\",\"error\":\"/bin/bash: -c: line 0: unexpected EOF while looking for matching `\\\"'\\n/bin/bash: -c: line 9: syntax error: unexpected end of file\\n\\n\\nCommand exited with code 2\",\"remaining_steps_skipped\":0}"
+          }
+        ]
+      ]
+    },
+    {
+      "task": "unique_repeat",
+      "arm": "tair_argv",
+      "argv_steps": 1,
+      "errors": []
+    },
+    {
+      "task": "unique_changed",
+      "arm": "native",
+      "argv_steps": 0,
+      "errors": []
+    },
+    {
+      "task": "unique_changed",
+      "arm": "tair_no_reuse",
+      "argv_steps": 0,
+      "errors": [
+        [
+          {
+            "type": "text",
+            "text": "{\"completed\":[{\"name\":\"write\",\"result\":{\"content\":[{\"type\":\"text\",\"text\":\"Successfully wrote to unique_changed.mjs\"}]}}],\"failed_step\":1,\"tool\":\"bash\",\"error\":\"/bin/bash: -c: line 0: unexpected EOF while looking for matching `\\\"'\\n/bin/bash: -c: line 9: syntax error: unexpected end of file\\n\\n\\nCommand exited with code 2\",\"remaining_steps_skipped\":0}"
+          }
+        ]
+      ]
+    },
+    {
+      "task": "unique_changed",
+      "arm": "tair_argv",
+      "argv_steps": 1,
+      "errors": []
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "stages": [
+    {
+      "experiment": "single-branch-open-content-20260921-a",
+      "prefix_tokens": 76,
+      "full_prompt_tokens": 229,
+      "outputs": [
+        {
+          "arm": "fused",
+          "repeat": 0,
+          "passed": true,
+          "generated_tokens": 148,
+          "source_sha256": "b5185e9f02de2a50762c7c6af8db7cd45b16cdb60226cc27c220f4e7f4acc184"
+        },
+        {
+          "arm": "direct",
+          "repeat": 0,
+          "passed": false,
+          "generated_tokens": 225,
+          "source_sha256": "2df125221d2ef8a6554ffeaad7381917cb79f75f5bcc8be14c63c45afd28f9f6"
+        },
+        {
+          "arm": "direct",
+          "repeat": 1,
+          "passed": false,
+          "generated_tokens": 225,
+          "source_sha256": "2df125221d2ef8a6554ffeaad7381917cb79f75f5bcc8be14c63c45afd28f9f6"
+        },
+        {
+          "arm": "fused",
+          "repeat": 1,
+          "passed": true,
+          "generated_tokens": 148,
+          "source_sha256": "b5185e9f02de2a50762c7c6af8db7cd45b16cdb60226cc27c220f4e7f4acc184"
+        }
+      ]
+    },
+    {
+      "experiment": "single-branch-split-shift-20260921-a",
+      "prefix_tokens": 108,
+      "full_prompt_tokens": 229,
+      "outputs": [
+        {
+          "arm": "fused",
+          "repeat": 0,
+          "passed": false,
+          "generated_tokens": 225,
+          "source_sha256": "2df125221d2ef8a6554ffeaad7381917cb79f75f5bcc8be14c63c45afd28f9f6"
+        },
+        {
+          "arm": "direct",
+          "repeat": 0,
+          "passed": false,
+          "generated_tokens": 225,
+          "source_sha256": "2df125221d2ef8a6554ffeaad7381917cb79f75f5bcc8be14c63c45afd28f9f6"
+        },
+        {
+          "arm": "direct",
+          "repeat": 1,
+          "passed": false,
+          "generated_tokens": 225,
+          "source_sha256": "2df125221d2ef8a6554ffeaad7381917cb79f75f5bcc8be14c63c45afd28f9f6"
+        },
+        {
+          "arm": "fused",
+          "repeat": 1,
+          "passed": false,
+          "generated_tokens": 225,
+          "source_sha256": "2df125221d2ef8a6554ffeaad7381917cb79f75f5bcc8be14c63c45afd28f9f6"
+        }
+      ]
+    },
+    {
+      "experiment": "single-branch-split-restore-20260921-a",
+      "prefix_tokens": 76,
+      "full_prompt_tokens": 229,
+      "outputs": [
+        {
+          "arm": "fused",
+          "repeat": 0,
+          "passed": true,
+          "generated_tokens": 148,
+          "source_sha256": "b5185e9f02de2a50762c7c6af8db7cd45b16cdb60226cc27c220f4e7f4acc184"
+        },
+        {
+          "arm": "direct",
+          "repeat": 0,
+          "passed": false,
+          "generated_tokens": 225,
+          "source_sha256": "2df125221d2ef8a6554ffeaad7381917cb79f75f5bcc8be14c63c45afd28f9f6"
+        },
+        {
+          "arm": "direct",
+          "repeat": 1,
+          "passed": false,
+          "generated_tokens": 225,
+          "source_sha256": "2df125221d2ef8a6554ffeaad7381917cb79f75f5bcc8be14c63c45afd28f9f6"
+        },
+        {
+          "arm": "fused",
+          "repeat": 1,
+          "passed": true,
+          "generated_tokens": 148,
+          "source_sha256": "b5185e9f02de2a50762c7c6af8db7cd45b16cdb60226cc27c220f4e7f4acc184"
+        }
+      ]
+    }
+  ],
+  "all_full_inputs_and_schemas_equal": true,
+  "live_parameter_comparison": {
+    "generation_cli_overrides": [],
+    "differences": {
+      "output_kind": [
+        "DELTA",
+        "FINAL_ONLY"
+      ],
+      "skip_clone": [
+        false,
+        true
+      ]
+    },
+    "method": "Construct pinned CompletionRequest.to_sampling_params using model generation config, compare against custom SamplingParams; no sampling-value difference found."
+  },
+  "conclusion": "Reversible boundary sensitivity: original 76-token prefix passes, 108-token prefix fails, restored 76-token prefix passes. Direct fails throughout. Does not identify a specific numerical kernel or prove classification adds semantic reasoning."
+}

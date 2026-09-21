@@ -1,0 +1,9 @@
+# Do not blindly retry exhausted structured generation
+
+2026-09-21. Pi 0.85.1 treats messages containing HTTP 500 as retryable provider failures. The custom engine also returns 500 when structured generation ends with `finish_reason=length`, even though retrying an unchanged generation request does not change its output budget or planning strategy. The recent warm-book experiment observed two budget-sized error responses followed by cancelled retries. Its old logs discarded finish reasons, so this change cannot retrospectively establish the precise cause of those responses.
+
+The bridge now maps **only** a structured `/v1/openjev/toolcall` HTTP 500 response explicitly reporting `finish_reason=length` to `GenerationLengthError`. Its user-facing message states that generation reached the output limit and returned no executable call. It does not contain the retryable HTTP-status text. Other HTTP failures retain their existing exception handling and retry behavior.
+
+HTTP status 500, consumed tokens, incomplete-usage status, engine request ID, selected index, finish reason and optional JSON-structure diagnostics remain in metrics. No partial plan executes. This is a failure-handling change, not an automatic repair or a successful-task speedup: the request fails without an unchanged automatic retry. A revised request or generation strategy may still succeed.
+
+The test exercises an HTTP error through `bridge.run`, verifies one attempted request and retained accounting, then invokes the actual pinned Pi 0.85.1 `isRetryableAssistantError` implementation. It returns false for the normalized length error and true for ordinary 500/503 errors. Full suite: 594 passed. No GPU inference, server installation or model restart was needed for this client change; the existing server already supplies finish reasons on error responses. Additional JSON-structure diagnostics still require the separately documented server update.

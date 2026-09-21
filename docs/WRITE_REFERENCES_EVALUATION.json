@@ -1,0 +1,419 @@
+{
+  "experiment": "write-references-ablation-20260920-a",
+  "manifest_sha256": "b7a54434ad1995f0acb63d16d7b57673e23ba2afcf0785c4e0e99b237f385d9f",
+  "arms": {
+    "native": {
+      "passed": 4,
+      "seconds": 42.52169308392331,
+      "known_generated_argument_tokens": 4085,
+      "known_input_tokens": 55577,
+      "known_classification_control_records": 0,
+      "inference_requests": 20,
+      "tool_errors": 1,
+      "tasks": 4,
+      "closed": 4,
+      "usage_complete": true,
+      "correct_reuse": 0,
+      "tokenize_http": null,
+      "local_tokenizations": 0,
+      "stages": null,
+      "pending_assistant_turns": 0,
+      "token_counts_are_lower_bounds": false,
+      "repeat_subset": {
+        "passed": 1,
+        "seconds": 8.17501354124397,
+        "known_generated_argument_tokens": 779
+      },
+      "closed_with_workflow_checks": 4
+    },
+    "tair": {
+      "passed": 4,
+      "seconds": 25.042043374851346,
+      "known_generated_argument_tokens": 1398,
+      "known_input_tokens": 30171,
+      "known_classification_control_records": 8,
+      "inference_requests": 8,
+      "tool_errors": 0,
+      "tasks": 4,
+      "closed": 4,
+      "usage_complete": true,
+      "correct_reuse": 1,
+      "tokenize_http": 0,
+      "local_tokenizations": 121,
+      "stages": {
+        "generation_preparation": 1.2223788718692958,
+        "generation_http": 18.339043415151536
+      },
+      "pending_assistant_turns": 0,
+      "token_counts_are_lower_bounds": false,
+      "repeat_subset": {
+        "passed": 1,
+        "seconds": 5.501392041798681,
+        "known_generated_argument_tokens": 266
+      },
+      "closed_with_workflow_checks": 4
+    },
+    "tair_refs": {
+      "passed": 4,
+      "seconds": 22.826001416891813,
+      "known_generated_argument_tokens": 1139,
+      "known_input_tokens": 30786,
+      "known_classification_control_records": 8,
+      "inference_requests": 8,
+      "tool_errors": 0,
+      "tasks": 4,
+      "closed": 4,
+      "usage_complete": true,
+      "correct_reuse": 1,
+      "tokenize_http": 0,
+      "local_tokenizations": 121,
+      "stages": {
+        "generation_preparation": 1.1940377922728658,
+        "generation_http": 16.58098900085315
+      },
+      "pending_assistant_turns": 0,
+      "token_counts_are_lower_bounds": false,
+      "repeat_subset": {
+        "passed": 1,
+        "seconds": 5.099803208839148,
+        "known_generated_argument_tokens": 249
+      },
+      "closed_with_workflow_checks": 4
+    }
+  },
+  "cases": [
+    {
+      "task": "unique_base",
+      "arm": "tair",
+      "phase": "base",
+      "passed": true,
+      "seconds": 7.366361041087657,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 481,
+      "known_input_tokens": 6999,
+      "inference_requests": 2,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "unique_base",
+      "arm": "native",
+      "phase": "base",
+      "passed": true,
+      "seconds": 8.133928208611906,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 790,
+      "known_input_tokens": 7811,
+      "inference_requests": 3,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "unique_base",
+      "arm": "tair_refs",
+      "phase": "base",
+      "passed": true,
+      "seconds": 5.777479292359203,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 306,
+      "known_input_tokens": 7068,
+      "inference_requests": 2,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "unique_repeat",
+      "arm": "tair",
+      "phase": "repeat",
+      "passed": true,
+      "seconds": 5.501392041798681,
+      "tool_errors": 0,
+      "reuse_executed": true,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 266,
+      "known_input_tokens": 7618,
+      "inference_requests": 2,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "unique_repeat",
+      "arm": "native",
+      "phase": "repeat",
+      "passed": true,
+      "seconds": 8.17501354124397,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 779,
+      "known_input_tokens": 10705,
+      "inference_requests": 4,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "unique_repeat",
+      "arm": "tair_refs",
+      "phase": "repeat",
+      "passed": true,
+      "seconds": 5.099803208839148,
+      "tool_errors": 0,
+      "reuse_executed": true,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 249,
+      "known_input_tokens": 7548,
+      "inference_requests": 2,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "nullable_base",
+      "arm": "tair_refs",
+      "phase": "fresh",
+      "passed": true,
+      "seconds": 5.492999832611531,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 275,
+      "known_input_tokens": 7701,
+      "inference_requests": 2,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "nullable_base",
+      "arm": "tair",
+      "phase": "fresh",
+      "passed": true,
+      "seconds": 5.723935875110328,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 294,
+      "known_input_tokens": 7379,
+      "inference_requests": 2,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "nullable_base",
+      "arm": "native",
+      "phase": "fresh",
+      "passed": true,
+      "seconds": 11.371740625239909,
+      "tool_errors": 1,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 1032,
+      "known_input_tokens": 19397,
+      "inference_requests": 7,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "nullable_changed",
+      "arm": "tair_refs",
+      "phase": "fresh",
+      "passed": true,
+      "seconds": 6.455719083081931,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 309,
+      "known_input_tokens": 8469,
+      "inference_requests": 2,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "nullable_changed",
+      "arm": "native",
+      "phase": "fresh",
+      "passed": true,
+      "seconds": 14.841010708827525,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 1484,
+      "known_input_tokens": 17664,
+      "inference_requests": 6,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    },
+    {
+      "task": "nullable_changed",
+      "arm": "tair",
+      "phase": "fresh",
+      "passed": true,
+      "seconds": 6.45035441685468,
+      "tool_errors": 0,
+      "reuse_executed": false,
+      "usage_complete": true,
+      "known_generated_argument_tokens": 357,
+      "known_input_tokens": 8175,
+      "inference_requests": 2,
+      "artifact_passed": true,
+      "no_tool_execution": false,
+      "last_tool_failed": false,
+      "pending_assistant_turns": 0,
+      "closed": true
+    }
+  ],
+  "artifact_reverification_agrees": 12,
+  "prefix_cache": {
+    "requests": 8,
+    "recorded": 8,
+    "nonzero_requests": 0,
+    "cached_tokens": 0,
+    "server_modes": [
+      "session"
+    ]
+  },
+  "repair_process_audit": {},
+  "reference_path_audit": [
+    {
+      "task": "unique_base",
+      "arm": "tair",
+      "native_branch_reuse": 0,
+      "selected_branches": [
+        "tool:write",
+        "general"
+      ],
+      "cache_outcomes": [
+        "empty_book",
+        "reply"
+      ]
+    },
+    {
+      "task": "unique_base",
+      "arm": "tair_refs",
+      "native_branch_reuse": 0,
+      "selected_branches": [
+        "tool:write",
+        "general"
+      ],
+      "cache_outcomes": [
+        "empty_book",
+        "reply"
+      ]
+    },
+    {
+      "task": "unique_repeat",
+      "arm": "tair",
+      "native_branch_reuse": 0,
+      "selected_branches": [
+        "reuse_content",
+        "general"
+      ],
+      "cache_outcomes": [
+        "reused",
+        "reply"
+      ]
+    },
+    {
+      "task": "unique_repeat",
+      "arm": "tair_refs",
+      "native_branch_reuse": 1,
+      "selected_branches": [
+        "tool:write",
+        "general"
+      ],
+      "cache_outcomes": [
+        "reused",
+        "reply"
+      ]
+    },
+    {
+      "task": "nullable_base",
+      "arm": "tair_refs",
+      "native_branch_reuse": 0,
+      "selected_branches": [
+        "tool:write",
+        "general"
+      ],
+      "cache_outcomes": [
+        "generated_with_candidates",
+        "reply"
+      ]
+    },
+    {
+      "task": "nullable_base",
+      "arm": "tair",
+      "native_branch_reuse": 0,
+      "selected_branches": [
+        "general",
+        "general"
+      ],
+      "cache_outcomes": [
+        "generated_with_candidates",
+        "reply"
+      ]
+    },
+    {
+      "task": "nullable_changed",
+      "arm": "tair_refs",
+      "native_branch_reuse": 0,
+      "selected_branches": [
+        "tool:write",
+        "general"
+      ],
+      "cache_outcomes": [
+        "generated_with_candidates",
+        "reply"
+      ]
+    },
+    {
+      "task": "nullable_changed",
+      "arm": "tair",
+      "native_branch_reuse": 0,
+      "selected_branches": [
+        "tool:write",
+        "general"
+      ],
+      "cache_outcomes": [
+        "generated_with_candidates",
+        "reply"
+      ]
+    }
+  ]
+}

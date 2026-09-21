@@ -1,0 +1,15 @@
+{
+  "service": {
+    "port": 8080,
+    "label": "现有配置",
+    "features": [
+      "a",
+      "b"
+    ]
+  },
+  "other": {
+    "port": 9000
+  },
+  "enabled": true,
+  "port": 8443
+}

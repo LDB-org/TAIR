@@ -1,0 +1,181 @@
+{
+  "method": "First-plan component probe; exact argument match; no generated tool execution or end-to-end timing claim.",
+  "experiments": [
+    {
+      "name": "plan-order-probe-20260921-a",
+      "pi_context": false,
+      "arms": [
+        {
+          "guided": false,
+          "matched": 4,
+          "tasks": 4,
+          "cases": [
+            {
+              "task": "python_check_first",
+              "selected": "tool:bash",
+              "matches": true,
+              "winner_logprob_margin": 1.7499998807907104
+            },
+            {
+              "task": "python_read_first",
+              "selected": "tool:read",
+              "matches": true,
+              "winner_logprob_margin": 3.2500000931322575
+            },
+            {
+              "task": "javascript_check_first",
+              "selected": "tool:bash",
+              "matches": true,
+              "winner_logprob_margin": 3.7499999031424522
+            },
+            {
+              "task": "javascript_read_first",
+              "selected": "tool:read",
+              "matches": true,
+              "winner_logprob_margin": 3.750000089406967
+            }
+          ]
+        },
+        {
+          "guided": true,
+          "matched": 4,
+          "tasks": 4,
+          "cases": [
+            {
+              "task": "python_check_first",
+              "selected": "tool:bash",
+              "matches": true,
+              "winner_logprob_margin": 3.25
+            },
+            {
+              "task": "python_read_first",
+              "selected": "tool:read",
+              "matches": true,
+              "winner_logprob_margin": 1.5
+            },
+            {
+              "task": "javascript_check_first",
+              "selected": "tool:bash",
+              "matches": true,
+              "winner_logprob_margin": 3.2499999552965164
+            },
+            {
+              "task": "javascript_read_first",
+              "selected": "tool:read",
+              "matches": true,
+              "winner_logprob_margin": 2.4999999031424522
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "plan-order-probe-20260921-b",
+      "pi_context": true,
+      "arms": [
+        {
+          "guided": false,
+          "matched": 4,
+          "tasks": 4,
+          "cases": [
+            {
+              "task": "python_check_first",
+              "selected": "tool:bash",
+              "matches": true,
+              "winner_logprob_margin": 0.9999999701976776
+            },
+            {
+              "task": "python_read_first",
+              "selected": "tool:read",
+              "matches": true,
+              "winner_logprob_margin": 5.124999851919711
+            },
+            {
+              "task": "javascript_check_first",
+              "selected": "tool:bash",
+              "matches": true,
+              "winner_logprob_margin": 4.499999858438969
+            },
+            {
+              "task": "javascript_read_first",
+              "selected": "tool:read",
+              "matches": true,
+              "winner_logprob_margin": 6.500000102212653
+            }
+          ]
+        },
+        {
+          "guided": true,
+          "matched": 4,
+          "tasks": 4,
+          "cases": [
+            {
+              "task": "python_check_first",
+              "selected": "tool:bash",
+              "matches": true,
+              "winner_logprob_margin": 5.750000096857548
+            },
+            {
+              "task": "python_read_first",
+              "selected": "tool:read",
+              "matches": true,
+              "winner_logprob_margin": 6.999999798019417
+            },
+            {
+              "task": "javascript_check_first",
+              "selected": "tool:bash",
+              "matches": true,
+              "winner_logprob_margin": 6.749999915598892
+            },
+            {
+              "task": "javascript_read_first",
+              "selected": "tool:read",
+              "matches": true,
+              "winner_logprob_margin": 5.624999907799065
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "prior_failure": {
+    "experiment": "empty-candidate-prompt-20260921-a",
+    "task": "repair_failure",
+    "arm": "tair_no_reuse",
+    "selected_branch": "tool:read",
+    "decision": {
+      "index": 0,
+      "name": "plan",
+      "control_id": 35,
+      "cached_prefix_tokens": 0,
+      "logprobs": [
+        -0.5627650022506714,
+        -6.312765121459961,
+        -3.937765121459961,
+        -0.9377650022506714,
+        -6.187765121459961,
+        -9.937765121459961,
+        -7.812765121459961,
+        -4.812765121459961
+      ],
+      "timing": {
+        "engine_monotonic_timestamps": {
+          "queued_ts": 6291516.946530302,
+          "scheduled_ts": 6291516.94657043,
+          "first_token_ts": 6291517.133626909
+        },
+        "initial_queue_seconds": 4.012789577245712e-05,
+        "scheduled_to_first_output_seconds": 0.1870564790442586
+      },
+      "classification_seconds": 0.191924424842
+    },
+    "workflow_validation": {
+      "passed": false,
+      "checks": {
+        "requested_command_first": false,
+        "unchanged:check_calc.py": true
+      }
+    }
+  },
+  "default_changed": false
+}

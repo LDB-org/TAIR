@@ -1,0 +1,49 @@
+{
+  "method": "Forced wrong native branch, then a single generation; no generated tools executed. Both schema and continuation change in candidate arm.",
+  "runtime_reverted": true,
+  "runs": [
+    {
+      "experiment": "native-fallback-probe-20260921-a",
+      "arms": [
+        {
+          "fallback": false,
+          "first_action_matches": 0,
+          "cases": 4,
+          "fallback_envelope_used": 0,
+          "input_tokens": 11961,
+          "generated_tokens": 161
+        },
+        {
+          "fallback": true,
+          "first_action_matches": 0,
+          "cases": 4,
+          "fallback_envelope_used": 0,
+          "input_tokens": 16501,
+          "generated_tokens": 173
+        }
+      ]
+    },
+    {
+      "experiment": "native-fallback-probe-20260921-b",
+      "arms": [
+        {
+          "fallback": false,
+          "first_action_matches": 0,
+          "cases": 4,
+          "fallback_envelope_used": 0,
+          "input_tokens": 11957,
+          "generated_tokens": 108
+        },
+        {
+          "fallback": true,
+          "first_action_matches": 0,
+          "cases": 4,
+          "fallback_envelope_used": 0,
+          "input_tokens": 16537,
+          "generated_tokens": 470
+        }
+      ]
+    }
+  ],
+  "manifest_correction": "Run A inherited the natural-classification/identical-schema method string from the preceding probe. That string is incorrect for this forced-fallback run; forced_fallback=true and recorded options/forced_index show the actual intervention. Frozen evidence is retained unchanged. Run B method text is corrected."
+}

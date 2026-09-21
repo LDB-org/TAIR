@@ -63,6 +63,8 @@ def test_runtime_profile_is_not_archived(tmp_path, monkeypatch, arm):
                 'action': 'chat', 'accounting': {'usage_complete': True}}) + '\n')
         def wait(self, **kwargs):
             return 0
+        def poll(self):
+            return self.returncode
     def popen(command, **kwargs):
         return FakePi(command, **kwargs) if command[0] == 'node' else real_popen(command, **kwargs)
     monkeypatch.setattr(c.subprocess, 'Popen', popen)
@@ -87,3 +89,33 @@ def test_native_usage_includes_cached_input_and_preserves_missing_responses(tmp_
     assert records[0]['accounting']['usage_complete']
     assert not records[1]['accounting']['usage_complete']
     assert records[1]['accounting']['unknown_usage_requests'] == 1
+
+
+def test_interrupted_attempt_reaps_child_before_closing_logs(tmp_path, monkeypatch):
+    project, state, folder = (tmp_path / name for name in ('project', 'state', 'case'))
+    project.mkdir()
+    folder.mkdir()
+    (project / 'app.py').write_text(c.SOURCE)
+    events = []
+    class InterruptedPi:
+        pid = 12345
+        returncode = None
+        def __init__(self, command, **kwargs):
+            self.stdout = kwargs['stdout']
+        def poll(self):
+            return self.returncode
+        def wait(self, **kwargs):
+            assert not self.stdout.closed
+            events.append('wait')
+            if len(events) == 1:
+                raise KeyboardInterrupt
+            self.stdout.write('child finished before archive freeze\n')
+            self.returncode = -15
+            return self.returncode
+    monkeypatch.setattr(c.subprocess, 'Popen', InterruptedPi)
+    monkeypatch.setattr(c.os, 'killpg', lambda pid, sig: events.append((pid, sig)))
+    with pytest.raises(KeyboardInterrupt):
+        c.attempt(project, state, folder, 'preset', 6, 5)
+    assert events == ['wait', (12345, c.signal.SIGTERM), 'wait']
+    assert (folder / 'events.jsonl').read_text() == 'child finished before archive freeze\n'
+    assert not (state / 'agent').is_symlink()

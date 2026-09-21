@@ -2,6 +2,8 @@
 
 本地交互客户端：[pijit 安装与使用](integrations/pijit/README.md)（紧凑源码编辑目前支持 Python）。
 
+最新研究进展（2026-09-21）：[加速研究总览、负面结果与社区技术路线](docs/ACCELERATION_RESEARCH_STATUS.md)。下方技术报告保留原实验口径；通用端到端加速尚未证实。
+
 **四项工程贡献的技术报告：紧凑操作、引擎侧类型决策、KV 连续执行，以及带生成回退的动态码表。**
 
 [English](README.md) · [实现细节](docs/ARCHITECTURE.md) · [复现](docs/REPRODUCE.md) · [实验档案](docs/EXPERIMENTS.md)

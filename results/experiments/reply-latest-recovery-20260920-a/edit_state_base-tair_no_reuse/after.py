@@ -1,0 +1,1 @@
+{"service": {"port": 8443, "label": "现有配置", "features": ["a", "b"]}, "other": {"port": 9000}, "enabled": true}
